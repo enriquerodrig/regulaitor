@@ -44,6 +44,9 @@ coverage.xml
 .env.local
 .env.*.local
 
+# Claude Code per-user settings (team policy goes in .claude/settings.json once we have one)
+.claude/settings.local.json
+
 # OS
 .DS_Store
 Thumbs.db

@@ -18,6 +18,7 @@ help:
 
 setup:
 	$(UV) sync --extra dev
+	$(UV) run pre-commit install
 
 lint:
 	$(UV) run ruff check .
