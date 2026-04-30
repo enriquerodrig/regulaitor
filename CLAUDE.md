@@ -630,6 +630,7 @@ Sitio MkDocs Material.
 9. evals/reports/latest.md.
 10. redteam/reports/latest.md.
 11. docs/evidence_matrix.md.
+12. docs/technical_decisions_log.md (registro acumulativo de decisiones técnicas, espinazo de la memoria del TFM).
 
 ---
 
@@ -646,6 +647,7 @@ Sitio MkDocs Material.
 9. Toda salida del Analyst-Agent pasa por el Auditor-Agent. **No hay atajos.**
 10. Toda PR pasa: ruff, black, mypy (gradual hasta H10, estricto después), pytest, evals (gold set), redteam (smoke). Sin warnings.
 11. Cada decisión de arquitectura no trivial → un ADR.
+11.b. **Cada decisión técnica aprobada → entrada en `docs/technical_decisions_log.md`** (incluye respuestas tipo "OK"/"A" en brainstorming, elecciones de stack, ajustes de pins, etc.). El ADR formal sigue siendo solo para no triviales; el log captura todas.
 12. Cada prompt del sistema versionado en `src/regulaitor/agents/prompts/<agent>/<role>.vN.M.md` con cabecera y changelog.
 13. Cada modelo accedido va por `router.py`. Ningún agente llama directamente a un modelo.
 14. PII detectada → log redactado, alerta, opción de cancelar.

@@ -44,7 +44,10 @@ coverage.xml
 .env.local
 .env.*.local
 
-# Claude Code per-user settings (team policy goes in .claude/settings.json once we have one)
+# Claude Code settings — both files are per-machine because the harness auto-saves
+# permission grants to settings.json. If we ever want a team-policy file, we will
+# create .claude/settings.team.json explicitly and force-add it.
+.claude/settings.json
 .claude/settings.local.json
 
 # OS
