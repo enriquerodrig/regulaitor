@@ -1,0 +1,96 @@
+# ADR 0002 — Skills, MCPs and subagents introduction roadmap
+
+- **Status:** Accepted
+- **Date:** 2026-04-30
+- **Deciders:** Project owner (TFM author).
+
+## Context
+
+`CLAUDE.md` §12-§14 prescribes a substantial set of agent skills, external MCPs and specialised subagents. Installing all of them upfront would violate two project rules:
+
+- §22.5 ("No instales dependencias, MCPs ni skills sin justificar y esperar OK").
+- §22.20 ("Si detectas sobreingeniería, dilo").
+
+Each skill, MCP and subagent must therefore be introduced at the milestone where it first earns its keep, with explicit owner approval. This ADR records the schedule so future sessions can plan against it without re-deriving the rationale.
+
+## Decision
+
+### Skills introduction calendar
+
+| Skill | Milestone | Trigger | Owner of `SKILL.md` proposal |
+|---|---|---|---|
+| `superpowers` (Anthropic) | always active | session bootstrap | n/a — built-in |
+| `adr-writer` | H1 | first batch of ADRs (≥2 in flight) | implementer |
+| `rag-ingest` | H1 | first corpus ingestion run | implementer |
+| `prompt-versioning` | H2-H3 | first non-trivial system prompt landing in `agents/prompts/` | implementer |
+| `citation-validator` | H4 | Auditor-Agent online | implementer |
+| `document-analysis` | H4 | document mode pipeline online | implementer |
+| `evals-runner` | H8 | first reproducible `make eval` run | implementer |
+| `model-card` / `data-card` | H8 | first dataset and first deployed model documented | implementer |
+| `redteam-runner` | H9 | first reproducible `make redteam` run | implementer |
+| `secure-coding-checklist` | H9 | merged with first PR after `make redteam` lands | implementer |
+| `ai-act-assessment` | H17 | academic deliverable preparation | implementer |
+| `cost-accounting` | H17 | cost/consulta and cost/documento numbers needed for memoria | implementer |
+| Anthropic `pdf` | H7-H8 | downloadable reports / PDF corpus | n/a — official |
+| Anthropic `xlsx` / `pptx` / `docx` | H17 | final deliverables | n/a — official |
+| `lora-finetune-recipe` | HX1 | LoRA optional milestone | implementer |
+| `next-frontend-architect` / `ui-style-guide` | HX2 | Next.js frontend optional | implementer |
+| `incident-postmortem` | HX (post-deploy) | first production incident | implementer |
+
+### MCPs introduction calendar
+
+All MCPs are **propose-and-wait**: implementer proposes the exact installation command, owner approves before execution. Zero MCPs installed in H0.1.
+
+| MCP | Milestone | Trigger | Scope |
+|---|---|---|---|
+| `fetch` | H1 | first corpus download | allowlist `eur-lex.europa.eu`, `boe.es`, `arxiv.org` |
+| `playwright` or `puppeteer` | H1 (conditional) | EUR-Lex requires JS rendering | one-off scrape session |
+| `git` | H1 (conditional) | only if Bash git becomes friction | repo only |
+| `github` | H7 (conditional) | when issue/PR automation needed | least privilege |
+| `sqlite` | H4 (conditional) | when metadata DB becomes interactive | local file only |
+| `mcp-server-time` | H1 | corpus ingest needs accurate timestamps | n/a |
+| `mcp-pandoc` | H17 | bilingual deliverables conversion | n/a |
+| `langfuse-mcp` | H11 | trace and metric inspection | one workspace |
+| `tavily-mcp` or `brave-search` | H17 | bibliographic references for memoria | rate-limited |
+| `filesystem`, `memory`, `sequential-thinking` | not needed | covered by built-in tools and `~/.claude/.../memory/` | — |
+
+### Subagents introduction calendar
+
+Subagents in `.claude/agents/<name>.md` are introduced when their scope becomes load-bearing. Built-in subagents (`Explore`, `Plan`, `general-purpose`, `code-reviewer`) cover the common cases until then.
+
+| Subagent | Milestone | Reason to introduce |
+|---|---|---|
+| `software-architect` | H3 | first non-trivial architectural decisions (MCP server, schemas) |
+| `security-engineer` | H6 | document sanitizer and injection detection land |
+| `evals-engineer` | H8 | gold set design and gate definition |
+| `redteam-engineer` | H9 | adversarial suite design |
+| `legal-aiact-reviewer` | H10 | first claims about own AI Act classification |
+| `mlops-engineer` | H11 | LangFuse and observability rollout |
+| `frontend-engineer` | H6 (Streamlit) / HX2 (Next.js) | UI work |
+| `docs-writer` | H10 | documentation freeze prep |
+| `tech-writer-academic` | H17 | memoria preparation |
+
+### Rules of engagement
+
+1. **Propose-and-wait** for every skill, MCP and subagent introduction (no exceptions).
+2. **Justification template** for each proposal: (a) what triggers it, (b) why now and not earlier or later, (c) exact install command or `SKILL.md` content, (d) scope minimisation.
+3. **No retroactive installation**: if a milestone closes without consuming a planned skill/MCP, push the entry to the next milestone in the calendar rather than installing it speculatively.
+4. **Skill files** stay ≤ 150 lines and procedural per CLAUDE.md §12.6; long detail goes to `references/` adjacent to the skill.
+
+## Consequences
+
+### Positive
+
+- Bootstrap (H0.1) ships with zero infrastructure debt.
+- Each installation has a paper trail: an ADR mention or a PR description tying the install to a concrete task.
+- Audit trail directly demonstrates the M4 "controles de producción" claim for the master defence.
+
+### Negative
+
+- More propose-and-wait cycles than installing everything upfront. Mitigation: most decisions are batched at milestone start.
+- Risk of "we will install it in Hn" never materialising. Mitigation: per-milestone Done criteria (CLAUDE.md §25) include "skills/MCPs introduced as scheduled".
+
+## References
+
+- `CLAUDE.md` §12 (Skills), §13 (MCPs), §14 (Subagents).
+- `0001-project-scope.md` (parent ADR).

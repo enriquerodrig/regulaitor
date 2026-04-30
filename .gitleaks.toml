@@ -1,0 +1,12 @@
+title = "RegulAItor gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow placeholder examples in non-secret files"
+paths = [
+    '''^\.env\.example$''',
+    '''^README\.md$''',
+    '''^docs/.*\.md$''',
+]

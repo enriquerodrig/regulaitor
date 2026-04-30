@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where uv *)",
+      "Read(//c/Users/enriq/.local/**)",
+      "Read(//c/Users/enriq/.cargo/**)",
+      "PowerShell(Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression)",
+      "Bash(export PATH=\"/c/Users/enriq/.local/bin:$PATH\")",
+      "Bash(uv --version)",
+      "Bash(uv python *)",
+      "Bash(uv sync *)",
+      "Bash(uv run *)",
+      "Bash(unset VIRTUAL_ENV)",
+      "Bash(git add *)",
+      "Bash(echo \"exit=$?\")"
+    ]
+  }
+}
