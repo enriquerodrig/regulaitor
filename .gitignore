@@ -55,8 +55,8 @@ coverage.xml
 Thumbs.db
 
 # Project: corpus and outputs (corpus/manifests/ IS tracked)
-corpus/raw/
-corpus/processed/
+# corpus/raw and corpus/processed are tracked via Git-LFS (see .gitattributes)
+# corpus/indexes is the LanceDB store, kept local per machine
 corpus/indexes/
 *.lance
 evals/reports/
