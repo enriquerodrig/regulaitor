@@ -31,6 +31,8 @@ class LanguageEntry(BaseModel):
     chunks: list[str] = Field(default_factory=list)
     embedded_at: datetime | None = None
     fetched_at: datetime
+    # plain str (not HttpUrl): URLs are built internally by eurlex.py;
+    # exact-match is required for HTTP cache headers (If-Modified-Since / ETag).
     source_url: str
 
 

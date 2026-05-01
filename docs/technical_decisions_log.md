@@ -199,6 +199,19 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
   - `stats` para diagnóstico rápido y para que el log/ADR capture números reales.
   - `version` se rellena con la fecha de consolidación que aparece en EUR-Lex (no la fecha de fetch).
 
+### 2026-04-30 · `source_url` se modela como `str`, no `HttpUrl`
+
+- **Decisión:** el campo `source_url` en `LanguageEntry` (Pydantic schema en `src/regulaitor/corpus/schemas.py`) se tipa como `str` en lugar de `pydantic.HttpUrl`.
+- **Justificación:** las URLs se construyen internamente por `eurlex.py` a partir del CELEX y un mapping de idioma; no entran como input de usuario, así que la validación formal no aporta. Además, `HttpUrl` normaliza la URL (puede añadir barra final) y eso rompería la igualdad exacta que necesitamos para `If-Modified-Since` y para que el campo coincida bit a bit entre el manifest y los headers HTTP devueltos por EUR-Lex. La serialización de `HttpUrl` a `Url` también añade complejidad innecesaria.
+- **Alternativas descartadas:**
+  - `HttpUrl` (la del spec original §5.1): aporta validación que no necesitamos y arriesga drift de normalización.
+  - Wrapper custom validator sobre `str` que verifique scheme: overkill.
+- **Detalle técnico:**
+  - Origen del valor: `EurLexClient.fetch_formex/fetch_html` devuelve `FetchResultModified.source_url` (string completo de la respuesta HTTP, post-redirects).
+  - Consumidor: el campo se almacena tal cual en el manifest y se reusa por el Auditor (H4) para mostrar la fuente al usuario.
+  - El spec original (`docs/superpowers/specs/2026-04-30-h1-corpus-ingest-design.md` §5.1) será actualizado en el cierre de H1 (Task 13) para reflejar este cambio.
+- **Enlace:** commit Task 1 (`eb16176`) + el commit de este fix.
+
 ---
 
 ## Convención de actualización
