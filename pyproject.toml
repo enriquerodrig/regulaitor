@@ -71,6 +71,8 @@ source = ["src/regulaitor"]
 branch = true
 
 [tool.coverage.report]
+# NOTE: fail_under is enforced by --cov-fail-under in pytest addopts
+# (currently 0 = disabled). Task 10 will raise both to 90.
 fail_under = 90
 show_missing = true
 skip_covered = false
