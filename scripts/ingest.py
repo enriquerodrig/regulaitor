@@ -33,6 +33,11 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Disable HTML fallback when Formex fails",
     )
     p.add_argument("--dry-run", action="store_true", help="Do not write the manifest")
+    p.add_argument(
+        "--use-local-only",
+        action="store_true",
+        help="Skip HTTP, read corpus/raw/{corpus}_{lang}.{xml,html} from disk only",
+    )
     p.add_argument("--verbose", "-v", action="store_true")
     return p
 
@@ -50,6 +55,7 @@ def main(argv: list[str] | None = None) -> int:
         force_reprocess=args.force_reprocess,
         allow_html_fallback=not args.no_html_fallback,
         dry_run=args.dry_run,
+        use_local_only=args.use_local_only,
     )
     print(summary.format_human())
     return 0 if summary.errors == 0 else 1

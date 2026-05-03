@@ -217,3 +217,57 @@ def test_all_304_with_no_prior_manifest_returns_empty_diff(
     assert diff.changed_articles == []
     assert diff.removed_articles == []
     assert diff.unchanged_articles == []
+
+
+def test_use_local_only_reads_xml_from_disk_skips_http(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    es_xml: bytes,
+    en_xml: bytes,
+) -> None:
+    """`use_local_only=True` reads corpus/raw/{corpus}_{lang}.xml without HTTP."""
+    raw_dir = tmp_path / "raw"
+    raw_dir.mkdir()
+    (raw_dir / "ai_act_es.xml").write_bytes(es_xml)
+    (raw_dir / "ai_act_en.xml").write_bytes(en_xml)
+    monkeypatch.setattr(ingest, "MANIFEST_DIR", tmp_path / "manifests")
+    monkeypatch.setattr(ingest, "RAW_DIR", raw_dir)
+    monkeypatch.setattr(ingest, "PROCESSED_DIR", tmp_path / "processed")
+    monkeypatch.setattr(
+        "regulaitor.corpus.validate.EXPECTED_ARTICLE_COUNTS",
+        {"ai_act": 5, "gdpr": 99},
+    )
+    # If HTTP is touched in this mode, this would explode (no transport configured).
+    monkeypatch.setattr(
+        ingest,
+        "EurLexClient",
+        lambda **kw: pytest.fail("EurLexClient should not be constructed in --use-local-only"),
+    )
+
+    summary = ingest.run(corpus="ai_act", languages=["es", "en"], use_local_only=True)
+    assert summary.errors == 0
+    assert summary.fetched == 2  # both lang files counted as "fetched" (locally)
+    assert summary.fetch_skipped == 0
+    m = manifest_mod.load(tmp_path / "manifests" / "ai_act.json")
+    assert m is not None
+    assert m.stats.articles_total == 5
+    # source_url must be a file:// URI from the local file
+    for article in m.articles:
+        for le in article.languages.values():
+            assert le.source_url.startswith("file://"), le.source_url
+
+
+def test_use_local_only_missing_file_raises(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """`use_local_only=True` with no source file raises FileNotFoundError clearly."""
+    monkeypatch.setattr(ingest, "MANIFEST_DIR", tmp_path / "manifests")
+    monkeypatch.setattr(ingest, "RAW_DIR", tmp_path / "raw")
+    monkeypatch.setattr(ingest, "PROCESSED_DIR", tmp_path / "processed")
+    monkeypatch.setattr(
+        "regulaitor.corpus.validate.EXPECTED_ARTICLE_COUNTS",
+        {"ai_act": 5, "gdpr": 99},
+    )
+    with pytest.raises(FileNotFoundError, match="--use-local-only requires"):
+        ingest.run(corpus="ai_act", languages=["es"], use_local_only=True)

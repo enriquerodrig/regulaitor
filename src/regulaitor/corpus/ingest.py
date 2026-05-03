@@ -21,6 +21,7 @@ import tiktoken
 from regulaitor.corpus import manifest as manifest_mod
 from regulaitor.corpus.eurlex import (
     EurLexClient,
+    FetchResult,
     FetchResultModified,
     FetchResultNotModified,
 )
@@ -117,6 +118,35 @@ def _write_atomic(path: Path, content: bytes) -> None:
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_bytes(content)
     os.replace(str(tmp), str(path))
+
+
+def _load_local(
+    corpus: Norma, lang: Language
+) -> tuple[FetchResultModified, Literal["formex4", "html"]]:
+    """Load a corpus snapshot from local RAW_DIR (no HTTP).
+
+    Used by `--use-local-only` mode (Task 12 pragmatic pivot for EUR-Lex CloudFront WAF).
+    Looks for `{corpus}_{lang}.xml` first (Formex), then `.html` (HTML fallback).
+    """
+    xml_path = RAW_DIR / f"{corpus}_{lang}.xml"
+    html_path = RAW_DIR / f"{corpus}_{lang}.html"
+    fmt: Literal["formex4", "html"]
+    if xml_path.exists():
+        path, fmt = xml_path, "formex4"
+    elif html_path.exists():
+        path, fmt = html_path, "html"
+    else:
+        raise FileNotFoundError(f"--use-local-only requires {xml_path} or {html_path} to exist")
+    return (
+        FetchResultModified(
+            content=path.read_bytes(),
+            etag=None,
+            last_modified=None,
+            source_url=path.resolve().as_uri(),
+            fetched_at=datetime.now(UTC),
+        ),
+        fmt,
+    )
 
 
 def _expand_targets(
@@ -237,14 +267,20 @@ def run(
     force_reprocess: bool = False,
     allow_html_fallback: bool = True,
     dry_run: bool = False,
+    use_local_only: bool = False,
 ) -> IngestSummary:
-    """Run the ingest pipeline. Returns a summary; raises only on unrecoverable errors."""
+    """Run the ingest pipeline. Returns a summary; raises only on unrecoverable errors.
+
+    When `use_local_only=True`, skips HTTP entirely and reads files from RAW_DIR.
+    Used as the H1 pragmatic path because EUR-Lex CloudFront WAF blocks bot fetches
+    (see docs/technical_decisions_log.md H1 entry "EUR-Lex WAF — local-only mode").
+    """
     summary = IngestSummary()
     corpora, langs = _expand_targets(corpus, languages)
 
     formex_parser = FormexParser()
     html_parser = HtmlParser()
-    client = EurLexClient()
+    client = None if use_local_only else EurLexClient()
 
     try:
         for c in corpora:
@@ -263,13 +299,25 @@ def run(
                 cache = None if force_fetch else old_cache
                 fetch_format: Literal["formex4", "html"] = "formex4"
 
-                try:
-                    fetch_result = client.fetch_formex(CELEX[c], lang, cache)
-                except FormexValidationError:
-                    if not allow_html_fallback:
-                        raise
-                    fetch_result = client.fetch_html(CELEX[c], lang, cache)
-                    fetch_format = "html"
+                fetch_result: FetchResult
+                if use_local_only:
+                    fetch_result, fetch_format = _load_local(c, lang)
+                    logger.info(
+                        "local %s/%s: %s, %d bytes",
+                        c,
+                        lang,
+                        fetch_format,
+                        len(fetch_result.content),
+                    )
+                else:
+                    assert client is not None  # narrow for mypy
+                    try:
+                        fetch_result = client.fetch_formex(CELEX[c], lang, cache)
+                    except FormexValidationError:
+                        if not allow_html_fallback:
+                            raise
+                        fetch_result = client.fetch_html(CELEX[c], lang, cache)
+                        fetch_format = "html"
 
                 if isinstance(fetch_result, FetchResultNotModified):
                     logger.info("fetch %s/%s: 304 Not Modified", c, lang)
@@ -295,7 +343,9 @@ def run(
 
                 xml_bytes = fetch_result.content
                 raw_total_bytes += len(xml_bytes)
-                _write_atomic(RAW_DIR / f"{c}_{lang}.xml", xml_bytes)
+                if not use_local_only:
+                    # In local-only mode, the file is already in RAW_DIR (we just read it).
+                    _write_atomic(RAW_DIR / f"{c}_{lang}.xml", xml_bytes)
 
                 parser = formex_parser if fetch_format == "formex4" else html_parser
                 try:
@@ -303,6 +353,14 @@ def run(
                 except FormexValidationError as exc:
                     if not allow_html_fallback:
                         raise
+                    if use_local_only:
+                        # No HTTP fallback in local-only mode; the local file is the source.
+                        logger.error(
+                            "Formex parse failed for %s/%s in local-only mode: %s", c, lang, exc
+                        )
+                        summary.errors += 1
+                        continue
+                    assert client is not None  # narrow for mypy
                     logger.warning(
                         "Formex parse failed for %s/%s (%s); falling back to HTML",
                         c,
@@ -402,7 +460,8 @@ def run(
             summary.diffs[c] = manifest_mod.diff(old_manifest, new_manifest)
 
     finally:
-        client.close()
+        if client is not None:
+            client.close()
 
     logger.info(
         "ingest summary: errors=%d fetched=%d fetch_skipped=%d reprocessed=%d",
