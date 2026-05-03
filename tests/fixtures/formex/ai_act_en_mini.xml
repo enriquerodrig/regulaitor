@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONS.ACT>
+  <ARTICLE>
+    <NO.ARTICLE>1</NO.ARTICLE>
+    <TI.ART>Subject matter</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>This Regulation lays down harmonised rules concerning the placing on the market and putting into service of artificial intelligence systems.</TXT>
+    </PARAG>
+    <PARAG>
+      <NO.P>2</NO.P>
+      <TXT>This Regulation applies to providers placing on the market or putting into service AI systems in the Union.</TXT>
+    </PARAG>
+  </ARTICLE>
+  <ARTICLE>
+    <NO.ARTICLE>2</NO.ARTICLE>
+    <TI.ART>Scope</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>This Regulation applies to AI systems placed on the market in the Union.</TXT>
+    </PARAG>
+  </ARTICLE>
+  <ARTICLE>
+    <NO.ARTICLE>3</NO.ARTICLE>
+    <TI.ART>Definitions</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>For the purposes of this Regulation an AI system means a machine-based system.</TXT>
+    </PARAG>
+  </ARTICLE>
+  <ARTICLE>
+    <NO.ARTICLE>4</NO.ARTICLE>
+    <TI.ART>AI literacy</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>Providers and deployers of AI systems shall take measures to ensure a sufficient level of AI literacy.</TXT>
+    </PARAG>
+  </ARTICLE>
+  <ARTICLE>
+    <NO.ARTICLE>5</NO.ARTICLE>
+    <TI.ART>Prohibited AI practices</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>The following AI practices shall be prohibited: the placing on the market of an AI system that deploys subliminal techniques.</TXT>
+    </PARAG>
+  </ARTICLE>
+</CONS.ACT>
