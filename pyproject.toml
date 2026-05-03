@@ -89,7 +89,7 @@ exclude_also = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-addopts = "-ra -q --strict-markers --cov=src/regulaitor/corpus --cov-report=term-missing --cov-fail-under=0"
+addopts = "-ra -q --strict-markers --cov=src/regulaitor/corpus --cov-report=term-missing --cov-fail-under=90"
 markers = [
     "integration: integration tests using stub HTTP server",
     "contract: contract tests using hypothesis",

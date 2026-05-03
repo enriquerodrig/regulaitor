@@ -120,3 +120,100 @@ def test_rerun_with_no_changes_is_idempotent(
         "ai_act.4",
         "ai_act.5",
     ]
+
+
+def test_dry_run_does_not_write_manifest(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    es_xml: bytes,
+    en_xml: bytes,
+) -> None:
+    """dry_run=True must populate would_write and leave the manifest file absent."""
+    monkeypatch.setattr(ingest, "MANIFEST_DIR", tmp_path / "manifests")
+    monkeypatch.setattr(ingest, "RAW_DIR", tmp_path / "raw")
+    monkeypatch.setattr(ingest, "PROCESSED_DIR", tmp_path / "processed")
+    handler = _make_handler(es_xml, en_xml)
+    monkeypatch.setattr(
+        ingest,
+        "EurLexClient",
+        lambda **kw: ingest._make_test_client(httpx.MockTransport(handler)),
+    )
+    monkeypatch.setattr(
+        "regulaitor.corpus.validate.EXPECTED_ARTICLE_COUNTS",
+        {"ai_act": 5, "gdpr": 99},
+    )
+
+    summary = ingest.run(corpus="ai_act", languages=["es"], dry_run=True)
+    assert summary.errors == 0
+    assert summary.would_write  # should contain the manifest path
+    assert not (tmp_path / "manifests" / "ai_act.json").exists()
+    # format_human includes the would_write section
+    human = summary.format_human()
+    assert "would_write" in human
+    assert "ai_act" in human
+
+
+def test_format_human_with_diffs_and_no_would_write(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    es_xml: bytes,
+    en_xml: bytes,
+) -> None:
+    """format_human iterates diffs dict and omits would_write when not dry_run."""
+    monkeypatch.setattr(ingest, "MANIFEST_DIR", tmp_path / "manifests")
+    monkeypatch.setattr(ingest, "RAW_DIR", tmp_path / "raw")
+    monkeypatch.setattr(ingest, "PROCESSED_DIR", tmp_path / "processed")
+    handler = _make_handler(es_xml, en_xml)
+    monkeypatch.setattr(
+        ingest,
+        "EurLexClient",
+        lambda **kw: ingest._make_test_client(httpx.MockTransport(handler)),
+    )
+    monkeypatch.setattr(
+        "regulaitor.corpus.validate.EXPECTED_ARTICLE_COUNTS",
+        {"ai_act": 5, "gdpr": 99},
+    )
+
+    summary = ingest.run(corpus="ai_act", languages=["es"])
+    human = summary.format_human()
+    assert "Ingest summary:" in human
+    assert "ai_act:" in human
+    assert "would_write" not in human
+
+
+def test_all_304_with_no_prior_manifest_returns_empty_diff(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    es_xml: bytes,
+    en_xml: bytes,
+) -> None:
+    """When every language returns 304 and there is no prior manifest, the
+    orchestrator must not crash and must record an empty diff for the corpus."""
+    monkeypatch.setattr(ingest, "MANIFEST_DIR", tmp_path / "manifests")
+    monkeypatch.setattr(ingest, "RAW_DIR", tmp_path / "raw")
+    monkeypatch.setattr(ingest, "PROCESSED_DIR", tmp_path / "processed")
+
+    # Always return 304 regardless of whether the client has a cache header.
+    def always_304(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(304)
+
+    monkeypatch.setattr(
+        ingest,
+        "EurLexClient",
+        lambda **kw: ingest._make_test_client(httpx.MockTransport(always_304)),
+    )
+    monkeypatch.setattr(
+        "regulaitor.corpus.validate.EXPECTED_ARTICLE_COUNTS",
+        {"ai_act": 5, "gdpr": 99},
+    )
+
+    # No prior manifest exists — old_manifest is None.
+    summary = ingest.run(corpus="ai_act", languages=["es"])
+    assert summary.errors == 0
+    assert summary.fetch_skipped == 1
+    diff = summary.diffs.get("ai_act")
+    assert diff is not None
+    assert diff.added_articles == []
+    assert diff.changed_articles == []
+    assert diff.removed_articles == []
+    assert diff.unchanged_articles == []

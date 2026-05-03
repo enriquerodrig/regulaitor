@@ -1,4 +1,4 @@
-.PHONY: help setup lint test precommit ingest serve eval redteam docker deploy clean
+.PHONY: help setup lint test test-cov precommit ingest serve eval redteam docker deploy clean
 
 UV ?= uv
 
@@ -27,6 +27,10 @@ lint:
 
 test:
 	$(UV) run pytest
+
+test-cov:
+	$(UV) run pytest --cov-report=html
+	@echo "HTML coverage report in htmlcov/"
 
 precommit:
 	$(UV) run pre-commit run --all-files

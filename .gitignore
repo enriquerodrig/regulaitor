@@ -29,6 +29,7 @@ ENV/
 htmlcov/
 coverage.xml
 .cache/
+.hypothesis/
 
 # Notebooks
 .ipynb_checkpoints/
