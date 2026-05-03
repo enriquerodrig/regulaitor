@@ -73,7 +73,7 @@ class EurLexClient:
         cache: HttpCacheEntry | None = None,
     ) -> FetchResult:
         url = _formex_url(celex, language)
-        return self._fetch(url, language=language, cache=cache, accept="application/xml")
+        return self._fetch(url, cache=cache, accept="application/xml")
 
     def fetch_html(
         self,
@@ -82,7 +82,7 @@ class EurLexClient:
         cache: HttpCacheEntry | None = None,
     ) -> FetchResult:
         url = _html_url(celex, language)
-        return self._fetch(url, language=language, cache=cache, accept="text/html")
+        return self._fetch(url, cache=cache, accept="text/html")
 
     def _enforce_allowlist(self, url: str) -> None:
         host = urlparse(url).hostname or ""
@@ -99,7 +99,6 @@ class EurLexClient:
         self,
         url: str,
         *,
-        language: Language,
         cache: HttpCacheEntry | None,
         accept: str,
     ) -> FetchResult:

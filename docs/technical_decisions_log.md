@@ -199,6 +199,18 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
   - `stats` para diagnóstico rápido y para que el log/ADR capture números reales.
   - `version` se rellena con la fecha de consolidación que aparece en EUR-Lex (no la fecha de fetch).
 
+### 2026-04-30 · Cliente EurLex no reintenta 5xx; solo errores de conexión
+
+- **Decisión:** `EurLexClient._fetch` (en `src/regulaitor/corpus/eurlex.py`) reintenta únicamente sobre `httpx.ConnectError` y `httpx.ReadTimeout` (3 intentos, backoff exponencial 1-4s). Las respuestas HTTP 5xx propagan inmediatamente como `httpx.HTTPStatusError` sin reintento.
+- **Justificación:** los 5xx en EUR-Lex suelen reflejar mantenimiento programado o outage estructural donde reintentar 3 veces solo añade latencia (≈7s) sin beneficio. El orquestador (`ingest.py`, Task 8) decide la política de reintento al nivel de corpus: si el fetch falla, el manifest se queda intacto y se reintenta en la siguiente ejecución del cron / `make ingest`.
+- **Alternativa descartada:** añadir `httpx.HTTPStatusError` con predicado `lambda e: e.response.status_code >= 500` al `retry_if_exception_type`. Rechazada porque genera retry storms hacia EUR-Lex (mala práctica de ciudadanía web) y porque el patrón "fail fast + manifest atomic" del orquestador ya cubre el caso.
+- **Detalle técnico:**
+  - Errores que SÍ se reintentan: `httpx.ConnectError`, `httpx.ReadTimeout`. Ambos son fallos de capa de transporte que típicamente desaparecen tras unos segundos.
+  - Errores que NO se reintentan: cualquier respuesta HTTP, incluyendo 4xx (URL mal formada, CELEX inexistente) y 5xx (servidor caído).
+  - El 304 Not Modified se intercepta antes de `raise_for_status()`, así que no entra en el flujo de errores.
+- **Implicación para spec:** se actualiza la tabla §7 del spec H1 para reflejar el comportamiento real ("HTTP 5xx → status code (no retry) → exit 1").
+- **Enlace:** commit Task 7 (`275aa4a`) + commit de este fix.
+
 ### 2026-04-30 · `source_url` se modela como `str`, no `HttpUrl`
 
 - **Decisión:** el campo `source_url` en `LanguageEntry` (Pydantic schema en `src/regulaitor/corpus/schemas.py`) se tipa como `str` en lugar de `pydantic.HttpUrl`.
