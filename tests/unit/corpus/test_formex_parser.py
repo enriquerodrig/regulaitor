@@ -77,3 +77,49 @@ def test_long_article_returns_single_parsed_article() -> None:
     assert len(articles) == 1
     assert articles[0].articulo == "6"
     assert len(articles[0].text) > 5000  # stress text
+
+
+def test_parse_paragraph_without_no_p_falls_back_cleanly() -> None:
+    parser = FormexParser()
+    xml = (
+        b'<?xml version="1.0" encoding="UTF-8"?>'
+        b"<CONS.ACT><ARTICLE>"
+        b"<NO.ARTICLE>1</NO.ARTICLE>"
+        b"<TI.ART>Title that should NOT appear in body</TI.ART>"
+        b"<PARAG><TXT>Body without NO.P numbering.</TXT></PARAG>"
+        b"</ARTICLE></CONS.ACT>"
+    )
+    article = parser.parse(xml)[0]
+    assert article.articulo == "1"
+    assert article.title == "Title that should NOT appear in body"
+    assert article.text == "Body without NO.P numbering."
+    # Critical: title and article number must NOT leak into article.text
+    assert "Title" not in article.text
+    assert article.text != "1 Title that should NOT appear in body Body without NO.P numbering."
+
+
+def test_parse_title_with_inline_markup() -> None:
+    parser = FormexParser()
+    xml = (
+        b'<?xml version="1.0" encoding="UTF-8"?>'
+        b"<CONS.ACT><ARTICLE>"
+        b"<NO.ARTICLE>1</NO.ARTICLE>"
+        b'<TI.ART><HT TYPE="BOLD">Subject matter</HT></TI.ART>'
+        b"<PARAG><NO.P>1</NO.P><TXT>Body.</TXT></PARAG>"
+        b"</ARTICLE></CONS.ACT>"
+    )
+    article = parser.parse(xml)[0]
+    assert article.title == "Subject matter"
+
+
+def test_parse_unexpected_root_raises() -> None:
+    parser = FormexParser()
+    with pytest.raises(FormexValidationError, match="unexpected root"):
+        parser.parse(
+            b'<?xml version="1.0"?>'
+            b"<WRONG_ROOT>"
+            b"<ARTICLE><NO.ARTICLE>1</NO.ARTICLE>"
+            b"<PARAG><NO.P>1</NO.P><TXT>x</TXT></PARAG>"
+            b"</ARTICLE>"
+            b"</WRONG_ROOT>"
+        )
