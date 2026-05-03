@@ -45,6 +45,11 @@ from regulaitor.corpus.validate import validate
 
 logger = logging.getLogger("regulaitor.corpus.ingest")
 
+# Module-level encoder cache. tiktoken.get_encoding caches internally too,
+# but binding the encoder once makes the intent explicit and avoids any
+# import-time work surprise.
+_TOKENIZER = tiktoken.get_encoding("cl100k_base")
+
 CORPUS_ROOT = Path("corpus")
 MANIFEST_DIR = CORPUS_ROOT / "manifests"
 RAW_DIR = CORPUS_ROOT / "raw"
@@ -68,6 +73,7 @@ class IngestSummary:
     fetched: int = 0
     reprocessed_articles: int = 0
     diffs: dict[Norma, ManifestDiff] = field(default_factory=dict)
+    would_write: list[Path] = field(default_factory=list)
 
     def format_human(self) -> str:
         parts = [
@@ -82,6 +88,8 @@ class IngestSummary:
                 f"  {corpus}: +{len(diff.added_articles)} ~{len(diff.changed_articles)} "
                 f"-{len(diff.removed_articles)} ={len(diff.unchanged_articles)}"
             )
+        if self.would_write:
+            parts.append(f"  would_write (dry-run): {[str(p) for p in self.would_write]}")
         return "\n".join(parts)
 
 
@@ -101,8 +109,7 @@ def _sha256_hex(text: str) -> str:
 
 
 def _token_count(text: str) -> int:
-    enc = tiktoken.get_encoding("cl100k_base")
-    return len(enc.encode(text))
+    return len(_TOKENIZER.encode(text))
 
 
 def _write_atomic(path: Path, content: bytes) -> None:
@@ -157,11 +164,11 @@ def _build_manifest(
             old_lang = old_entry.languages.get(lang) if old_entry else None
 
             if not force_reprocess and old_lang is not None and old_lang.hash == text_hash:
-                # Preserve H2 chunks and embedded_at
+                # Preserve H2 chunks and embedded_at — article unchanged.
                 languages_dict[lang] = old_lang.model_copy(update={"fetched_at": now})
             else:
-                if old_lang is not None or old_entry is None:
-                    reprocessed += 1
+                # New article, changed article, or force reprocess — invalidate H2 state.
+                reprocessed += 1
                 languages_dict[lang] = LanguageEntry(
                     hash=text_hash,
                     tokens=tokens,
@@ -243,6 +250,7 @@ def run(
         for c in corpora:
             manifest_path = MANIFEST_DIR / f"{c}.json"
             old_manifest = manifest_mod.load(manifest_path)
+            logger.info("manifest %s: %s", c, "loaded" if old_manifest else "not found, creating")
 
             articles_per_lang: dict[Language, list[ParsedArticle]] = {}
             http_cache_per_lang: dict[Language, HttpCacheEntry] = {}
@@ -264,6 +272,7 @@ def run(
                     fetch_format = "html"
 
                 if isinstance(fetch_result, FetchResultNotModified):
+                    logger.info("fetch %s/%s: 304 Not Modified", c, lang)
                     summary.fetch_skipped += 1
                     if old_manifest is not None:
                         # Reuse old data from processed cache
@@ -276,6 +285,13 @@ def run(
 
                 assert isinstance(fetch_result, FetchResultModified)
                 summary.fetched += 1
+                logger.info(
+                    "fetch %s/%s: 200 OK, %d bytes, etag=%s",
+                    c,
+                    lang,
+                    len(fetch_result.content),
+                    fetch_result.etag,
+                )
 
                 xml_bytes = fetch_result.content
                 raw_total_bytes += len(xml_bytes)
@@ -284,21 +300,40 @@ def run(
                 parser = formex_parser if fetch_format == "formex4" else html_parser
                 try:
                     parsed = parser.parse(xml_bytes)
-                except FormexValidationError:
+                except FormexValidationError as exc:
                     if not allow_html_fallback:
                         raise
+                    logger.warning(
+                        "Formex parse failed for %s/%s (%s); falling back to HTML",
+                        c,
+                        lang,
+                        exc,
+                    )
                     fetch_format = "html"
-                    fallback_result = client.fetch_html(CELEX[c], lang, cache)
-                    if isinstance(fallback_result, FetchResultNotModified):
+                    fetch_result = client.fetch_html(CELEX[c], lang, cache)
+                    if isinstance(fetch_result, FetchResultNotModified):
+                        logger.error(
+                            "HTML fallback for %s/%s returned 304 with no cached data; skipping",
+                            c,
+                            lang,
+                        )
                         summary.errors += 1
                         continue
-                    assert isinstance(fallback_result, FetchResultModified)
-                    parsed = html_parser.parse(fallback_result.content)
-                    _write_atomic(RAW_DIR / f"{c}_{lang}.xml", fallback_result.content)
+                    assert isinstance(fetch_result, FetchResultModified)
+                    parsed = html_parser.parse(fetch_result.content)
+                    _write_atomic(RAW_DIR / f"{c}_{lang}.xml", fetch_result.content)
 
                 source_format = fetch_format
                 report = validate(c, parsed, strict=True)
-                logger.info("validate %s/%s: %d/%d", c, lang, report.found, report.expected)
+                logger.info("parse %s/%s: %d articles", c, lang, len(parsed))
+                logger.info(
+                    "validate %s/%s: %d/%d coverage_ok=%s",
+                    c,
+                    lang,
+                    report.found,
+                    report.expected,
+                    report.coverage_ok,
+                )
 
                 articles_per_lang[lang] = parsed
                 http_cache_per_lang[lang] = HttpCacheEntry(
@@ -307,8 +342,9 @@ def run(
                 )
                 source_url_per_lang[lang] = fetch_result.source_url
 
+                processed_path_value = PROCESSED_DIR / f"{c}_{lang}.json"
                 _write_atomic(
-                    PROCESSED_DIR / f"{c}_{lang}.json",
+                    processed_path_value,
                     json.dumps(
                         [
                             {
@@ -325,6 +361,7 @@ def run(
                         indent=2,
                     ).encode("utf-8"),
                 )
+                logger.info("processed %s/%s: wrote %s", c, lang, processed_path_value)
 
             if not articles_per_lang:
                 # Everything was 304 and we have no old data — nothing to do.
@@ -353,9 +390,25 @@ def run(
 
             if not dry_run:
                 manifest_mod.save_atomic(manifest_path, new_manifest)
+                logger.info(
+                    "manifest %s: wrote %s with %d articles, %d reprocessed",
+                    c,
+                    manifest_path,
+                    len(new_manifest.articles),
+                    reprocessed,
+                )
+            else:
+                summary.would_write.append(manifest_path)
             summary.diffs[c] = manifest_mod.diff(old_manifest, new_manifest)
 
     finally:
         client.close()
 
+    logger.info(
+        "ingest summary: errors=%d fetched=%d fetch_skipped=%d reprocessed=%d",
+        summary.errors,
+        summary.fetched,
+        summary.fetch_skipped,
+        summary.reprocessed_articles,
+    )
     return summary

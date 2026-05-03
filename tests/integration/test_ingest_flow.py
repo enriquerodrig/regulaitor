@@ -73,6 +73,16 @@ def test_first_run_creates_manifest_with_5_articles(
     assert {a.articulo for a in m.articles} == {"1", "2", "3", "4", "5"}
     assert all("es" in a.languages and "en" in a.languages for a in m.articles)
 
+    # H1/H2 boundary contract: every language entry must have empty chunks and no embedded_at.
+    for a in m.articles:
+        for le in a.languages.values():
+            assert (
+                le.chunks == []
+            ), f"chunks should be empty after H1, got {le.chunks!r} for {a.article_id}"
+            assert (
+                le.embedded_at is None
+            ), f"embedded_at should be None after H1, got {le.embedded_at!r} for {a.article_id}"
+
 
 def test_rerun_with_no_changes_is_idempotent(
     tmp_path: Path,
