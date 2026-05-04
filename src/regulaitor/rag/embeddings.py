@@ -6,9 +6,12 @@ tokens in articles (the H2 swap from tiktoken to BGE-M3 native).
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from FlagEmbedding import BGEM3FlagModel
+
+logger = logging.getLogger("regulaitor.rag.embeddings")
 
 DEFAULT_MODEL = "BAAI/bge-m3"
 
@@ -36,10 +39,11 @@ def embed(texts: list[str], batch_size: int = 16) -> list[list[float]]:
     returns empty list (no model load).
     """
     if not texts:
+        logger.debug("embed() called with empty list; returning [] without loading model")
         return []
     model = _ensure_loaded()
     out = model.encode(texts, batch_size=batch_size, return_dense=True)
-    return [list(vec) for vec in out["dense_vecs"]]
+    return [vec.tolist() for vec in out["dense_vecs"]]
 
 
 def token_count(text: str) -> int:
