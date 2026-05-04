@@ -21,13 +21,16 @@ THRESHOLD_TOKENS = 1000
 
 
 def _normalize(text: str) -> str:
-    """Lowercase + strip diacritics + collapse whitespace.
+    """Lowercase + strip diacritics + unify dashes + collapse whitespace.
 
     Used to populate `Chunk.text_normalized` for the H3 citation_validator's
-    exact-match path.
+    exact-match path. Per spec §12.2: dashes (en-dash U+2013, em-dash U+2014,
+    minus U+2212, horizontal bar U+2015) collapse to ASCII hyphen U+002D so
+    a user quoting a typographic dash from the PDF still matches the corpus.
     """
     s = unicodedata.normalize("NFD", text.lower())
     s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
+    s = re.sub(r"[–—−―]", "-", s)
     return re.sub(r"\s+", " ", s).strip()
 
 
@@ -54,6 +57,9 @@ def chunk_article(
 
     if full_tokens <= THRESHOLD_TOKENS or not article.paragraphs:
         if full_tokens > THRESHOLD_TOKENS:
+            # No `apartado` in this branch — we got here precisely because
+            # `not article.paragraphs` is True. Spec §5.4 prose suggested
+            # logging apartado too; we omit it because it does not exist.
             logger.warning(
                 "article %s/%s/%s exceeds threshold (%d tokens) but has no "
                 "paragraphs; emitting a single oversized chunk",

@@ -52,6 +52,17 @@ def test_normalize_lowercases_and_strips_accents() -> None:
     assert "  " not in out  # whitespace collapsed
 
 
+def test_normalize_unifies_typographic_dashes() -> None:
+    """Per spec §12.2, all dash variants collapse to ASCII '-' so quotes from
+    the PDF (which often use em-dash) match the corpus."""
+    assert chunking._normalize("artículo 1—del") == "articulo 1-del"  # em-dash
+    assert chunking._normalize("artículo 1–del") == "articulo 1-del"  # en-dash
+    assert chunking._normalize("artículo 1−del") == "articulo 1-del"  # minus
+    assert chunking._normalize("artículo 1―del") == "articulo 1-del"  # horizontal bar
+    # ASCII hyphen passes through unchanged
+    assert chunking._normalize("artículo 1-del") == "articulo 1-del"
+
+
 def test_short_article_yields_single_chunk() -> None:
     article = _article(text="palabra " * 100)  # 100 tokens, well below 1000
     chunks = chunking.chunk_article(article, **_kwargs())
@@ -76,6 +87,10 @@ def test_long_article_with_paragraphs_splits_by_apartado() -> None:
         "ai_act.1.2.es",
         "ai_act.1.3.es",
     ]
+    # token_count is computed per-apartado, not the article-level total
+    assert chunks[0].token_count == 200
+    assert chunks[1].token_count == 600
+    assert chunks[2].token_count == 400
 
 
 def test_long_article_without_paragraphs_yields_single_chunk_with_warning(
@@ -83,10 +98,16 @@ def test_long_article_without_paragraphs_yields_single_chunk_with_warning(
 ) -> None:
     """If an article exceeds threshold but has no PARAG structure, we cannot
     split it. We emit a single oversized chunk and log a warning."""
+    import logging
+
+    caplog.set_level(logging.WARNING, logger="regulaitor.rag.chunking")
     article = _article(text="palabra " * 1500, paragraphs=[])
     chunks = chunking.chunk_article(article, **_kwargs())
     assert len(chunks) == 1
     assert chunks[0].apartado is None
+    # Verify the warning actually fired
+    assert any("exceeds threshold" in rec.message for rec in caplog.records)
+    assert any(rec.levelname == "WARNING" for rec in caplog.records)
 
 
 def test_chunk_token_count_matches_text() -> None:
