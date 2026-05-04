@@ -34,13 +34,36 @@ def run(
     *,
     force_rebuild: bool = False,
 ) -> RagBuildSummary:
-    """Run the RAG build pipeline. Returns a summary; exit codes by caller."""
+    """Run the RAG build pipeline.
+
+    For each (corpus, language, article):
+      - Skip when not force_rebuild AND entry.chunks (non-empty) AND
+        entry.embedding_model == current_model. Increments `chunks_unchanged`.
+      - Otherwise: chunk → embed → DELETE-by-article (if had chunks) → upsert
+        LanceDB → update LanguageEntry with new chunks, embedded_at,
+        embedding_model. Increments `chunks_added` (fresh) or
+        `chunks_recomputed` (article had previous chunks).
+
+    Manifests are written atomically per corpus via `manifest.save_atomic`.
+
+    Atomicity caveat: if `store.upsert` succeeds but `save_atomic` fails after
+    (e.g., disk full), the LanceDB has new chunks but the manifest is stale.
+    The next run will re-embed — recoverable. The window is small.
+
+    Returns a `RagBuildSummary` with cumulative counts across all processed
+    corpora. The caller (CLI) decides exit code based on `summary.errors`.
+    """
     summary = RagBuildSummary()
     corpora, langs = expand_targets(corpus, languages)
     table = store.connect(INDEX_PATH)
     current_model = embeddings.model_identifier()
 
     for c in corpora:
+        # Snapshot accumulators at start of corpus to compute per-corpus deltas
+        delta_added = summary.chunks_added
+        delta_recomputed = summary.chunks_recomputed
+        delta_unchanged = summary.chunks_unchanged
+
         manifest_path = MANIFEST_DIR / f"{c}.json"
         m = manifest_mod.load(manifest_path)
         if m is None:
@@ -122,14 +145,34 @@ def run(
                 )
             updated_articles.append(article.model_copy(update={"languages": updated_languages}))
 
-        new_manifest = m.model_copy(update={"articles": updated_articles})
+        new_chunks_total = sum(
+            len(e.chunks) for art in updated_articles for e in art.languages.values()
+        )
+        new_embedded_total = sum(
+            1
+            for art in updated_articles
+            for e in art.languages.values()
+            if e.embedded_at is not None
+        )
+        new_stats = m.stats.model_copy(
+            update={
+                "chunks_total": new_chunks_total,
+                "embedded_total": new_embedded_total,
+            }
+        )
+        new_manifest = m.model_copy(update={"articles": updated_articles, "stats": new_stats})
         manifest_mod.save_atomic(manifest_path, new_manifest)
+
+        # Compute per-corpus deltas for this log line
+        per_corpus_added = summary.chunks_added - delta_added
+        per_corpus_recomputed = summary.chunks_recomputed - delta_recomputed
+        per_corpus_unchanged = summary.chunks_unchanged - delta_unchanged
         logger.info(
             "manifest %s: extended (added=%d recomputed=%d unchanged=%d)",
             c,
-            summary.chunks_added,
-            summary.chunks_recomputed,
-            summary.chunks_unchanged,
+            per_corpus_added,
+            per_corpus_recomputed,
+            per_corpus_unchanged,
         )
 
     reranker.warmup()

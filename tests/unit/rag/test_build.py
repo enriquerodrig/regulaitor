@@ -85,3 +85,22 @@ def test_missing_manifest_records_skip(setup_fs: Path) -> None:
     summary = build.run(corpus="gdpr", languages=["es"])
     assert "gdpr" in summary.skipped_corpora
     assert summary.errors >= 1
+
+
+def test_article_with_only_one_language_skips_other_lang_cleanly(
+    setup_fs: Path, tmp_path: Path
+) -> None:
+    """If an article exists with only ES but the build asks for both ES and EN,
+    the EN branch must be a clean continue (no error, no chunk added for EN)."""
+    # Modify the manifest to remove EN from article 1
+    import json
+
+    manifest_path = setup_fs / "corpus" / "manifests" / "ai_act.json"
+    m = json.loads(manifest_path.read_text(encoding="utf-8"))
+    del m["articles"][0]["languages"]["en"]
+    manifest_path.write_text(json.dumps(m), encoding="utf-8")
+
+    summary = build.run(corpus="ai_act", languages=["es", "en"])
+    assert summary.errors == 0
+    # 2 articles × 2 langs - 1 missing = 3 chunks added
+    assert summary.chunks_added == 3
