@@ -73,6 +73,10 @@ disallow_untyped_defs = false
 module = "lxml.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "FlagEmbedding.*"
+ignore_missing_imports = true
+
 [tool.coverage.run]
 source = ["src/regulaitor"]
 branch = true
