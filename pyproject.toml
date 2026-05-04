@@ -70,6 +70,10 @@ module = "tests.*"
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
+module = "lancedb.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
 module = "lxml.*"
 ignore_missing_imports = true
 

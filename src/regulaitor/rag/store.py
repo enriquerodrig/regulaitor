@@ -2,16 +2,30 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING
 
-import lancedb  # type: ignore[import-untyped]
+import lancedb
 import pyarrow as pa
 
 from regulaitor.rag.schemas import ChunkRecord
 
+if TYPE_CHECKING:
+    import lancedb.table
+
+# Default LanceDB store directory, relative to the current working directory
+# at call time. Production callers (rag.build.run, scripts.rag_build) run from
+# the repo root, so this resolves to <repo>/corpus/indexes/regulaitor.lance.
+# Future H7 FastAPI / scripts.serve callers should pass an explicit absolute
+# path resolved at startup.
 DEFAULT_PATH = Path("corpus/indexes/regulaitor.lance")
 TABLE_NAME = "chunks"
+
+# Allowlist for path-segment characters in chunk IDs and language codes.
+# Matches the deterministic format {norma}.{articulo}[.{apartado}].{lang}
+# where each segment is alphanumeric, dot, hyphen, or underscore.
+_SAFE_ID_PATTERN = re.compile(r"^[a-z0-9_.-]+$")
 
 SCHEMA = pa.schema(
     [
@@ -35,7 +49,7 @@ SCHEMA = pa.schema(
 )
 
 
-def connect(path: Path = DEFAULT_PATH) -> Any:
+def connect(path: Path = DEFAULT_PATH) -> lancedb.table.Table:
     """Open or create the chunks table at the given path.
 
     ``path`` is the directory of the LanceDB database (a directory, not a single
@@ -48,7 +62,7 @@ def connect(path: Path = DEFAULT_PATH) -> Any:
     return db.create_table(TABLE_NAME, schema=SCHEMA)
 
 
-def upsert(records: list[ChunkRecord], table: Any) -> int:
+def upsert(records: list[ChunkRecord], table: lancedb.table.Table) -> int:
     """Upsert by chunk_id. Existing rows with matching chunk_id are deleted first.
 
     Returns the number of rows written. Empty ``records`` returns 0 without any
@@ -64,7 +78,7 @@ def upsert(records: list[ChunkRecord], table: Any) -> int:
     return len(rows)
 
 
-def delete_by_article(article_id: str, language: str, table: Any) -> int:
+def delete_by_article(article_id: str, language: str, table: lancedb.table.Table) -> int:
     """Delete all chunks belonging to a specific article in a specific language.
 
     Used when re-processing an article whose hash changed: the orchestrator
@@ -72,7 +86,15 @@ def delete_by_article(article_id: str, language: str, table: Any) -> int:
 
     Returns the count returned by LanceDB's delete (varies between 0 and N
     matching rows).
+
+    Validates `article_id` and `language` against `_SAFE_ID_PATTERN` to prevent
+    LanceDB filter injection. The orchestrator constructs both from typed
+    schema fields (`Norma`, `Language`, `articulo`), so production callers
+    always pass safe values. The guard is defensive against a future MCP tool
+    or HTTP route forwarding user input to this function.
     """
+    if not _SAFE_ID_PATTERN.match(article_id) or not _SAFE_ID_PATTERN.match(language):
+        raise ValueError(f"Unsafe article_id or language: {article_id!r}, {language!r}")
     where = f"chunk_id LIKE '{article_id}.%.{language}' " f"OR chunk_id = '{article_id}.{language}'"
     result = table.delete(where)
     return int(result.num_deleted_rows) if result is not None else 0

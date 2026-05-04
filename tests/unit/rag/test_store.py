@@ -82,9 +82,18 @@ def test_delete_by_article_removes_only_matching(tmp_path: Path) -> None:
         table,
     )
     deleted = store.delete_by_article("ai_act.1", "es", table)
-    assert deleted >= 1  # exact count varies by lancedb version; at minimum the ES one
+    assert deleted == 1
     rows = list(table.search().limit(10).to_list())
     chunk_ids = sorted(r["chunk_id"] for r in rows)
     assert "ai_act.1.es" not in chunk_ids
     assert "ai_act.1.en" in chunk_ids
     assert "ai_act.2.es" in chunk_ids
+
+
+def test_delete_by_article_rejects_unsafe_input(tmp_path: Path) -> None:
+    """delete_by_article must validate inputs to prevent LanceDB filter injection."""
+    table = store.connect(tmp_path / "t.lance")
+    with pytest.raises(ValueError, match="Unsafe"):
+        store.delete_by_article("ai_act.1' OR 1=1 --", "es", table)
+    with pytest.raises(ValueError, match="Unsafe"):
+        store.delete_by_article("ai_act.1", "es' OR 1=1 --", table)

@@ -542,6 +542,29 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
 - **Implicación para H9 (red team):** uno de los ataques canónicos del red team puede ser "model version skew" — adversario con conocimiento de la versión vieja del modelo prepara queries que explotan vectores estancados. Tener `embedding_model` en el manifest permite al Auditor detectar si un chunk fue embebido con un modelo distinto al que el Retriever está usando ahora, y marcar la inconsistencia.
 - **Enlace:** se formaliza en ADR 0004 al cierre de H2.
 
+### 2026-05-04 · `fecha_ingesta` se mantiene a nivel `LanguageEntry`, no en `Chunk`
+
+- **Decisión:** los campos de fecha de ingesta del corpus (`fetched_at`, `embedded_at`) viven en `LanguageEntry` (manifest), no en `ChunkRecord` (LanceDB). El schema `Chunk` y `ChunkRecord` no incluyen un campo `fecha_ingesta` o equivalente. El metadato CLAUDE.md §7 ("Cada chunk debe tener metadatos: ... fecha_ingesta ...") se cumple por la trazabilidad transitiva chunk → article_id → manifest entry → fetched_at/embedded_at.
+- **Justificación:**
+  1. **DRY:** todos los chunks de un mismo `(article, language)` comparten la misma fecha de ingesta. Duplicarlo en cada chunk multiplica datos sin beneficio.
+  2. **Coherencia con la regla de versionado:** el manifest ya tiene `fetched_at`, `embedded_at`, `embedding_model` por `LanguageEntry`. El chunk hereda esos atributos por su `article_id`.
+  3. **Inmutabilidad operativa:** si `fecha_ingesta` viviera en cada chunk, una re-ingest cambiaría timestamps en todos los chunks de un artículo aunque el contenido no cambie. Mantenerlo en `LanguageEntry` permite que H1 idempotency (preserve chunks/embedded_at when hash matches) funcione limpio.
+  4. **El Auditor (H4) accede vía join:** cuando el Auditor necesita la fecha de ingesta de la cita, lee el manifest del corpus correspondiente. La query a LanceDB ya devuelve `article_id`; un lookup contra el manifest es O(1) en memoria con un dict pre-cargado.
+- **Alternativa descartada:**
+  - **Duplicar `fetched_at` y `embedded_at` en cada `ChunkRecord`:** rechazada por las razones 1, 2, 3. Inflaría LanceDB ~12 bytes × N chunks × 2 timestamps = ~10 KB extra para 424 chunks; trivial en disco pero conceptualmente ruidoso.
+  - **Añadir un campo único `chunk_ingest_date` distinto del manifest:** rechazada porque introduciría un tercer concepto temporal sin claridad de cuándo aplica.
+- **Detalle técnico — flujo del Auditor (H4):**
+  ```python
+  # H4 Auditor receives a (norma, article_id, chunk_id) from the Analyst's citation
+  m = manifest_mod.load(MANIFEST_DIR / f"{norma}.json")
+  article = next(a for a in m.articles if a.article_id.startswith(article_id.rsplit('.', 1)[0]))
+  fetched_at = article.languages[lang].fetched_at
+  embedded_at = article.languages[lang].embedded_at
+  embedding_model = article.languages[lang].embedding_model
+  ```
+- **Implicación para CLAUDE.md §7:** la afirmación literal "Cada chunk debe tener metadatos: ... fecha_ingesta ..." se cumple en su intención (cada chunk tiene una fecha de ingesta trazable), no en su forma literal (no en una columna `fecha_ingesta` del chunk record). El cumplimiento es por composición jerárquica chunk → manifest, que es defensible académicamente y más robusto operacionalmente. Esta decisión se hizo durante el code review de Task 7 (commit a determinar) tras detectar la ambigüedad.
+- **Enlace:** se referenciará en ADR 0004 al cierre de H2.
+
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
 1. Añadir entrada al hito correspondiente.
