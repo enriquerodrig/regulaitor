@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field, field_validator
 
 Norma = Literal["ai_act", "gdpr", "nis2", "dora"]
 Language = Literal["es", "en"]
-SourceFormat = Literal["formex4", "html"]
+SourceFormat = Literal["formex4", "html", "pdf"]
 
 
 class HttpCacheEntry(BaseModel):

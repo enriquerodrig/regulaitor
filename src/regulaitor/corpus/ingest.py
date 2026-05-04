@@ -31,8 +31,9 @@ from regulaitor.corpus.formex_parser import (
     ParsedArticle,
     ParsedParagraph,
 )
-from regulaitor.corpus.html_parser import HtmlParser
+from regulaitor.corpus.html_parser import HtmlParseError, HtmlParser
 from regulaitor.corpus.manifest import ManifestDiff
+from regulaitor.corpus.pdf_parser import PdfParseError, PdfParser
 from regulaitor.corpus.schemas import (
     ArticleEntry,
     HttpCacheEntry,
@@ -122,21 +123,27 @@ def _write_atomic(path: Path, content: bytes) -> None:
 
 def _load_local(
     corpus: Norma, lang: Language
-) -> tuple[FetchResultModified, Literal["formex4", "html"]]:
+) -> tuple[FetchResultModified, Literal["formex4", "html", "pdf"]]:
     """Load a corpus snapshot from local RAW_DIR (no HTTP).
 
     Used by `--use-local-only` mode (Task 12 pragmatic pivot for EUR-Lex CloudFront WAF).
-    Looks for `{corpus}_{lang}.xml` first (Formex), then `.html` (HTML fallback).
+    Tries `{corpus}_{lang}.xml` (Formex), then `.html`, then `.pdf` — in that order
+    of preference (XML is most structured, PDF most fragile).
     """
     xml_path = RAW_DIR / f"{corpus}_{lang}.xml"
     html_path = RAW_DIR / f"{corpus}_{lang}.html"
-    fmt: Literal["formex4", "html"]
+    pdf_path = RAW_DIR / f"{corpus}_{lang}.pdf"
+    fmt: Literal["formex4", "html", "pdf"]
     if xml_path.exists():
         path, fmt = xml_path, "formex4"
     elif html_path.exists():
         path, fmt = html_path, "html"
+    elif pdf_path.exists():
+        path, fmt = pdf_path, "pdf"
     else:
-        raise FileNotFoundError(f"--use-local-only requires {xml_path} or {html_path} to exist")
+        raise FileNotFoundError(
+            f"--use-local-only requires one of {xml_path}, {html_path}, {pdf_path} to exist"
+        )
     return (
         FetchResultModified(
             content=path.read_bytes(),
@@ -160,7 +167,7 @@ def _expand_targets(
 
 def _build_manifest(
     corpus: Norma,
-    source_format: Literal["formex4", "html"],
+    source_format: Literal["formex4", "html", "pdf"],
     articles_per_lang: dict[Language, list[ParsedArticle]],
     http_cache: dict[Language, HttpCacheEntry],
     old_manifest: Manifest | None,
@@ -280,6 +287,12 @@ def run(
 
     formex_parser = FormexParser()
     html_parser = HtmlParser()
+    pdf_parser = PdfParser()
+    parsers: dict[str, FormexParser | HtmlParser | PdfParser] = {
+        "formex4": formex_parser,
+        "html": html_parser,
+        "pdf": pdf_parser,
+    }
     client = None if use_local_only else EurLexClient()
 
     try:
@@ -291,13 +304,13 @@ def run(
             articles_per_lang: dict[Language, list[ParsedArticle]] = {}
             http_cache_per_lang: dict[Language, HttpCacheEntry] = {}
             source_url_per_lang: dict[Language, str] = {}
-            source_format: Literal["formex4", "html"] = "formex4"
+            source_format: Literal["formex4", "html", "pdf"] = "formex4"
             raw_total_bytes = 0
 
             for lang in langs:
                 old_cache = old_manifest.http_cache.get(lang) if old_manifest else None
                 cache = None if force_fetch else old_cache
-                fetch_format: Literal["formex4", "html"] = "formex4"
+                fetch_format: Literal["formex4", "html", "pdf"] = "formex4"
 
                 fetch_result: FetchResult
                 if use_local_only:
@@ -347,22 +360,27 @@ def run(
                     # In local-only mode, the file is already in RAW_DIR (we just read it).
                     _write_atomic(RAW_DIR / f"{c}_{lang}.xml", xml_bytes)
 
-                parser = formex_parser if fetch_format == "formex4" else html_parser
+                parser = parsers[fetch_format]
                 try:
                     parsed = parser.parse(xml_bytes)
-                except FormexValidationError as exc:
+                except (FormexValidationError, HtmlParseError, PdfParseError) as exc:
                     if not allow_html_fallback:
                         raise
                     if use_local_only:
                         # No HTTP fallback in local-only mode; the local file is the source.
                         logger.error(
-                            "Formex parse failed for %s/%s in local-only mode: %s", c, lang, exc
+                            "%s parse failed for %s/%s in local-only mode: %s",
+                            fetch_format,
+                            c,
+                            lang,
+                            exc,
                         )
                         summary.errors += 1
                         continue
                     assert client is not None  # narrow for mypy
                     logger.warning(
-                        "Formex parse failed for %s/%s (%s); falling back to HTML",
+                        "%s parse failed for %s/%s (%s); falling back to HTML",
+                        fetch_format,
                         c,
                         lang,
                         exc,
