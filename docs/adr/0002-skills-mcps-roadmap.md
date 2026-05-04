@@ -94,3 +94,30 @@ Subagents in `.claude/agents/<name>.md` are introduced when their scope becomes 
 
 - `CLAUDE.md` §12 (Skills), §13 (MCPs), §14 (Subagents).
 - `0001-project-scope.md` (parent ADR).
+- `0003-corpus-pipeline.md` — companion ADR landed at H1 closure.
+
+---
+
+## H1 closure update (2026-05-04)
+
+H1 closed with the following deviations vs the calendar above. All deferrals reduce scope; no skill or MCP was introduced earlier than planned.
+
+### Skills
+
+- **`rag-ingest`** introduced **as scheduled** in H1. SKILL.md committed at `.claude/skills/rag-ingest/SKILL.md` (commit `114285f`).
+- **`adr-writer`** **deferred from H1 to H10**. Rationale: H1 produced two ADRs (0003 plus this update), but both were drafted by the implementer in a single batch with no signs of repeated friction. The skill earns its keep when ≥3 ADRs queue up in a single milestone, which is more likely at H10 (documentation freeze).
+- **Anthropic `pdf` skill** **not introduced in H1**. The original calendar slot was H7-H8 (downloadable reports). `pdfplumber` was added as a runtime dependency for corpus ingestion instead, fully decoupled from the Anthropic `pdf` skill.
+
+### MCPs
+
+- **`fetch`** **deferred from H1 to H3+**. Rationale: `httpx` direct call in `eurlex.py` with explicit allowlist (`eur-lex.europa.eu`) is sufficient and simpler. `fetch` MCP was originally scoped for H1 corpus download; it will be reconsidered in H3 if other agents (Retriever, Auditor) need general browse capability.
+- **`mcp-server-time`** **not introduced**. Python's `datetime.now(timezone.utc)` covers all timestamp needs in H1. No future re-introduction planned unless an external scheduling/cron MCP brings it as a dependency.
+- **`playwright` / `puppeteer`** **not introduced**. The H1 smoke run revealed EUR-Lex CloudFront WAF blocks non-browser clients, but the operational pivot to local PDF snapshots (committed to LFS) avoided needing browser automation. Re-evaluate if H14 (NIS2/DORA) needs to scrape a JS-heavy source.
+
+### Subagents
+
+- No project-level subagents were introduced in H1. Built-in agents (`Explore`, `Plan`, `general-purpose`, `code-reviewer`, `superpowers:code-reviewer`) covered all H1 needs across implementation, spec review, and code-quality review. The first project-level subagent (`software-architect`) is still scheduled for H3.
+
+### Calendar updates carried forward
+
+The dependency installation calendar above remains the source of truth for H2 onwards. The H1 deferrals are reflected in `docs/technical_decisions_log.md` H1 closure entry "Skills/MCPs deferrals tras smoke H1" with the same rationales.

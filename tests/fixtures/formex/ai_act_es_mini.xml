@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONS.ACT>
+  <ARTICLE>
+    <NO.ARTICLE>1</NO.ARTICLE>
+    <TI.ART>Objeto</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>El presente Reglamento establece normas armonizadas relativas a la introduccion en el mercado y la puesta en servicio de sistemas de inteligencia artificial.</TXT>
+    </PARAG>
+    <PARAG>
+      <NO.P>2</NO.P>
+      <TXT>El presente Reglamento se aplica a los proveedores que introduzcan en el mercado o pongan en servicio sistemas de IA en la Union.</TXT>
+    </PARAG>
+  </ARTICLE>
+  <ARTICLE>
+    <NO.ARTICLE>2</NO.ARTICLE>
+    <TI.ART>Ambito de aplicacion</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>El presente Reglamento se aplica a sistemas de IA introducidos en el mercado de la Union.</TXT>
+    </PARAG>
+  </ARTICLE>
+  <ARTICLE>
+    <NO.ARTICLE>3</NO.ARTICLE>
+    <TI.ART>Definiciones</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>A efectos del presente Reglamento se entendera por sistema de IA un sistema basado en una maquina.</TXT>
+    </PARAG>
+  </ARTICLE>
+  <ARTICLE>
+    <NO.ARTICLE>4</NO.ARTICLE>
+    <TI.ART>Alfabetizacion en materia de IA</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>Los proveedores y responsables del despliegue de sistemas de IA adoptaran medidas para garantizar un nivel suficiente de alfabetizacion en materia de IA.</TXT>
+    </PARAG>
+  </ARTICLE>
+  <ARTICLE>
+    <NO.ARTICLE>5</NO.ARTICLE>
+    <TI.ART>Practicas de IA prohibidas</TI.ART>
+    <PARAG>
+      <NO.P>1</NO.P>
+      <TXT>Quedan prohibidas las practicas de IA siguientes: la introduccion en el mercado de un sistema de IA que utilice tecnicas subliminales.</TXT>
+    </PARAG>
+  </ARTICLE>
+</CONS.ACT>
