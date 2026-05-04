@@ -554,7 +554,7 @@ H2 reads the diff and only re-embeds article 6.
 
 | Failure mode | Detection | Action |
 |---|---|---|
-| HTTP 5xx | retries exhausted | exit 1, manifest untouched |
+| HTTP 5xx | status code (no retry: see ADR / decisions log entry 2026-04-30) | exit 1, manifest untouched |
 | HTTP 304 | status code | success path (no re-process) |
 | HTTP 4xx | status code | exit 1 immediate, log CELEX + URL |
 | Formex schema violation | `FormexValidationError` from parser | if `--no-html-fallback`: exit 1; else try HTML and log warning |
