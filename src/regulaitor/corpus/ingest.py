@@ -106,9 +106,15 @@ def _sha256_hex(text: str) -> str:
 
 
 def _token_count(text: str) -> int:
-    """Token counter stub. H2 Task 10 will redirect this to rag.embeddings.token_count.
-    For now, a whitespace-split proxy keeps tests passing without tiktoken."""
-    return len(text.split())
+    """Delegate to rag.embeddings.token_count (BGE-M3 XLM-RoBERTa tokenizer).
+
+    H1 used tiktoken cl100k_base as a proxy; H2 swapped to the real BGE-M3
+    tokenizer for coherence between the chunking decisions and the manifest
+    `tokens` field. See decisions log entry 'Swap completo de tokenizer'.
+    """
+    from regulaitor.rag import embeddings  # local import to avoid cycle on package load
+
+    return embeddings.token_count(text)
 
 
 def _write_atomic(path: Path, content: bytes) -> None:
