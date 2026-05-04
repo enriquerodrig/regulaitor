@@ -16,7 +16,6 @@ from pathlib import Path
 from typing import Literal
 
 import httpx
-import tiktoken
 
 from regulaitor.corpus import manifest as manifest_mod
 from regulaitor.corpus.eurlex import (
@@ -46,11 +45,6 @@ from regulaitor.corpus.schemas import (
 from regulaitor.corpus.validate import validate
 
 logger = logging.getLogger("regulaitor.corpus.ingest")
-
-# Module-level encoder cache. tiktoken.get_encoding caches internally too,
-# but binding the encoder once makes the intent explicit and avoids any
-# import-time work surprise.
-_TOKENIZER = tiktoken.get_encoding("cl100k_base")
 
 CORPUS_ROOT = Path("corpus")
 MANIFEST_DIR = CORPUS_ROOT / "manifests"
@@ -111,7 +105,9 @@ def _sha256_hex(text: str) -> str:
 
 
 def _token_count(text: str) -> int:
-    return len(_TOKENIZER.encode(text))
+    """Token counter stub. H2 Task 10 will redirect this to rag.embeddings.token_count.
+    For now, a whitespace-split proxy keeps tests passing without tiktoken."""
+    return len(text.split())
 
 
 def _write_atomic(path: Path, content: bytes) -> None:
