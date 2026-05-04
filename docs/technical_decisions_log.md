@@ -224,6 +224,66 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
   - El spec original (`docs/superpowers/specs/2026-04-30-h1-corpus-ingest-design.md` §5.1) será actualizado en el cierre de H1 (Task 13) para reflejar este cambio.
 - **Enlace:** commit Task 1 (`eb16176`) + el commit de este fix.
 
+### 2026-05-04 · Pivote a PDF tras WAF de EUR-Lex (Task 12)
+
+- **Decisión:** la versión H1 del corpus se ingesta desde **PDFs descargados manualmente** y commiteados a Git-LFS, no desde la API HTTP de EUR-Lex. El pipeline soporta los tres formatos (Formex 4 / HTML / PDF) vía dispatch en `ingest.py`; en H1 se usa solo PDF; el camino HTTP queda probado con stubs y disponible para H14.
+- **Justificación:** el smoke run real reveló que el frontend de EUR-Lex está fortificado con CloudFront WAF:
+  - Endpoint Formex (`/legal-content/{LANG}/TXT/?uri=CELEX:{celex}` con `Accept: application/xml`) devuelve **HTTP 200 con 0 bytes**.
+  - Endpoint HTML (`/legal-content/{LANG}/TXT/HTML/?uri=CELEX:...`) devuelve **HTTP 202** con un challenge JavaScript (~2 KB) que solo un navegador real puede resolver.
+  - Cellar (`publications.europa.eu/resource/celex/{celex}`) responde con RDF de metadata, no con el contenido del documento.
+- **Alternativas evaluadas:**
+  - **Cellar + rdflib:** robusta pero ~2-3h de research + dependencia adicional. Postpuesta a H14.
+  - **Beat WAF con headers + cookies:** probado con User-Agent Chrome completo y `Accept-Language` — sigue devolviendo 202. Inviable sin JS engine.
+  - **Playwright headless:** funcionaría, pero contradice ADR 0002 (no `playwright` MCP en H1) y añade ~250 MB de Chromium en CI.
+  - **Snapshot manual a LFS (elegida):** el operador descarga 4 PDFs desde su navegador (que pasa el WAF naturalmente), los deja en `corpus/raw/`, y el pipeline los lee con `--use-local-only`.
+- **Detalle técnico:**
+  - **Nuevo módulo `src/regulaitor/corpus/pdf_parser.py`** con `PdfParser` y `PdfParseError`. Usa `pdfplumber` para extraer texto y un regex line-anchored estricto (`^\s*(?:Article|Art[íi]culo)\s+(\d+)\s*$`) para detectar cabeceras de artículo. Excluye entradas de ToC (tienen puntos suspensivos + número de página) y referencias cruzadas inline (`...in accordance with Article 49(1)`) que no encajan con `^...$`.
+  - **Estrategia keep-first:** cuando un mismo número de artículo aparece dos veces como cabecera (caso AI Act EN: "Article 49" en el body + en una tabla de cross-references del Annex VIII), conservamos la primera ocurrencia por offset (el body siempre precede al annex en orden de documento).
+  - **Nuevo flag `--use-local-only`** en CLI: salta `EurLexClient`, lee de `corpus/raw/{corpus}_{lang}.{xml,html,pdf}` con prioridad XML > HTML > PDF.
+  - `SourceFormat` Pydantic literal extendido a `Literal["formex4", "html", "pdf"]`.
+  - El except del orquestador se ensancha a `(FormexValidationError, HtmlParseError, PdfParseError)` para que cualquier parser falle limpio.
+- **Resultado del smoke (commits `d367c88` + `b10c0b0`):**
+  - AI Act ES: 113 artículos ✓ (esperado 113)
+  - AI Act EN: 113 artículos ✓
+  - GDPR ES: 99 artículos ✓ (esperado 99)
+  - GDPR EN: 99 artículos ✓
+  - Errores: 0. Idempotencia verificada (segunda corrida: `reprocessed=0`).
+  - Tiempo total: ~115 segundos. PDF text extraction es lo lento (~30s/PDF AI Act, ~12s/PDF GDPR).
+  - 4 PDFs en LFS (~6.7 MB total). 4 JSONs procesados en LFS. 2 manifests git-tracked.
+- **Defensa académica:** "EUR-Lex bloqueó el acceso automatizado vía CloudFront WAF; pivotamos a un snapshot reproducible en Git-LFS y demostramos que el pipeline soporta tres formatos de origen". Más honesto que "vencimos al WAF" o "todo es mock".
+- **Implicación para H14 (NIS2/DORA):** re-evaluar las 4 opciones antes de ingestar. Si EUR-Lex sigue con el WAF, repetir el patrón snapshot+PDF; si Cellar API ha mejorado, probar opción 1.
+- **Enlace:** commit `d367c88` (parser + wiring), commit `b10c0b0` (smoke artefacts).
+
+### 2026-05-04 · Skills/MCPs deferrals tras smoke H1
+
+- **Decisión:** consolidación final de qué skills/MCPs entraron y cuáles no en H1, vs lo planeado en ADR 0002.
+- **Skills:**
+  - `rag-ingest` — **introducida** en H1 (commit `114285f`).
+  - `adr-writer` — **diferida a H10**. H1 produjo 2 ADRs (0003 + actualización de 0002), pero ambas se redactaron sin fricciones repetidas. El skill se justifica con ≥3 ADRs en cola en un solo hito, más probable en H10 (documentación final).
+  - Anthropic `pdf` — **no introducida**. `pdfplumber` cubre H1 directamente; la skill oficial se considerará para informes descargables en H7-H8.
+- **MCPs:**
+  - `fetch` — **diferido a H3+**. `httpx` con allowlist en `eurlex.py` cubre H1.
+  - `mcp-server-time` — **no introducido**. `datetime.now(timezone.utc)` es suficiente.
+  - `playwright` — **no introducido**. WAF se evita con snapshot LFS, no con headless browser.
+- **Subagentes:** ninguno project-level introducido en H1. Los built-in (`Explore`, `Plan`, `general-purpose`, `code-reviewer`, `superpowers:code-reviewer`) cubrieron impl + spec review + quality review en las 14 tareas. Primer subagente custom (`software-architect`) sigue programado para H3.
+- **Enlace:** ADR 0002 (sección "H1 closure update").
+
+### 2026-05-04 · H1 cerrado: corpus AI Act + RGPD operativos
+
+- **Decisión:** H1 cierra como Done. El pipeline corpus está implementado, testeado, validado contra datos reales y con paper trail completo.
+- **Stats finales:**
+  - 22+ commits en `feat/h1-corpus-ingest`.
+  - 57 tests verde (unit + contract + integration).
+  - 91% coverage en `src/regulaitor/corpus/` (gate 90% ✓).
+  - 113 + 113 + 99 + 99 = 424 LanguageEntry generados (212 artículos × 2 idiomas).
+  - 4 PDFs (~6.7 MB) en Git-LFS como source snapshot reproducible.
+  - 2 manifests git-tracked, 4 processed JSON en LFS.
+- **Lecciones para H2:**
+  - El chunker debe respetar el `tokens` ya calculado en `LanguageEntry` (proxy `tiktoken cl100k_base`); cuando H2 instale BGE-M3 tokenizer, refrescar el campo.
+  - El `source_format=pdf` actual del manifest es ortogonal al chunking — el chunker recibe artículos ya parseados, no le importa el formato de origen.
+  - El boundary contract H1→H2 (`chunks: []`, `embedded_at: None` para todo `LanguageEntry`) está verificado por test de integración.
+- **Enlace:** ADR 0003 (architecture); ADR 0002 (skills/MCPs); commits `971fdf81` (Task 0) → `b10c0b0` (Task 12 smoke). Branch `feat/h1-corpus-ingest`.
+
 ---
 
 ## Convención de actualización
