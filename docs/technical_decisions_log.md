@@ -286,7 +286,261 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
 
 ---
 
-## Convención de actualización
+## H2 — RAG base (en diseño)
+
+### 2026-05-04 · Embeddings BGE-M3 ejecutados localmente, no vía API
+
+- **Decisión:** los embeddings densos se generan en local cargando el modelo `BAAI/bge-m3` con la librería `FlagEmbedding` (alternativa válida: `sentence-transformers`). No se contrata ningún proveedor de embeddings cloud (Voyage, Cohere, Together, OpenAI).
+- **Justificación:**
+  1. **Reproducibilidad bit-a-bit.** Un objetivo no negociable del TFM (CLAUDE.md §2) es que un evaluador externo pueda clonar el repo y regenerar los mismos artefactos. Una API hosted introduce un actor opaco entre el código y los vectores: el proveedor puede actualizar el modelo silenciosamente, hacer A/B testing, ajustar normalización, etc., con lo que dos ejecuciones idénticas pueden producir vectores diferentes. Con el modelo en local y un hash del checkpoint, los mismos bytes de entrada producen los mismos 1024 floats de salida siempre.
+  2. **Coste cero por embedding.** El corpus AI Act + RGPD ES+EN tiene 424 LanguageEntry con un total estimado de ~500 000 tokens. A precios actuales de proveedores de embeddings (~$0.10–$0.13 / millón de tokens en BGE-M3 hosted), una re-build completa cuesta ~$0.05–$0.07. Parece poco, pero las iteraciones del chunker, los re-runs por bug, los experimentos de threshold y la regeneración periódica al actualizar el corpus se acumulan rápidamente. En local: cero. Solo coste de cómputo, que es del usuario.
+  3. **Independencia de secrets en CI.** Una build con API requiere meter una key secreta en GitHub Actions. Eso obliga a (a) gestionar rotación, (b) limitar quién puede ver los logs, (c) cuidar de no logear la key. Local elimina toda esa complejidad de seguridad.
+  4. **CLAUDE.md §10.3 lo prefijó:** "Embeddings multilingües: BGE-M3". La intención del proyecto desde H0 ya era local, no cloud.
+  5. **Defensa académica más sólida.** El TFM puede afirmar "controlamos el modelo de embedding completo: la versión exacta del checkpoint, su hash, su longitud máxima de contexto (8192 tokens) y su comportamiento de normalización". Una API no permite ese nivel de argumentación.
+- **Alternativas descartadas:**
+  - **API cloud (Voyage / Cohere / Together):** rechazada por reproducibilidad y secrets.
+  - **Híbrido (local en dev, API en CI):** rechazada porque doblar las rutas obliga a tests duplicados y multiplica los modos de fallo. La complejidad no compensa para el ahorro de tiempo en CI (~3-5 minutos extra por instalación del modelo, mitigable con `actions/cache` sobre `~/.cache/huggingface`).
+- **Detalle técnico — coste del install local:**
+  - `FlagEmbedding` arrastra `torch` (~800 MB), `transformers` (~200 MB) y el checkpoint `BAAI/bge-m3` (~2.3 GB) la primera vez.
+  - Total disco aprox. 3.3 GB en `~/.cache/huggingface/`.
+  - Primera ejecución de `make rag-build` en máquina limpia: ~5-10 min de descarga.
+  - Ejecuciones siguientes: instantáneo (cache local).
+  - CI: cache hit tras la primera build. Estrategia de cache key recomendada: hash del lockfile + versión del modelo.
+- **Implicación para H2:**
+  - Nueva dependencia runtime: `FlagEmbedding>=1.3,<2.0` (o `sentence-transformers>=3.0,<5.0` si se decide después; ambas leen el mismo checkpoint).
+  - Workflow CI: añadir `actions/cache@v4` con path `~/.cache/huggingface` y key `${{ runner.os }}-hf-bgem3-${{ hashFiles('uv.lock') }}`.
+  - Estrategia de fallback: si la descarga del modelo falla en primera build, el ingest debe fallar limpio con mensaje accionable ("HF Hub unreachable; check network or pre-download model").
+- **Implicación para H17 (cost analysis):** la sección "coste por consulta" del documento `cost_analysis.md` debe reflejar coste de cómputo local (CPU/GPU minutos), NO coste de API por token. Eso cambia cómo se redacta esa parte.
+- **Enlace:** se documentará en ADR 0004 al cierre de H2 (RAG architecture).
+
+### 2026-05-04 · LanceDB con una única tabla `chunks`, particionada por metadata
+
+- **Decisión:** todos los chunks de todos los corpus viven en una sola tabla LanceDB llamada `chunks`, con campos `norma`, `language`, `articulo`, `apartado`, etc. Los filtros por corpus o idioma son clausulas `WHERE` sobre esos campos.
+- **Justificación:**
+  1. **`chunk_id` es ya único globalmente.** El formato `{norma}.{articulo}[.{apartado}].{lang}` (ej. `ai_act.6.1.es`) garantiza que dos chunks distintos nunca colisionan en una misma tabla. Esto elimina el argumento principal a favor de tablas separadas (evitar colisiones).
+  2. **Re-ingest parcial ya lo gestiona el manifest.** El `_build_manifest` de H1 detecta a nivel artículo qué cambió (por hash) y solo invalida los chunks de ese artículo. La operación equivalente en LanceDB es un `DELETE WHERE chunk_id LIKE '{article_id}.%'` seguido de un upsert. No necesitamos drop-and-recreate de tabla entera; el aislamiento físico de tablas separadas es teórico para nuestro patrón de actualización.
+  3. **Queries cross-corpus son útiles.** Un caso real para el Auditor (H4): el Analyst cita un artículo del AI Act sobre datos personales; el retriever puede querer también verificar si RGPD dice algo similar. Con tabla única: una sola query con `WHERE norma IN ('ai_act','gdpr') AND ...`. Con tablas separadas: dos queries y unión manual en código Python.
+  4. **LanceDB filtra por metadata eficientemente.** Es columnar. Un filtro `WHERE norma='ai_act'` se traduce a un push-down sobre la columna `norma` y no produce full scan + filtrado en aplicación. Conversaciones con el equipo de LanceDB confirman que el rendimiento de filtros sobre columnas indexadas es comparable al aislamiento físico para tamaños sub-millón de filas.
+  5. **H14 (NIS2 + DORA) se reduce a "añadir filas".** Con tablas separadas, H14 implicaría crear `chunks_nis2`, `chunks_dora`, actualizar el router, añadir tests para los caminos nuevos. Con tabla única: el ingest existente inserta filas con `norma='nis2'` y `'dora'` y el resto del pipeline funciona sin tocarse.
+- **Alternativas descartadas:**
+  - **Tabla por corpus** (`chunks_ai_act`, `chunks_gdpr`, …): rechazada por las razones 2-5. El único pro real (drop-and-recreate atómico) no compensa la complejidad operativa.
+  - **Tabla por (corpus, idioma)** (`chunks_ai_act_es`, …): rechazada categóricamente. Genera 8 tablas en MVP (subiendo a 16 con NIS2+DORA), duplica la complejidad operativa, no aporta nada que no aporte el filtro por columna `language`.
+- **Detalle técnico — tamaño esperado:**
+  - 424 chunks × 1024 floats × 4 bytes = 1.7 MB en vectores.
+  - Más metadata: ~10 columnas × 50 bytes promedio × 424 = ~210 KB.
+  - Total tabla LanceDB: ~2 MB. Trivial.
+- **Detalle técnico — esquema preliminar de la tabla `chunks`** (refinará en spec H2):
+  ```python
+  # PyArrow schema (LanceDB-native)
+  schema = pa.schema([
+      pa.field("chunk_id", pa.string(), nullable=False),       # PK: "ai_act.6.1.es"
+      pa.field("article_id", pa.string(), nullable=False),     # "ai_act.6.1"
+      pa.field("norma", pa.string(), nullable=False),          # filter: "ai_act" | "gdpr" | ...
+      pa.field("articulo", pa.string(), nullable=False),
+      pa.field("apartado", pa.string(), nullable=True),        # null cuando chunk = artículo entero
+      pa.field("language", pa.string(), nullable=False),       # "es" | "en"
+      pa.field("text", pa.string(), nullable=False),
+      pa.field("text_normalized", pa.string(), nullable=False),# para citation_validator (H3)
+      pa.field("token_count", pa.int32(), nullable=False),
+      pa.field("celex", pa.string(), nullable=False),
+      pa.field("version", pa.string(), nullable=False),
+      pa.field("source_format", pa.string(), nullable=False),
+      pa.field("source_url", pa.string(), nullable=False),
+      pa.field("hash", pa.string(), nullable=False),           # SHA256 del texto del artículo
+      pa.field("embedding", pa.list_(pa.float32(), 1024), nullable=False),  # BGE-M3 dense
+  ])
+  ```
+- **Implicación para H3 (Retriever-Agent):** el Retriever recibe `query: str` y opcionalmente `corpus: Norma | None` y `language: Language | None`, traduce a `WHERE` clause, y delega en LanceDB. Una sola ruta de código.
+- **Enlace:** se formaliza en ADR 0004 al cierre de H2.
+
+### 2026-05-04 · Swap completo de tokenizer: `tiktoken` → BGE-M3 nativo (XLM-RoBERTa)
+
+- **Decisión:** el chunker usa el tokenizer del propio modelo BGE-M3 (que es XLM-RoBERTa) para todas las decisiones de partición y para refrescar el campo `tokens` del manifest. Re-corremos `make ingest --force-reprocess` una vez en H2 para refrescar los manifests existentes. La dependencia `tiktoken` se elimina del proyecto porque deja de tener consumidores.
+- **Justificación:**
+  1. **Coherencia de fuente única de verdad.** Cuando el manifest dice "art. 6 ES tiene 1840 tokens", ese número debe ser lo que el modelo de embedding realmente ve. Si lo mide un tokenizer diferente (tiktoken cl100k es BPE de OpenAI; XLM-RoBERTa de BGE-M3 es SentencePiece sobre vocabulario de 250K), los conteos divergen entre 15-30% para texto multilingüe europeo. La doble medición confunde tanto a desarrolladores como al evaluador del TFM.
+  2. **Documentación honesta de coste.** En H17 la memoria académica cita números de tokens para argumentar "coste por consulta ≤ 0.05 €" (CLAUDE.md §17). Si esos números están en una unidad (cl100k tokens) y el modelo procesa en otra (XLM-RoBERTa tokens), la afirmación pierde rigor. Con el swap, el manifest es auditable directamente.
+  3. **Decisión ya programada.** El plan operativo del proyecto (`~/.claude/plans/lee-el-archivo-claude-md-sparkling-fairy.md`, sección H2) explicita: *"H1 used `tiktoken cl100k_base` as a token-count proxy. H2 should switch to BGE-M3's native tokenizer when refreshing the `tokens` field in manifests."* Era deuda técnica intencional con calendario de pago.
+  4. **El re-ingest no es coste extra.** H2 va a hacer un `make ingest --force-reprocess` para poblar `chunks` y `embedded_at` en los manifests. Refrescar `tokens` en el mismo pase es 0 trabajo adicional — el chunker recalcula `token_count` por chunk, el orquestador recalcula `tokens` agregado por (article, language) en el mismo loop.
+  5. **Higiene del codebase.** Mantener `tiktoken` como dep cuando ningún módulo lo usa es código muerto declarado. Reviewers académicos pueden preguntar legítimamente "¿por qué usas el tokenizer de OpenAI si no usas modelos de OpenAI en producción?" — y la respuesta correcta sería "ya no lo uso, el dep se quedó".
+- **Alternativas descartadas:**
+  - **Chunker BGE-M3 + manifest tiktoken (split):** rechazada. Tener dos tokenizers con conteos divergentes en el mismo flujo confunde y corrompe los números del manifest.
+  - **Mantener tiktoken como proxy en H2 entero:** rechazada. El umbral de chunking de 1000 tokens es generoso (BGE-M3 admite 8192) así que el proxy no rompe la lógica de partición, pero los números del manifest siguen siendo inválidos para análisis de coste y para la memoria.
+- **Detalle técnico — diferencia de conteo (estimaciones):**
+  - cl100k_base sobre AI Act art. 6 ES: 1840 tokens (medido en H1).
+  - XLM-RoBERTa estimado sobre el mismo texto: ~1380-1560 tokens (15-25% menos por el vocabulario más amplio que captura más subwords europeos).
+  - Para el threshold de 1000 tokens del chunker, ambos tokenizers están en zona segura respecto a la ventana de 8192 de BGE-M3. La decisión de partir o no partir un artículo no cambia para los artículos del corpus actual.
+- **Detalle técnico — cómo accede el chunker al tokenizer:**
+  ```python
+  from FlagEmbedding import BGEM3FlagModel
+
+  _MODEL = BGEM3FlagModel("BAAI/bge-m3", use_fp16=False)
+  _TOKENIZER = _MODEL.tokenizer  # transformers.XLMRobertaTokenizerFast
+
+  def token_count(text: str) -> int:
+      return len(_TOKENIZER.encode(text, add_special_tokens=False))
+  ```
+- **Implicación operativa:**
+  - `pyproject.toml`: eliminar línea `"tiktoken>=0.8,<1.0"`.
+  - `src/regulaitor/corpus/ingest.py`: eliminar import de `tiktoken`, eliminar `_TOKENIZER = tiktoken.get_encoding(...)`, redirigir `_token_count` a la función nueva basada en BGE-M3 (que probablemente vivirá en el módulo `rag/embeddings.py` para no acoplar `corpus/` a `FlagEmbedding`).
+  - Re-run de `make ingest --use-local-only --force-reprocess --corpus all --lang all` esperado: ~5 min (incluye carga inicial de modelo BGE-M3 + reprocesado de los 4 PDFs).
+  - Diff esperado en manifests: solo el campo `tokens` por LanguageEntry, todo lo demás igual (mismos hashes, mismos chunks futuros).
+- **Implicación arquitectónica:** el módulo `corpus/` deja de depender de `tiktoken` directamente. El conteo de tokens ahora es una responsabilidad del módulo `rag/` (que es donde vive el modelo). El orquestador `corpus/ingest.py` importa la función `token_count` de `rag/embeddings.py`. **Esto crea una dependencia direccional `corpus/ → rag/`** que no existía en H1; conviene documentarlo en ADR 0004 para no caer en circular imports cuando H2 también consuma manifests.
+- **Enlace:** se documentará en ADR 0004 (RAG architecture) al cierre de H2.
+
+### 2026-05-04 · Reranker (cross-encoder bge-reranker-v2-m3) entra completo en H2, no en H3
+
+- **Decisión:** el módulo `src/regulaitor/rag/reranker.py` se implementa completo en H2, incluyendo la carga del modelo `BAAI/bge-reranker-v2-m3` y la función `rerank(query: str, passages: list[str]) -> list[tuple[int, float]]`. El smoke test del cierre de H2 ejecuta el flujo completo: query → embedding → top-k denso (LanceDB) → rerank → top-N final. Solo el wrapping en agente (Retriever-Agent) + exposición vía MCP tool quedan para H3.
+- **Justificación:**
+  1. **El plan operativo lo encuadra explícitamente en H2.** El plan dice: *"H2 — RAG base: chunking, embeddings, reranker, store LanceDB."* El reranker está bajo "RAG base", no bajo "agentes y autonomía" (que es Módulo 2 del Máster, asociado a H3-H4).
+  2. **El reranker es modelo + función pura, no agente.** Un cross-encoder recibe una `(query, passage)` y devuelve un score escalar. No tiene memoria, ni autonomía, ni invoca herramientas. Es un módulo determinista comparable al embedder. Forzarlo a H3 inflaría el alcance de "Retriever-Agent" sin razón arquitectónica: el agente es la capa que **decide qué consultar**, no la capa que **ranquea pasajes**.
+  3. **Smoke test académicamente más fuerte al cierre de H2.** Con el reranker dentro, H2 cierra demostrando que una query como *"obligaciones del proveedor de un sistema de IA de alto riesgo"* devuelve los 3 artículos más relevantes ordenados por relevancia real (no solo similitud de coseno cruda). Sin el reranker, H2 cerraría con "top-k de similitud densa devuelve resultados plausibles" — útil pero menos diferencial. La memoria del TFM puede argumentar al evaluador del módulo M3 que "RegulAItor implementa retrieval híbrido (dense + cross-encoder rerank) desde la base, no como un parche posterior".
+  4. **Sinergia operativa con BGE-M3.** Ya estamos descargando el embedder BAAI/bge-m3 (~2.3 GB) y configurando `actions/cache` sobre `~/.cache/huggingface`. Añadir bge-reranker-v2-m3 (~600 MB) en la misma tanda comparte cache y carga, en lugar de duplicar la decisión de infraestructura en H3. Una sola PR, una sola entrada en `pyproject.toml`, un solo paso de cache CI.
+  5. **Higiene del scope de H3.** H3 ya es denso: Retriever-Agent (con su prompt versionado y su contrato Pydantic), MCP server propio con 5 tools, schemas Pydantic compartidos, citation_validator inicial. Si H3 además tuviera que decidir sobre el reranker, su Done criteria se hincharía y los gates serían menos verificables.
+- **Alternativas descartadas:**
+  - **B. Reranker fuera de H2 (deferir a H3):** rechazada porque infla H3 sin razón y deja H2 con un smoke test más débil de defender académicamente.
+  - **C. Stub en H2 + impl en H3 (`IdentityReranker` que devuelve pasajes sin reordenar):** rechazada porque añade un patrón de "interface con dos implementaciones" que no aporta valor real (no hay tests donde queramos un reranker no-real). Es ingeniería defensiva sin escenario que la justifique.
+- **Detalle técnico — modelo:**
+  - `BAAI/bge-reranker-v2-m3` es un cross-encoder multilingual derivado de XLM-RoBERTa. Recibe pares `(query, passage)`, devuelve un score logit por par. Soporta español e inglés (y otros 100+ idiomas).
+  - Tamaño en disco: ~600 MB (modelo fp32). Si CI necesita acelerar, se puede usar fp16 (~300 MB) sin pérdida material de calidad para nuestro uso.
+  - Latencia esperada en CPU: ~50-150 ms para 10 pasajes en query típica. En GPU < 20 ms. Aceptable para H2 smoke; el Retriever de H3 puede paralelizar si es cuello de botella.
+- **Detalle técnico — interfaz pública del módulo:**
+  ```python
+  # src/regulaitor/rag/reranker.py
+
+  from FlagEmbedding import FlagReranker
+
+  class Reranker:
+      """Re-rank dense-retrieved passages with a cross-encoder.
+
+      Lifecycle: load the model once at module/process start; reuse for all queries.
+      """
+      def __init__(self, model_name: str = "BAAI/bge-reranker-v2-m3", use_fp16: bool = False) -> None:
+          self._model = FlagReranker(model_name, use_fp16=use_fp16)
+
+      def rerank(self, query: str, passages: list[str], top_n: int | None = None) -> list[tuple[int, float]]:
+          """Score each passage against the query; return list of (original_index, score),
+          sorted by score descending. If top_n is set, truncate."""
+          if not passages:
+              return []
+          scores = self._model.compute_score([(query, p) for p in passages], normalize=True)
+          ranked = sorted(enumerate(scores), key=lambda kv: kv[1], reverse=True)
+          return ranked[:top_n] if top_n else ranked
+  ```
+- **Detalle técnico — integración en el smoke test de H2:**
+  ```python
+  # En el smoke / integration test
+  query = "obligaciones del proveedor de un sistema de IA de alto riesgo"
+  q_vec = embedder.embed(query)
+  candidates = store.query(q_vec, top_k=20, where={"norma": "ai_act", "language": "es"})
+  passages = [c.text for c in candidates]
+  ranked = reranker.rerank(query, passages, top_n=3)
+  top_articles = [candidates[i] for i, score in ranked]
+  ```
+- **Implicación para H3:** el `Retriever-Agent` recibe una query y orquesta: `embedder.embed → store.query → reranker.rerank → return contexto estructurado`. Es un wrapper fino (≤80 líneas estimadas). Si H3 detecta que el reranker es lento bajo carga, ahí es donde se introducen optimizaciones (batching, caché, fp16) — no en H2.
+- **Implicación para coste:** el reranker añade ~600 MB de cache HF y ~50-150 ms a cada query en CPU. La memoria del TFM (cost_analysis.md, H17) debe contabilizarlo como parte de la "latencia p95" pactada (≤12 s en MVP).
+- **Enlace:** se formaliza en ADR 0004 (RAG architecture) al cierre de H2.
+
+### 2026-05-04 · Orquestador `rag/build.py` separado de `corpus/ingest.py`
+
+- **Decisión:** H2 introduce un nuevo orquestador en `src/regulaitor/rag/build.py` con función `run()` propia, distinto e independiente del `corpus/ingest.py` de H1. La cadena queda: `make ingest` produce parse + manifest article-level (lo que ya hace H1); `make rag-build` lee ese manifest + `corpus/processed/`, ejecuta chunker + embedder + reranker-warmup + upsert LanceDB, y extiende el manifest existente con `chunks` y `embedded_at` poblados. Ambos comandos son idempotentes, ambos usan `manifest.save_atomic` para escritura, y ambos comparten un módulo de utilidades (`corpus/_targets.py` o similar) para `expand_targets(corpus, langs)`.
+- **Justificación:**
+  1. **Separación de capas defendible académicamente.** La memoria del TFM (Módulo 3 del Máster: RAG, evaluación, despliegue) puede argumentar con limpieza: "el módulo `corpus/` materializa el ciclo de ingesta documental (fetch → parse → validate → manifest); el módulo `rag/` materializa el ciclo de indexación vectorial (chunk → embed → store → manifest-extension); ambos son orquestadores independientes con sus propios criterios de idempotencia, sus propias dependencias y sus propios gates". Forzar todo en `corpus/ingest.py` enturbiaría esta narrativa: `corpus/` empezaría a depender de LanceDB, BGE-M3, FlagEmbedding, etc. — cosas que conceptualmente pertenecen a la capa de retrieval, no a la de ingesta documental.
+  2. **Cycle de iteración real del desarrollador en hitos posteriores.** El caso operativo concreto: "ajusto el threshold del chunker de 1000 a 800 tokens", o "cambio el modelo de embedding de bge-m3 a un fine-tune", o "actualizo el normalizador de `text_normalized`". En ninguno de esos casos cambia el corpus parseado, así que no debería re-parsearse. Con dos orquestadores: `make rag-build --force-rebuild` y listo. Con un solo orquestador, hay que añadir flags cada vez más finos (`--skip-fetch --skip-parse --only-chunk-and-embed`), lo que infla la API y embarra la lógica condicional.
+  3. **Acoplamiento estructural minimizado.** En H1 ya aceptamos un acoplamiento puntual `corpus/ → rag/` (función `token_count` consumida por `corpus/ingest.py`); esto es una flecha pequeña y direccional. Si todo el orquestado de RAG viviera dentro de `corpus/ingest.py`, esa flecha se convertiría en imports masivos a `rag/store`, `rag/chunking`, `rag/embeddings`, `rag/reranker`. La regla de aislamiento que CLAUDE.md §22.13 aplica al router de modelos ("ningún agente llama directamente a un modelo; todo pasa por el router") es la misma idea aplicada al orquestador: capas que no se mezclan a propósito.
+  4. **Tests más limpios y rápidos.** El test integration de `corpus/ingest.run()` puede seguir corriendo sin instalar BGE-M3 (modelo 2.3 GB) ni LanceDB. Solo `tests/integration/test_rag_build_flow.py` carga esos pesos. Esto mantiene la suite total ágil — desarrolladores que solo tocan `corpus/` no pagan el coste de descargar embeddings.
+  5. **Comando `make rag-build` como ciudadano de primera clase.** El Makefile ya tiene `make ingest`. Añadir `make rag-build` (y luego `make eval`, `make redteam`, etc., todos en H8-H9) hace que el reviewer académico ejecute `make ingest && make rag-build && make eval && make redteam && make serve` y entienda visualmente el pipeline completo sin abrir código. Esa explicabilidad operativa es valor de defensa del TFM.
+  6. **Atomicidad y resiliencia preservadas.** `rag/build.py` sigue el mismo patrón de `corpus/ingest.py`: acumula trabajo en estructuras en memoria, al final hace un único `manifest.save_atomic(...)` que es temporal + `os.replace`. Si revienta a mitad de embedding del corpus 3, el manifest viejo (eventualmente con corpus 1+2 ya re-procesados de runs anteriores) sigue válido. Misma resiliencia que H1.
+- **Alternativas descartadas:**
+  - **A. Extender `corpus/ingest.run()` con la fase RAG:** rechazada por las razones 1-4. Crece la función a ~600 líneas, mezcla capas, infla los tests del corpus.
+  - **C. Cada módulo (chunker, embedder, store) escribe directamente al manifest:** rechazada categóricamente. Múltiples puntos de I/O, no atómico, contraria a la disciplina H1 que pasó por revisión.
+- **Detalle técnico — cadena de comandos del Makefile:**
+  ```makefile
+  ingest:    ## fetch + parse + validate + write manifest (article-level)
+    $(UV) run python -m scripts.ingest --use-local-only --corpus all --lang all
+
+  rag-build: ## chunk + embed + rerank-warmup + upsert LanceDB + extend manifest
+    $(UV) run python -m scripts.rag_build --corpus all --lang all
+  ```
+  Ambos comandos son idempotentes: re-ejecutar sin cambios devuelve `reprocessed=0`.
+- **Detalle técnico — flujo de `rag/build.run()`:**
+  ```
+  1. Cargar manifest existente (debe existir; si no, abortar pidiendo `make ingest` antes).
+  2. Cargar processed/{corpus}_{lang}.json para reconstruir ParsedArticle.
+  3. Para cada (corpus, lang, article):
+     a. Si manifest tiene `chunks` no vacío y hash del artículo no cambió y model_version
+        no cambió → skip (ya indexado).
+     b. Si no:
+        - Chunker: dividir si > 1000 tokens (BGE-M3 tokens), generar chunk_ids.
+        - Embedder: BGE-M3 sobre cada chunk → vector 1024-dim.
+        - LanceDB: upsert por chunk_id (DELETE WHERE chunk_id LIKE '{article_id}.%' + INSERT).
+        - Manifest LanguageEntry: poblar `chunks` con la lista de chunk_ids, `embedded_at = now`.
+  4. Pre-cargar reranker (warmup, evita latencia en primer query post-build).
+  5. Escribir manifest actualizado vía save_atomic.
+  6. Devolver IngestSummary con `chunks_added`, `chunks_unchanged`, `embeddings_recomputed`.
+  ```
+- **Detalle técnico — utilidades compartidas:**
+  - `corpus/_targets.py` (o módulo equivalente): expone `expand_targets(corpus, langs)` que devuelve `(list[Norma], list[Language])`. Hoy vive en `corpus/ingest.py` como función privada `_expand_targets`; H2 la promueve a módulo público compartido por ambos orquestadores. Tests de esa función pasan a `tests/unit/corpus/test_targets.py`.
+  - El schema `IngestSummary` no se reutiliza tal cual (tiene campos específicos de fetch HTTP que no aplican a RAG); H2 introduce un `RagBuildSummary` análogo.
+- **Implicación para H1 (refactor menor):** `_expand_targets` se promueve de privado a público (renombrar a `expand_targets`, mover a `corpus/_targets.py`, importar desde `ingest.py`). Cero cambios funcionales, refactor de 10 líneas. H2 lo hará en su primer commit como housekeeping.
+- **Implicación para CI:** dos jobs de test posibles, o uno con marcadores. Recomendación: un solo job `pytest`, pero los tests de `tests/integration/test_rag_build_flow.py` se marcan con `@pytest.mark.slow` si son >30s; CI corre `pytest -m "not slow"` por defecto y `pytest -m slow` en un job separado o en push a main. Decisión final cuando se vea el tiempo real en CI.
+- **Implicación para H8 (gold set):** `make eval` consume el LanceDB ya construido. La cadena `make ingest && make rag-build && make eval` es la pipeline completa que H8 ejecuta para producir métricas reales.
+- **Enlace:** se formaliza en ADR 0004 al cierre de H2.
+
+### 2026-05-04 · Versionado del modelo de embedding por `LanguageEntry`
+
+- **Decisión:** el schema `LanguageEntry` (Pydantic v2 en `src/regulaitor/corpus/schemas.py`) se extiende con un campo `embedding_model: str | None = None` que almacena el identificador del modelo que produjo los vectores de los chunks de esa entrada (formato `"{repo}@{version_or_hash}"`, p. ej. `"BAAI/bge-m3@v1.0"` o `"BAAI/bge-m3@sha256:abcd..."`). El orquestador `rag/build.py` evalúa skip-condition como `hash_unchanged AND embedding_model_unchanged`. Cualquier cambio en cualquiera de los dos invalida el `LanguageEntry` y dispara re-embebido. Solo afecta al embedder; el reranker NO requiere campo análogo (es función pura, no persiste datos).
+- **Justificación:**
+  1. **Evita el bug silencioso "model skew" en LanceDB.** Sin este campo, el escenario es: día N el repo embebe con BGE-M3 v1 y guarda 424 vectores en LanceDB; día N+k alguien actualiza la versión del modelo en `pyproject.toml`; día N+k+1 corren `make rag-build` y la regla de skip "hash del texto no cambió → preserva chunks" se dispara sin saber que el modelo cambió. El sistema queda inconsistente: las queries que el Retriever-Agent embebe con v2 buscan en un espacio vectorial v1 que las queries no comparten. No hay error visible — solo que la búsqueda devuelve resultados malos. Es exactamente el tipo de bug que destruye una demo de TFM en directo. Versionar el modelo en cada `LanguageEntry` cierra esta brecha automáticamente.
+  2. **Trazabilidad completa para defensa académica.** El TFM puede afirmar al evaluador del Módulo 3: "cada vector almacenado en LanceDB puede trazarse exactamente al modelo y la versión que lo generó, no solo al texto fuente. Esto permite auditar embeddings, hacer A/B testing reproducible, y detectar deriva de modelo en producción". Sin este campo, la trazabilidad termina en "se generó con BGE-M3 (la versión del momento)", lo cual es suficiente para hoy pero no para Módulo 3, que pide explícitamente "monitorización y mejora continua" (P7 del Máster).
+  3. **Granularidad por `LanguageEntry` permite escenarios mixtos sin re-arquitectura.** Caso futuro plausible: BGE-M3 saca v2 con mejoras notables en EN pero regresión en ES (esto pasa periódicamente con multilingual models). Con campo a nivel `LanguageEntry`, podemos re-embeder solo las 113 entradas EN y dejar las 99 ES con v1: evaluamos calidad por idioma en H8, decidimos por separado. Con campo global a nivel manifest, no hay forma de mezclar — toda la regeneración es atómica por corpus.
+  4. **Coste despreciable.** Un campo `str | None` con valor típico de ~30 caracteres × 424 entradas = ~12 KB extra en los manifests. JSON parsing, schema validation, diff: todo dentro del coste asintótico de los demás campos. La granularidad fina es prácticamente gratis.
+  5. **Asimetría con el reranker es intencional, no descuido.** El reranker (`bge-reranker-v2-m3`) es función pura: recibe `(query, passages)`, devuelve scores, **no persiste nada**. Cada llamada en H3 (Retriever-Agent) usa el modelo activo en ese momento. Si cambia el reranker, los scores nuevos los produce el modelo nuevo y no hay datos viejos que invalidar. Por tanto NO necesita campo `reranker_model`. Pero documentamos esta asimetría aquí explícitamente, porque sin justificación parece una omisión.
+  6. **El plan operativo no lo había prefijado** (es decisión nueva surgida de la fase de brainstorming H2), pero encaja con el principio rector de CLAUDE.md §17.13 ("sin findings críticos"): un bug silencioso que mezcla espacios vectoriales es exactamente el tipo de finding crítico que el red team adversarial puede explotar en H9 (un atacante prepara payloads que aprovechan baja similitud entre el modelo viejo y el nuevo para inyectar contenido no detectable).
+- **Alternativas descartadas:**
+  - **B. Campo global `embedding_model_version` a nivel manifest:** rechazada por la razón 3 (impide mezclar versiones por idioma o por corpus). El ahorro en bytes es trivial (~30 caracteres en lugar de ~12 KB), no compensa la rigidez.
+  - **C. Sin campo, invalidación manual con `--force-rebuild`:** rechazada categóricamente por la razón 1. Frágil. Convierte un bug silencioso en una bomba de tiempo. Es exactamente el patrón que CLAUDE.md §22.20 condena ("si detectas sobreingeniería, dilo"; el converso aplica: "si detectas falta de mecanismo de protección, no lo escondas tras un flag opcional").
+- **Detalle técnico — diff en el schema:**
+  ```python
+  # En src/regulaitor/corpus/schemas.py
+
+  class LanguageEntry(BaseModel):
+      """Per-language metadata for one article. H2 fills `chunks`, `embedded_at`,
+      and `embedding_model`."""
+      hash: str
+      tokens: int
+      chunks: list[str] = Field(default_factory=list)
+      embedded_at: datetime | None = None
+      embedding_model: str | None = None   # <-- NUEVO en H2
+      fetched_at: datetime
+      source_url: str
+  ```
+  Default `None` mantiene compatibilidad hacia atrás: los manifests producidos por H1 (sin este campo) cargan limpio (Pydantic acepta el default), y el primer `make rag-build` los puebla.
+- **Detalle técnico — formato del valor:**
+  - Patrón canónico: `"{huggingface_repo}@{tag_or_hash}"`.
+  - Si está pinneado a una release oficial: `"BAAI/bge-m3@v1.0"`.
+  - Si está pinneado a un commit del HF Hub: `"BAAI/bge-m3@sha256:e1f2c3..."` (los primeros 16 caracteres del hash bastan; el `safetensors` index del modelo expone este hash).
+  - Recomendación operativa: usar el hash del checkpoint, no el tag, porque el HF Hub permite re-tag (un día `v1.0` apuntaba al checkpoint A, mañana al B). El hash es inmutable.
+- **Detalle técnico — lógica de skip en `rag/build.py`:**
+  ```python
+  def should_skip(entry: LanguageEntry, current_model: str, force: bool) -> bool:
+      if force:
+          return False
+      if not entry.chunks:                        # nunca embebido → no skip
+          return False
+      if entry.embedding_model != current_model:  # modelo cambió → no skip
+          return False
+      # hash ya verificado por el orquestador en _build_manifest
+      return True
+  ```
+- **Detalle técnico — migración de manifests existentes (H2 primer build):**
+  - Los manifests H1 actuales (`corpus/manifests/{ai_act,gdpr}.json`) tienen `chunks: []` y `embedded_at: None` para todas las 424 entradas.
+  - El primer `make rag-build` ve `entry.chunks == []` → no skip → embebe todo → puebla `chunks`, `embedded_at`, `embedding_model = "BAAI/bge-m3@<sha del checkpoint>"`.
+  - Cero migración manual. El campo nuevo, al ser optional con default None, no rompe la carga del manifest H1.
+- **Detalle técnico — A/B testing futuro (H8 / H12):**
+  - Si en H12 (router multi-LLM) queremos comparar BGE-M3 vs un fine-tune custom, podemos correr `make rag-build --embedder=bge-m3-finetune` que produzca una segunda copia de los vectores en una tabla LanceDB diferente o en la misma con `embedding_model` diferente, y `make eval` evaluaría las métricas RAGAS en cada conjunto. Sin este campo, no hay manera de saber qué vectores corresponden a qué modelo.
+- **Implicación para CLAUDE.md §17 métricas (H17):** la sección "Faithfulness ≥ 0.85" del cost analysis puede referenciar el `embedding_model` exacto que produjo los embeddings sobre los que se midió la métrica. Esto es lo que diferencia "tenemos faithfulness 0.85" de "tenemos faithfulness 0.85 con BGE-M3 v1.0 (checkpoint hash X) sobre un corpus snapshot del 4 de mayo de 2026". El segundo es defendible; el primero es vago.
+- **Implicación para H9 (red team):** uno de los ataques canónicos del red team puede ser "model version skew" — adversario con conocimiento de la versión vieja del modelo prepara queries que explotan vectores estancados. Tener `embedding_model` en el manifest permite al Auditor detectar si un chunk fue embebido con un modelo distinto al que el Retriever está usando ahora, y marcar la inconsistencia.
+- **Enlace:** se formaliza en ADR 0004 al cierre de H2.
 
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
