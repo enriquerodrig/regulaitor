@@ -323,7 +323,7 @@ def run(
                         len(fetch_result.content),
                     )
                 else:
-                    assert client is not None  # narrow for mypy
+                    assert client is not None  # noqa: S101 # nosec B101  # type narrow for mypy
                     try:
                         fetch_result = client.fetch_formex(CELEX[c], lang, cache)
                     except FormexValidationError:
@@ -344,7 +344,9 @@ def run(
                         source_url_per_lang[lang] = ""
                     continue
 
-                assert isinstance(fetch_result, FetchResultModified)
+                assert isinstance(  # noqa: S101 # nosec B101  # type narrow for mypy
+                    fetch_result, FetchResultModified
+                )
                 summary.fetched += 1
                 logger.info(
                     "fetch %s/%s: 200 OK, %d bytes, etag=%s",
@@ -377,7 +379,7 @@ def run(
                         )
                         summary.errors += 1
                         continue
-                    assert client is not None  # narrow for mypy
+                    assert client is not None  # noqa: S101 # nosec B101  # type narrow for mypy
                     logger.warning(
                         "%s parse failed for %s/%s (%s); falling back to HTML",
                         fetch_format,
@@ -395,7 +397,9 @@ def run(
                         )
                         summary.errors += 1
                         continue
-                    assert isinstance(fetch_result, FetchResultModified)
+                    assert isinstance(  # noqa: S101 # nosec B101  # type narrow for mypy
+                        fetch_result, FetchResultModified
+                    )
                     parsed = html_parser.parse(fetch_result.content)
                     _write_atomic(RAW_DIR / f"{c}_{lang}.xml", fetch_result.content)
 
