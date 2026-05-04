@@ -18,6 +18,7 @@ from typing import Literal
 import httpx
 
 from regulaitor.corpus import manifest as manifest_mod
+from regulaitor.corpus._targets import expand_targets
 from regulaitor.corpus.eurlex import (
     EurLexClient,
     FetchResult,
@@ -152,15 +153,6 @@ def _load_local(
     )
 
 
-def _expand_targets(
-    corpus: Norma | Literal["all"],
-    languages: list[Language] | Literal["all"],
-) -> tuple[list[Norma], list[Language]]:
-    corpora: list[Norma] = list(CELEX.keys()) if corpus == "all" else [corpus]
-    langs: list[Language] = ["es", "en"] if languages == "all" else list(languages)
-    return corpora, langs
-
-
 def _build_manifest(
     corpus: Norma,
     source_format: Literal["formex4", "html", "pdf"],
@@ -279,7 +271,9 @@ def run(
     (see docs/technical_decisions_log.md H1 entry "EUR-Lex WAF — local-only mode").
     """
     summary = IngestSummary()
-    corpora, langs = _expand_targets(corpus, languages)
+    corpora, langs = expand_targets(corpus, languages)
+    # Filter to only corpora that have CELEX/VERSION pinned (H1 + H14).
+    corpora = [c for c in corpora if c in CELEX]
 
     formex_parser = FormexParser()
     html_parser = HtmlParser()
