@@ -6,6 +6,8 @@ Defer Finding and Answer to H4 (decisions log 2026-05-05 entry "Schemas Pydantic
 from __future__ import annotations
 
 from datetime import datetime
+from enum import StrEnum
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -72,3 +74,53 @@ class FetchedArticle(BaseModel):
     text: str
     version: str
     source_url: str
+
+
+class Finding(BaseModel):
+    """One assertion within an Answer; >=1 Citation required (H4 schema for Analyst output).
+
+    Frozen and immutable. Per the lean Auditor (decisions log 2026-05-05 entry
+    "Auditor lean en H4"), Field(min_length=1) on citations enforces "no Finding
+    without citation" at schema level.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    text: str = Field(min_length=1)
+    citations: list[Citation] = Field(min_length=1)
+    severity: Literal["info", "low", "medium", "high"] = "info"
+
+
+class Answer(BaseModel):
+    """Analyst output: human-readable summary + structured findings (H4).
+
+    Frozen. The Auditor wraps this in AuditedAnswer; Answer itself is never mutated.
+    `query` and `language` echo the input for downstream invariant checks.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    query: str
+    language: Language
+    text: str = Field(min_length=1)
+    findings: list[Finding]
+
+
+class AuditVerdict(StrEnum):
+    """Three-state verdict for the Lenient-strict aggregation policy (H4)."""
+
+    PASS = "pass"  # nosec B105 -- enum value, not a password
+    BLOCK = "block"
+    REQUIRES_HUMAN_REVIEW = "requires_human_review"
+
+
+class AuditedAnswer(BaseModel):
+    """Auditor wrapper composed over the immutable Analyst Answer (H4).
+
+    Carries per-citation audit_results and an aggregated verdict + reason.
+    """
+
+    answer: Answer
+    verdict: AuditVerdict
+    audit_results: list[AuditResult]
+    reason: str | None
