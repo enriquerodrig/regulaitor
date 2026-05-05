@@ -90,4 +90,10 @@ jobs:
       - name: Bandit
         run: uv run bandit -r src
       - name: Pip-audit
-        run: uv run pip-audit
+        # Ignored: CVE-2026-1839 affects transformers.Trainer._load_rng_state, only
+        # reachable via Trainer.train(resume_from_checkpoint=...). RegulAItor uses
+        # pretrained models via FlagEmbedding -> AutoModel.from_pretrained (safetensors),
+        # never instantiates Trainer. See docs/technical_decisions_log.md H2 entry
+        # "CVE-2026-1839 transformers — descartada por ruta de código no usada".
+        # Re-evaluate when FlagEmbedding releases transformers 5.x compatibility.
+        run: uv run pip-audit --ignore-vuln CVE-2026-1839

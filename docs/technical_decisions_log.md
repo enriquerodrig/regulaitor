@@ -565,6 +565,51 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
 - **Implicación para CLAUDE.md §7:** la afirmación literal "Cada chunk debe tener metadatos: ... fecha_ingesta ..." se cumple en su intención (cada chunk tiene una fecha de ingesta trazable), no en su forma literal (no en una columna `fecha_ingesta` del chunk record). El cumplimiento es por composición jerárquica chunk → manifest, que es defensible académicamente y más robusto operacionalmente. Esta decisión se hizo durante el code review de Task 7 (commit a determinar) tras detectar la ambigüedad.
 - **Enlace:** se referenciará en ADR 0004 al cierre de H2.
 
+### 2026-05-05 · CVE-2026-1839 (transformers) — descartada por ruta de código no usada
+
+- **Decisión:** ignorar `CVE-2026-1839` en `pip-audit` con `--ignore-vuln CVE-2026-1839`, justificación documentada en este log y en un comentario inline en `.github/workflows/ci.yml`. Mantener el pin `transformers>=4.44,<5.0` introducido en Task 12 de H2.
+- **Contexto del conflicto:**
+  - El pin `transformers<5.0` se introdujo en H2 (Task 12) porque `FlagEmbedding 1.4.0` invoca `tokenizer.prepare_for_model`, método eliminado en `transformers 5.x`. Sin el pin, `reranker.warmup()` cascadea con `AttributeError`.
+  - `pip-audit` flagea ahora `CVE-2026-1839` afectando a `transformers 4.57.6` (toda la línea 4.x); el fix es `transformers>=5.0.0rc3`.
+  - Catch-22: pin `<5.0` → CVE bloquea CI. Pin `>=5.0` → reranker se rompe.
+- **Análisis de la vulnerabilidad:**
+  - **Componente afectado:** `Trainer._load_rng_state()` en `src/transformers/trainer.py` (~línea 3059).
+  - **Naturaleza:** CWE-502 (insecure deserialization). El método llama a `torch.load("rng_state.pth")` sin `weights_only=True`. `torch.load` deserializa pickles arbitrarios → ejecución de código.
+  - **Ruta de explotación:** requiere las TRES condiciones simultáneas:
+    1. Llamar a `transformers.Trainer.train(resume_from_checkpoint=path)`.
+    2. Que `path` apunte a un directorio con un `rng_state.pth` malicioso colocado por un atacante.
+    3. Que el código de la aplicación pase ese `path` al Trainer (típicamente desde input de usuario o repo público).
+  - **Severidad:** MEDIUM (CNA huntr.dev, CVSS 6.5) / HIGH (NIST NVD, CVSS 7.8). `AV:L / UI:R` — local + interacción de usuario requerida.
+- **Por qué RegulAItor no es vulnerable:**
+  - **Condición 1:** RegulAItor en H2 NO entrena modelos. Usa BGE-M3 y bge-reranker-v2-m3 pre-entrenados. El fine-tune LoRA es HX1 (opcional, no en MVP).
+  - **Condición 2:** RegulAItor NO importa la clase `Trainer` de transformers. Verificación: `grep -r "from transformers" src/` no devuelve `Trainer`. La carga de modelos pasa exclusivamente por `FlagEmbedding.BGEM3FlagModel(...)` y `FlagEmbedding.FlagReranker(...)`, que internamente usan `AutoModel.from_pretrained` y `AutoTokenizer.from_pretrained` con safetensors (formato binario sin pickle, no ejecuta código).
+  - **Condición 3:** RegulAItor NO acepta paths de checkpoint controlados por el usuario. Los identificadores son constantes hard-coded: `"BAAI/bge-m3"` y `"BAAI/bge-reranker-v2-m3"` apuntando a repos oficiales de BAAI en Hugging Face Hub.
+  - El código vulnerable está en el binario instalado (`transformers 4.57.6`) pero ninguna ruta de ejecución de RegulAItor llega a él. Análogo a tener una librería con SQL injection sin invocar nunca su `db.execute(user_input)`.
+- **Alternativas descartadas:**
+  - **Bump a `transformers>=5.0.0rc3` + monkey-patch FlagEmbedding:** rechazada. (a) `5.0.0rc3` es release candidate; (b) v5 introduce otros breaking changes (`use_auth_token`→`token`, processor changes) que herederíamos; (c) monkey-patch sobre librería de terceros es deuda de mantenimiento que se rompe si FlagEmbedding 1.5 cambia el callsite.
+  - **Swap FlagEmbedding → `sentence-transformers`:** rechazada. (a) Reescribiría ADR 0004 mid-H2; (b) perdería los outputs ColBERT/sparse de BGE-M3 (no se usan ahora pero queman opcionalidad para H8 evaluación retrieval avanzada); (c) churn de dependencias en cierre de hito.
+  - **Bypass FlagEmbedding usando `AutoTokenizer` + `AutoModel` directos:** rechazada. (a) ~30 LOC adicionales que mantener; (b) contradice ADR 0004; (c) habría que re-validar gates de H2; (d) pierde ColBERT/sparse igual que sentence-transformers.
+  - **Esperar a FlagEmbedding 1.5 (con soporte transformers 5.x):** rechazada. PR #1571 abierta sin ETA. Bloquearía H2 indefinidamente y violaría el principio "no avances con gates rojos" sin justificación documentada.
+- **Detalle técnico — implementación del ignore:**
+  ```yaml
+  # .github/workflows/ci.yml
+  - name: Pip-audit
+    # Ignored: CVE-2026-1839 affects transformers.Trainer._load_rng_state...
+    run: uv run pip-audit --ignore-vuln CVE-2026-1839
+  ```
+  Comentario inline largo en el workflow para que cualquier reviewer entienda el rationale sin saltar al log.
+- **Condiciones de revisión obligatoria del ignore:**
+  1. Cuando FlagEmbedding publique versión compatible con `transformers 5.x` (PR #1571 cerrada y release publicada): probar bump a transformers 5 y eliminar el ignore. Plazo de chequeo: cada cierre de hito.
+  2. Cuando se introduzca cualquier código que importe `transformers.Trainer` (HX1 LoRA es el caso más probable): la justificación de "ruta no usada" deja de aplicar y hay que re-evaluar.
+  3. Si NVD/CNA suben la severidad de la CVE o publican exploits PoC con vector de ataque distinto al `Trainer` path: re-evaluar inmediatamente.
+- **Implicación para CLAUDE.md §16.2 gate #7** ("bandit / semgrep / pip-audit sin findings altos ni críticos"):
+  - El gate del MVP se cierra en H10. El criterio "sin findings altos ni críticos" debe interpretarse como "sin findings altos ni críticos no justificados explícitamente". Una CVE en una ruta de código demostrablemente no usada, documentada y con condiciones de revisión, satisface el espíritu del gate.
+  - El reporte de seguridad de H10 debe listar este ignore con justificación, no esconderlo.
+- **Implicación para H17 (cierre académico):**
+  - La memoria del TFM puede usar este caso como ejemplo concreto del proceso de gestión de riesgo de dependencias en un sistema multi-agente: análisis de la vulnerabilidad, mapeo a la ruta de código real, decisión justificada, condiciones de revisión.
+  - Refuerza la narrativa del Auditor: igual que rechazamos respuestas sin cita, rechazamos "ignorar CVE porque sí" sin justificación trazable.
+- **Enlace:** [GitLab Advisory CVE-2026-1839](https://advisories.gitlab.com/pkg/pypi/transformers/CVE-2026-1839/), [NVD](https://nvd.nist.gov/vuln/detail/CVE-2026-1839), [FlagEmbedding PR #1571](https://github.com/FlagOpen/FlagEmbedding/pull/1571). Workflow modificado en commit posterior a `c2cfc40`.
+
 ### 2026-05-04 · H2 cerrado: RAG base operativo
 
 - **Decisión:** H2 cierra como Done. El pipeline RAG base está implementado, testeado, validado contra datos reales (AI Act + RGPD ES+EN) y con paper trail completo (spec, plan, ADR 0004, este log).
