@@ -63,7 +63,10 @@ jobs:
       - name: Install dependencies
         run: uv sync --extra dev
       - name: Pytest
-        run: uv run pytest
+        # Slow tests (BGE-M3 / bge-reranker-v2-m3 + live LanceDB index) require
+        # `make ingest && make rag-build` to populate state that's gitignored;
+        # they're local-only per spec H3 §11.3 and H2 §11.3.
+        run: uv run pytest -m "not slow"
 
   security:
     name: Security
