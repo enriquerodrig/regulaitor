@@ -18,6 +18,9 @@ dependencies = [
     "lancedb>=0.16,<1.0",
     "pyarrow>=18.0,<22.0",
     "mcp>=1.0,<2.0",
+    "anthropic>=0.40,<1.0",
+    "langgraph>=0.2,<1.0",
+    "nanoid>=2.0,<3.0",
 ]
 
 [project.optional-dependencies]
@@ -91,6 +94,18 @@ ignore_missing_imports = true
 module = "mcp.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "anthropic.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "langgraph.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "nanoid"
+ignore_missing_imports = true
+
 [tool.coverage.run]
 source = ["src/regulaitor"]
 branch = true
@@ -110,7 +125,7 @@ exclude_also = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-addopts = "-ra -q --strict-markers --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov-report=term-missing --cov-fail-under=90"
+addopts = "-ra -q --strict-markers --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov-report=term-missing --cov-fail-under=90"
 markers = [
     "integration: integration tests using stub HTTP server",
     "contract: contract tests using hypothesis",
