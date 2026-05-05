@@ -1,0 +1,18 @@
+[
+  {
+    "articulo": "1",
+    "title": "Objeto",
+    "text": "El presente Reglamento establece normas armonizadas.",
+    "paragraphs": [
+      {"apartado": "1", "text": "El presente Reglamento establece normas armonizadas."}
+    ]
+  },
+  {
+    "articulo": "2",
+    "title": "Ámbito",
+    "text": "Este Reglamento se aplica a sistemas de IA.",
+    "paragraphs": [
+      {"apartado": "1", "text": "Este Reglamento se aplica a sistemas de IA."}
+    ]
+  }
+]
