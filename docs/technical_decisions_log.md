@@ -286,7 +286,7 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
 
 ---
 
-## H2 — RAG base (en diseño)
+## H2 — RAG base (cerrado 2026-05-04)
 
 ### 2026-05-04 · Embeddings BGE-M3 ejecutados localmente, no vía API
 
@@ -564,6 +564,45 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
   ```
 - **Implicación para CLAUDE.md §7:** la afirmación literal "Cada chunk debe tener metadatos: ... fecha_ingesta ..." se cumple en su intención (cada chunk tiene una fecha de ingesta trazable), no en su forma literal (no en una columna `fecha_ingesta` del chunk record). El cumplimiento es por composición jerárquica chunk → manifest, que es defensible académicamente y más robusto operacionalmente. Esta decisión se hizo durante el code review de Task 7 (commit a determinar) tras detectar la ambigüedad.
 - **Enlace:** se referenciará en ADR 0004 al cierre de H2.
+
+### 2026-05-04 · H2 cerrado: RAG base operativo
+
+- **Decisión:** H2 cierra como Done. El pipeline RAG base está implementado, testeado, validado contra datos reales (AI Act + RGPD ES+EN) y con paper trail completo (spec, plan, ADR 0004, este log).
+- **Stats finales del cierre:**
+  - **Branch:** `feat/h2-rag-base`. **20 commits** del primero (`72ca768` — spec) al último (`a3eb658` — smoke artefacts).
+  - **Tests:** 111 totales, todos verde (98 unit + 5 contract + 8 integration; 1 marcado `slow` que no entra en CI).
+  - **Coverage global:** 92.55% sobre `src/regulaitor/` (gate 90%). Por módulo en `src/regulaitor/rag/`: `chunking.py` 100%, `embeddings.py` 100%, `reranker.py` 100%, `schemas.py` 100%, `store.py` 100%, `build.py` 91%.
+  - **LanceDB:** tabla `chunks` con **1011 filas** distribuidas como sigue:
+    - Por norma: `ai_act` 687, `gdpr` 324.
+    - Por idioma: `es` 533, `en` 478.
+    - Por norma × idioma: `ai_act_es` 361, `ai_act_en` 326, `gdpr_es` 172, `gdpr_en` 152.
+    - Disco: 32 MB en `corpus/indexes/regulaitor.lance/` (gitignored, build artefact).
+  - **Manifests:** los 4 (`ai_act_es`, `ai_act_en`, `gdpr_es`, `gdpr_en` dentro de `ai_act.json` y `gdpr.json`) extendidos con `chunks`, `embedded_at`, `embedding_model="BAAI/bge-m3"`. Article counts inalterados (113 + 99 = 212 artículos × 2 idiomas = 424 LanguageEntry slots).
+  - **Idempotencia:** segunda ejecución de `python -m scripts.rag_build --corpus all --lang all` reporta `chunks_added=0, chunks_recomputed=0, chunks_unchanged=1011, errors=2`. Wall-clock ~3 s.
+  - **Errors=2:** son cosméticos: `expand_targets("all")` incluye `nis2` y `dora` cuyos manifests aún no existen (los crea H14). El orchestrator los reporta como missing-manifest. No bloqueante; se resuelve en H14.
+- **Sorpresa documentada — chunk count real (1011) ≠ estimado del spec (424–440):**
+  - El spec asumía que la mayoría de artículos cabrían en un solo chunk y solo se splittean los AI Act 6/9/14. La realidad es que 52 LanguageEntries (32 AI Act + 20 GDPR) cruzan el umbral de 1000 tokens BGE-M3 y se splittean por `apartado`, con un promedio de ~3 chunks por LanguageEntry.
+  - Causa raíz: muchos artículos del AI Act tienen múltiples apartados con detalle regulatorio extenso (definiciones, listas tasadas, considerandos referenciados). El umbral es más selectivo de lo que se asumía en brainstorming.
+  - **No es un bug.** Es comportamiento correcto del chunker híbrido. Implicación positiva para H3 (Retriever): chunks más finos → mayor precisión de citación, porque cada chunk corresponde a un apartado citable, alineado con cómo se redactan las citas legales (`Art. X.Y`).
+  - Implicación operativa: el TFM debe reportar el número real (1011) en memoria académica y model card, no la estimación inicial del spec.
+- **Lecciones para H3 (Retriever-Agent):**
+  - El Retriever recibe `(query, corpus, lang, top_k)` y orquesta `embeddings.embed → store.query → reranker.rerank`. Wrapper fino, ~80 líneas estimadas.
+  - El boundary contract H2→H3 (manifests con `chunks`/`embedded_at`/`embedding_model` poblados; LanceDB queryable) está verificado por test de integración real (`tests/integration/test_rag_build_flow.py`, marcado `slow`, descarga BGE-M3 + bge-reranker-v2-m3 reales).
+  - El reranker está warmed-up al final del build, así que la primera query del Retriever no paga cold-start (~5–10 s evitados).
+  - Top-k: planificar contra ~1k–1.2k chunks por build, no ~400. Top-k inicial sugerido: 20 candidatos del store, 5 supervivientes tras rerank.
+- **Lecciones para H8 (Evaluación):**
+  - La granularidad fina (apartado-level) facilita métricas de citation precision: el gold set puede afirmar "la respuesta debe citar `ai_act.6.1.es`" en vez de "debe citar `ai_act.6.es`", lo que reduce ambigüedad en la evaluación.
+  - El `embedding_model` en cada `LanguageEntry` permite re-evaluar después de un model swap sin perder trazabilidad: el reporte puede afirmar "Faithfulness 0.87 con BGE-M3 + corpus snapshot 2026-05-04" en vez de un genérico "Faithfulness 0.87".
+- **Pin defensivo de `transformers<5.0`:** detectado durante Task 12. `FlagEmbedding 1.4.0` llama a `tokenizer.prepare_for_model`, removido en `transformers 5.x`. Pinned hasta que upstream FlagEmbedding emita un fix. Documentado en `pyproject.toml`.
+- **Decisiones técnicas tomadas durante H2** (todas con entrada propia más arriba en este log):
+  1. Embeddings BGE-M3 locales (no API).
+  2. LanceDB single-table `chunks` particionada por metadata.
+  3. Tokenizer swap completo `tiktoken` → BGE-M3 nativo (XLM-RoBERTa).
+  4. Reranker bge-reranker-v2-m3 entra en H2 (no H3).
+  5. Orquestador `rag/build.py` separado de `corpus/ingest.py`.
+  6. Versionado de modelo de embedding por `LanguageEntry`.
+  7. `fecha_ingesta` se mantiene en `LanguageEntry`, no se duplica en `Chunk`.
+- **Enlace:** ADR 0004 (RAG architecture); spec `docs/superpowers/specs/2026-05-04-h2-rag-base-design.md`; plan `docs/superpowers/plans/2026-05-04-h2-rag-base.md`. Branch `feat/h2-rag-base`, primer commit `72ca768`, último `a3eb658`. Tag pendiente: `v0.0.3-h2` (en Task 15).
 
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
