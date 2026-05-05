@@ -11,6 +11,10 @@ Decisions log 2026-05-05 entries: "Auditor lean en H4" (injection check) +
 from __future__ import annotations
 
 import functools
+import hashlib
+import json
+import logging
+import time
 from typing import Any, cast
 
 from langgraph.graph import END, StateGraph
@@ -21,6 +25,8 @@ from regulaitor.agents.retriever import RetrieverAgent
 from regulaitor.corpus.schemas import Language, Norma
 from regulaitor.orchestration.state import ChatState
 from regulaitor.security import injection
+
+logger = logging.getLogger("regulaitor.orchestration.graph")
 
 
 # Lazy-init agent helpers. Avoids import-time I/O (AnalystAgent reads its
@@ -102,6 +108,53 @@ def _compiled_graph() -> Any:
     return build_graph()
 
 
+def _log_turn(state: ChatState, latency_ms_total: int) -> None:
+    """Emit a single structured JSON log line summarising the chat turn.
+
+    Per CLAUDE.md §10.5 + §11 (PII discipline): never log the raw query —
+    only a short SHA256 prefix for grouping/dedup. The record is small and
+    flat so log handlers can index it directly.
+    """
+    query_hash = hashlib.sha256(state.query.encode("utf-8")).hexdigest()[:12]
+
+    verdict: str
+    n_findings = 0
+    n_citations = 0
+    n_validated = 0
+    n_blocked = 0
+    reason_code: str | None = None
+
+    if state.injection_blocked:
+        verdict = "blocked_injection"
+        reason_code = state.injection_reason
+    elif state.audited_answer is not None:
+        audited = state.audited_answer
+        verdict = audited.verdict.value
+        n_findings = len(audited.answer.findings)
+        n_citations = len(audited.audit_results)
+        n_validated = sum(1 for r in audited.audit_results if r.validated)
+        n_blocked = n_citations - n_validated
+        reason_code = None if audited.reason is None else audited.reason.split(":", 1)[0]
+    else:
+        verdict = "no_answer"
+
+    record = {
+        "case_id": state.case_id,
+        "query_hash": query_hash,
+        "corpus": state.corpus,
+        "language": state.language,
+        "verdict": verdict,
+        "n_findings": n_findings,
+        "n_citations": n_citations,
+        "n_validated": n_validated,
+        "n_blocked": n_blocked,
+        "latency_ms_total": latency_ms_total,
+        "reason_code": reason_code,
+        "errors": list(state.errors),
+    }
+    logger.info("chat_turn: %s", json.dumps(record, ensure_ascii=False))
+
+
 def run(*, query: str, corpus: str, language: str, case_id: str) -> ChatState:
     """Run the cached compiled graph; return the final ChatState."""
     initial = ChatState(
@@ -110,5 +163,9 @@ def run(*, query: str, corpus: str, language: str, case_id: str) -> ChatState:
         corpus=cast(Norma, corpus),
         language=cast(Language, language),
     )
+    t0 = time.monotonic()
     final_dict = _compiled_graph().invoke(initial)
-    return ChatState.model_validate(final_dict)
+    latency_ms_total = int((time.monotonic() - t0) * 1000)
+    state = ChatState.model_validate(final_dict)
+    _log_turn(state, latency_ms_total)
+    return state

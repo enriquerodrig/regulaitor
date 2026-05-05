@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import logging
 from datetime import UTC, datetime
 from unittest.mock import MagicMock
 
@@ -177,3 +179,55 @@ def test_compiled_graph_is_cached() -> None:
     g1 = graph._compiled_graph()
     g2 = graph._compiled_graph()
     assert g1 is g2
+
+
+def test_run_emits_structured_log(
+    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    """run() emits a single chat_turn JSON log line via logger.info."""
+    final_state = ChatState(
+        case_id="ch-log-1",
+        query="What does the AI Act say?",
+        corpus="ai_act",
+        language="es",
+        context=_make_context(),
+        answer=_make_answer(),
+        audited_answer=_make_audited_answer(),
+    )
+    final_dict = final_state.model_dump()
+
+    compiled_mock = MagicMock()
+    compiled_mock.invoke.return_value = final_dict
+    monkeypatch.setattr(graph, "_compiled_graph", lambda: compiled_mock)
+
+    with caplog.at_level(logging.INFO, logger="regulaitor.orchestration.graph"):
+        result = graph.run(
+            query="What does the AI Act say?",
+            corpus="ai_act",
+            language="es",
+            case_id="ch-log-1",
+        )
+
+    assert result.case_id == "ch-log-1"
+
+    chat_turn_records = [r for r in caplog.records if "chat_turn" in r.getMessage()]
+    assert len(chat_turn_records) == 1, "expected exactly one chat_turn log line"
+
+    message = chat_turn_records[0].getMessage()
+    payload_json = message.split("chat_turn: ", 1)[1]
+    payload = json.loads(payload_json)
+
+    assert payload["case_id"] == "ch-log-1"
+    assert payload["verdict"] == "pass"
+    assert payload["corpus"] == "ai_act"
+    assert payload["language"] == "es"
+    assert payload["n_findings"] == 1
+    assert payload["n_citations"] == 1
+    assert payload["n_validated"] == 1
+    assert payload["n_blocked"] == 0
+    assert isinstance(payload["latency_ms_total"], int)
+    assert payload["reason_code"] is None
+    assert payload["errors"] == []
+    # PII discipline: raw query must not appear; query_hash is 12 hex chars.
+    assert "query" not in payload
+    assert len(payload["query_hash"]) == 12
