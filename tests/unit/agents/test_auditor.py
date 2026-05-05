@@ -171,3 +171,49 @@ def test_audit_answer_with_no_findings_passes(monkeypatch: pytest.MonkeyPatch) -
 
     assert result.verdict == AuditVerdict.PASS
     assert len(result.audit_results) == 0
+
+
+def test_audit_reason_uses_pipe_separator_not_semicolon(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Validator reasons embed ';' so Auditor must join per-Finding reasons with ' | '.
+
+    Example validator reason: 'text_not_in_apartado: ai_act art. 6.2; cited text
+    not found...'. Downstream parsers must split unambiguously, so the Auditor's
+    inter-reason separator must be a string the validator never emits.
+    """
+    from regulaitor.agents import auditor
+
+    c1 = _citation("6", "2", "t1")
+    c2 = _citation("999", None, "t2")
+    finding = Finding(text="f", citations=[c1, c2])
+    answer = _answer([finding])
+
+    # Real-format reasons containing ';' (matching validator's actual output)
+    reason_with_semicolon = (
+        "text_not_in_apartado: ai_act art. 6.2 es; cited text not found "
+        "after normalization (12 chars vs 800 chars apartado)."
+    )
+    monkeypatch.setattr(
+        auditor.validator,
+        "validate",
+        MagicMock(
+            side_effect=[
+                _audit_result(c1, validated=False, reason=reason_with_semicolon),
+                _audit_result(
+                    c2,
+                    validated=False,
+                    reason="article_not_found: ai_act has no articulo 999 in language es",
+                ),
+            ]
+        ),
+    )
+
+    result = AuditorAgent().audit(answer)
+
+    # The 2 reasons should be joined with " | ", not ";"
+    assert result.reason is not None
+    assert " | " in result.reason
+    # Both reasons must appear in the output
+    assert "text_not_in_apartado" in result.reason
+    assert "article_not_found" in result.reason

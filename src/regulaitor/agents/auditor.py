@@ -14,7 +14,6 @@ from regulaitor.citation.schemas import (
     AuditedAnswer,
     AuditResult,
     AuditVerdict,
-    Finding,
 )
 
 
@@ -23,11 +22,13 @@ class AuditorAgent:
 
     def audit(self, answer: Answer) -> AuditedAnswer:
         all_results: list[AuditResult] = []
+        per_finding_results: list[list[AuditResult]] = []  # parallel to answer.findings
         finding_verdicts: list[Literal["pass", "blocked"]] = []
 
         for finding in answer.findings:
             this_finding_results = [validator.validate(c) for c in finding.citations]
             all_results.extend(this_finding_results)
+            per_finding_results.append(this_finding_results)
             # Lenient: Finding passes if >=1 of its citations validates
             finding_verdicts.append(
                 "pass" if any(r.validated for r in this_finding_results) else "blocked"
@@ -40,10 +41,12 @@ class AuditorAgent:
             verdict, reason = AuditVerdict.PASS, None
         elif all(v == "blocked" for v in finding_verdicts):
             verdict = AuditVerdict.BLOCK
-            reason = _aggregate_reason(answer, all_results, "BLOCK")
+            reason = _aggregate_reason(answer, all_results, per_finding_results, "BLOCK")
         else:
             verdict = AuditVerdict.REQUIRES_HUMAN_REVIEW
-            reason = _aggregate_reason(answer, all_results, "REQUIRES_HUMAN_REVIEW")
+            reason = _aggregate_reason(
+                answer, all_results, per_finding_results, "REQUIRES_HUMAN_REVIEW"
+            )
 
         return AuditedAnswer(
             answer=answer,
@@ -53,35 +56,32 @@ class AuditorAgent:
         )
 
 
-def _aggregate_reason(answer: Answer, all_results: list[AuditResult], verdict_prefix: str) -> str:
+def _aggregate_reason(
+    answer: Answer,
+    all_results: list[AuditResult],
+    per_finding_results: list[list[AuditResult]],
+    verdict_prefix: str,
+) -> str:
     """Build human-readable summary referencing per-Finding outcomes.
+
+    Per-Finding citation reasons are joined with ' | ' (validator never emits this
+    separator, ensuring downstream parsers can split unambiguously).
 
     Format example:
     "REQUIRES_HUMAN_REVIEW: 2 of 5 citations invalid. Finding #2: 2 of 2 citations
-    invalid (text_not_in_apartado: ai_act art. 6.2; text_not_in_apartado: ai_act art. 6.3)."
+    invalid (text_not_in_apartado: ai_act art. 6.2 | text_not_in_apartado: ai_act art. 6.3)."
     """
     n_invalid = sum(1 for r in all_results if not r.validated)
     n_total = len(all_results)
     parts = [f"{verdict_prefix}: {n_invalid} of {n_total} citations invalid."]
 
-    for idx, finding in enumerate(answer.findings, start=1):
-        finding_results = _audit_results_for_finding(finding, all_results)
+    for idx, finding_results in enumerate(per_finding_results, start=1):
         bad = [r for r in finding_results if not r.validated]
         if bad:
-            reasons_str = "; ".join(r.reason or "no-reason" for r in bad)
+            reasons_str = " | ".join(r.reason or "no-reason" for r in bad)
             parts.append(
                 f"Finding #{idx}: {len(bad)} of {len(finding_results)} "
                 f"citations invalid ({reasons_str})."
             )
 
     return " ".join(parts)
-
-
-def _audit_results_for_finding(
-    finding: Finding, all_results: list[AuditResult]
-) -> list[AuditResult]:
-    """Filter audit_results to those whose citation appears in the Finding.
-
-    Identity-based on citation tuple (Citation is frozen, so equality works).
-    """
-    return [r for r in all_results if r.citation in finding.citations]
