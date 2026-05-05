@@ -30,6 +30,14 @@ PROCESSED_DIR = CORPUS_ROOT / "processed"
 
 CORPORA_WITH_MANIFESTS: tuple[Norma, ...] = ("ai_act", "gdpr")
 
+# Canonical hash prefix used by H1 ingest.py and recomputed during warmup.
+# Exposed at module scope so tests share the same constant.
+_HASH_PREFIX = "sha256:"
+
+# Recovery guidance appended to integrity-failure messages so operators have
+# a single, copy-pasteable remediation path.
+_RECOVERY_HINT = "Run `make ingest` to refresh manifest, or restore corpus/processed/ from git-lfs."
+
 # EUR-Lex canonical URL template keyed by CELEX. Used by get_manifest_meta to
 # expose a single, citation-grade source_url per corpus.
 _EURLEX_URL = "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:{celex}"
@@ -53,18 +61,24 @@ def warmup() -> None:
     populated).
 
     Raises:
-        RuntimeError: if a manifest is missing, or if the SHA256 of any
-            processed article disagrees with the hash recorded in the
-            manifest. The error message identifies the offending article and
-            includes a recovery path (``make ingest`` or restore
-            ``corpus/processed/`` from git-lfs).
+        RuntimeError: if a manifest is missing, a processed file is missing,
+            a referenced articulo is absent from the processed JSON, or if
+            the SHA256 of any processed article disagrees with the hash
+            recorded in the manifest. The error message identifies the
+            offending article and includes a recovery path
+            (``make ingest`` or restore ``corpus/processed/`` from git-lfs).
 
-    Fail-closed: when an integrity error is raised, no entry has yet been
-    inserted into ``_CORPUS``; subsequent ``get_*`` calls will report "not
-    loaded" rather than serve potentially-tampered data.
+    Atomic publish: state is staged in a local dict during the loop and only
+    committed to the module singletons after every corpus passes integrity.
+    A partial failure leaves the previous (possibly empty) singleton state
+    untouched, so a retry will re-run the full loop instead of silently
+    skipping unloaded corpora.
     """
     if _CORPUS:
         return
+
+    loaded: dict[Norma, Manifest] = {}
+    loaded_processed: dict[tuple[Norma, Language], list[dict[str, Any]]] = {}
 
     for norma in CORPORA_WITH_MANIFESTS:
         manifest_path = MANIFEST_DIR / f"{norma}.json"
@@ -76,31 +90,58 @@ def warmup() -> None:
             )
         for article in m.articles:
             for lang, entry in article.languages.items():
-                processed_text = _load_processed_article_text(norma, article.articulo, lang)
-                computed = "sha256:" + hashlib.sha256(processed_text.encode("utf-8")).hexdigest()
+                try:
+                    processed_text = _read_article_text(
+                        loaded_processed, norma, article.articulo, lang
+                    )
+                except FileNotFoundError as e:
+                    raise RuntimeError(
+                        f"processed file missing for {norma}/{lang} "
+                        f"(expected at {e.filename}). {_RECOVERY_HINT}"
+                    ) from e
+                except KeyError as e:
+                    raise RuntimeError(
+                        f"processed JSON for {norma}/{lang} is missing "
+                        f"articulo {article.articulo} referenced by manifest. "
+                        f"{_RECOVERY_HINT}"
+                    ) from e
+                computed = _HASH_PREFIX + hashlib.sha256(processed_text.encode("utf-8")).hexdigest()
                 if computed != entry.hash:
                     raise RuntimeError(
                         f"manifest hash drift detected on {norma} art. "
                         f"{article.articulo} {lang} (expected "
                         f"{entry.hash[:16]}..., got {computed[:16]}...). "
-                        f"Run `make ingest` to refresh manifest, or restore "
-                        f"corpus/processed/ from git-lfs."
+                        f"{_RECOVERY_HINT}"
                     )
-        _CORPUS[norma] = m
+        loaded[norma] = m
+
+    # Atomic commit: only after every corpus has passed integrity do we
+    # publish to the module-level singletons. This prevents a half-populated
+    # _CORPUS from short-circuiting the early-return guard above on retry.
+    _CORPUS.update(loaded)
+    _PROCESSED_CACHE.update(loaded_processed)
 
 
-def _load_processed_article_text(norma: Norma, articulo: str, language: Language) -> str:
-    """Read the article text from ``corpus/processed/<norma>_<lang>.json``.
+def _read_article_text(
+    cache: dict[tuple[Norma, Language], list[dict[str, Any]]],
+    norma: Norma,
+    articulo: str,
+    language: Language,
+) -> str:
+    """Read article text from processed JSON, populating ``cache`` in-place.
 
-    Cached per ``(norma, language)`` so repeated lookups during warmup or
-    later ``get_paragraph`` calls do not re-parse JSON.
+    Used by :func:`warmup` against a *local* staging dict so unverified data
+    never reaches the module singleton ``_PROCESSED_CACHE``. Raises
+    ``FileNotFoundError`` if the processed file is absent and ``KeyError`` if
+    the articulo is not present in the loaded JSON; :func:`warmup` wraps both
+    as ``RuntimeError`` with recovery guidance.
     """
     key = (norma, language)
-    if key not in _PROCESSED_CACHE:
+    if key not in cache:
         path = PROCESSED_DIR / f"{norma}_{language}.json"
         with path.open("r", encoding="utf-8") as f:
-            _PROCESSED_CACHE[key] = json.load(f)
-    for art in _PROCESSED_CACHE[key]:
+            cache[key] = json.load(f)
+    for art in cache[key]:
         if art["articulo"] == articulo:
             return str(art["text"])
     raise KeyError(f"processed article not found: {norma} art. {articulo} {language}")
@@ -128,10 +169,12 @@ def get_article(norma: Norma, articulo: str, language: Language) -> ArticleEntry
     for a in m.articles:
         if a.articulo == articulo and language in a.languages:
             return a
-    valid = list_articulos(norma, language)[:10]
+    all_valid = list_articulos(norma, language)
+    valid = all_valid[:10]
+    suffix = "..." if len(all_valid) > 10 else ""
     raise KeyError(
         f"{norma} has no articulo {articulo} in language {language}. "
-        f"Valid articulos: {valid}..."
+        f"Valid articulos: {valid}{suffix}"
     )
 
 
@@ -142,12 +185,17 @@ def get_paragraph(norma: Norma, articulo: str, apartado: str, language: Language
     raises ``KeyError`` rather than triggering a lazy load (the MCP boot
     path must run warmup explicitly so integrity errors abort startup).
 
+    The membership check covers both ``_CORPUS`` (manifest verified) and
+    ``_PROCESSED_CACHE`` (text loaded). Gating on ``_CORPUS`` ensures
+    unverified data is unreachable even if the cache was somehow populated
+    out of band.
+
     Raises:
         KeyError: if the corpus is not loaded, the articulo is absent, or
             the apartado is absent within the articulo.
     """
     key = (norma, language)
-    if key not in _PROCESSED_CACHE:
+    if norma not in _CORPUS or key not in _PROCESSED_CACHE:
         raise KeyError(f"corpus {norma}/{language} not loaded; call warmup() first")
     for art in _PROCESSED_CACHE[key]:
         if art["articulo"] == articulo:
@@ -167,7 +215,10 @@ def get_manifest_meta(norma: Norma) -> dict[str, str]:
 
     ``source_url`` is the canonical EUR-Lex URL derived from the manifest's
     CELEX identifier, so it is the same for every article and stable across
-    re-ingestions of the same regulation.
+    re-ingestions of the same regulation. The EN landing page is used
+    deliberately: EN is the canonical EUR-Lex URL and ES citations still
+    resolve correctly via the ``?lang=es`` query parameter (future
+    enhancement if per-language source_url is needed).
     """
     m = get_manifest(norma)
     return {
@@ -194,10 +245,10 @@ def list_apartados(norma: Norma, articulo: str, language: Language) -> list[str]
     which lexical sort would be misleading.
 
     Returns an empty list if the corpus is not loaded or the articulo is
-    absent.
+    absent. Gates on ``_CORPUS`` so unverified data is unreachable.
     """
     key = (norma, language)
-    if key not in _PROCESSED_CACHE:
+    if norma not in _CORPUS or key not in _PROCESSED_CACHE:
         return []
     for art in _PROCESSED_CACHE[key]:
         if art["articulo"] == articulo:
