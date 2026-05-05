@@ -109,7 +109,7 @@ class Answer(BaseModel):
 class AuditVerdict(StrEnum):
     """Three-state verdict for the Lenient-strict aggregation policy (H4)."""
 
-    PASS = "pass"
+    PASS = "pass"  # nosec B105 -- enum value, not a password
     BLOCK = "block"
     REQUIRES_HUMAN_REVIEW = "requires_human_review"
 
