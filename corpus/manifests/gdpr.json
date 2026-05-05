@@ -20,8 +20,8 @@
   },
   "stats": {
     "articles_total": 99,
-    "chunks_total": 0,
-    "embedded_total": 0,
+    "chunks_total": 324,
+    "embedded_total": 198,
     "raw_size_bytes": 1446523
   },
   "articles": [
@@ -34,18 +34,22 @@
         "es": {
           "hash": "sha256:d46771896897ea0c107715d32527fd44ee6b76a3791ac112ffebfbc12ae455d1",
           "tokens": 122,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.1.es"
+          ],
+          "embedded_at": "2026-05-04T23:21:22.848185Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:8f99b820eb27cd96355bbf7e2d47e984233a0ff1f7ba386ba3ec0f9766f120c3",
           "tokens": 104,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.1.en"
+          ],
+          "embedded_at": "2026-05-04T23:21:24.986517Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -60,18 +64,22 @@
         "es": {
           "hash": "sha256:bc54862bf0ead7b0417644cc394dfeedcb650ee4134c6614121f7900410f5754",
           "tokens": 346,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.2.es"
+          ],
+          "embedded_at": "2026-05-04T23:21:31.128294Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:3694c469413a7a7a69c05d08e465dbec1cc2db088093dee17ee2818e4b22c2d6",
           "tokens": 335,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.2.en"
+          ],
+          "embedded_at": "2026-05-04T23:21:36.906247Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -86,18 +94,22 @@
         "es": {
           "hash": "sha256:a29f478b28746401b4489f40b0e0cddea4890e0f7f8eb367ecac3cd6cfb56efd",
           "tokens": 207,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.3.es"
+          ],
+          "embedded_at": "2026-05-04T23:21:40.947360Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:4f26e75c291a1a04ae1f5cb73084a33c61ce22d9a25294055e5cd07d82b84e47",
           "tokens": 189,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.3.en"
+          ],
+          "embedded_at": "2026-05-04T23:21:44.733113Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -112,18 +124,22 @@
         "es": {
           "hash": "sha256:68cc41570612f1e3e4efeec202c7b71c66c6192992492acddadcc906e235fd88",
           "tokens": 1960,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.4.1.es"
+          ],
+          "embedded_at": "2026-05-04T23:21:53.138471Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:babd1f03d2cf640ca8e50e51bf18eb75dfdfd9af620c5b0d299eeda4675c11dd",
           "tokens": 1883,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.4.1.en"
+          ],
+          "embedded_at": "2026-05-04T23:22:01.629870Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -138,18 +154,22 @@
         "es": {
           "hash": "sha256:5b6dfda4c88a93977c1814efb2861494dabafb81ea2b5ed5c39527e3cb7c604c",
           "tokens": 542,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.5.es"
+          ],
+          "embedded_at": "2026-05-04T23:22:09.935895Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:2c19bad7e0c1039427ab4be720302096be47ebd700492939a58596dc8e5d1926",
           "tokens": 506,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.5.en"
+          ],
+          "embedded_at": "2026-05-04T23:22:18.802994Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -164,18 +184,22 @@
         "es": {
           "hash": "sha256:9b70d5e43313852f4976c66808eafb9d26a30a7481fcb86a2c28956065db9e65",
           "tokens": 919,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.6.es"
+          ],
+          "embedded_at": "2026-05-04T23:22:27.478964Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:417eb79b75357d10f70e9f834da75d81b4319105af943de02c882a921fedba39",
           "tokens": 900,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.6.en"
+          ],
+          "embedded_at": "2026-05-04T23:22:35.848380Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -190,18 +214,22 @@
         "es": {
           "hash": "sha256:d0add602f3d6360b20016f4888eeef16e3325d1440b4831a8b9965bf312debeb",
           "tokens": 256,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.7.es"
+          ],
+          "embedded_at": "2026-05-04T23:22:40.230045Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:ff75055a4e0acc0a722fa4a16a3b6a85cce28a07aafa3824e46efbc588154513",
           "tokens": 251,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.7.en"
+          ],
+          "embedded_at": "2026-05-04T23:22:44.960811Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -216,18 +244,22 @@
         "es": {
           "hash": "sha256:cd3360c70b929d86fb6c72a58e22a54a57faa2ba47f96d99d4a295b1fbf478ae",
           "tokens": 252,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.8.es"
+          ],
+          "embedded_at": "2026-05-04T23:22:49.425949Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:7d05b4b53b67afc960f7f54a253de9ea23314b37cbd5e1dfadf5e0c4c3d7393d",
           "tokens": 218,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.8.en"
+          ],
+          "embedded_at": "2026-05-04T23:22:53.636171Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -242,18 +274,25 @@
         "es": {
           "hash": "sha256:0bac0f543845a78d67590443110984413d7156304d60e09472be615ea3178224",
           "tokens": 1046,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.9.1.es",
+            "gdpr.9.2.es",
+            "gdpr.9.3.es",
+            "gdpr.9.4.es"
+          ],
+          "embedded_at": "2026-05-04T23:23:23.733441Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:216c9f87b83bf20e6c90c86d05a750f7c5dbe91dd0c4253f0cd41e6abb200fe2",
           "tokens": 925,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.9.en"
+          ],
+          "embedded_at": "2026-05-04T23:23:33.119130Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -268,18 +307,22 @@
         "es": {
           "hash": "sha256:72d668869974cfc86f805fd4c5295b2401f40e3b6dfd8f7911493ac985999d4f",
           "tokens": 123,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.10.es"
+          ],
+          "embedded_at": "2026-05-04T23:23:35.857177Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:80687627348b6b24c77da97f21b5fabdc2f2b1300d4ccfa4bae9f821a51568a8",
           "tokens": 110,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.10.en"
+          ],
+          "embedded_at": "2026-05-04T23:23:38.009501Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -294,18 +337,22 @@
         "es": {
           "hash": "sha256:d512b220c40c02e90502e629b916e66edc9c8c6e3e346e642aca41d999e405e2",
           "tokens": 197,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.11.es"
+          ],
+          "embedded_at": "2026-05-04T23:23:41.562449Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:88852a1cc6afe67353719d3b64cae125512057ae8014cb22d98ed0d2e9b8fd29",
           "tokens": 200,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.11.en"
+          ],
+          "embedded_at": "2026-05-04T23:23:45.010085Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -320,18 +367,22 @@
         "es": {
           "hash": "sha256:c878431617ede33d1e4051aaca26c3c875ef716da81b7d30889fff2b3468a225",
           "tokens": 839,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.12.es"
+          ],
+          "embedded_at": "2026-05-04T23:23:55.339376Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:adce6845b6da670c9a5df65dd7fda607b804225a159d8256b75155aaf67b9351",
           "tokens": 771,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.12.en"
+          ],
+          "embedded_at": "2026-05-04T23:24:05.754657Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -346,18 +397,22 @@
         "es": {
           "hash": "sha256:b7564a6a10649f7a2b5c1c4c78ef789c1e23eb76f3a3a37695b43063762aa172",
           "tokens": 764,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.13.es"
+          ],
+          "embedded_at": "2026-05-04T23:24:14.784966Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:9c9fa819f89012b8b9c614051ceaae44b691ee1b0da0a8c945ac27c115c856a9",
           "tokens": 710,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.13.en"
+          ],
+          "embedded_at": "2026-05-04T23:24:23.684788Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -372,18 +427,26 @@
         "es": {
           "hash": "sha256:69bd9bcd854b9c26fdb431e6d304409966c66292dd72871cf0695eed5b832e6a",
           "tokens": 1061,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.14.1.es",
+            "gdpr.14.2.es",
+            "gdpr.14.3.es",
+            "gdpr.14.4.es",
+            "gdpr.14.5.es"
+          ],
+          "embedded_at": "2026-05-04T23:24:51.247953Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:c3cbcef54745f720d4dbc375b3a2f91aabbdf4d7601368901f6d10f49507a2ca",
           "tokens": 993,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.14.en"
+          ],
+          "embedded_at": "2026-05-04T23:25:00.244173Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -398,18 +461,22 @@
         "es": {
           "hash": "sha256:3346329b3995a51982a1298d9194a18f75ae7722bba9bdffa2891b244e4dd3a0",
           "tokens": 499,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.15.es"
+          ],
+          "embedded_at": "2026-05-04T23:25:09.152120Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:270b3fff51a22abcba690808fad787ea842cf22fc6c1a23fcaa7d1e5824d1f74",
           "tokens": 491,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.15.en"
+          ],
+          "embedded_at": "2026-05-04T23:25:19.326466Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -424,18 +491,22 @@
         "es": {
           "hash": "sha256:55a8fcc69c7dae65a9a9e8a0725c0e25c08d0c978c6e8250df61f3546d17c5d9",
           "tokens": 69,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.16.es"
+          ],
+          "embedded_at": "2026-05-04T23:25:21.830704Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:69f760afec6fcd077a1076af30ff286f13c0c742b3520363e671149fa3b10a0b",
           "tokens": 74,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.16.en"
+          ],
+          "embedded_at": "2026-05-04T23:25:23.882184Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -450,18 +521,22 @@
         "es": {
           "hash": "sha256:4ff5c06b68dae3b0ca3fbd8b4932634fff10e246ff51eedaa83a6390b6cc1cc6",
           "tokens": 616,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.17.es"
+          ],
+          "embedded_at": "2026-05-04T23:25:33.468105Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:d05124d608071dce8001368370c2a94ed88a66452e3dfafe8bc1f0b33f4498ac",
           "tokens": 577,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.17.en"
+          ],
+          "embedded_at": "2026-05-04T23:25:42.916942Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -476,18 +551,22 @@
         "es": {
           "hash": "sha256:3fc143eea3dcdb4056e469d075f3703486eba21d9713ea29c9503120057bb9d1",
           "tokens": 315,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.18.es"
+          ],
+          "embedded_at": "2026-05-04T23:25:49.171250Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:8904bf319f23b7cf5d7eb09a5e426d60cf54ff71c3222ac5dff1b66f953684aa",
           "tokens": 313,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.18.en"
+          ],
+          "embedded_at": "2026-05-04T23:25:55.691090Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -502,18 +581,22 @@
         "es": {
           "hash": "sha256:0331cb2d7b4c70f67901ded21c59fd8b8d0e90b9501c4d4494679ba0204c6f77",
           "tokens": 102,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.19.es"
+          ],
+          "embedded_at": "2026-05-04T23:25:58.292951Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:92d9030d8697563c00672abee51315a1dddbb54821eeca457a2d3feaea87d729",
           "tokens": 87,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.19.en"
+          ],
+          "embedded_at": "2026-05-04T23:26:00.317123Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -528,18 +611,22 @@
         "es": {
           "hash": "sha256:122c39e546f8ff8ae0a07514bb5dddb74e539cb822799779fc48beea5c8865ae",
           "tokens": 346,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.20.es"
+          ],
+          "embedded_at": "2026-05-04T23:26:06.416857Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:2a99e8621ca02c4b5ba8968a51a9793252f616670936046e42698b8b3c4477c6",
           "tokens": 340,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.20.en"
+          ],
+          "embedded_at": "2026-05-04T23:26:12.342708Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -554,18 +641,22 @@
         "es": {
           "hash": "sha256:36c5920de3723a99de2e03522fab3716b37512b131da5ba61ab60c807be70124",
           "tokens": 438,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.21.es"
+          ],
+          "embedded_at": "2026-05-04T23:26:20.244256Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:8ac0720fc5a92fc8fa177e408b324b467581426669c8f6b87545bae436567a98",
           "tokens": 401,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.21.en"
+          ],
+          "embedded_at": "2026-05-04T23:26:27.863416Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -580,18 +671,22 @@
         "es": {
           "hash": "sha256:514bff09093e78b833171067655b88c2a200d75146053d42091dd73ddb7a9f88",
           "tokens": 328,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.22.es"
+          ],
+          "embedded_at": "2026-05-04T23:26:34.161111Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:cc0fe2cbc09f6806b54ea562c3f3a5e5082a6ee840a903ab0df9f2630eda222a",
           "tokens": 307,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.22.en"
+          ],
+          "embedded_at": "2026-05-04T23:26:40.154001Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -606,18 +701,22 @@
         "es": {
           "hash": "sha256:a7435a28bcccd40dfdc2b496bc2b04d09d74c308c69cc76da23acb6f697a5aec",
           "tokens": 615,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.23.es"
+          ],
+          "embedded_at": "2026-05-04T23:26:49.130061Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:2963d0c3bd8f4cee57e24497bc4ffe1264f3694578a519a2330731a99d54522d",
           "tokens": 579,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.23.en"
+          ],
+          "embedded_at": "2026-05-04T23:26:58.458895Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -632,18 +731,22 @@
         "es": {
           "hash": "sha256:2f1442621632a1dd3045d9b7f1ea2cbd8b58a2cd9e8b19415216196d7cac46af",
           "tokens": 213,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.24.es"
+          ],
+          "embedded_at": "2026-05-04T23:27:02.737162Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:fad4556d424f92259865a67b7707802168f99c8913652bd82a2ac3a511914805",
           "tokens": 190,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.24.en"
+          ],
+          "embedded_at": "2026-05-04T23:27:06.810045Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -658,18 +761,22 @@
         "es": {
           "hash": "sha256:d24b92bd40c673db994ab25a5766f9ea9a2c95ee3372640144e1e4de2fba37ef",
           "tokens": 320,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.25.es"
+          ],
+          "embedded_at": "2026-05-04T23:27:12.586222Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:1e0ba4952a0ca6613f6b925714f323dabde1a74046e9e4847a53e3c0aae64ac3",
           "tokens": 305,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.25.en"
+          ],
+          "embedded_at": "2026-05-04T23:27:18.297761Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -684,18 +791,22 @@
         "es": {
           "hash": "sha256:d2e6ad32267f0e193a7d2440ca703ba4dbb658c994de113991f52ca0a3487edc",
           "tokens": 265,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.26.es"
+          ],
+          "embedded_at": "2026-05-04T23:27:23.153713Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:fa79d32bf540bbf702ee4c815a0816581d35cfbd71e98c2df594d572eab1cbb6",
           "tokens": 244,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.26.en"
+          ],
+          "embedded_at": "2026-05-04T23:27:27.794343Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -710,18 +821,22 @@
         "es": {
           "hash": "sha256:d6b7f0f28c6b8df87f14232127cd53ec4021d3acfbcb450e6f6026fae46e0fba",
           "tokens": 315,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.27.es"
+          ],
+          "embedded_at": "2026-05-04T23:27:33.294874Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:f82113a06f81a0ae54a421178985c29733d9c591947ff5102f47bfc229041176",
           "tokens": 302,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.27.en"
+          ],
+          "embedded_at": "2026-05-04T23:27:39.514131Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -736,18 +851,40 @@
         "es": {
           "hash": "sha256:a5e3a46de75836ad213d2312d3a9fcb9629737a05c105bd9192eb2260543a3b4",
           "tokens": 1305,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.28.1.es",
+            "gdpr.28.2.es",
+            "gdpr.28.3.es",
+            "gdpr.28.4.es",
+            "gdpr.28.5.es",
+            "gdpr.28.6.es",
+            "gdpr.28.7.es",
+            "gdpr.28.8.es",
+            "gdpr.28.9.es",
+            "gdpr.28.10.es"
+          ],
+          "embedded_at": "2026-05-04T23:28:58.813769Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:016d741c5dde51208b3c5e0d2e0181b28810e7801ac4f841cca8a0eb56fffa79",
           "tokens": 1190,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.28.1.en",
+            "gdpr.28.2.en",
+            "gdpr.28.3.en",
+            "gdpr.28.4.en",
+            "gdpr.28.5.en",
+            "gdpr.28.6.en",
+            "gdpr.28.7.en",
+            "gdpr.28.8.en",
+            "gdpr.28.9.en",
+            "gdpr.28.10.en"
+          ],
+          "embedded_at": "2026-05-04T23:30:18.569159Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -762,18 +899,22 @@
         "es": {
           "hash": "sha256:83ab3ee608a5005c23a5630b517d19ac7300aaf56fb886ab548ab2e0f0092eda",
           "tokens": 68,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.29.es"
+          ],
+          "embedded_at": "2026-05-04T23:30:20.644159Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:8fa2484576f70b36e64b10f44837d1162b632f5b32dd8d58c43af1215ab7dbdf",
           "tokens": 51,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.29.en"
+          ],
+          "embedded_at": "2026-05-04T23:30:22.082825Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -788,18 +929,22 @@
         "es": {
           "hash": "sha256:681ff6ad751d4cdd1d73821a6efccf71a86a49336852056e68392589eb947e3f",
           "tokens": 651,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.30.es"
+          ],
+          "embedded_at": "2026-05-04T23:30:31.394940Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:3e29a4e0779a343e48e67787a59c3dd910b13073cde93f907f28aa7ca4da3194",
           "tokens": 651,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.30.en"
+          ],
+          "embedded_at": "2026-05-04T23:30:40.556854Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -814,18 +959,22 @@
         "es": {
           "hash": "sha256:54ab9453a168a18517cb909e4846056877b40c19fbca912a18c70e224a2beb03",
           "tokens": 74,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.31.es"
+          ],
+          "embedded_at": "2026-05-04T23:30:43.086075Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:aaf9b7db505e59d6de93f060599f1094f9ded4f261721e48cfb6616396189592",
           "tokens": 69,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.31.en"
+          ],
+          "embedded_at": "2026-05-04T23:30:45.164107Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -840,18 +989,22 @@
         "es": {
           "hash": "sha256:8e305dc1dfe4af5d0ce93f5835d533fae7d5094e03ee8786697f5027dfa5950d",
           "tokens": 426,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.32.es"
+          ],
+          "embedded_at": "2026-05-04T23:30:53.208283Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:7d8f10ae7a273a71225dbe9a1cf1b6759dd4676f0b1e42d52b101c3cf8a43c4e",
           "tokens": 406,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.32.en"
+          ],
+          "embedded_at": "2026-05-04T23:31:01.300227Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -866,18 +1019,22 @@
         "es": {
           "hash": "sha256:a962784b70748d23ab3d8b35bb47db3df17ffc511caf2f386a76827b4e8a1b3a",
           "tokens": 457,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.33.es"
+          ],
+          "embedded_at": "2026-05-04T23:31:09.437079Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:350cd6fe70e95a81037fb144ddcba7a86c84ccdd3ecb73450a6ee45b929df69e",
           "tokens": 390,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.33.en"
+          ],
+          "embedded_at": "2026-05-04T23:31:16.643547Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -892,18 +1049,22 @@
         "es": {
           "hash": "sha256:8f0857d145d933255c31293a8eb4a736773a7aad0927397912a2a583a96cb507",
           "tokens": 440,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.34.es"
+          ],
+          "embedded_at": "2026-05-04T23:31:25.058056Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:4e275ac07a5917560883422fb27bf9c4915355f2103b649c08b7530ab6078d40",
           "tokens": 411,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.34.en"
+          ],
+          "embedded_at": "2026-05-04T23:31:32.839995Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -918,18 +1079,32 @@
         "es": {
           "hash": "sha256:014aa095a0bb7f547d6175d59b8b41ba31d095cdd258aabe571c38670c70c442",
           "tokens": 1009,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.35.1.es",
+            "gdpr.35.2.es",
+            "gdpr.35.3.es",
+            "gdpr.35.4.es",
+            "gdpr.35.5.es",
+            "gdpr.35.6.es",
+            "gdpr.35.7.es",
+            "gdpr.35.8.es",
+            "gdpr.35.9.es",
+            "gdpr.35.10.es",
+            "gdpr.35.11.es"
+          ],
+          "embedded_at": "2026-05-04T23:32:03.211493Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:6e90d61b675fc3a3d50289199b8450c7389f56388333afcb39e834e6e04a4492",
           "tokens": 944,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.35.en"
+          ],
+          "embedded_at": "2026-05-04T23:32:12.664360Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -944,18 +1119,22 @@
         "es": {
           "hash": "sha256:a52e5f9f32648fa3c69213b57bb38adb484cbf42d037276cbe1a0e8be22fd82a",
           "tokens": 612,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.36.es"
+          ],
+          "embedded_at": "2026-05-04T23:32:21.899666Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:8891cbbb5e3acb935dee25a2d95b05206ebc16c933179bab75407882a9c8c637",
           "tokens": 572,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.36.en"
+          ],
+          "embedded_at": "2026-05-04T23:32:31.577807Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -970,18 +1149,22 @@
         "es": {
           "hash": "sha256:83e56ed43d13bf420e8412bbb661a9d3469c127b9c74f64b9f84d9248063adc9",
           "tokens": 478,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.37.es"
+          ],
+          "embedded_at": "2026-05-04T23:32:40.507343Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:5f64e3cfaf2e5187b0ed79624319357ca06462282e7be2cefdbb16645dcfc221",
           "tokens": 427,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.37.en"
+          ],
+          "embedded_at": "2026-05-04T23:32:48.829405Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -996,18 +1179,22 @@
         "es": {
           "hash": "sha256:da94984d93e14863d03718fa64182661ea21dc7a57082c22ea459b93535c8f6e",
           "tokens": 356,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.38.es"
+          ],
+          "embedded_at": "2026-05-04T23:32:55.195883Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:ea2d82da1592b98330347dd43a8aafa071b6f9a3b57e03ff220161d7f7a72b98",
           "tokens": 297,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.38.en"
+          ],
+          "embedded_at": "2026-05-04T23:33:01.069307Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1022,18 +1209,22 @@
         "es": {
           "hash": "sha256:7645e07313d67796777bc4b5711c26b96e6d51d5dfcf52c67f1e3e687ef2859a",
           "tokens": 349,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.39.es"
+          ],
+          "embedded_at": "2026-05-04T23:33:07.457470Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:64d689b2dcb8ebfeb85c8f7a7b435d52212ab31a7dc85922a5931cb6b7bb1118",
           "tokens": 299,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.39.en"
+          ],
+          "embedded_at": "2026-05-04T23:33:13.166839Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1048,18 +1239,42 @@
         "es": {
           "hash": "sha256:4a0baf647955e03703ca4df74045b73b347218dba9db72da7b66983af4eb192c",
           "tokens": 1170,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.40.1.es",
+            "gdpr.40.2.es",
+            "gdpr.40.3.es",
+            "gdpr.40.4.es",
+            "gdpr.40.5.es",
+            "gdpr.40.6.es",
+            "gdpr.40.7.es",
+            "gdpr.40.8.es",
+            "gdpr.40.9.es",
+            "gdpr.40.10.es",
+            "gdpr.40.11.es"
+          ],
+          "embedded_at": "2026-05-04T23:34:08.550363Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:bffcaf616e315df9f062d1676243b019324e57a2f9d2bbab6dd92b0135ea397d",
           "tokens": 1113,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.40.1.en",
+            "gdpr.40.2.en",
+            "gdpr.40.3.en",
+            "gdpr.40.4.en",
+            "gdpr.40.5.en",
+            "gdpr.40.6.en",
+            "gdpr.40.7.en",
+            "gdpr.40.8.en",
+            "gdpr.40.9.en",
+            "gdpr.40.10.en",
+            "gdpr.40.11.en"
+          ],
+          "embedded_at": "2026-05-04T23:35:02.558166Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1074,18 +1289,22 @@
         "es": {
           "hash": "sha256:676fdab061346739f2784d58dc2bc528a213846094de2bc7d23fda9fac2770a0",
           "tokens": 536,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.41.es"
+          ],
+          "embedded_at": "2026-05-04T23:35:11.845945Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:e401ad2ed9fa7b8db951337947d9a9b5e00ea1cf30ccb68875c842dcb0bd16c5",
           "tokens": 540,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.41.en"
+          ],
+          "embedded_at": "2026-05-04T23:35:21.385827Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1100,18 +1319,22 @@
         "es": {
           "hash": "sha256:be9f0fc3ab5d5bb067259f1c401a2407c68098c78ca0a5829f5c5500b9225de5",
           "tokens": 690,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.42.es"
+          ],
+          "embedded_at": "2026-05-04T23:35:32.319164Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:47771b13ac684051eced224a59f9dd053d3b1e8f8e8d04a415357cf7f849cf91",
           "tokens": 633,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.42.en"
+          ],
+          "embedded_at": "2026-05-04T23:35:43.351486Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1126,18 +1349,38 @@
         "es": {
           "hash": "sha256:398b2279b35cb2cf83b012c8d2ac90d16676954587817dbf3a8300516c7524fc",
           "tokens": 1154,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.43.1.es",
+            "gdpr.43.2.es",
+            "gdpr.43.3.es",
+            "gdpr.43.4.es",
+            "gdpr.43.5.es",
+            "gdpr.43.6.es",
+            "gdpr.43.7.es",
+            "gdpr.43.8.es",
+            "gdpr.43.9.es"
+          ],
+          "embedded_at": "2026-05-04T23:36:33.055389Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:2e7f3b4714b8d52ff55fa14057eb4b795782a42ceda035c6063c14c485e9282f",
           "tokens": 1076,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.43.1.en",
+            "gdpr.43.2.en",
+            "gdpr.43.3.en",
+            "gdpr.43.4.en",
+            "gdpr.43.5.en",
+            "gdpr.43.6.en",
+            "gdpr.43.7.en",
+            "gdpr.43.8.en",
+            "gdpr.43.9.en"
+          ],
+          "embedded_at": "2026-05-04T23:37:18.730391Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1152,18 +1395,22 @@
         "es": {
           "hash": "sha256:93b75ae21cd11e0814d8ebd5493583c8e81350540ea7ea32a6f8aa8a0947d71f",
           "tokens": 135,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.44.es"
+          ],
+          "embedded_at": "2026-05-04T23:37:22.042559Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:f691d7cf6546062623e1b4f7d22023ccc9210fee3c75d443c17424d03619e3a6",
           "tokens": 130,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.44.en"
+          ],
+          "embedded_at": "2026-05-04T23:37:24.938308Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1178,18 +1425,38 @@
         "es": {
           "hash": "sha256:29791d73616fc8d6e527052e9fb0bb82ff5c98c597b1c551fe4b4f1f56e44b45",
           "tokens": 1134,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.45.1.es",
+            "gdpr.45.2.es",
+            "gdpr.45.3.es",
+            "gdpr.45.4.es",
+            "gdpr.45.5.es",
+            "gdpr.45.6.es",
+            "gdpr.45.7.es",
+            "gdpr.45.8.es",
+            "gdpr.45.9.es"
+          ],
+          "embedded_at": "2026-05-04T23:38:16.139828Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:73116baf993c166b4a52b7165125b98a96bbbc443131d5a0713ff6c7f3f45440",
           "tokens": 1048,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.45.1.en",
+            "gdpr.45.2.en",
+            "gdpr.45.3.en",
+            "gdpr.45.4.en",
+            "gdpr.45.5.en",
+            "gdpr.45.6.en",
+            "gdpr.45.7.en",
+            "gdpr.45.8.en",
+            "gdpr.45.9.en"
+          ],
+          "embedded_at": "2026-05-04T23:39:02.533944Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1204,18 +1471,22 @@
         "es": {
           "hash": "sha256:d8e4e9de919c3d8704f3a7d8bb4216e9bb0df4c002cf6b6dfbb7132d0acaa519",
           "tokens": 615,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.46.es"
+          ],
+          "embedded_at": "2026-05-04T23:39:13.094767Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:85bd7cb544f21c3e1a604c89f6dc9aa1e6963ea0bebcca889b42ed80fbd562eb",
           "tokens": 578,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.46.en"
+          ],
+          "embedded_at": "2026-05-04T23:39:22.111163Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1230,18 +1501,26 @@
         "es": {
           "hash": "sha256:394c0b0d5149fb011928ce69be2284677381ec3470165b0acd72ebebee186dfe",
           "tokens": 1164,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.47.1.es",
+            "gdpr.47.2.es",
+            "gdpr.47.3.es"
+          ],
+          "embedded_at": "2026-05-04T23:39:46.577020Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:755ceade014f686cbf3ab58f978f0cadbc58799e90e803dd49f33123029f257f",
           "tokens": 1078,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.47.1.en",
+            "gdpr.47.2.en",
+            "gdpr.47.3.en"
+          ],
+          "embedded_at": "2026-05-04T23:40:11.742004Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1256,18 +1535,22 @@
         "es": {
           "hash": "sha256:3f5238a49e08d128242e8fb1ee6064ce32e7237666ebffe41070f4edf11ffcc2",
           "tokens": 106,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.48.es"
+          ],
+          "embedded_at": "2026-05-04T23:40:14.436588Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:3b8a6aab8328796bfa6e1fd0bfe2bbe282e65d365e4e039711934d9339a35dbd",
           "tokens": 98,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.48.en"
+          ],
+          "embedded_at": "2026-05-04T23:40:16.566415Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1282,18 +1565,22 @@
         "es": {
           "hash": "sha256:2b37980726d3cf7339148054cbaf86cf5a932a56494678a3a270d14ccd94f1d9",
           "tokens": 900,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.49.es"
+          ],
+          "embedded_at": "2026-05-04T23:40:26.336740Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:2ff4ffede8ea45f3be689ded81fcde5c0098e0fab4f8f760bf7d5053b415b565",
           "tokens": 861,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.49.en"
+          ],
+          "embedded_at": "2026-05-04T23:40:35.347156Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1308,18 +1595,22 @@
         "es": {
           "hash": "sha256:557983c1b89cd432ac8a672c18fd51a3ba63981b2b1761d8845bf69c227868f8",
           "tokens": 259,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.50.es"
+          ],
+          "embedded_at": "2026-05-04T23:40:40.230167Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:e6f33cce562ff99de1fc14dd5b2324e24c487a25e0a34867a842024cd45c6348",
           "tokens": 222,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.50.en"
+          ],
+          "embedded_at": "2026-05-04T23:40:44.563713Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1334,18 +1625,22 @@
         "es": {
           "hash": "sha256:5d4d0043c7174dcfbfde336eb5b1730edd02fb8872c76736914e16b3dfdb7bf2",
           "tokens": 243,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.51.es"
+          ],
+          "embedded_at": "2026-05-04T23:40:49.241303Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:479e0bb6fbbbca5be472553fd4094a36dd3c77fc438ac24d30c58a4385db802a",
           "tokens": 229,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.51.en"
+          ],
+          "embedded_at": "2026-05-04T23:40:53.715508Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1360,18 +1655,22 @@
         "es": {
           "hash": "sha256:07612aec15e89fc532c2643a175054bbcce5a4f646bdb949bd9a6cadafd665a5",
           "tokens": 345,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.52.es"
+          ],
+          "embedded_at": "2026-05-04T23:41:00.380192Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:937993e64502ec06edb0715f096d0dc4a68e32a3070551ab4762143421a4b486",
           "tokens": 306,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.52.en"
+          ],
+          "embedded_at": "2026-05-04T23:41:06.760518Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1386,18 +1685,22 @@
         "es": {
           "hash": "sha256:c123bf0501cc1c4b0de012981f6bcaefc28cc7575d1658772011c404b9b75138",
           "tokens": 199,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.53.es"
+          ],
+          "embedded_at": "2026-05-04T23:41:10.622313Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:dcea5ee3982a68545f18f3dd83ed033c577d93bb80663775c5a7209e5802e039",
           "tokens": 175,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.53.en"
+          ],
+          "embedded_at": "2026-05-04T23:41:14.007110Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1412,18 +1715,22 @@
         "es": {
           "hash": "sha256:c0fc1b2313e6d9abb71f708ead9c1df196bcb246607c60ebc769fa002e4569e5",
           "tokens": 424,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.54.es"
+          ],
+          "embedded_at": "2026-05-04T23:41:21.857883Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:4bc8637579f6276b11e85504877c6af2c401b3d7e5f35a7566feed8780b3d973",
           "tokens": 397,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.54.en"
+          ],
+          "embedded_at": "2026-05-04T23:41:29.264773Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1438,18 +1745,22 @@
         "es": {
           "hash": "sha256:a82b50a407c25e01865b8d887b98e2c0fa9b8b6cef1890c6cd28cd99cd0fca2d",
           "tokens": 138,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.55.es"
+          ],
+          "embedded_at": "2026-05-04T23:41:32.353111Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:a764ed6805b95035ae3a20383ac2997e82bf7d52f32b74d98e5d744aec40aefa",
           "tokens": 133,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.55.en"
+          ],
+          "embedded_at": "2026-05-04T23:41:35.384088Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1464,18 +1775,22 @@
         "es": {
           "hash": "sha256:da70982be82662e8c5647ee72e53497dbf7dffa22b5113b7a3c700b666555954",
           "tokens": 410,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.56.es"
+          ],
+          "embedded_at": "2026-05-04T23:41:42.984758Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:99008e7f30f12b8695ee04b1b8c3adc855368e0695b416f72cd0d09be3efb482",
           "tokens": 418,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.56.en"
+          ],
+          "embedded_at": "2026-05-04T23:41:50.599561Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1490,18 +1805,25 @@
         "es": {
           "hash": "sha256:c11487ca6e31046e0949f7c2866920c341e4f2b915230bf2c25649947f82a326",
           "tokens": 1089,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.57.1.es",
+            "gdpr.57.2.es",
+            "gdpr.57.3.es",
+            "gdpr.57.4.es"
+          ],
+          "embedded_at": "2026-05-04T23:42:23.682227Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:5f7025a90c657126a5719210d5d1e886d7228135976fb77a955d2d1b0ae4d5c3",
           "tokens": 957,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.57.en"
+          ],
+          "embedded_at": "2026-05-04T23:42:33.529784Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1516,18 +1838,32 @@
         "es": {
           "hash": "sha256:b9e906d985f2703cf413887a55d81384819d2d0f6896939217efb6a652c4b5e9",
           "tokens": 1154,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.58.1.es",
+            "gdpr.58.2.es",
+            "gdpr.58.3.es",
+            "gdpr.58.4.es",
+            "gdpr.58.5.es",
+            "gdpr.58.6.es"
+          ],
+          "embedded_at": "2026-05-04T23:43:16.350690Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:e32361e670cb3aa5d6f21c555b285b93c00ebe9da55e10a1290033ff484f256d",
           "tokens": 1067,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.58.1.en",
+            "gdpr.58.2.en",
+            "gdpr.58.3.en",
+            "gdpr.58.4.en",
+            "gdpr.58.5.en",
+            "gdpr.58.6.en"
+          ],
+          "embedded_at": "2026-05-04T23:43:53.188806Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1542,18 +1878,22 @@
         "es": {
           "hash": "sha256:18aeeaf90391269da3c29339d7b1627b21e3afea81b0077fcd5a10895e9b20f8",
           "tokens": 137,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.59.es"
+          ],
+          "embedded_at": "2026-05-04T23:43:56.356891Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:b0af83074cedb09d3bcb50ae3891691d797c2fa1c90d33852ce21594157bddd8",
           "tokens": 115,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.59.en"
+          ],
+          "embedded_at": "2026-05-04T23:43:59.080756Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1568,18 +1908,22 @@
         "es": {
           "hash": "sha256:94e2bb11f3fa0189c37598cada897a7f8707d779cb95690a3b4efd22b43e3c00",
           "tokens": 1000,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.60.es"
+          ],
+          "embedded_at": "2026-05-04T23:44:08.538874Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:91dcb7e28f9b140a5989576c4e526f3f856c64bf046d9d8016268b239106b641",
           "tokens": 965,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.60.en"
+          ],
+          "embedded_at": "2026-05-04T23:44:17.490690Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1594,18 +1938,22 @@
         "es": {
           "hash": "sha256:d33eaa8f01f90b8b694a09f3c240bb0c3cf6ff5309cae27e814a0b496e7914be",
           "tokens": 699,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.61.es"
+          ],
+          "embedded_at": "2026-05-04T23:44:26.605222Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:59e63ae62f0ba9554441776165faaa01a1177c335574363e9eb1d6f4f0ef79a9",
           "tokens": 655,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.61.en"
+          ],
+          "embedded_at": "2026-05-04T23:44:36.105566Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1620,18 +1968,22 @@
         "es": {
           "hash": "sha256:2a116994463a932be6175eadf479bafc05a7ee61b23a69684bff4e5dc01da03c",
           "tokens": 771,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.62.es"
+          ],
+          "embedded_at": "2026-05-04T23:44:45.531575Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:519d956dc991ca9b766623a91ac6598898314732be96145c64fbe2eb50506d00",
           "tokens": 705,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.62.en"
+          ],
+          "embedded_at": "2026-05-04T23:44:55.555359Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1646,18 +1998,22 @@
         "es": {
           "hash": "sha256:0f07ba2a84a0870dfde6ed7a38edaf9babf344bb866a4c89d899c38bb441bfca",
           "tokens": 55,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.63.es"
+          ],
+          "embedded_at": "2026-05-04T23:44:57.684052Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:91e6dd03f07a6fc9a188b64af422eeb4c92938d2c689e7153b8f5da9909a69f7",
           "tokens": 48,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.63.en"
+          ],
+          "embedded_at": "2026-05-04T23:44:59.388168Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1672,18 +2028,22 @@
         "es": {
           "hash": "sha256:b4c60d1bcb482b6d4e339309f54177477e4a69d5b41d0caeb75a76930dc04363",
           "tokens": 911,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.64.es"
+          ],
+          "embedded_at": "2026-05-04T23:45:09.256802Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:7869a9820b7b15d67ec83edaa718a7bd631262da90a5cda1f6ddfd2cd9fbefe0",
           "tokens": 867,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.64.en"
+          ],
+          "embedded_at": "2026-05-04T23:45:18.906320Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1698,18 +2058,22 @@
         "es": {
           "hash": "sha256:9001038c658e6a82b3ec8370f26170a934e6b80fd9440bde4d16daff12eeaa63",
           "tokens": 786,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.65.es"
+          ],
+          "embedded_at": "2026-05-04T23:45:28.073344Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:f9bc73eb3258a6748a0eab2bc49882e8756055bfed43e037e136915bdd35f1b2",
           "tokens": 791,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.65.en"
+          ],
+          "embedded_at": "2026-05-04T23:45:37.126362Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1724,18 +2088,22 @@
         "es": {
           "hash": "sha256:bd65bd7dd9eb64e3611fbc9f581ab22a62ed48c617943f18d4f4f9cda1061cb1",
           "tokens": 349,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.66.es"
+          ],
+          "embedded_at": "2026-05-04T23:45:43.355192Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:07300749c9f7ebbd6cc06d28b7634ca9f8bade0036a1fc9da31f1f023fdc4f05",
           "tokens": 336,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.66.en"
+          ],
+          "embedded_at": "2026-05-04T23:45:50.004230Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1750,18 +2118,22 @@
         "es": {
           "hash": "sha256:c45cbcc08769698191e59882d6ce758f9b1748898d5cab8b4a98e5d48150d236",
           "tokens": 117,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.67.es"
+          ],
+          "embedded_at": "2026-05-04T23:45:52.761173Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:414c37e3024f817305ddcfbb4188843990e48480fece05585ea2e825a7350838",
           "tokens": 120,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.67.en"
+          ],
+          "embedded_at": "2026-05-04T23:45:56.034254Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1776,18 +2148,22 @@
         "es": {
           "hash": "sha256:94c5675dfb9bf6d98d3b571c3b85c51ef8287c1a25fc48978e2722b237464b1c",
           "tokens": 258,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.68.es"
+          ],
+          "embedded_at": "2026-05-04T23:46:00.917345Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:8ca8481bbbca9b1c9d2263fd323baaca5cac4c495210c7609c20ae0cc2c61f46",
           "tokens": 258,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.68.en"
+          ],
+          "embedded_at": "2026-05-04T23:46:05.764132Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1802,18 +2178,22 @@
         "es": {
           "hash": "sha256:db80a2b1f2a3d8a1869186a5aee46be1ee7edf263401bc1f4040d370f3eb52dd",
           "tokens": 90,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.69.es"
+          ],
+          "embedded_at": "2026-05-04T23:46:08.138418Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:8942e69fabc46a87541c0f52e2c44df740bdca1ef72a447222080490d1b65136",
           "tokens": 85,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.69.en"
+          ],
+          "embedded_at": "2026-05-04T23:46:10.355098Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1828,18 +2208,28 @@
         "es": {
           "hash": "sha256:0734b8682de94f0d584a670664a8ac810211e9181aff5e41e3ce7467b45bac32",
           "tokens": 1567,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.70.1.es",
+            "gdpr.70.2.es",
+            "gdpr.70.3.es",
+            "gdpr.70.4.es"
+          ],
+          "embedded_at": "2026-05-04T23:46:42.599097Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:181f6d0d398dadf25ceb44a95ea04fcc709505e38154f72aca1ba9e7f901081d",
           "tokens": 1381,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.70.1.en",
+            "gdpr.70.2.en",
+            "gdpr.70.3.en",
+            "gdpr.70.4.en"
+          ],
+          "embedded_at": "2026-05-04T23:47:14.906576Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1854,18 +2244,22 @@
         "es": {
           "hash": "sha256:224bef210ea1cbed911ab0db47015c024f835f69f70e1711ee418dacdf009535",
           "tokens": 111,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.71.es"
+          ],
+          "embedded_at": "2026-05-04T23:47:17.653000Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:a2ad0473a3dfbebf867a035d5e00244c964ad00028236ed989bbaec58611a580",
           "tokens": 111,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.71.en"
+          ],
+          "embedded_at": "2026-05-04T23:47:20.065180Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1880,18 +2274,22 @@
         "es": {
           "hash": "sha256:b9f1c1a22f7d9f5a055e95d7b43754e1ed01f94d7d3fecb4220ec4d81cf73c6e",
           "tokens": 55,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.72.es"
+          ],
+          "embedded_at": "2026-05-04T23:47:21.863223Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:8c6671e05564facde5cf92ae6199ca98c5c1af0f5355808e9b30812f57d6ff62",
           "tokens": 52,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.72.en"
+          ],
+          "embedded_at": "2026-05-04T23:47:24.384723Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1906,18 +2304,22 @@
         "es": {
           "hash": "sha256:e67ffddb84c6f27af8dce142c61cf45ba1cf38e218173d4ded2c208b8aced96d",
           "tokens": 42,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.73.es"
+          ],
+          "embedded_at": "2026-05-04T23:47:25.938039Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:029b63f6da12ebdd605acdac897284f0616cd2fa980ec97a87c5d9a80b7493f8",
           "tokens": 52,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.73.en"
+          ],
+          "embedded_at": "2026-05-04T23:47:27.864011Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1932,18 +2334,22 @@
         "es": {
           "hash": "sha256:bff207fd56096296aecce6bfbcb9adcb4c57f69600494a96efd6079c6ac559ea",
           "tokens": 138,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.74.es"
+          ],
+          "embedded_at": "2026-05-04T23:47:30.735408Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:0207792ae90bbcb864a0ac7a7163962587eccd2b83626bf3d3f5c817021e6e65",
           "tokens": 143,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.74.en"
+          ],
+          "embedded_at": "2026-05-04T23:47:33.949307Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1958,18 +2364,22 @@
         "es": {
           "hash": "sha256:570d28bc22665ae377a6a5c30ad0417ba65821019cd8cbcf7e42149c1c41770e",
           "tokens": 355,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.75.es"
+          ],
+          "embedded_at": "2026-05-04T23:47:40.962767Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:7e123cfc05b81d4c07d9558d8a4e46cfc0dc7d9591077d044a606484b6185c16",
           "tokens": 337,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.75.en"
+          ],
+          "embedded_at": "2026-05-04T23:47:46.944043Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -1984,18 +2394,22 @@
         "es": {
           "hash": "sha256:edf727561a94ed6f8c76eefce08944672f9e4884165f107befe307dab984a6dd",
           "tokens": 92,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.76.es"
+          ],
+          "embedded_at": "2026-05-04T23:47:49.336008Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:32d864c804db4c4ae9afec796c00891fef8ad0037431845b593521d6721221e7",
           "tokens": 83,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.76.en"
+          ],
+          "embedded_at": "2026-05-04T23:47:51.377385Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2010,18 +2424,22 @@
         "es": {
           "hash": "sha256:da4a882d7e6503be807e7aad1aa83e170ea7f19300a70bb1b8d4f8c1a11a2171",
           "tokens": 124,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.77.es"
+          ],
+          "embedded_at": "2026-05-04T23:47:53.976221Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:e0beac48adc64612d404e7a151a7ef33aee43abace87ab153011f84fbf131ab7",
           "tokens": 128,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.77.en"
+          ],
+          "embedded_at": "2026-05-04T23:47:57.686071Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2036,18 +2454,22 @@
         "es": {
           "hash": "sha256:2659b87418daaed932028ec439e907a8d4e186a9b6acef8171fae930e8947868",
           "tokens": 288,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.78.es"
+          ],
+          "embedded_at": "2026-05-04T23:48:03.325911Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:1811d9e3ad5569a504996b4a715cd764b66f85545c7f1f49e59ab5899059661c",
           "tokens": 277,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.78.en"
+          ],
+          "embedded_at": "2026-05-04T23:48:08.714371Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2062,18 +2484,22 @@
         "es": {
           "hash": "sha256:31f644d5ffd3e6c3ccd1be46e35e8be333924ad4c37d2277756619ef9b45cbfd",
           "tokens": 173,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.79.es"
+          ],
+          "embedded_at": "2026-05-04T23:48:12.860001Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:f5733cf2aa308de5cabe143191916ecd8e073a2d8db38480f4fffa27a4fceeee",
           "tokens": 183,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.79.en"
+          ],
+          "embedded_at": "2026-05-04T23:48:16.648832Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2088,18 +2514,22 @@
         "es": {
           "hash": "sha256:65c5663bd644c29fd606b7dd600bdaa6a059702a5444449c45212b7f5a6fc771",
           "tokens": 227,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.80.es"
+          ],
+          "embedded_at": "2026-05-04T23:48:20.874175Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:3b5e968b12e185a0bfac5260b6d2c2098b213adfd7d0d6b25728c43148859355",
           "tokens": 245,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.80.en"
+          ],
+          "embedded_at": "2026-05-04T23:48:25.678957Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2114,18 +2544,22 @@
         "es": {
           "hash": "sha256:43c2164084163ac945b0a4dcec5fcf63d250ac81de70b8b53bb8a2ad2a2e9629",
           "tokens": 206,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.81.es"
+          ],
+          "embedded_at": "2026-05-04T23:48:29.740179Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:0fe6fd4640b3759f1edfc17ab010fb5bafdc8d992e5ac105ebdaa1af002e9612",
           "tokens": 199,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.81.en"
+          ],
+          "embedded_at": "2026-05-04T23:48:33.752633Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2140,18 +2574,22 @@
         "es": {
           "hash": "sha256:ac5236b2f9e050ce11afc325b0737078eafbef5a2847578edd240e281877dcf0",
           "tokens": 407,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.82.es"
+          ],
+          "embedded_at": "2026-05-04T23:48:41.145554Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:eca1c748e82cc3f3e3e49de7ab14eb5c4f7d601f3ca6726feccc41839f82ccbb",
           "tokens": 347,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.82.en"
+          ],
+          "embedded_at": "2026-05-04T23:48:48.771603Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2166,18 +2604,38 @@
         "es": {
           "hash": "sha256:fe049f603b744a7492ec87dfb465e45472f7233c4b63879af1bdfa4385a913b3",
           "tokens": 1419,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.83.1.es",
+            "gdpr.83.2.es",
+            "gdpr.83.3.es",
+            "gdpr.83.4.es",
+            "gdpr.83.5.es",
+            "gdpr.83.6.es",
+            "gdpr.83.7.es",
+            "gdpr.83.8.es",
+            "gdpr.83.9.es"
+          ],
+          "embedded_at": "2026-05-04T23:49:52.243472Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:1be92f459fd444a20558d5e0c1196ce87c310161d41ee78e7669255cfa89e4a9",
           "tokens": 1289,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.83.1.en",
+            "gdpr.83.2.en",
+            "gdpr.83.3.en",
+            "gdpr.83.4.en",
+            "gdpr.83.5.en",
+            "gdpr.83.6.en",
+            "gdpr.83.7.en",
+            "gdpr.83.8.en",
+            "gdpr.83.9.en"
+          ],
+          "embedded_at": "2026-05-04T23:50:54.042222Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2192,18 +2650,22 @@
         "es": {
           "hash": "sha256:070fd3582f9ee110de124e5af843e6dad252f06086bce43b8344ff173b01438d",
           "tokens": 147,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.84.es"
+          ],
+          "embedded_at": "2026-05-04T23:50:57.385244Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:504f607e3e9bad5435f243d39817c6e55d5a30a90b44a90680609e233d58b346",
           "tokens": 131,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.84.en"
+          ],
+          "embedded_at": "2026-05-04T23:51:00.147930Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2218,18 +2680,22 @@
         "es": {
           "hash": "sha256:e948eb9e9a4e466c877c54d7c43ac50608ed6d353caba1c4f8020a0379b25697",
           "tokens": 244,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.85.es"
+          ],
+          "embedded_at": "2026-05-04T23:51:05.206625Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:3be786a561b9266699b496a1218c2543df0e4902453796cad9f1572356effdf4",
           "tokens": 227,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.85.en"
+          ],
+          "embedded_at": "2026-05-04T23:51:09.911958Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2244,18 +2710,22 @@
         "es": {
           "hash": "sha256:aebaeae8a2bc87377acbd0b733a4c63cddf720ae4f9c85f168946766ba73fb8e",
           "tokens": 114,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.86.es"
+          ],
+          "embedded_at": "2026-05-04T23:51:12.890132Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:4d03abb5c84f0170e97d64beae420b44355b1ab3f38f430974e8911fe34a3581",
           "tokens": 103,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.86.en"
+          ],
+          "embedded_at": "2026-05-04T23:51:15.578986Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2270,18 +2740,22 @@
         "es": {
           "hash": "sha256:756c1ab31b688014ecf158f490d984c2591e283d545164af366305970546c709",
           "tokens": 83,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.87.es"
+          ],
+          "embedded_at": "2026-05-04T23:51:17.879581Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:d6943f6fe888ea6f9621832a92b2a90779ae5ebcd60093c2a99e0d84bf5b4648",
           "tokens": 72,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.87.en"
+          ],
+          "embedded_at": "2026-05-04T23:51:20.658683Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2296,18 +2770,22 @@
         "es": {
           "hash": "sha256:35532a68381fa8f447304a8a568a735a7c0ad9e6c7045bcac75565ff55e6df80",
           "tokens": 295,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.88.es"
+          ],
+          "embedded_at": "2026-05-04T23:51:26.203105Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:6909021d8c54d121e9948e42cec21cf90a4dc8eb964bbed12a6b6c559c684260",
           "tokens": 276,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.88.en"
+          ],
+          "embedded_at": "2026-05-04T23:51:31.356693Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2322,18 +2800,22 @@
         "es": {
           "hash": "sha256:1b5c907341ff684848e5f590bf6caab3a3cf5c44b46081fa47f746e62b8044a6",
           "tokens": 439,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.89.es"
+          ],
+          "embedded_at": "2026-05-04T23:51:39.468926Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:efa2a266eda5274e4af6a4ee4fd161f07bdd7739bdbce5352448d94cf12ac3eb",
           "tokens": 436,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.89.en"
+          ],
+          "embedded_at": "2026-05-04T23:51:47.969624Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2348,18 +2830,22 @@
         "es": {
           "hash": "sha256:467b55d1e59672cf50dd297ce212d1654264f5a9d241511dbb4dd6bde73c28d9",
           "tokens": 212,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.90.es"
+          ],
+          "embedded_at": "2026-05-04T23:51:52.388750Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:0749eb13e6b207738ea8267e22f6bc2fd5f812b3c8f96751f46f4a97187b751d",
           "tokens": 189,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.90.en"
+          ],
+          "embedded_at": "2026-05-04T23:51:56.201554Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2374,18 +2860,22 @@
         "es": {
           "hash": "sha256:864b0af60aedf9415b2dadaac0473a8801d667abd458949a09a4d9cdccf2e725",
           "tokens": 169,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.91.es"
+          ],
+          "embedded_at": "2026-05-04T23:51:59.499356Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:67103f1d9829349c0db3468dad505b9abec4fbe717ea5ff0eaa4dbe4741fe527",
           "tokens": 153,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.91.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:02.726207Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2400,18 +2890,22 @@
         "es": {
           "hash": "sha256:0f1138335d3f04c51c6fcfb93fd7de504d30550d1cac20c585e33cae6f28c8b7",
           "tokens": 330,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.92.es"
+          ],
+          "embedded_at": "2026-05-04T23:52:08.679499Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:4dceeb912767da67d8edaccb014cb2c35aa4b24f45dd3c0440d27d7470ff9cac",
           "tokens": 309,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.92.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:15.478784Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2426,18 +2920,22 @@
         "es": {
           "hash": "sha256:a37e7b66ac01d1497ca9ad755ea0ad14852a6afa77e1fba543b120ea91cac895",
           "tokens": 103,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.93.es"
+          ],
+          "embedded_at": "2026-05-04T23:52:18.014095Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:b0bc0b42af378e032ba32c0f88599d0e82c254a16dd3a4c504a719114c7c812b",
           "tokens": 100,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.93.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:20.378361Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2452,18 +2950,22 @@
         "es": {
           "hash": "sha256:2ad4f1e4af6f22a6181dfbb58bc6c3dfbdf5857a73afe9c1401fc450ea17a511",
           "tokens": 115,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.94.es"
+          ],
+          "embedded_at": "2026-05-04T23:52:23.460007Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:223ad82d7c92683931540e552108fc0dbaa459bf5d3fac6f3b49cdcd9fb5f505",
           "tokens": 112,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.94.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:26.234537Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2478,18 +2980,22 @@
         "es": {
           "hash": "sha256:0c89de31be38843fe2a6c0deebfca1b7f2d89787983829614a2143168deb5d1c",
           "tokens": 71,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.95.es"
+          ],
+          "embedded_at": "2026-05-04T23:52:28.400132Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:53133e80c687569817b4bc80de49e15c79e1251169d5b05b308f0b260a2a459e",
           "tokens": 70,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.95.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:30.278242Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2504,18 +3010,22 @@
         "es": {
           "hash": "sha256:186fae07d3f742d3d21ff9c864f10c6de70908e9d98fb2f46eea1eff5b0ca4e0",
           "tokens": 73,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.96.es"
+          ],
+          "embedded_at": "2026-05-04T23:52:32.361936Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:22a7fc4c267ed5d4ca32c58c1b9d8b57262f2a05b89ddf973fd6f3bfdc4c5b00",
           "tokens": 58,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.96.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:34.329378Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2530,18 +3040,22 @@
         "es": {
           "hash": "sha256:e2b6b273efe510d8ac85ef94a94f723e79a3ee1f9422cbbe651129c703a63ce2",
           "tokens": 312,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.97.es"
+          ],
+          "embedded_at": "2026-05-04T23:52:40.210340Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:2ad6aad1cb398984a813080f15ec898ec1ffe310544c6a6a206c409721260b3f",
           "tokens": 287,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.97.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:46.444681Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2556,18 +3070,22 @@
         "es": {
           "hash": "sha256:acdc78bf38ca5961af2e7d6f613749cc20cd78096f0fdf5cf82d34c4bf05583b",
           "tokens": 104,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.98.es"
+          ],
+          "embedded_at": "2026-05-04T23:52:48.824684Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:c607968b144ba9b4db79dc7c91497843e4a96087206068af1dc985555780f93b",
           "tokens": 90,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.98.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:51.195545Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
@@ -2582,18 +3100,22 @@
         "es": {
           "hash": "sha256:3c8aa0c72db43516cfd8590ae5f9b4e4c7f0cd05062b0c342d385abb7fa28a7e",
           "tokens": 59,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.99.es"
+          ],
+          "embedded_at": "2026-05-04T23:52:52.807638Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_es.pdf"
         },
         "en": {
           "hash": "sha256:1edb0318285dcd0700bda2497d560cad4421a2629cd1fcbf1501e336a589aadf",
           "tokens": 55,
-          "chunks": [],
-          "embedded_at": null,
-          "embedding_model": null,
+          "chunks": [
+            "gdpr.99.en"
+          ],
+          "embedded_at": "2026-05-04T23:52:54.495942Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:44.881091Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/gdpr_en.pdf"
         }
