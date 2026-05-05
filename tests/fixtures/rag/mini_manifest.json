@@ -1,0 +1,64 @@
+{
+  "corpus": "ai_act",
+  "celex": "32024R1689",
+  "version": "2024-07-12",
+  "source_format": "pdf",
+  "fetched_at": "2026-05-04T18:00:00Z",
+  "languages": ["es", "en"],
+  "http_cache": {"es": {}, "en": {}},
+  "stats": {"articles_total": 2, "chunks_total": 0, "embedded_total": 0, "raw_size_bytes": 1024},
+  "articles": [
+    {
+      "article_id": "ai_act.1",
+      "articulo": "1",
+      "title_es": "Objeto",
+      "title_en": "Subject matter",
+      "languages": {
+        "es": {
+          "hash": "sha256:aa",
+          "tokens": 50,
+          "chunks": [],
+          "embedded_at": null,
+          "embedding_model": null,
+          "fetched_at": "2026-05-04T18:00:00Z",
+          "source_url": "file:///es"
+        },
+        "en": {
+          "hash": "sha256:bb",
+          "tokens": 45,
+          "chunks": [],
+          "embedded_at": null,
+          "embedding_model": null,
+          "fetched_at": "2026-05-04T18:00:00Z",
+          "source_url": "file:///en"
+        }
+      }
+    },
+    {
+      "article_id": "ai_act.2",
+      "articulo": "2",
+      "title_es": "Ámbito",
+      "title_en": "Scope",
+      "languages": {
+        "es": {
+          "hash": "sha256:cc",
+          "tokens": 30,
+          "chunks": [],
+          "embedded_at": null,
+          "embedding_model": null,
+          "fetched_at": "2026-05-04T18:00:00Z",
+          "source_url": "file:///es"
+        },
+        "en": {
+          "hash": "sha256:dd",
+          "tokens": 28,
+          "chunks": [],
+          "embedded_at": null,
+          "embedding_model": null,
+          "fetched_at": "2026-05-04T18:00:00Z",
+          "source_url": "file:///en"
+        }
+      }
+    }
+  ]
+}

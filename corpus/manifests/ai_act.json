@@ -3,7 +3,7 @@
   "celex": "32024R1689",
   "version": "2024-07-12",
   "source_format": "pdf",
-  "fetched_at": "2026-05-04T18:05:10.868742Z",
+  "fetched_at": "2026-05-04T21:59:00.656060Z",
   "languages": [
     "es",
     "en"
@@ -20,8 +20,8 @@
   },
   "stats": {
     "articles_total": 113,
-    "chunks_total": 0,
-    "embedded_total": 0,
+    "chunks_total": 687,
+    "embedded_total": 226,
     "raw_size_bytes": 5263052
   },
   "articles": [
@@ -33,18 +33,24 @@
       "languages": {
         "es": {
           "hash": "sha256:cc5123e57b89b61252330771400be27e71b68281c58aedab93825e8a42475da9",
-          "tokens": 367,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 312,
+          "chunks": [
+            "ai_act.1.es"
+          ],
+          "embedded_at": "2026-05-04T22:32:14.246111Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:6421f6806bc734c2948b4c190c00f03705d034e41d4d5e877f6f67f34f8238b5",
-          "tokens": 238,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 269,
+          "chunks": [
+            "ai_act.1.en"
+          ],
+          "embedded_at": "2026-05-04T22:32:18.914090Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -57,18 +63,46 @@
       "languages": {
         "es": {
           "hash": "sha256:c0d88e054e97b4e44ba11d4460937241b99b733d2037d081d77b74ef82d6c821",
-          "tokens": 1483,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1248,
+          "chunks": [
+            "ai_act.2.1.es",
+            "ai_act.2.2.es",
+            "ai_act.2.3.es",
+            "ai_act.2.4.es",
+            "ai_act.2.5.es",
+            "ai_act.2.6.es",
+            "ai_act.2.7.es",
+            "ai_act.2.8.es",
+            "ai_act.2.9.es",
+            "ai_act.2.10.es",
+            "ai_act.2.11.es",
+            "ai_act.2.12.es"
+          ],
+          "embedded_at": "2026-05-04T22:32:58.023896Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:e0052bba33236e53e3c6b1a6c8811b83f8db574b2c45f840e7b75be2d7e2faef",
-          "tokens": 976,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1028,
+          "chunks": [
+            "ai_act.2.1.en",
+            "ai_act.2.2.en",
+            "ai_act.2.3.en",
+            "ai_act.2.4.en",
+            "ai_act.2.5.en",
+            "ai_act.2.6.en",
+            "ai_act.2.7.en",
+            "ai_act.2.8.en",
+            "ai_act.2.9.en",
+            "ai_act.2.10.en",
+            "ai_act.2.11.en",
+            "ai_act.2.12.en"
+          ],
+          "embedded_at": "2026-05-04T22:33:31.991126Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -81,18 +115,24 @@
       "languages": {
         "es": {
           "hash": "sha256:14fd2a0147d2dd15448734c5b5573528d292f3011decf2e6610689525ec75d56",
-          "tokens": 5124,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 4334,
+          "chunks": [
+            "ai_act.3.1.es"
+          ],
+          "embedded_at": "2026-05-04T22:33:40.866362Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:292ba3d378c55931f3a4cda6e3871db0f7237811711387650e331e3567a38ab8",
-          "tokens": 3665,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 3848,
+          "chunks": [
+            "ai_act.3.1.en"
+          ],
+          "embedded_at": "2026-05-04T22:33:49.456758Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -105,18 +145,24 @@
       "languages": {
         "es": {
           "hash": "sha256:5f9f1f92815c66b88786c20b21db45ad305b6592b2aef60394d4cd19597fe28f",
-          "tokens": 148,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 127,
+          "chunks": [
+            "ai_act.4.es"
+          ],
+          "embedded_at": "2026-05-04T22:33:52.003229Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:86f667dfe4d0352211f9cb5c580c8d4d6d2ca04d56babbd2237776123b7b65d1",
-          "tokens": 99,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 108,
+          "chunks": [
+            "ai_act.4.en"
+          ],
+          "embedded_at": "2026-05-04T22:33:54.260989Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -129,18 +175,38 @@
       "languages": {
         "es": {
           "hash": "sha256:8ef689896bdb9611b1687dbc5627a427a119cf391a7fc7f2e66f83fecf582f00",
-          "tokens": 3288,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 2649,
+          "chunks": [
+            "ai_act.5.1.es",
+            "ai_act.5.2.es",
+            "ai_act.5.3.es",
+            "ai_act.5.4.es",
+            "ai_act.5.5.es",
+            "ai_act.5.6.es",
+            "ai_act.5.7.es",
+            "ai_act.5.8.es"
+          ],
+          "embedded_at": "2026-05-04T22:34:55.180596Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:f6024e967f884c1f298bbce012bd67f9832264d9eadcfdb5b0c45e2d1dae57cc",
-          "tokens": 2248,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 2418,
+          "chunks": [
+            "ai_act.5.1.en",
+            "ai_act.5.2.en",
+            "ai_act.5.3.en",
+            "ai_act.5.4.en",
+            "ai_act.5.5.en",
+            "ai_act.5.6.en",
+            "ai_act.5.7.en",
+            "ai_act.5.8.en"
+          ],
+          "embedded_at": "2026-05-04T22:36:06.518978Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -153,18 +219,31 @@
       "languages": {
         "es": {
           "hash": "sha256:6ea387e39abc4361dacad783c242668961e6acc8dd22e3bd0e1353ea1d393145",
-          "tokens": 1229,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1020,
+          "chunks": [
+            "ai_act.6.1.es",
+            "ai_act.6.2.es",
+            "ai_act.6.3.es",
+            "ai_act.6.4.es",
+            "ai_act.6.5.es",
+            "ai_act.6.6.es",
+            "ai_act.6.7.es",
+            "ai_act.6.8.es"
+          ],
+          "embedded_at": "2026-05-04T22:36:38.394650Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:84722aea64b95d7cf0d68670b418a0036908ea927a96a18f1e1c639fc334cb9b",
-          "tokens": 835,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 886,
+          "chunks": [
+            "ai_act.6.en"
+          ],
+          "embedded_at": "2026-05-04T22:36:46.854432Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -177,18 +256,24 @@
       "languages": {
         "es": {
           "hash": "sha256:aa0977189666ee9db0291877c453703a4376b30241f084e3bb67098d8ace9583",
-          "tokens": 1097,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 940,
+          "chunks": [
+            "ai_act.7.es"
+          ],
+          "embedded_at": "2026-05-04T22:36:55.378104Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:18dd2afd7e3e264ae5e4ae48f5bb42f696c8d407e0795a94bca7f70c3207fb32",
-          "tokens": 753,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 834,
+          "chunks": [
+            "ai_act.7.en"
+          ],
+          "embedded_at": "2026-05-04T22:37:03.864299Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -201,18 +286,24 @@
       "languages": {
         "es": {
           "hash": "sha256:575f5fcb055f0f976e9eb132a2cf92be72427ea57a930ead8977caf2cf8dd0f2",
-          "tokens": 404,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 326,
+          "chunks": [
+            "ai_act.8.es"
+          ],
+          "embedded_at": "2026-05-04T22:37:09.460053Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:7cfadc31e2e5a283219db9492c608b6ee5f91e139442aead39e2450dc9293a35",
-          "tokens": 260,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 275,
+          "chunks": [
+            "ai_act.8.en"
+          ],
+          "embedded_at": "2026-05-04T22:37:14.561004Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -225,18 +316,33 @@
       "languages": {
         "es": {
           "hash": "sha256:f6084ac58be0704bbce6b9c45889e84f01771a174356b2e265f39bf10f0371cd",
-          "tokens": 1210,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1028,
+          "chunks": [
+            "ai_act.9.1.es",
+            "ai_act.9.2.es",
+            "ai_act.9.3.es",
+            "ai_act.9.4.es",
+            "ai_act.9.5.es",
+            "ai_act.9.6.es",
+            "ai_act.9.7.es",
+            "ai_act.9.8.es",
+            "ai_act.9.9.es",
+            "ai_act.9.10.es"
+          ],
+          "embedded_at": "2026-05-04T22:37:55.314965Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:ed73f8960e572ad892edda7b798598155712a2bb86994dcb320881c12b6fc2c3",
-          "tokens": 821,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 900,
+          "chunks": [
+            "ai_act.9.en"
+          ],
+          "embedded_at": "2026-05-04T22:38:04.172279Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -249,18 +355,34 @@
       "languages": {
         "es": {
           "hash": "sha256:447fef06224d800ecda758e82a09e835257f0aca63e91fc7f37d24a96d8d77fb",
-          "tokens": 1350,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1133,
+          "chunks": [
+            "ai_act.10.1.es",
+            "ai_act.10.2.es",
+            "ai_act.10.3.es",
+            "ai_act.10.4.es",
+            "ai_act.10.5.es",
+            "ai_act.10.6.es"
+          ],
+          "embedded_at": "2026-05-04T22:38:45.964937Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:c5a3b6ad98365b1fe5b2eeb55423fb750d9d7ca8386c02fcef07d5b94aec4c7b",
-          "tokens": 906,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1008,
+          "chunks": [
+            "ai_act.10.1.en",
+            "ai_act.10.2.en",
+            "ai_act.10.3.en",
+            "ai_act.10.4.en",
+            "ai_act.10.5.en",
+            "ai_act.10.6.en"
+          ],
+          "embedded_at": "2026-05-04T22:39:24.529017Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -273,18 +395,24 @@
       "languages": {
         "es": {
           "hash": "sha256:5c74042f5695be0fdaad2bec20be8db4cf13f555078d8aa3637733c90745dc49",
-          "tokens": 526,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 433,
+          "chunks": [
+            "ai_act.11.es"
+          ],
+          "embedded_at": "2026-05-04T22:39:32.236806Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:5d724a3fb02506c535908a9842b955d14bb4d3f6221fca94ff8e4a7a5f8aed53",
-          "tokens": 386,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 406,
+          "chunks": [
+            "ai_act.11.en"
+          ],
+          "embedded_at": "2026-05-04T22:39:39.708615Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -297,18 +425,24 @@
       "languages": {
         "es": {
           "hash": "sha256:30e011fb86658273a982779f84eafabc1308f97108800f7c1defe5e0fb5108b2",
-          "tokens": 370,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 316,
+          "chunks": [
+            "ai_act.12.es"
+          ],
+          "embedded_at": "2026-05-04T22:39:45.009766Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:e75d678cf1d5baa50454b339ab4a4b7da86d7a7aa6d80f83d49e1c2cee413552",
-          "tokens": 250,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 268,
+          "chunks": [
+            "ai_act.12.en"
+          ],
+          "embedded_at": "2026-05-04T22:39:49.598948Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -321,18 +455,24 @@
       "languages": {
         "es": {
           "hash": "sha256:37bd3efe03937d702a9822c20885ce0440c749c737ebeaaf08cf58745e020c4a",
-          "tokens": 905,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 765,
+          "chunks": [
+            "ai_act.13.es"
+          ],
+          "embedded_at": "2026-05-04T22:39:57.940285Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:d3def5a7850398f9ef5a8c649b90fdf64e3a9b4d2dcd6e602e56e8ca2b9fbc72",
-          "tokens": 630,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 697,
+          "chunks": [
+            "ai_act.13.en"
+          ],
+          "embedded_at": "2026-05-04T22:40:06.464491Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -345,18 +485,24 @@
       "languages": {
         "es": {
           "hash": "sha256:2f3d16afa132abcce6a9a51d08ac3133c546436178fe1fb3ad321fd8db623d29",
-          "tokens": 926,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 791,
+          "chunks": [
+            "ai_act.14.es"
+          ],
+          "embedded_at": "2026-05-04T22:40:15.811214Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:d419a3ff90fd7862c649632b1a4c30c66bb7bbdb08d200d1382a3e7c806eb3d7",
-          "tokens": 656,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 724,
+          "chunks": [
+            "ai_act.14.en"
+          ],
+          "embedded_at": "2026-05-04T22:40:24.338011Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -369,18 +515,24 @@
       "languages": {
         "es": {
           "hash": "sha256:7481440ea6a9441a826d7221b5da730d08e4bb96f6f9f153ad8d736f583e863b",
-          "tokens": 785,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 653,
+          "chunks": [
+            "ai_act.15.es"
+          ],
+          "embedded_at": "2026-05-04T22:40:33.062195Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a3162519f6105bfdcac0982121f5118484631b204e816e2f39820df11ddf7868",
-          "tokens": 489,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 549,
+          "chunks": [
+            "ai_act.15.en"
+          ],
+          "embedded_at": "2026-05-04T22:40:41.671657Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -393,18 +545,24 @@
       "languages": {
         "es": {
           "hash": "sha256:c114d3e0dcbe69255f346971710b8dee1404c111e51857b029f16e35e0fec55b",
-          "tokens": 477,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 414,
+          "chunks": [
+            "ai_act.16.es"
+          ],
+          "embedded_at": "2026-05-04T22:40:49.267395Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a74936c6d24492e5d4f8561fd8e5faa55ee3013bf75fcc0a67c59892527682b2",
-          "tokens": 332,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 364,
+          "chunks": [
+            "ai_act.16.en"
+          ],
+          "embedded_at": "2026-05-04T22:40:55.424088Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -417,18 +575,24 @@
       "languages": {
         "es": {
           "hash": "sha256:9b0031e871ab65fd40ce32fe4e96c517f918d4f30e563f218fda5fe96a34af21",
-          "tokens": 1074,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 903,
+          "chunks": [
+            "ai_act.17.es"
+          ],
+          "embedded_at": "2026-05-04T22:41:03.846395Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:38b2bd4706616b1e9a03882d4dbf4df755a31a0a623304aabd29e3e2a028d90b",
-          "tokens": 726,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 777,
+          "chunks": [
+            "ai_act.17.en"
+          ],
+          "embedded_at": "2026-05-04T22:41:12.452678Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -441,18 +605,24 @@
       "languages": {
         "es": {
           "hash": "sha256:c049d7067c8ffca31507b3a521b2efa20a2dabde479dcaab52bb6ec4c99482f4",
-          "tokens": 379,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 302,
+          "chunks": [
+            "ai_act.18.es"
+          ],
+          "embedded_at": "2026-05-04T22:41:17.587032Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:56a9951e60e37a88f5f48d2a5bc3916e52cd66684f28fddb9775d29d6a1eb0b0",
-          "tokens": 264,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 277,
+          "chunks": [
+            "ai_act.18.en"
+          ],
+          "embedded_at": "2026-05-04T22:41:22.655373Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -465,18 +635,24 @@
       "languages": {
         "es": {
           "hash": "sha256:2e32266b32a2d870c2140dec9d56b9c25373f5cc0a1c9eaac51668bbe464235c",
-          "tokens": 259,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 216,
+          "chunks": [
+            "ai_act.19.es"
+          ],
+          "embedded_at": "2026-05-04T22:41:27.212714Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:d66b4bcf16405fa8b638428e49d9dff5cd3f2db7bc2e6b73173e228189061851",
-          "tokens": 151,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 161,
+          "chunks": [
+            "ai_act.19.en"
+          ],
+          "embedded_at": "2026-05-04T22:41:30.671232Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -489,18 +665,24 @@
       "languages": {
         "es": {
           "hash": "sha256:5e0751a9ebdb27090949845d296fbf6b43d906a16fc6cb71c06766ecaadb179c",
-          "tokens": 301,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 259,
+          "chunks": [
+            "ai_act.20.es"
+          ],
+          "embedded_at": "2026-05-04T22:41:34.918578Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:520e75121782652ebff0c999e2086acbfe05997032c4ae68789b1a002051d941",
-          "tokens": 215,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 229,
+          "chunks": [
+            "ai_act.20.en"
+          ],
+          "embedded_at": "2026-05-04T22:41:39.044702Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -513,18 +695,24 @@
       "languages": {
         "es": {
           "hash": "sha256:d75583448198af42b50a5bae1347ec3cf6fec40d724288ba88f219308c4cdae0",
-          "tokens": 284,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 231,
+          "chunks": [
+            "ai_act.21.es"
+          ],
+          "embedded_at": "2026-05-04T22:41:43.058464Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:1edbba1a19c4e4077ae65977bd981c86724bb684350f21363388f6c35f3c48b5",
-          "tokens": 208,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 214,
+          "chunks": [
+            "ai_act.21.en"
+          ],
+          "embedded_at": "2026-05-04T22:41:46.863233Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -537,18 +725,24 @@
       "languages": {
         "es": {
           "hash": "sha256:67eec0085d5e5f3425c496cc1d85f993934d6fb612e0d35612affb7641a30c9a",
-          "tokens": 840,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 664,
+          "chunks": [
+            "ai_act.22.es"
+          ],
+          "embedded_at": "2026-05-04T22:41:56.111782Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:522d2c5288fba2a8671b68cc6d44ac7f9b0e98bb4fdd5b1fd1c171b6d182ab4a",
-          "tokens": 586,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 656,
+          "chunks": [
+            "ai_act.22.en"
+          ],
+          "embedded_at": "2026-05-04T22:42:04.823712Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -561,18 +755,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b23fabcdfb7fa1d47ca2274230e23d880237962d652d384b91a9fff23e52739a",
-          "tokens": 750,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 617,
+          "chunks": [
+            "ai_act.23.es"
+          ],
+          "embedded_at": "2026-05-04T22:42:13.181581Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:9c2a5862cca9b7655338bb54d21af97c42ac7b1bf9f5b206ba6f699d9d01f821",
-          "tokens": 554,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 579,
+          "chunks": [
+            "ai_act.23.en"
+          ],
+          "embedded_at": "2026-05-04T22:42:21.323760Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -585,18 +785,24 @@
       "languages": {
         "es": {
           "hash": "sha256:db64952ff04311c4cdbfd94b13746c03c540fa042e9ee967f4155958d2fc260d",
-          "tokens": 708,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 589,
+          "chunks": [
+            "ai_act.24.es"
+          ],
+          "embedded_at": "2026-05-04T22:42:29.713992Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:1d09445c2a0bae4bb7bfa6b4c2c8cbad6f575a37a9847a11755d3853aef21cf5",
-          "tokens": 562,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 574,
+          "chunks": [
+            "ai_act.24.en"
+          ],
+          "embedded_at": "2026-05-04T22:42:38.452273Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -609,18 +815,24 @@
       "languages": {
         "es": {
           "hash": "sha256:ee19952229ee1e5c5ede587683c9a9016c29244d4054a4412ad79b9eb6059627",
-          "tokens": 1109,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 923,
+          "chunks": [
+            "ai_act.25.es"
+          ],
+          "embedded_at": "2026-05-04T22:42:46.643306Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:6f7ba177fa22eb9cb7525b033901d773dfd7003930cf7269d2b689137eeabf7c",
-          "tokens": 755,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 809,
+          "chunks": [
+            "ai_act.25.en"
+          ],
+          "embedded_at": "2026-05-04T22:42:54.920436Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -633,18 +845,46 @@
       "languages": {
         "es": {
           "hash": "sha256:0b8e4144c3571dffb6f3b6fbbf6a3a9e5071f6126499da33317d9b7914fb2bc4",
-          "tokens": 2394,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1950,
+          "chunks": [
+            "ai_act.26.1.es",
+            "ai_act.26.2.es",
+            "ai_act.26.3.es",
+            "ai_act.26.4.es",
+            "ai_act.26.5.es",
+            "ai_act.26.6.es",
+            "ai_act.26.7.es",
+            "ai_act.26.8.es",
+            "ai_act.26.9.es",
+            "ai_act.26.10.es",
+            "ai_act.26.11.es",
+            "ai_act.26.12.es"
+          ],
+          "embedded_at": "2026-05-04T22:44:22.281667Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:e021ea4cfacfb76f5ccafce6d7d29e594130f5ad3cc87488398ba6b82f90e51e",
-          "tokens": 1520,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1642,
+          "chunks": [
+            "ai_act.26.1.en",
+            "ai_act.26.2.en",
+            "ai_act.26.3.en",
+            "ai_act.26.4.en",
+            "ai_act.26.5.en",
+            "ai_act.26.6.en",
+            "ai_act.26.7.en",
+            "ai_act.26.8.en",
+            "ai_act.26.9.en",
+            "ai_act.26.10.en",
+            "ai_act.26.11.en",
+            "ai_act.26.12.en"
+          ],
+          "embedded_at": "2026-05-04T22:45:50.231933Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -657,18 +897,24 @@
       "languages": {
         "es": {
           "hash": "sha256:ed47e0ff8b411bf5dc769cc620fc322e0e5c3812a9de92e81a0fbf962148178a",
-          "tokens": 926,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 760,
+          "chunks": [
+            "ai_act.27.es"
+          ],
+          "embedded_at": "2026-05-04T22:45:58.411345Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:58f47513c64b1ad7e973d47d367874068f6b588cf99851a54ad4e43f7e47f196",
-          "tokens": 642,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 686,
+          "chunks": [
+            "ai_act.27.en"
+          ],
+          "embedded_at": "2026-05-04T22:46:07.005480Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -681,18 +927,24 @@
       "languages": {
         "es": {
           "hash": "sha256:83c2f3d693879f3967bd6548db8b86369f4a044f7cc17dda8ae0e9d898879d60",
-          "tokens": 461,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 369,
+          "chunks": [
+            "ai_act.28.es"
+          ],
+          "embedded_at": "2026-05-04T22:46:13.203521Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:3b83bf9481df65d8b6182d1f94bb2f06084fab6fc89e9d2c3b9fa25bfbd006fc",
-          "tokens": 308,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 325,
+          "chunks": [
+            "ai_act.28.en"
+          ],
+          "embedded_at": "2026-05-04T22:46:18.401858Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -705,18 +957,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b01ae94e1e3e2c065a462e34e96197ae49938343b2e4bc5ebda453e5313b67a1",
-          "tokens": 483,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 387,
+          "chunks": [
+            "ai_act.29.es"
+          ],
+          "embedded_at": "2026-05-04T22:46:25.068845Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:e7d9b1a8f57dfbb39dc90007883eb414b8e62acc765fd6ec486f90db9d110e3f",
-          "tokens": 322,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 334,
+          "chunks": [
+            "ai_act.29.en"
+          ],
+          "embedded_at": "2026-05-04T22:46:30.493703Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -729,18 +987,24 @@
       "languages": {
         "es": {
           "hash": "sha256:6f43bea7b33ac97431980961c7d6d41627dfb589e4f6231e14b6d5dc68f2a46a",
-          "tokens": 519,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 389,
+          "chunks": [
+            "ai_act.30.es"
+          ],
+          "embedded_at": "2026-05-04T22:46:37.031268Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:0fa439aec4ab53afb36fa1db3f5f97541e75d4a7451de77df8c1355b2109e887",
-          "tokens": 341,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 346,
+          "chunks": [
+            "ai_act.30.en"
+          ],
+          "embedded_at": "2026-05-04T22:46:42.892046Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -753,18 +1017,24 @@
       "languages": {
         "es": {
           "hash": "sha256:d4b013ddd575c6bb3f027c03b4a0f9794f92647b6a80e106255ea55c597a4540",
-          "tokens": 1224,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 996,
+          "chunks": [
+            "ai_act.31.es"
+          ],
+          "embedded_at": "2026-05-04T22:46:51.511684Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:6e62989ebaf6c73b99f6515c6572fb45440d86a0193ba7d74256996390424631",
-          "tokens": 807,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 859,
+          "chunks": [
+            "ai_act.31.en"
+          ],
+          "embedded_at": "2026-05-04T22:46:59.732415Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -777,18 +1047,24 @@
       "languages": {
         "es": {
           "hash": "sha256:df8218ce0932cf7711463ab2ddc1a089c6066b3f4d98c4f5254670d73917dda7",
-          "tokens": 143,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 114,
+          "chunks": [
+            "ai_act.32.es"
+          ],
+          "embedded_at": "2026-05-04T22:47:02.060453Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:385d6b9105fa2ac5b9139fb93afe40e0a190dd1deb7627be8968bad8cbf3c5f8",
-          "tokens": 108,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 109,
+          "chunks": [
+            "ai_act.32.en"
+          ],
+          "embedded_at": "2026-05-04T22:47:04.108307Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -801,18 +1077,24 @@
       "languages": {
         "es": {
           "hash": "sha256:c6a0043fe49d335d67a58fd1e70b849f74e48b03cb32202408c8d306c33e1bdf",
-          "tokens": 239,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 192,
+          "chunks": [
+            "ai_act.33.es"
+          ],
+          "embedded_at": "2026-05-04T22:47:07.468264Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:b27cecd992b6b81914cde61dcc881734028a9bb9d9b4ba13b2302c85620fde33",
-          "tokens": 163,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 185,
+          "chunks": [
+            "ai_act.33.en"
+          ],
+          "embedded_at": "2026-05-04T22:47:10.556037Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -825,18 +1107,24 @@
       "languages": {
         "es": {
           "hash": "sha256:10bc697581aea81a50d8d5bf88dc46fdfb5adacf36ffd7e192ec14c29e2c39e4",
-          "tokens": 320,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 269,
+          "chunks": [
+            "ai_act.34.es"
+          ],
+          "embedded_at": "2026-05-04T22:47:15.274365Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:9bca110d9838e9e1d179168c5dfff2c61600abb0eea816be602094c4d2d585bf",
-          "tokens": 211,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 228,
+          "chunks": [
+            "ai_act.34.en"
+          ],
+          "embedded_at": "2026-05-04T22:47:19.544413Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -849,18 +1137,24 @@
       "languages": {
         "es": {
           "hash": "sha256:46d4e5b7e19c7f595c61926a7a2a6b8905db9cbe261b3eaef194b744fc8a2a57",
-          "tokens": 105,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 89,
+          "chunks": [
+            "ai_act.35.es"
+          ],
+          "embedded_at": "2026-05-04T22:47:21.376901Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:28f74d4c340959492bf2e9e04e4ef13b293aa34ecf6e2f4529e1e66cb38f9b12",
-          "tokens": 76,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 80,
+          "chunks": [
+            "ai_act.35.en"
+          ],
+          "embedded_at": "2026-05-04T22:47:23.452538Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -873,18 +1167,40 @@
       "languages": {
         "es": {
           "hash": "sha256:63f19ead6ed1cd401525b15eec71cde76526ef45118deb3b353fd6926d7dfbeb",
-          "tokens": 1800,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1463,
+          "chunks": [
+            "ai_act.36.1.es",
+            "ai_act.36.2.es",
+            "ai_act.36.3.es",
+            "ai_act.36.4.es",
+            "ai_act.36.5.es",
+            "ai_act.36.6.es",
+            "ai_act.36.7.es",
+            "ai_act.36.8.es",
+            "ai_act.36.9.es"
+          ],
+          "embedded_at": "2026-05-04T22:48:06.398534Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:d67351a72a41e8d3dd5d432cee27bfe55a5f34867167e870aec396a7a8d9a439",
-          "tokens": 1265,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1384,
+          "chunks": [
+            "ai_act.36.1.en",
+            "ai_act.36.2.en",
+            "ai_act.36.3.en",
+            "ai_act.36.4.en",
+            "ai_act.36.5.en",
+            "ai_act.36.6.en",
+            "ai_act.36.7.en",
+            "ai_act.36.8.en",
+            "ai_act.36.9.en"
+          ],
+          "embedded_at": "2026-05-04T22:48:47.657028Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -897,18 +1213,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b991c7553436a2557142b0250ae6223498667ed35971b9b8c58339ae625f9a30",
-          "tokens": 331,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 255,
+          "chunks": [
+            "ai_act.37.es"
+          ],
+          "embedded_at": "2026-05-04T22:48:51.936110Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:3d77cedb2e40c85edf364b500fbd19736151249badeb347f2e1bd6174b9b4307",
-          "tokens": 227,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 243,
+          "chunks": [
+            "ai_act.37.en"
+          ],
+          "embedded_at": "2026-05-04T22:48:56.379239Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -921,18 +1243,24 @@
       "languages": {
         "es": {
           "hash": "sha256:c85c6439f284716111415bb9ff5f1b31c04e4723c556a4d1c9b8d305d3bf78ba",
-          "tokens": 206,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 167,
+          "chunks": [
+            "ai_act.38.es"
+          ],
+          "embedded_at": "2026-05-04T22:48:59.242987Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a3ff626980b9e59d1ca6fca4bdf85d56d292661b58a11c84bc1b033f89a98871",
-          "tokens": 145,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 153,
+          "chunks": [
+            "ai_act.38.en"
+          ],
+          "embedded_at": "2026-05-04T22:49:02.176337Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -945,18 +1273,24 @@
       "languages": {
         "es": {
           "hash": "sha256:1c754c290497d46d27f3c20d97d96febac803f5409b2fc39b272975aa01d2242",
-          "tokens": 112,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 89,
+          "chunks": [
+            "ai_act.39.es"
+          ],
+          "embedded_at": "2026-05-04T22:49:04.023740Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:f1ef03be81ff50f10a7e5f022eb1b6c0363f0e5a174bc60a877690ef48c6256d",
-          "tokens": 73,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 76,
+          "chunks": [
+            "ai_act.39.en"
+          ],
+          "embedded_at": "2026-05-04T22:49:06.013740Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -969,18 +1303,24 @@
       "languages": {
         "es": {
           "hash": "sha256:551345e49f3fee44703dc0218f2057c854a85c5bca64b1d243eb8f421c516c24",
-          "tokens": 814,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 669,
+          "chunks": [
+            "ai_act.40.es"
+          ],
+          "embedded_at": "2026-05-04T22:49:14.806101Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:11b7e6600869c4ad631a0e390d2939b6ec2b8b72ec9e626190bda9ed0a868f5b",
-          "tokens": 543,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 570,
+          "chunks": [
+            "ai_act.40.en"
+          ],
+          "embedded_at": "2026-05-04T22:49:23.327378Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -993,18 +1333,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b990436419e52f28bf444d513523389b1d4944132a9e5770c3fbf83d9a582729",
-          "tokens": 1202,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 949,
+          "chunks": [
+            "ai_act.41.es"
+          ],
+          "embedded_at": "2026-05-04T22:49:31.848821Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:970c48b10c88b32c50325df1da807275e862b156de72d07aeb3c74d059b172f5",
-          "tokens": 837,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 849,
+          "chunks": [
+            "ai_act.41.en"
+          ],
+          "embedded_at": "2026-05-04T22:49:40.071935Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1017,18 +1363,24 @@
       "languages": {
         "es": {
           "hash": "sha256:e9a1216b5fcf1e182406d2fe6a226416d87e32acbc8e2ee8ac47699b01499abd",
-          "tokens": 249,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 209,
+          "chunks": [
+            "ai_act.42.es"
+          ],
+          "embedded_at": "2026-05-04T22:49:44.028663Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:623648e274b89fd371c8b71dec52994ed64dde89fd9341af6378825247c8815e",
-          "tokens": 182,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 190,
+          "chunks": [
+            "ai_act.42.en"
+          ],
+          "embedded_at": "2026-05-04T22:49:47.528129Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1041,18 +1393,34 @@
       "languages": {
         "es": {
           "hash": "sha256:dba53dcaa58d915be439361b7ee08e34f71ee1daf0a7b03d351a8b2bfb5652b7",
-          "tokens": 1590,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1268,
+          "chunks": [
+            "ai_act.43.1.es",
+            "ai_act.43.2.es",
+            "ai_act.43.3.es",
+            "ai_act.43.4.es",
+            "ai_act.43.5.es",
+            "ai_act.43.6.es"
+          ],
+          "embedded_at": "2026-05-04T22:50:26.167566Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:1e1a7aa952b9e9bba40f6da704bda236a1f31a26df9b2527e5cd8187e732120b",
-          "tokens": 1031,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1088,
+          "chunks": [
+            "ai_act.43.1.en",
+            "ai_act.43.2.en",
+            "ai_act.43.3.en",
+            "ai_act.43.4.en",
+            "ai_act.43.5.en",
+            "ai_act.43.6.en"
+          ],
+          "embedded_at": "2026-05-04T22:50:59.852026Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1065,18 +1433,24 @@
       "languages": {
         "es": {
           "hash": "sha256:cd0a1498ac95923432b4bd30b0d66ad31d2c4a7d8cf104f0c1117a9e3cb509c9",
-          "tokens": 392,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 326,
+          "chunks": [
+            "ai_act.44.es"
+          ],
+          "embedded_at": "2026-05-04T22:51:05.156300Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a7923a563681348c04fa4f5960d496e05561f9cdea728f66612fa25c0e3459fa",
-          "tokens": 273,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 294,
+          "chunks": [
+            "ai_act.44.en"
+          ],
+          "embedded_at": "2026-05-04T22:51:10.047175Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1089,18 +1463,24 @@
       "languages": {
         "es": {
           "hash": "sha256:ffdd53be586ffd445d5fb76abeb23b7fbe84b72b9633336b93857d6da4ad01cb",
-          "tokens": 568,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 459,
+          "chunks": [
+            "ai_act.45.es"
+          ],
+          "embedded_at": "2026-05-04T22:51:17.595780Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:97d54cd90174d4a7d3a2229e3b358a608441a4968c18e7e67b413384975659f2",
-          "tokens": 338,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 382,
+          "chunks": [
+            "ai_act.45.en"
+          ],
+          "embedded_at": "2026-05-04T22:51:24.001050Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1113,18 +1493,24 @@
       "languages": {
         "es": {
           "hash": "sha256:bb7cb58d2daa1268c1fbbf1ab8bb948d15e93516c2a13725e9ff8fbdcd814153",
-          "tokens": 960,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 759,
+          "chunks": [
+            "ai_act.46.es"
+          ],
+          "embedded_at": "2026-05-04T22:51:32.863130Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:8fb2d6f8f3c729691f8381e9f812f44e334f310cfcd33abef71a008c4189170c",
-          "tokens": 637,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 687,
+          "chunks": [
+            "ai_act.46.en"
+          ],
+          "embedded_at": "2026-05-04T22:51:41.120196Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1137,18 +1523,24 @@
       "languages": {
         "es": {
           "hash": "sha256:04b2c8396a135fb655f7f72d2615a58cafe53bb7a958b3ebf3c32d6987e67fd0",
-          "tokens": 550,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 455,
+          "chunks": [
+            "ai_act.47.es"
+          ],
+          "embedded_at": "2026-05-04T22:51:48.771690Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:b89cf9f6809d6126c2d611dae6977e340daf7b53ce5db9c3eb4dfb0e71879ecd",
-          "tokens": 393,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 418,
+          "chunks": [
+            "ai_act.47.en"
+          ],
+          "embedded_at": "2026-05-04T22:51:55.876534Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1161,18 +1553,24 @@
       "languages": {
         "es": {
           "hash": "sha256:8a09c72e27b783c061a7e4f9769d75399528450a0dc197f5312cee2dc0f1c9d4",
-          "tokens": 385,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 319,
+          "chunks": [
+            "ai_act.48.es"
+          ],
+          "embedded_at": "2026-05-04T22:52:01.061926Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:574ecf22a98a1a81b6c4068e42957a0f59a087ce5a6f34c7869edd699a334cbf",
-          "tokens": 285,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 307,
+          "chunks": [
+            "ai_act.48.en"
+          ],
+          "embedded_at": "2026-05-04T22:52:06.514933Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1185,18 +1583,24 @@
       "languages": {
         "es": {
           "hash": "sha256:2e517ac8f9de2ec63f92587e5aa1c72ee3e7c88dae261d0da13a9aad6d364764",
-          "tokens": 750,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 616,
+          "chunks": [
+            "ai_act.49.es"
+          ],
+          "embedded_at": "2026-05-04T22:52:15.101008Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a0aff4e4244d108165ae2d76e3bee2188700e23742a099e648a1bbb2caf74b66",
-          "tokens": 516,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 515,
+          "chunks": [
+            "ai_act.49.en"
+          ],
+          "embedded_at": "2026-05-04T22:52:23.314071Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1209,18 +1613,30 @@
       "languages": {
         "es": {
           "hash": "sha256:f470a1ac4f7490144a1a100d0c6ac6736d0031b19b2504b4b4d676536d6ff983",
-          "tokens": 1380,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1139,
+          "chunks": [
+            "ai_act.50.1.es",
+            "ai_act.50.2.es",
+            "ai_act.50.3.es",
+            "ai_act.50.4.es",
+            "ai_act.50.5.es",
+            "ai_act.50.6.es",
+            "ai_act.50.7.es"
+          ],
+          "embedded_at": "2026-05-04T22:52:54.753184Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:86d1a04f61a0c1bb2444813f2c51e30991e830b8d169d1e9c295b4b231bbeb15",
-          "tokens": 927,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 998,
+          "chunks": [
+            "ai_act.50.en"
+          ],
+          "embedded_at": "2026-05-04T22:53:03.488578Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1233,18 +1649,24 @@
       "languages": {
         "es": {
           "hash": "sha256:e394ffef29cc66923e46a81633caf65e29fda6d94ad2e70f860761f368251d52",
-          "tokens": 333,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 272,
+          "chunks": [
+            "ai_act.51.es"
+          ],
+          "embedded_at": "2026-05-04T22:53:08.055790Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:d67dd97c0c454fcbce41f3f1d07935d21444c63e94c5bbaebd5e066d529e6b94",
-          "tokens": 226,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 255,
+          "chunks": [
+            "ai_act.51.en"
+          ],
+          "embedded_at": "2026-05-04T22:53:12.403830Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1257,18 +1679,24 @@
       "languages": {
         "es": {
           "hash": "sha256:8dd8a8f79be71adc7a76c4553bc2c200e0f920bbcd2765a32bede04524e9754b",
-          "tokens": 872,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 730,
+          "chunks": [
+            "ai_act.52.es"
+          ],
+          "embedded_at": "2026-05-04T22:53:21.383020Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:2a7b974d1e9a1965454be39c63bc58f0ce040cada0ddf9730f7bd4262577261c",
-          "tokens": 620,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 701,
+          "chunks": [
+            "ai_act.52.en"
+          ],
+          "embedded_at": "2026-05-04T22:53:29.876296Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1281,18 +1709,24 @@
       "languages": {
         "es": {
           "hash": "sha256:53ed652e176d8f227ac2f10058e37a5922a0f2cc499691543cb9d2d71410cec2",
-          "tokens": 1039,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 852,
+          "chunks": [
+            "ai_act.53.es"
+          ],
+          "embedded_at": "2026-05-04T22:53:38.180232Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:1f8fe81d6e01a9ce7773166ac49cece66e789791b59bc3dbb76eb3e8a3ee3691",
-          "tokens": 714,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 776,
+          "chunks": [
+            "ai_act.53.en"
+          ],
+          "embedded_at": "2026-05-04T22:53:46.444316Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1305,18 +1739,24 @@
       "languages": {
         "es": {
           "hash": "sha256:32bc48ad9e2796501a1bdce0c82bd78c09b589baa6334de05db44a306d648de8",
-          "tokens": 814,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 658,
+          "chunks": [
+            "ai_act.54.es"
+          ],
+          "embedded_at": "2026-05-04T22:53:55.527987Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:cda83e24546dd1989fc2e704a9822c266f96b73eaebd8c10d471110bfe1b54d0",
-          "tokens": 567,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 631,
+          "chunks": [
+            "ai_act.54.en"
+          ],
+          "embedded_at": "2026-05-04T22:54:04.057127Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1329,18 +1769,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b83d6250fd39445a00c7a7b1e8bee7f78af00f7b7190d4164f8d9a811e6dffbb",
-          "tokens": 548,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 450,
+          "chunks": [
+            "ai_act.55.es"
+          ],
+          "embedded_at": "2026-05-04T22:54:11.588114Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:f745cdec587bb240dea8485bb49ff74a5ad7efba0124e877d6075f822007c72b",
-          "tokens": 342,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 389,
+          "chunks": [
+            "ai_act.55.en"
+          ],
+          "embedded_at": "2026-05-04T22:54:18.400193Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1353,18 +1799,32 @@
       "languages": {
         "es": {
           "hash": "sha256:851c480e4a417d706db5118328cbaac4347b3084146e48b5cb254c1aa024ecc3",
-          "tokens": 1415,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1122,
+          "chunks": [
+            "ai_act.56.1.es",
+            "ai_act.56.2.es",
+            "ai_act.56.3.es",
+            "ai_act.56.4.es",
+            "ai_act.56.5.es",
+            "ai_act.56.6.es",
+            "ai_act.56.7.es",
+            "ai_act.56.8.es",
+            "ai_act.56.9.es"
+          ],
+          "embedded_at": "2026-05-04T22:54:52.189080Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:459aee268c1b36b96e7849eaf2329baccad643387d90795fa5da64d30ae5d500",
-          "tokens": 920,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 968,
+          "chunks": [
+            "ai_act.56.en"
+          ],
+          "embedded_at": "2026-05-04T22:55:00.424587Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1377,18 +1837,56 @@
       "languages": {
         "es": {
           "hash": "sha256:2889ff1cb6b9c325bd9522bae496a684d253fc53339d9bdf289357b2f2096eb0",
-          "tokens": 2701,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 2171,
+          "chunks": [
+            "ai_act.57.1.es",
+            "ai_act.57.2.es",
+            "ai_act.57.3.es",
+            "ai_act.57.4.es",
+            "ai_act.57.5.es",
+            "ai_act.57.6.es",
+            "ai_act.57.7.es",
+            "ai_act.57.8.es",
+            "ai_act.57.9.es",
+            "ai_act.57.10.es",
+            "ai_act.57.11.es",
+            "ai_act.57.12.es",
+            "ai_act.57.13.es",
+            "ai_act.57.14.es",
+            "ai_act.57.15.es",
+            "ai_act.57.16.es",
+            "ai_act.57.17.es"
+          ],
+          "embedded_at": "2026-05-04T22:55:53.767918Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:b7df2d84a2c4c908153e420f4cf9fdb1f05534de3fa2b7b6ebc2ede4decc1c86",
-          "tokens": 1658,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1830,
+          "chunks": [
+            "ai_act.57.1.en",
+            "ai_act.57.2.en",
+            "ai_act.57.3.en",
+            "ai_act.57.4.en",
+            "ai_act.57.5.en",
+            "ai_act.57.6.en",
+            "ai_act.57.7.en",
+            "ai_act.57.8.en",
+            "ai_act.57.9.en",
+            "ai_act.57.10.en",
+            "ai_act.57.11.en",
+            "ai_act.57.12.en",
+            "ai_act.57.13.en",
+            "ai_act.57.14.en",
+            "ai_act.57.15.en",
+            "ai_act.57.16.en",
+            "ai_act.57.17.en"
+          ],
+          "embedded_at": "2026-05-04T22:56:37.301869Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1401,18 +1899,27 @@
       "languages": {
         "es": {
           "hash": "sha256:5bb0405ed50d08c922c1b225dbfc5622f50be2c55f4def3c193ee9facb88cfef",
-          "tokens": 1426,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1182,
+          "chunks": [
+            "ai_act.58.1.es",
+            "ai_act.58.2.es",
+            "ai_act.58.3.es",
+            "ai_act.58.4.es"
+          ],
+          "embedded_at": "2026-05-04T22:57:07.937343Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:3dca0d49658851db300ee68cf2abdf1ad0f2ec9271fdfc8d156d5c324ee4d1f8",
-          "tokens": 866,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 986,
+          "chunks": [
+            "ai_act.58.en"
+          ],
+          "embedded_at": "2026-05-04T22:57:16.307446Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1425,18 +1932,26 @@
       "languages": {
         "es": {
           "hash": "sha256:7e2999da5ca4b9b7f279fe669d863871b506c97949697bcc04f45e0e2e6b31bb",
-          "tokens": 1315,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1065,
+          "chunks": [
+            "ai_act.59.1.es",
+            "ai_act.59.2.es",
+            "ai_act.59.3.es"
+          ],
+          "embedded_at": "2026-05-04T22:57:39.726251Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:9b85bfb6045bfe7d5c03b2048655ed555256c424a401ba7f95b37bec3126fb0c",
-          "tokens": 833,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 911,
+          "chunks": [
+            "ai_act.59.en"
+          ],
+          "embedded_at": "2026-05-04T22:57:48.215735Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1449,18 +1964,40 @@
       "languages": {
         "es": {
           "hash": "sha256:0b71bd6c2d7cdaadfd018cb8e593aa625f79ac03c00c3fed7743b46fee35da10",
-          "tokens": 2211,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1797,
+          "chunks": [
+            "ai_act.60.1.es",
+            "ai_act.60.2.es",
+            "ai_act.60.3.es",
+            "ai_act.60.4.es",
+            "ai_act.60.5.es",
+            "ai_act.60.6.es",
+            "ai_act.60.7.es",
+            "ai_act.60.8.es",
+            "ai_act.60.9.es"
+          ],
+          "embedded_at": "2026-05-04T22:58:54.463761Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:56ffc24987e145d1085b5e0d39b0c0e1463fc3f5be8806a682f36c0cdf8124cd",
-          "tokens": 1517,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1643,
+          "chunks": [
+            "ai_act.60.1.en",
+            "ai_act.60.2.en",
+            "ai_act.60.3.en",
+            "ai_act.60.4.en",
+            "ai_act.60.5.en",
+            "ai_act.60.6.en",
+            "ai_act.60.7.en",
+            "ai_act.60.8.en",
+            "ai_act.60.9.en"
+          ],
+          "embedded_at": "2026-05-04T23:00:01.107448Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1473,18 +2010,24 @@
       "languages": {
         "es": {
           "hash": "sha256:53525c816a6157ab883535149b0ac30e61616a5233d9caefc8999840a57a5ba7",
-          "tokens": 360,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 297,
+          "chunks": [
+            "ai_act.61.es"
+          ],
+          "embedded_at": "2026-05-04T23:00:06.085222Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:1f048e9fe0318b4d79e2b230e5cd3809741aac91fb143db39158c53742c4ebbe",
-          "tokens": 269,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 291,
+          "chunks": [
+            "ai_act.61.en"
+          ],
+          "embedded_at": "2026-05-04T23:00:11.073877Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1497,18 +2040,24 @@
       "languages": {
         "es": {
           "hash": "sha256:e15e2d9eeda82ff02f5b5ddbac8be2da6845b44f18f55eb300951cfebc4c7d33",
-          "tokens": 658,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 551,
+          "chunks": [
+            "ai_act.62.es"
+          ],
+          "embedded_at": "2026-05-04T23:00:20.541363Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:bbcc06b24fc7f241e0c4f70109decab97e26835451858cf7478aa1b0dc0e9a61",
-          "tokens": 409,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 459,
+          "chunks": [
+            "ai_act.62.en"
+          ],
+          "embedded_at": "2026-05-04T23:00:29.349421Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1521,18 +2070,24 @@
       "languages": {
         "es": {
           "hash": "sha256:1067dc535277a357faeb6222f14374def3e2e9da64b474bd652ed9ed186338fe",
-          "tokens": 281,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 215,
+          "chunks": [
+            "ai_act.63.es"
+          ],
+          "embedded_at": "2026-05-04T23:00:33.234711Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:d780a15d1055bfd4db02ccbb6d047b8df68eab6d1b5d399fc6ac8226de8ed40e",
-          "tokens": 198,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 204,
+          "chunks": [
+            "ai_act.63.en"
+          ],
+          "embedded_at": "2026-05-04T23:00:37.092384Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1545,18 +2100,24 @@
       "languages": {
         "es": {
           "hash": "sha256:0ae19c07e54873f16e37f025fce66711d0e167ff0ce646633ca92ba7799660cf",
-          "tokens": 74,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 57,
+          "chunks": [
+            "ai_act.64.es"
+          ],
+          "embedded_at": "2026-05-04T23:00:38.581019Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:47313455a46af8782e7b2b4e61e096298008be05f07491b30e979c74e1df803b",
-          "tokens": 40,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 45,
+          "chunks": [
+            "ai_act.64.en"
+          ],
+          "embedded_at": "2026-05-04T23:00:39.782283Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1569,18 +2130,24 @@
       "languages": {
         "es": {
           "hash": "sha256:7e8b1b2346b940f106180f22a91d48cc9470268f227b543b7b20d5b570a976b2",
-          "tokens": 843,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 699,
+          "chunks": [
+            "ai_act.65.es"
+          ],
+          "embedded_at": "2026-05-04T23:00:48.141588Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:b3f8c7ff647d140a1ab32270aaab0360c2f67dc5d6fd245938650947db4acc16",
-          "tokens": 591,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 655,
+          "chunks": [
+            "ai_act.65.en"
+          ],
+          "embedded_at": "2026-05-04T23:00:56.665421Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1593,18 +2160,24 @@
       "languages": {
         "es": {
           "hash": "sha256:e9b2417cc1cff9785b76658849666b9266108c264f5af55814c77dbbd4c686e2",
-          "tokens": 1344,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1099,
+          "chunks": [
+            "ai_act.66.1.es"
+          ],
+          "embedded_at": "2026-05-04T23:01:05.492661Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:69b7b78865bcc8bc55ad1bf51ad7a1bf9eeacf54510dc02f0326b62657c8e73f",
-          "tokens": 862,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 954,
+          "chunks": [
+            "ai_act.66.en"
+          ],
+          "embedded_at": "2026-05-04T23:01:13.863195Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1617,18 +2190,24 @@
       "languages": {
         "es": {
           "hash": "sha256:246c144a1b03409d779b30518f871e8eaffcb9ca9627b6367a4eb4f764e08421",
-          "tokens": 609,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 484,
+          "chunks": [
+            "ai_act.67.es"
+          ],
+          "embedded_at": "2026-05-04T23:01:21.892869Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:9d125a5c17b81ce04358cef81147d22621abbf41ed5ace7b7f9efc5d23e27a3f",
-          "tokens": 430,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 456,
+          "chunks": [
+            "ai_act.67.en"
+          ],
+          "embedded_at": "2026-05-04T23:01:29.545771Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1641,18 +2220,24 @@
       "languages": {
         "es": {
           "hash": "sha256:a8bea2cd0b9ae547b5728c6a7149192c20ad03659d93701d7682f3d8bc0270e4",
-          "tokens": 895,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 724,
+          "chunks": [
+            "ai_act.68.es"
+          ],
+          "embedded_at": "2026-05-04T23:01:38.373879Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:2cb602d3855637210dc64eabe8522526daf327730dbf99903348b9e770a55c4d",
-          "tokens": 605,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 674,
+          "chunks": [
+            "ai_act.68.en"
+          ],
+          "embedded_at": "2026-05-04T23:01:46.983767Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1665,18 +2250,24 @@
       "languages": {
         "es": {
           "hash": "sha256:8422a2a09c460a7d4c3605191ba2ef3457ac7ad4686be19c536d4ec402527074",
-          "tokens": 293,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 230,
+          "chunks": [
+            "ai_act.69.es"
+          ],
+          "embedded_at": "2026-05-04T23:01:50.844621Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:d2490607ebec6e1fcfe10f8cb9fcca22ead01316dac533ba073d720cc31c41e2",
-          "tokens": 177,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 184,
+          "chunks": [
+            "ai_act.69.en"
+          ],
+          "embedded_at": "2026-05-04T23:01:54.340229Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1689,18 +2280,24 @@
       "languages": {
         "es": {
           "hash": "sha256:688fb315a8fc17a76470658ab9f91a344e53eea715a1f12132ebb5c2eb715d3e",
-          "tokens": 1041,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 823,
+          "chunks": [
+            "ai_act.70.es"
+          ],
+          "embedded_at": "2026-05-04T23:02:02.567398Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:96b4d58325f25da194fab57de814cc25813a33a736205583f1cdeac894ea1fec",
-          "tokens": 670,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 712,
+          "chunks": [
+            "ai_act.70.en"
+          ],
+          "embedded_at": "2026-05-04T23:02:11.318185Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1713,18 +2310,24 @@
       "languages": {
         "es": {
           "hash": "sha256:c583acee7801424397383d00788fd9c2682f4c1d6e2f5d0501c1552e37486a7a",
-          "tokens": 748,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 609,
+          "chunks": [
+            "ai_act.71.es"
+          ],
+          "embedded_at": "2026-05-04T23:02:20.253809Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:304346e65eab9fe7955f5f4018fa300d7faf79e25c8f14ac7dd1e2d360e24eaf",
-          "tokens": 511,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 502,
+          "chunks": [
+            "ai_act.71.en"
+          ],
+          "embedded_at": "2026-05-04T23:02:28.544543Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1737,18 +2340,24 @@
       "languages": {
         "es": {
           "hash": "sha256:68947970366aeb4b4b54fc82549eddb63c1c499f2111a2a3cb2dd03544e628fa",
-          "tokens": 700,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 560,
+          "chunks": [
+            "ai_act.72.es"
+          ],
+          "embedded_at": "2026-05-04T23:02:36.857114Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:2d13badc013694aace8695eb2ee9e3508d255f9915e66a9f386d98932d6ce849",
-          "tokens": 421,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 450,
+          "chunks": [
+            "ai_act.72.en"
+          ],
+          "embedded_at": "2026-05-04T23:02:44.231421Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1761,18 +2370,24 @@
       "languages": {
         "es": {
           "hash": "sha256:3ea001547814f1ffc39dd96f8b25b971c513b775a670885b017355846155b14b",
-          "tokens": 1252,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 996,
+          "chunks": [
+            "ai_act.73.es"
+          ],
+          "embedded_at": "2026-05-04T23:02:53.278538Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a87108a896247eee409a5400b567ea216e80da2a4cc494b2b94d602c8c199695",
-          "tokens": 854,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 879,
+          "chunks": [
+            "ai_act.73.en"
+          ],
+          "embedded_at": "2026-05-04T23:03:01.957409Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1785,18 +2400,50 @@
       "languages": {
         "es": {
           "hash": "sha256:c22024105dcb16d687905951cdf0c4f6b45824e23c53127b2e49d6e32eeaba5b",
-          "tokens": 2150,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1724,
+          "chunks": [
+            "ai_act.74.1.es",
+            "ai_act.74.2.es",
+            "ai_act.74.3.es",
+            "ai_act.74.4.es",
+            "ai_act.74.5.es",
+            "ai_act.74.6.es",
+            "ai_act.74.7.es",
+            "ai_act.74.8.es",
+            "ai_act.74.9.es",
+            "ai_act.74.10.es",
+            "ai_act.74.11.es",
+            "ai_act.74.12.es",
+            "ai_act.74.13.es",
+            "ai_act.74.14.es"
+          ],
+          "embedded_at": "2026-05-04T23:03:44.085518Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:ccf645d9db9b308ec092a6b659a7fee36ff5c7a6b21605b8748c4b30a3217a54",
-          "tokens": 1404,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1507,
+          "chunks": [
+            "ai_act.74.1.en",
+            "ai_act.74.2.en",
+            "ai_act.74.3.en",
+            "ai_act.74.4.en",
+            "ai_act.74.5.en",
+            "ai_act.74.6.en",
+            "ai_act.74.7.en",
+            "ai_act.74.8.en",
+            "ai_act.74.9.en",
+            "ai_act.74.10.en",
+            "ai_act.74.11.en",
+            "ai_act.74.12.en",
+            "ai_act.74.13.en",
+            "ai_act.74.14.en"
+          ],
+          "embedded_at": "2026-05-04T23:04:18.350483Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1809,18 +2456,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b2127b178d9b3b13e3743e3ce3ee0aa26400c14031e141b8093aa8dc39fdb205",
-          "tokens": 496,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 418,
+          "chunks": [
+            "ai_act.75.es"
+          ],
+          "embedded_at": "2026-05-04T23:04:25.391018Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:6dda7c22804d3ebc9fa8af9ff5d893729dede85287980a9fb3625e8304f22c21",
-          "tokens": 350,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 381,
+          "chunks": [
+            "ai_act.75.en"
+          ],
+          "embedded_at": "2026-05-04T23:04:32.172211Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1833,18 +2486,24 @@
       "languages": {
         "es": {
           "hash": "sha256:9859056dc24409478dc5f551324b9106f30f852e9fb5e4fd5f8db42b26c2ac02",
-          "tokens": 556,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 448,
+          "chunks": [
+            "ai_act.76.es"
+          ],
+          "embedded_at": "2026-05-04T23:04:40.367997Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:0d525316fe5db5b03988e0ba0ae75c3803abeebbe658f5f744213f74826b8d09",
-          "tokens": 399,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 420,
+          "chunks": [
+            "ai_act.76.en"
+          ],
+          "embedded_at": "2026-05-04T23:04:47.522077Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1857,18 +2516,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b94836b441117d8a29425a3653604f0e5ec708dbf9f7dc009233e5c3c8b2bcb4",
-          "tokens": 517,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 405,
+          "chunks": [
+            "ai_act.77.es"
+          ],
+          "embedded_at": "2026-05-04T23:04:54.480052Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:f266e912ed90bbc62b2686d931c39b641ac318ac7da7ea4517c59ea441c0433e",
-          "tokens": 319,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 341,
+          "chunks": [
+            "ai_act.77.en"
+          ],
+          "embedded_at": "2026-05-04T23:05:00.002079Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1881,18 +2546,24 @@
       "languages": {
         "es": {
           "hash": "sha256:5177377dcce28831c1be8dfbafb17f7a7120d75af936e3b9de7dae620e6237cf",
-          "tokens": 1095,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 868,
+          "chunks": [
+            "ai_act.78.es"
+          ],
+          "embedded_at": "2026-05-04T23:05:08.692781Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:28b29173fad74efcf0cdb215f2bfb645c6dc4f60bf436a7fa80317cec79f8f3b",
-          "tokens": 717,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 757,
+          "chunks": [
+            "ai_act.78.en"
+          ],
+          "embedded_at": "2026-05-04T23:05:18.271980Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1905,18 +2576,40 @@
       "languages": {
         "es": {
           "hash": "sha256:65e9943feca083d3d644ab2531e7d386eee9ec7cdbcec2bdae5ed9940931b130",
-          "tokens": 1579,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1280,
+          "chunks": [
+            "ai_act.79.1.es",
+            "ai_act.79.2.es",
+            "ai_act.79.3.es",
+            "ai_act.79.4.es",
+            "ai_act.79.5.es",
+            "ai_act.79.6.es",
+            "ai_act.79.7.es",
+            "ai_act.79.8.es",
+            "ai_act.79.9.es"
+          ],
+          "embedded_at": "2026-05-04T23:06:22.286846Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:3dbe35a7765ca8605d09e31cfd5403800f02233609d9bcb3a65a5c492a007aa1",
-          "tokens": 1122,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1206,
+          "chunks": [
+            "ai_act.79.1.en",
+            "ai_act.79.2.en",
+            "ai_act.79.3.en",
+            "ai_act.79.4.en",
+            "ai_act.79.5.en",
+            "ai_act.79.6.en",
+            "ai_act.79.7.en",
+            "ai_act.79.8.en",
+            "ai_act.79.9.en"
+          ],
+          "embedded_at": "2026-05-04T23:07:21.522246Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1929,18 +2622,24 @@
       "languages": {
         "es": {
           "hash": "sha256:dab6824b40337de0abd12f8f4e77a1478dcff5a19a389a333c1c9804d0189a5a",
-          "tokens": 762,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 630,
+          "chunks": [
+            "ai_act.80.es"
+          ],
+          "embedded_at": "2026-05-04T23:07:30.225372Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:79d48d86362e15a2e06fbd6b2b16dded7791a3fd42d695bfffd3eaf4b93912ee",
-          "tokens": 549,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 559,
+          "chunks": [
+            "ai_act.80.en"
+          ],
+          "embedded_at": "2026-05-04T23:07:39.478821Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1953,18 +2652,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b2311121708c830e74d1bb00d81b6fc2834dcd47a34ffcec82e1ea38b16d394c",
-          "tokens": 540,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 444,
+          "chunks": [
+            "ai_act.81.es"
+          ],
+          "embedded_at": "2026-05-04T23:07:46.975032Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:912daf2fe5287bf06b4c03f0fdee2871378d91868aa998e989f9676ed3da965b",
-          "tokens": 383,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 406,
+          "chunks": [
+            "ai_act.81.en"
+          ],
+          "embedded_at": "2026-05-04T23:07:53.858300Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -1977,18 +2682,24 @@
       "languages": {
         "es": {
           "hash": "sha256:a55c54c24238976ceffb48b8c3d97b48fba9aeb01a36cb5ecdf8404c962826a0",
-          "tokens": 544,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 429,
+          "chunks": [
+            "ai_act.82.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:01.182905Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:2c431749a41e41d36014e84f29b28e6447734064595261fa4d0ab81324b6224d",
-          "tokens": 388,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 393,
+          "chunks": [
+            "ai_act.82.en"
+          ],
+          "embedded_at": "2026-05-04T23:08:08.304180Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2001,18 +2712,24 @@
       "languages": {
         "es": {
           "hash": "sha256:218bcb0b5c7b9cfbcc61cc4f0f61dcf0e3991246000a92a906a1fb07ea1ced6c",
-          "tokens": 281,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 238,
+          "chunks": [
+            "ai_act.83.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:12.529758Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:4792f314a0c1115840740decefb3f037154cb544b0ec93b05c694a79d3973070",
-          "tokens": 214,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 245,
+          "chunks": [
+            "ai_act.83.en"
+          ],
+          "embedded_at": "2026-05-04T23:08:16.821047Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2025,18 +2742,24 @@
       "languages": {
         "es": {
           "hash": "sha256:3d319d8619ca9e40b96b17ab40e1269f37dbfd4da6bef9158d7ea06bc4007ef3",
-          "tokens": 194,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 149,
+          "chunks": [
+            "ai_act.84.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:19.496008Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:19035d66334c79f2ff13a432abf4b2226e1681f36ba07e9427166fae6292079b",
-          "tokens": 135,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 126,
+          "chunks": [
+            "ai_act.84.en"
+          ],
+          "embedded_at": "2026-05-04T23:08:22.078556Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2049,18 +2772,24 @@
       "languages": {
         "es": {
           "hash": "sha256:09f3ef7b2cca041a68384b907353ab88713c368cefc37e188af970b357922d0b",
-          "tokens": 143,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 113,
+          "chunks": [
+            "ai_act.85.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:24.241524Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:71554cb10824a0000b349057860b0eeb843b6a7c543bf0cf93b6a641245289d2",
-          "tokens": 95,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 109,
+          "chunks": [
+            "ai_act.85.en"
+          ],
+          "embedded_at": "2026-05-04T23:08:27.090142Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2073,18 +2802,24 @@
       "languages": {
         "es": {
           "hash": "sha256:081a30240a74f4eda2f7e5d3ef0551a4b7d8e42c3606b644618c4e1b0264aac3",
-          "tokens": 279,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 232,
+          "chunks": [
+            "ai_act.86.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:30.840565Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:f06ca41583e8094ed2f0e41e3fc6864a5fcd0e322892b4681f05e22e3ea0574f",
-          "tokens": 186,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 189,
+          "chunks": [
+            "ai_act.86.en"
+          ],
+          "embedded_at": "2026-05-04T23:08:34.463614Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2097,18 +2832,24 @@
       "languages": {
         "es": {
           "hash": "sha256:32edf7faa459716663c0b6e9a7d2c8f02a5d8457e0e97e36d0b64eee3cbc544f",
-          "tokens": 73,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 60,
+          "chunks": [
+            "ai_act.87.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:35.879030Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a204cd20799bba97ff1ad30e284e54cfff207d02de1f20460600aa39fa4522a7",
-          "tokens": 55,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 58,
+          "chunks": [
+            "ai_act.87.en"
+          ],
+          "embedded_at": "2026-05-04T23:08:37.584919Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2121,18 +2862,24 @@
       "languages": {
         "es": {
           "hash": "sha256:636d6923c9d269181f2099fe1cb9015b4179d24c0b2ce904e6a4f694df7e8ce4",
-          "tokens": 229,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 179,
+          "chunks": [
+            "ai_act.88.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:40.650811Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:cdfbc5ae04c5cdac5d4642697048fe7665a18d7611ce5323424b1a938ccec7a5",
-          "tokens": 164,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 165,
+          "chunks": [
+            "ai_act.88.en"
+          ],
+          "embedded_at": "2026-05-04T23:08:44.051349Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2145,18 +2892,24 @@
       "languages": {
         "es": {
           "hash": "sha256:c1fe11ef6a1137a30fa0d185be7c3ab1be294177464acca2248017c7ccd7f07f",
-          "tokens": 261,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 225,
+          "chunks": [
+            "ai_act.89.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:48.229979Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:6d6bec5e5234ff5c230169445499291310676a8a4c956f71cf2716d916ff688b",
-          "tokens": 171,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 201,
+          "chunks": [
+            "ai_act.89.en"
+          ],
+          "embedded_at": "2026-05-04T23:08:51.586520Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2169,18 +2922,24 @@
       "languages": {
         "es": {
           "hash": "sha256:9f694bcb1aaebd30000df4d60e42af52149e804ba59687ebd7e425c0ac9761d2",
-          "tokens": 311,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 253,
+          "chunks": [
+            "ai_act.90.es"
+          ],
+          "embedded_at": "2026-05-04T23:08:56.107390Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:36840440455c8e39c3790a3feb4f17f7f6b5c07ac01d720680c8dcdaea99e9b5",
-          "tokens": 196,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 213,
+          "chunks": [
+            "ai_act.90.en"
+          ],
+          "embedded_at": "2026-05-04T23:09:00.353572Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2193,18 +2952,24 @@
       "languages": {
         "es": {
           "hash": "sha256:6f1e57bf013939fe82b33aad4d9143e7ad4f645e05cf0c1aea8ba806892a9177",
-          "tokens": 479,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 385,
+          "chunks": [
+            "ai_act.91.es"
+          ],
+          "embedded_at": "2026-05-04T23:09:06.870933Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:ef46b46e0f1b8844c002f1fdbe2bb7375bfa31a6bbf4d021091650128deadb22",
-          "tokens": 350,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 367,
+          "chunks": [
+            "ai_act.91.en"
+          ],
+          "embedded_at": "2026-05-04T23:09:13.082081Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2217,18 +2982,24 @@
       "languages": {
         "es": {
           "hash": "sha256:eddab59bdbd50b9868e79d03e1430bd7358a584964e7665001b628f30152f3bb",
-          "tokens": 669,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 550,
+          "chunks": [
+            "ai_act.92.es"
+          ],
+          "embedded_at": "2026-05-04T23:09:22.079643Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a2da470b04e791959dc500a4eb92a4d39895cbdb90ff7beff54ff39be684f6a6",
-          "tokens": 434,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 475,
+          "chunks": [
+            "ai_act.92.en"
+          ],
+          "embedded_at": "2026-05-04T23:09:30.231932Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2241,18 +3012,24 @@
       "languages": {
         "es": {
           "hash": "sha256:300807f89e89f9c3ee5a41558039f3e36c66391e913dfccdec407d32af6d3bd7",
-          "tokens": 313,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 255,
+          "chunks": [
+            "ai_act.93.es"
+          ],
+          "embedded_at": "2026-05-04T23:09:34.626207Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:a629412f4458269b0ec99791624e6287fbfc52bbf0be193d59b154e5b83a9f7d",
-          "tokens": 216,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 231,
+          "chunks": [
+            "ai_act.93.en"
+          ],
+          "embedded_at": "2026-05-04T23:09:38.644758Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2265,18 +3042,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b84f81eeb1aa566483df01e46fad52e3b912dd17f40b70d08fd5f3940406d886",
-          "tokens": 78,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 66,
+          "chunks": [
+            "ai_act.94.es"
+          ],
+          "embedded_at": "2026-05-04T23:09:40.247320Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:10f7ae776cc6ad1ff96655f5d1af2d90da6a31a106b72f9ff6a5ff4d73b9cb80",
-          "tokens": 56,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 62,
+          "chunks": [
+            "ai_act.94.en"
+          ],
+          "embedded_at": "2026-05-04T23:09:41.673152Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2289,18 +3072,24 @@
       "languages": {
         "es": {
           "hash": "sha256:f6fb295835a1d415c6ec3d3a95b15bca41304f45cd99821ead902fe637f2fb41",
-          "tokens": 697,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 577,
+          "chunks": [
+            "ai_act.95.es"
+          ],
+          "embedded_at": "2026-05-04T23:09:50.255915Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:7a2935cd4bb2f8123325ace9d487af71023e03e5ad36815d8611d14bcb24a13f",
-          "tokens": 441,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 489,
+          "chunks": [
+            "ai_act.95.en"
+          ],
+          "embedded_at": "2026-05-04T23:09:59.231638Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2313,18 +3102,24 @@
       "languages": {
         "es": {
           "hash": "sha256:39b829d03586e5f640ff6c8e58d76377eff015806ed567fdd4c69c2998020a77",
-          "tokens": 451,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 376,
+          "chunks": [
+            "ai_act.96.es"
+          ],
+          "embedded_at": "2026-05-04T23:10:05.336995Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:ccae49e79b0d7d75f71dab7f3e64354ddbf0ceceb01c01c18aef57d983847411",
-          "tokens": 303,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 336,
+          "chunks": [
+            "ai_act.96.en"
+          ],
+          "embedded_at": "2026-05-04T23:10:11.017590Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2337,18 +3132,24 @@
       "languages": {
         "es": {
           "hash": "sha256:7c54967c399bc74a1c718ff1f57b62dd0a346bceb45c67962bab940730069009",
-          "tokens": 830,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 643,
+          "chunks": [
+            "ai_act.97.es"
+          ],
+          "embedded_at": "2026-05-04T23:10:19.612222Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:7c6cb92385e053027744e037c31c7b19af15c5ebe708ad40b8bbfe09b594a6d0",
-          "tokens": 617,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 556,
+          "chunks": [
+            "ai_act.97.en"
+          ],
+          "embedded_at": "2026-05-04T23:10:28.461754Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2361,18 +3162,24 @@
       "languages": {
         "es": {
           "hash": "sha256:aa71222df313dd8c1466ae656c740c084e2e2ebc5a6de1e561e98a651c274bc0",
-          "tokens": 89,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 68,
+          "chunks": [
+            "ai_act.98.es"
+          ],
+          "embedded_at": "2026-05-04T23:10:30.433051Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:854b158df066168304a4cc7a674613fec59e85a4e4e4d1504ab0775b97a71544",
-          "tokens": 68,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 60,
+          "chunks": [
+            "ai_act.98.en"
+          ],
+          "embedded_at": "2026-05-04T23:10:32.117222Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2385,18 +3192,44 @@
       "languages": {
         "es": {
           "hash": "sha256:d743b53c0c8005a140692fb784d7eab59b60b03f729e42e7301ad7cfaa888547",
-          "tokens": 1527,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1276,
+          "chunks": [
+            "ai_act.99.1.es",
+            "ai_act.99.2.es",
+            "ai_act.99.3.es",
+            "ai_act.99.4.es",
+            "ai_act.99.5.es",
+            "ai_act.99.6.es",
+            "ai_act.99.7.es",
+            "ai_act.99.8.es",
+            "ai_act.99.9.es",
+            "ai_act.99.10.es",
+            "ai_act.99.11.es"
+          ],
+          "embedded_at": "2026-05-04T23:11:33.663221Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:d301a613b30a3772a26b5f86ffa9a614d67346245de9d3c825cb7f0825384bca",
-          "tokens": 1100,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1213,
+          "chunks": [
+            "ai_act.99.1.en",
+            "ai_act.99.2.en",
+            "ai_act.99.3.en",
+            "ai_act.99.4.en",
+            "ai_act.99.5.en",
+            "ai_act.99.6.en",
+            "ai_act.99.7.en",
+            "ai_act.99.8.en",
+            "ai_act.99.9.en",
+            "ai_act.99.10.en",
+            "ai_act.99.11.en"
+          ],
+          "embedded_at": "2026-05-04T23:12:36.190470Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2409,18 +3242,24 @@
       "languages": {
         "es": {
           "hash": "sha256:d296bb727bc7b3bea9d57fd62d234b213ed3afc4071e34589e8fbe3c5e3c644b",
-          "tokens": 973,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 773,
+          "chunks": [
+            "ai_act.100.es"
+          ],
+          "embedded_at": "2026-05-04T23:12:44.710187Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:9f1c3403117931216b22455b44a69dc54170867417c399a6361f86b95db4c3ef",
-          "tokens": 687,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 729,
+          "chunks": [
+            "ai_act.100.en"
+          ],
+          "embedded_at": "2026-05-04T23:12:53.997367Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2433,18 +3272,24 @@
       "languages": {
         "es": {
           "hash": "sha256:a23f4e5fc8b91d842860a85692040d8f320c5b4728a2fb249158e4e702d1fa76",
-          "tokens": 652,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 547,
+          "chunks": [
+            "ai_act.101.es"
+          ],
+          "embedded_at": "2026-05-04T23:13:02.852752Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:2f01770ef75b521477a4a1031cefdd48aea59f6a8efb8f216e36b023e8e77d10",
-          "tokens": 452,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 482,
+          "chunks": [
+            "ai_act.101.en"
+          ],
+          "embedded_at": "2026-05-04T23:13:10.891258Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2457,18 +3302,24 @@
       "languages": {
         "es": {
           "hash": "sha256:3774d3f89b9603bf7c470274620916d0ff85a5da27d75e87980b56448d9d37db",
-          "tokens": 341,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 271,
+          "chunks": [
+            "ai_act.102.es"
+          ],
+          "embedded_at": "2026-05-04T23:13:15.481885Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:bb91624f2de6a269fb0ce252d6f53e7efcfc28feb1de582e90a63c0855f5638f",
-          "tokens": 269,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 240,
+          "chunks": [
+            "ai_act.102.en"
+          ],
+          "embedded_at": "2026-05-04T23:13:19.803607Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2481,18 +3332,24 @@
       "languages": {
         "es": {
           "hash": "sha256:c72bec39943141de001199c8a7018807b183a387b1ddc5872fa4efd8fb26e717",
-          "tokens": 369,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 295,
+          "chunks": [
+            "ai_act.103.es"
+          ],
+          "embedded_at": "2026-05-04T23:13:24.973748Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:742798e0e3b8019a623f305ff5cb5a0b65bb9527a27f3e68885684356d2fd618",
-          "tokens": 301,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 272,
+          "chunks": [
+            "ai_act.103.en"
+          ],
+          "embedded_at": "2026-05-04T23:13:30.054165Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2505,18 +3362,24 @@
       "languages": {
         "es": {
           "hash": "sha256:01c36c3e2b6855e4a601dabd7ecdad7fab68962dda34f8405317a76c5b3af58e",
-          "tokens": 332,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 264,
+          "chunks": [
+            "ai_act.104.es"
+          ],
+          "embedded_at": "2026-05-04T23:13:34.567362Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:77e1c3951b9f096583d17e036913935e0e9350e313d43ecf656d4ec1f8df19a1",
-          "tokens": 263,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 239,
+          "chunks": [
+            "ai_act.104.en"
+          ],
+          "embedded_at": "2026-05-04T23:13:38.542466Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2529,18 +3392,24 @@
       "languages": {
         "es": {
           "hash": "sha256:2dfbb30227b7dc08491abe9666d8444ed444b318c288822784da4b58b2bb8880",
-          "tokens": 352,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 279,
+          "chunks": [
+            "ai_act.105.es"
+          ],
+          "embedded_at": "2026-05-04T23:13:43.248827Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:c7625b012bd5dba52d65e14951d5b4e3876d6b9ef4e9684257efe66dc382e764",
-          "tokens": 281,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 253,
+          "chunks": [
+            "ai_act.105.en"
+          ],
+          "embedded_at": "2026-05-04T23:13:47.932703Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2553,18 +3422,24 @@
       "languages": {
         "es": {
           "hash": "sha256:8e857ba60de1958a6e3b06abf244d58862c9909288539215976ac55855067c61",
-          "tokens": 375,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 298,
+          "chunks": [
+            "ai_act.106.es"
+          ],
+          "embedded_at": "2026-05-04T23:13:52.921092Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:0f67e31249b0595fb688abef5197cb045f6d7211d0317bd28aff8366f451eabc",
-          "tokens": 311,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 278,
+          "chunks": [
+            "ai_act.106.en"
+          ],
+          "embedded_at": "2026-05-04T23:13:57.602544Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2577,18 +3452,24 @@
       "languages": {
         "es": {
           "hash": "sha256:b412abd056af3209c6ff7b276fa0de8cf30ff68820050a51d17aa2fb9a2584d4",
-          "tokens": 320,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 257,
+          "chunks": [
+            "ai_act.107.es"
+          ],
+          "embedded_at": "2026-05-04T23:14:02.399340Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:814e642f8e5feaf67539e893c8634a81c0ea1b716729d5f568985e2650f2c996",
-          "tokens": 260,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 234,
+          "chunks": [
+            "ai_act.107.en"
+          ],
+          "embedded_at": "2026-05-04T23:14:06.348186Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2601,18 +3482,24 @@
       "languages": {
         "es": {
           "hash": "sha256:cefa9180ac6256b4202e38aca64d9882e87a8ff1af6171ae30cf48877109c00b",
-          "tokens": 883,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 695,
+          "chunks": [
+            "ai_act.108.es"
+          ],
+          "embedded_at": "2026-05-04T23:14:14.849201Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:959b71f648c6cf761a11bfb970005813d259ceb2150038cd247ce78b3ce5b82c",
-          "tokens": 687,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 653,
+          "chunks": [
+            "ai_act.108.en"
+          ],
+          "embedded_at": "2026-05-04T23:14:23.321170Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2625,18 +3512,24 @@
       "languages": {
         "es": {
           "hash": "sha256:4c8166730c553e3455242c72b6f560e354ea8b4901995d93ec6a949819b9848d",
-          "tokens": 327,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 259,
+          "chunks": [
+            "ai_act.109.es"
+          ],
+          "embedded_at": "2026-05-04T23:14:28.176445Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:58fed2cd7aa826250924d099e53ff9d4d089f1e4dc1006c3481079db16368aa2",
-          "tokens": 264,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 238,
+          "chunks": [
+            "ai_act.109.en"
+          ],
+          "embedded_at": "2026-05-04T23:14:32.316797Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2649,18 +3542,24 @@
       "languages": {
         "es": {
           "hash": "sha256:401035e87fbf0e96a41b3184dccf665275e634b2b5270319091463a79a2e4202",
-          "tokens": 239,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 192,
+          "chunks": [
+            "ai_act.110.es"
+          ],
+          "embedded_at": "2026-05-04T23:14:36.023050Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:2f449fe2157d8f3cc584a2fd12f44574dabd52b1be904940bb37b2027a5869d3",
-          "tokens": 207,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 178,
+          "chunks": [
+            "ai_act.110.en"
+          ],
+          "embedded_at": "2026-05-04T23:14:40.061690Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2673,18 +3572,24 @@
       "languages": {
         "es": {
           "hash": "sha256:ef8d7abf49f59d675ccd212c261e7c5694dbd72a80519af1f7dc55fae46c1799",
-          "tokens": 642,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 502,
+          "chunks": [
+            "ai_act.111.es"
+          ],
+          "embedded_at": "2026-05-04T23:14:48.691144Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:bf647893c203b147e5aeca4df7383ee865a70e0598a36ac0a85a364eebc45899",
-          "tokens": 433,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 421,
+          "chunks": [
+            "ai_act.111.en"
+          ],
+          "embedded_at": "2026-05-04T23:14:56.144203Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2697,18 +3602,48 @@
       "languages": {
         "es": {
           "hash": "sha256:faa7b98d569e070d4aa685ab3fcd7497d7ebce594d71be38ad5e85513bfa3bb8",
-          "tokens": 1630,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1321,
+          "chunks": [
+            "ai_act.112.1.es",
+            "ai_act.112.2.es",
+            "ai_act.112.3.es",
+            "ai_act.112.4.es",
+            "ai_act.112.5.es",
+            "ai_act.112.6.es",
+            "ai_act.112.7.es",
+            "ai_act.112.8.es",
+            "ai_act.112.9.es",
+            "ai_act.112.10.es",
+            "ai_act.112.11.es",
+            "ai_act.112.12.es",
+            "ai_act.112.13.es"
+          ],
+          "embedded_at": "2026-05-04T23:15:27.363706Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:98833f91e669e6b6eb9d11233213f9fb8003090463173306882ce400418d5127",
-          "tokens": 1134,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 1208,
+          "chunks": [
+            "ai_act.112.1.en",
+            "ai_act.112.2.en",
+            "ai_act.112.3.en",
+            "ai_act.112.4.en",
+            "ai_act.112.5.en",
+            "ai_act.112.6.en",
+            "ai_act.112.7.en",
+            "ai_act.112.8.en",
+            "ai_act.112.9.en",
+            "ai_act.112.10.en",
+            "ai_act.112.11.en",
+            "ai_act.112.12.en",
+            "ai_act.112.13.en"
+          ],
+          "embedded_at": "2026-05-04T23:15:52.371914Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }
@@ -2721,18 +3656,222 @@
       "languages": {
         "es": {
           "hash": "sha256:6c5487860739e085791689dac62ea96a2203d2f6d12ae67cc50ccf8cb865ea1c",
-          "tokens": 15685,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 12593,
+          "chunks": [
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.6.es",
+            "ai_act.113.7.es",
+            "ai_act.113.8.es",
+            "ai_act.113.9.es",
+            "ai_act.113.10.es",
+            "ai_act.113.11.es",
+            "ai_act.113.12.es",
+            "ai_act.113.13.es",
+            "ai_act.113.14.es",
+            "ai_act.113.15.es",
+            "ai_act.113.16.es",
+            "ai_act.113.17.es",
+            "ai_act.113.18.es",
+            "ai_act.113.19.es",
+            "ai_act.113.20.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.6.es",
+            "ai_act.113.7.es",
+            "ai_act.113.8.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.6.es",
+            "ai_act.113.7.es",
+            "ai_act.113.8.es",
+            "ai_act.113.9.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.6.es",
+            "ai_act.113.7.es",
+            "ai_act.113.8.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.6.es",
+            "ai_act.113.7.es",
+            "ai_act.113.8.es",
+            "ai_act.113.9.es",
+            "ai_act.113.10.es",
+            "ai_act.113.11.es",
+            "ai_act.113.12.es",
+            "ai_act.113.13.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.6.es",
+            "ai_act.113.7.es",
+            "ai_act.113.8.es",
+            "ai_act.113.9.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.4.es",
+            "ai_act.113.5.es",
+            "ai_act.113.6.es",
+            "ai_act.113.7.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es",
+            "ai_act.113.3.es",
+            "ai_act.113.1.es",
+            "ai_act.113.2.es"
+          ],
+          "embedded_at": "2026-05-04T23:18:39.117729Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
         },
         "en": {
           "hash": "sha256:20f45ad560e48d6583de9d7459a2dbc363064b745efe1a1d8108982b7bfbe106",
-          "tokens": 11370,
-          "chunks": [],
-          "embedded_at": null,
-          "fetched_at": "2026-05-04T18:05:10.868742Z",
+          "tokens": 11148,
+          "chunks": [
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.6.en",
+            "ai_act.113.7.en",
+            "ai_act.113.8.en",
+            "ai_act.113.9.en",
+            "ai_act.113.10.en",
+            "ai_act.113.11.en",
+            "ai_act.113.12.en",
+            "ai_act.113.13.en",
+            "ai_act.113.14.en",
+            "ai_act.113.15.en",
+            "ai_act.113.16.en",
+            "ai_act.113.17.en",
+            "ai_act.113.18.en",
+            "ai_act.113.19.en",
+            "ai_act.113.20.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.6.en",
+            "ai_act.113.7.en",
+            "ai_act.113.8.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.6.en",
+            "ai_act.113.7.en",
+            "ai_act.113.8.en",
+            "ai_act.113.9.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.6.en",
+            "ai_act.113.7.en",
+            "ai_act.113.8.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.6.en",
+            "ai_act.113.7.en",
+            "ai_act.113.8.en",
+            "ai_act.113.9.en",
+            "ai_act.113.10.en",
+            "ai_act.113.11.en",
+            "ai_act.113.12.en",
+            "ai_act.113.13.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.6.en",
+            "ai_act.113.7.en",
+            "ai_act.113.8.en",
+            "ai_act.113.9.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.4.en",
+            "ai_act.113.5.en",
+            "ai_act.113.6.en",
+            "ai_act.113.7.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en",
+            "ai_act.113.3.en",
+            "ai_act.113.1.en",
+            "ai_act.113.2.en"
+          ],
+          "embedded_at": "2026-05-04T23:21:20.255749Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
         }
       }

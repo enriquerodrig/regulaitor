@@ -1,0 +1,18 @@
+[
+  {
+    "articulo": "1",
+    "title": "Subject matter",
+    "text": "This Regulation lays down harmonised rules.",
+    "paragraphs": [
+      {"apartado": "1", "text": "This Regulation lays down harmonised rules."}
+    ]
+  },
+  {
+    "articulo": "2",
+    "title": "Scope",
+    "text": "This Regulation applies to AI systems.",
+    "paragraphs": [
+      {"apartado": "1", "text": "This Regulation applies to AI systems."}
+    ]
+  }
+]

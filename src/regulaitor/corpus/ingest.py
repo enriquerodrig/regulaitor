@@ -16,9 +16,9 @@ from pathlib import Path
 from typing import Literal
 
 import httpx
-import tiktoken
 
 from regulaitor.corpus import manifest as manifest_mod
+from regulaitor.corpus._targets import expand_targets
 from regulaitor.corpus.eurlex import (
     EurLexClient,
     FetchResult,
@@ -46,11 +46,6 @@ from regulaitor.corpus.schemas import (
 from regulaitor.corpus.validate import validate
 
 logger = logging.getLogger("regulaitor.corpus.ingest")
-
-# Module-level encoder cache. tiktoken.get_encoding caches internally too,
-# but binding the encoder once makes the intent explicit and avoids any
-# import-time work surprise.
-_TOKENIZER = tiktoken.get_encoding("cl100k_base")
 
 CORPUS_ROOT = Path("corpus")
 MANIFEST_DIR = CORPUS_ROOT / "manifests"
@@ -111,7 +106,15 @@ def _sha256_hex(text: str) -> str:
 
 
 def _token_count(text: str) -> int:
-    return len(_TOKENIZER.encode(text))
+    """Delegate to rag.embeddings.token_count (BGE-M3 XLM-RoBERTa tokenizer).
+
+    H1 used tiktoken cl100k_base as a proxy; H2 swapped to the real BGE-M3
+    tokenizer for coherence between the chunking decisions and the manifest
+    `tokens` field. See decisions log entry 'Swap completo de tokenizer'.
+    """
+    from regulaitor.rag import embeddings  # local import to avoid cycle on package load
+
+    return embeddings.token_count(text)
 
 
 def _write_atomic(path: Path, content: bytes) -> None:
@@ -154,15 +157,6 @@ def _load_local(
         ),
         fmt,
     )
-
-
-def _expand_targets(
-    corpus: Norma | Literal["all"],
-    languages: list[Language] | Literal["all"],
-) -> tuple[list[Norma], list[Language]]:
-    corpora: list[Norma] = list(CELEX.keys()) if corpus == "all" else [corpus]
-    langs: list[Language] = ["es", "en"] if languages == "all" else list(languages)
-    return corpora, langs
 
 
 def _build_manifest(
@@ -283,7 +277,9 @@ def run(
     (see docs/technical_decisions_log.md H1 entry "EUR-Lex WAF — local-only mode").
     """
     summary = IngestSummary()
-    corpora, langs = _expand_targets(corpus, languages)
+    corpora, langs = expand_targets(corpus, languages)
+    # Filter to only corpora that have CELEX/VERSION pinned (H1 + H14).
+    corpora = [c for c in corpora if c in CELEX]
 
     formex_parser = FormexParser()
     html_parser = HtmlParser()

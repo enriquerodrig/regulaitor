@@ -1,4 +1,4 @@
-.PHONY: help setup lint test test-cov precommit ingest serve eval redteam docker deploy clean
+.PHONY: help setup lint test test-cov precommit ingest rag-build serve eval redteam docker deploy clean
 
 UV ?= uv
 
@@ -37,6 +37,9 @@ precommit:
 
 ingest:
 	@echo "TODO: implementar en H1"
+
+rag-build: ## chunk + embed + rerank-warmup + upsert LanceDB + extend manifest
+	$(UV) run python -m scripts.rag_build --corpus all --lang all
 
 serve:
 	@echo "TODO: implementar en H6"

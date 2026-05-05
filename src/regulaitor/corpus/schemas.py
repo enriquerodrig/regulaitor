@@ -24,12 +24,15 @@ class HttpCacheEntry(BaseModel):
 
 
 class LanguageEntry(BaseModel):
-    """Per-language metadata for one article. H2 fills `chunks` and `embedded_at`."""
+    """Per-language metadata for one article. H2 fills `chunks`, `embedded_at`,
+    and `embedding_model`. The latter records which model produced the vectors,
+    enabling automatic invalidation when the model is upgraded."""
 
     hash: str  # "sha256:<hex>" — SHA256 of the raw article text
     tokens: int
     chunks: list[str] = Field(default_factory=list)
     embedded_at: datetime | None = None
+    embedding_model: str | None = None  # e.g. "BAAI/bge-m3@<sha256>"
     fetched_at: datetime
     # plain str (not HttpUrl): URLs are built internally by eurlex.py;
     # exact-match is required for HTTP cache headers (If-Modified-Since / ETag).

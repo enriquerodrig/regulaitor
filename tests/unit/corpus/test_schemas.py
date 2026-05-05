@@ -105,3 +105,26 @@ def test_manifest_rejects_unknown_corpus() -> None:
 def test_http_cache_entry_all_fields_optional() -> None:
     assert HttpCacheEntry().etag is None
     assert HttpCacheEntry().last_modified is None
+
+
+def test_language_entry_carries_embedding_model_field() -> None:
+    """H2 adds embedding_model to track which model produced the vectors."""
+    le = LanguageEntry(
+        hash="sha256:abc",
+        tokens=412,
+        fetched_at=_now(),
+        source_url="https://eur-lex.europa.eu/x",
+        embedding_model="BAAI/bge-m3@v1.0",
+    )
+    assert le.embedding_model == "BAAI/bge-m3@v1.0"
+
+
+def test_language_entry_embedding_model_defaults_to_none_for_h1_compat() -> None:
+    """Manifests written by H1 (without this field) must still parse."""
+    le = LanguageEntry(
+        hash="sha256:abc",
+        tokens=412,
+        fetched_at=_now(),
+        source_url="https://eur-lex.europa.eu/x",
+    )
+    assert le.embedding_model is None
