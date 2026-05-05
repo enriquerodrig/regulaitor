@@ -663,7 +663,7 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
 
 ---
 
-## H3 — MCP server + Retriever-Agent + Citation validator (en diseño)
+## H3 — MCP server + Retriever-Agent + Citation validator (cerrado 2026-05-05)
 
 ### 2026-05-05 · Alcance del MCP server en H3: 3 tools, no 5
 
@@ -948,6 +948,79 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
   ```
 - **Implicación para H4 (LangGraph state):** el `RetrieverAgent.retrieve()` se invoca como un nodo del graph; el output `Context` se guarda en el state que el siguiente nodo (Analyst) lee. El Analyst recibe `Context.chunks` para razonar sobre ellos.
 - **Enlace:** spec H3 §4.5; CLAUDE.md §8.1.
+
+### 2026-05-05 · H3 desviaciones de implementación (amendments durante el ciclo)
+
+Capturadas durante la ejecución task-by-task. La feedback memory `feedback_decisions_log_living.md` exige que estos cambios queden en el log aunque el spec original difiera.
+
+**Task 3 — corpus/loader.py (3 amendments):**
+- **Hash format:** el plan asumía SHA256 raw hex (`hashlib.sha256(...).hexdigest()`); H1 `corpus/ingest._sha256_hex` produce `"sha256:" + hexdigest()`. El loader prepende ese prefix antes de comparar, simétrico con el writer. Constante `_HASH_PREFIX = "sha256:"` añadida.
+- **Test fixture schema:** el plan usaba campos sintéticos (`norma`, `source_url` top-level, etc.) que el `Manifest` Pydantic real rechaza. Reescrito para usar el schema H1 real (`corpus`, `celex`, `version`, `source_format`, etc.).
+- **`get_manifest_meta.source_url`:** el `Manifest` real no tiene `source_url` top-level; per-`LanguageEntry` URLs son `file://` paths del PDF pivot H1 — inútiles para citación auditable. Decisión: derivar `source_url = "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:{celex}"` para cada corpus. Información pública (CELEX), citation-grade, estable.
+- **Code review fix (Critical):** el patrón inicial poblaba `_PROCESSED_CACHE` ANTES del integrity check, con riesgo de partial-failure que dejara unverified data alcanzable. Refactorizado a **atomic publish** (build local dict, commit `_CORPUS.update(loaded)` solo si todo el loop pasa) + gate de read paths sobre `_CORPUS` membership.
+
+**Task 4 — rag/retrieval.py (2 amendments):**
+- **`INDEX_PATH` ubicación:** el plan importaba de `regulaitor.rag.store`; en realidad vive en `regulaitor.rag.build`. Importado de la ubicación real para evitar duplicar la constante.
+- **Empty candidates handling:** el plan hacía `if not candidates: return []` antes del rerank; el test esperaba que `reranker.rerank` se llame siempre. Reordenado a llamar rerank (que retorna `[]` natively para input vacío), early-return sobre `reranked` vacío. Comportamiento observable idéntico.
+
+**Task 5 — citation/validator.py (Code review CHANGES REQUESTED → fixed):**
+- **`hasattr(article, "text")` bridge eliminado.** El primer commit usaba duck-typing entre `_FakeArticle` (test) y `ArticleEntry` real. Reviewer flagged risk: si `ArticleEntry` gana un campo `.text` en H4+, el validator silenciosamente bypassa el `_CORPUS` gate de `get_article_text`. Fix: `LoaderProtocol(Protocol)` con 4 métodos típicos; `loader: LoaderProtocol | None`; siempre `ld.get_article_text(...)` en path no-apartado; `_FakeLoader` expone `get_article_text` directo; `_FakeArticle` eliminado.
+- **2 regression tests añadidos** para substring-collision (text de apartado-2 citado como apartado-1; text de art-7 citado como art-6). Spec §14 risk #5.
+
+**Task 7 — mcp_server/tools.py (Code review CHANGES REQUESTED → fixed):**
+- **CRITICAL:** `loader.get_manifest_meta(norma)` estaba FUERA del `try/except KeyError`. Su `KeyError("corpus not loaded")` escapaba unwrapped al MCP SDK como `INTERNAL_ERROR`, violando el contrato `NotFoundError`. Fix: la llamada se trajo dentro del bloque try.
+- 2 regression tests añadidos (`test_validate_citation_returns_audit_result_when_invalid`, `test_fetch_article_manifest_meta_missing_raises_notfound`). Information-disclosure note añadido al docstring de `fetch_article` (acceptable porque corpora son públicos; revisar si futuros corpora son privados).
+
+**Task 8 — mcp_server/server.py (SDK API):**
+- El plan usaba `mcp.server.Server` + `mcp_server.tool()(fn)`. El SDK 1.x `Server` (low-level) carece del método `.tool()`. Se cambió a `mcp.server.FastMCP` (high-level) + `add_tool(fn)` + `run_stdio_async()`. Misma intención (3 tools registradas + stdio loop + fail-closed warmup); código resultante más idiomático.
+- **Observaciones del code review (no blocking, deferred):**
+  1. Extract `_build_server() -> FastMCP` para hacer testeable la registration de tools (actualmente toda la `run()` body es `# pragma: no cover`).
+  2. Test que asserte exactamente 3 tools registradas con nombres correctos.
+  Diferidas a polish post-H3 si surge motivación; APROBADO por reviewer sin blocker.
+
+**Task 10 — test_loader_integrity_drift.py:**
+- El plan tampering target era `data[0]["paragraphs"][0]["text"]` (paragraph-level), pero el hash en `LanguageEntry.hash` es SHA256 del texto **a nivel de artículo** (`art["text"]`), NO de los paragraphs individuales. Tampering paragraph dejaba `art["text"]` intacto y el hash check no fallaba. Test corregido a `data[0]["text"] = "TAMPERED"` con comment explicando el nivel del hash.
+
+### 2026-05-05 · H3 cerrado: MCP server operativo
+
+- **Decisión:** H3 cierra como Done. El primer trust boundary surface del proyecto está implementado, testeado contra el corpus real, validado por smoke run, y con paper trail completo (spec, plan, ADR 0005, este log).
+- **Stats finales del cierre:**
+  - **Branch:** `feat/h3-mcp-server`. **19 commits** del primero (`6b6f12f` — spec) al último (`1f4121a` — Makefile). Squash a `main` pendiente en Task 15.
+  - **Tests:** 189 totales (157 unit + 13 contract + 19 integration). 186 fast (3 slow excluidos del CI fast suite: 1 H2 + 2 H3 con BGE-M3 real).
+  - **Coverage global:** **93.13%** sobre `src/regulaitor/` (gate 90%). Per-módulo: `citation/` 100%, `agents/` 100%, `mcp_server/` ≥85% (server.py menor por `# pragma: no cover` en `run()`), `corpus/loader.py` 85%, `rag/retrieval.py` 100%.
+  - **MCP server boot:** ~3.1 s con cache HF caliente (loader integrity check ~190 ms, reranker load ~3 s). Smoke `python -m regulaitor.mcp_server` arranca limpio con `2026-05-05 13:35:19,177 INFO regulaitor.mcp_server: warmup complete`.
+  - **MCP tools verificados:** 3 tools (`search_articles`, `fetch_article`, `validate_citation`) responden correctamente contra el corpus real. Slow E2E test confirma top-5 retrieval con score monotónico decreciente sobre query "sistemas de inteligencia artificial de alto riesgo" en AI Act ES.
+  - **Skills propuestas (drafted, not yet active):** `prompt-versioning` y `citation-validator` SKILL.md committeadas en `.claude/skills/`. Activación cuando se consuman: prompt-versioning en H4 (Analyst prompt), citation-validator si se modifica el validator (e.g. H15 fuzzy fallback).
+- **Decisiones técnicas tomadas durante H3** (las 13 brainstorming + amendments durante implementación, todas con entrada propia más arriba en este log):
+  1. Alcance: 3 tools (search/fetch/validate); document tools deferidos a H5.
+  2. Transporte: stdio (con FastMCP por SDK reality).
+  3. Arquitectura: helper común con adapters finos.
+  4. Citation validator: matching normalizado exacto.
+  5. Schemas H3: solo los 5 que H3 produce/consume (Citation, AuditResult, RetrievedChunk, Context, FetchedArticle).
+  6. Top-k: defaults fijos pre=50 / post=5.
+  7. Validator depth: 3 chequeos estrictos (article + apartado + text).
+  8. fetch_article: texto + metadata documental mínima.
+  9. Corpus loader: lazy singleton + warmup + integrity check fail-closed.
+  10. RetrievedChunk: 9 campos (citable one-shot con version + source_url).
+  11. Política de errores MCP por semántica de cada tool.
+  12. Integrity check strict fail-closed (`RuntimeError` + recovery message).
+  13. `Context` como Pydantic wrapper (no plain list).
+- **Lecciones para H4 (Analyst + Auditor + LangGraph):**
+  - El Analyst recibe `Context` (output del `RetrieverAgent`) y produce `Finding` + `Citation`. `Citation` schema ya existe en H3; `Finding` y `Answer` son trabajo H4.
+  - El Auditor recibe `Citation` del Analyst y llama `tools.validate_citation` (vía MCP loop si quiere ejercitar el server, o directo vía `validator.validate(...)` para ahorrar overhead).
+  - `Citation` y `RetrievedChunk` son `frozen=True`: el Auditor puede comparar/hashear citas con seguridad (defensa contra TOCTOU).
+  - `Context.query` permite al Auditor verificar coherencia: `Context.query == analyst_state.query` debería ser invariante por turno.
+  - `_normalize` reuse asegura que la cita validada usa la misma forma canónica que produjo los chunks. Cualquier mejora futura del normalizador beneficia a ambos lados sin desincronización.
+- **Lecciones para H8 (Evaluación):**
+  - Las 3 MCP tools pueden invocarse desde el harness directamente sin LangGraph; eso reduce el coste de iteración de evals "¿devuelve el corpus el artículo correcto?" un orden de magnitud.
+  - El campo `reason` de `AuditResult` permite reportes de evaluación que distinguen "el LLM cita un artículo inexistente" de "el LLM cita texto que no aparece" — granularidad que dará buenos reportes de calidad para la TFM defense.
+  - Slow integration tests son útiles localmente pero NO entran en CI (por coste de modelo); el harness de H8 los ejecutará bajo demanda con caché compartida.
+- **Polish diferido (capturado pero no bloqueante):**
+  1. Extract `_build_server() -> FastMCP` en `mcp_server/server.py` para unit-testability del bootstrap (actualmente cubierto solo por slow integration).
+  2. Test de assertion de exactly-3-tools registradas en `mcp_server/server.py`.
+  3. Considerar si el cliente MCP externo necesita per-language EUR-Lex URL (actualmente EN-only via `_EURLEX_URL` constant).
+  4. Suggestion: extract `REASON_*` constantes en `citation/validator.py` para uso por H4 Auditor downstream.
+- **Enlace:** ADR 0005 (MCP server architecture); spec `docs/superpowers/specs/2026-05-05-h3-mcp-server-design.md`; plan `docs/superpowers/plans/2026-05-05-h3-mcp-server.md`. Branch `feat/h3-mcp-server`. Tag pendiente: `v0.0.4-h3` (en Task 15).
 
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
