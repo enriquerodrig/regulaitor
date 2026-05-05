@@ -79,7 +79,7 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
 
 ---
 
-## H1 — Corpus AI Act + RGPD (en diseño)
+## H1 — Corpus AI Act + RGPD (cerrado 2026-05-04)
 
 ### 2026-04-30 · Versiones consolidadas del corpus
 
@@ -647,7 +647,19 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
   5. Orquestador `rag/build.py` separado de `corpus/ingest.py`.
   6. Versionado de modelo de embedding por `LanguageEntry`.
   7. `fecha_ingesta` se mantiene en `LanguageEntry`, no se duplica en `Chunk`.
-- **Enlace:** ADR 0004 (RAG architecture); spec `docs/superpowers/specs/2026-05-04-h2-rag-base-design.md`; plan `docs/superpowers/plans/2026-05-04-h2-rag-base.md`. Branch `feat/h2-rag-base`, primer commit `72ca768`, último `a3eb658`. Tag pendiente: `v0.0.3-h2` (en Task 15).
+- **Enlace:** ADR 0004 (RAG architecture); spec `docs/superpowers/specs/2026-05-04-h2-rag-base-design.md`; plan `docs/superpowers/plans/2026-05-04-h2-rag-base.md`. Branch `feat/h2-rag-base`, primer commit `72ca768`, último `a3eb658`. Squash en `main`: `1f5147c`. Tag publicado: `v0.0.3-h2`.
+
+### 2026-05-05 · Follow-up H2: `rag_build` reporta `errors=2` por nis2/dora missing en `--corpus all`
+
+- **Estado:** detectado en auditoría post-cierre H2. **No bloqueante; diferido a H14.**
+- **Síntoma:** `python -m scripts.rag_build --corpus all --lang all` reporta `errors=2` con mensajes "manifest not found for nis2" y "manifest not found for dora", aunque ai_act + gdpr se procesan correctamente y el CLI sale con exit code 0.
+- **Causa:** `expand_targets("all")` en `corpus/_targets.py` devuelve los 4 corpora (`ALL_NORMAS`), pero solo ai_act y gdpr tienen manifests hasta H14. `corpus/ingest.py` filtra explícitamente con `[c for c in corpora if c in CELEX]` (donde `CELEX` está pinned solo para los corpora ingestables); `rag/build.py` no aplica filtro equivalente y cuenta los missing como `summary.errors += 1`.
+- **Por qué no se fixea ahora:**
+  1. Cosmético: la build real funciona correctamente (1011 chunks consistentes manifest⇄LanceDB).
+  2. Corregir tocaría `rag/build.run` y sus tests (`tests/unit/rag/test_build.py`); cambio de comportamiento que merece su propio commit y revisión.
+  3. H14 (NIS2 + DORA) creará los manifests faltantes y el síntoma desaparece automáticamente. Si en H14 todavía hay corpora sin manifest (e.g. corpus parcialmente integrado por bloqueo de upstream), allí se decide la semántica final: ¿error explícito o info silencioso?
+- **Acción cuando se aborde:** distinguir "user pidió `--corpus all` y este corpus no existe todavía" (info-level, no error) de "user pidió `--corpus nis2` específicamente y no existe" (error). Patrón análogo al de `corpus/ingest.run` que ya filtra contra `CELEX`.
+- **Enlace:** detectado durante auditoría post-H2 (commit que cerró auditoría).
 
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 

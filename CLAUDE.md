@@ -749,39 +749,13 @@ Primero:
 4. Identifica riesgos.
 5. Espera mi OK.
 
-### H0.1 - Bootstrap mínimo del repositorio (pendiente)
+### Hitos cerrados
 
-**Disparo:** solo cuando yo diga "OK, implementa H0.1".
+- **H0** — Plan operativo aprobado (2026-04-30). Ver `docs/technical_decisions_log.md` §H0.
+- **H0.1** — Bootstrap reproducible cerrado (2026-04-30). Tag `v0.0.1-h0.1`. Ver `docs/technical_decisions_log.md` §H0.1.
+- **H1** — Corpus AI Act + RGPD ingestado (2026-05-04). Tag `v0.0.2-h1`. Pivote a PDF documentado en ADR 0003. Ver `docs/technical_decisions_log.md` §H1.
+- **H2** — RAG base operativo: chunker + BGE-M3 + reranker + LanceDB (2026-05-05). Tag `v0.0.3-h2`. ADR 0004. 1011 chunks indexados. Ver `docs/technical_decisions_log.md` §H2.
 
-**Decisiones ya pactadas:**
+### Hito siguiente
 
-- Gestor de paquetes: `uv`.
-- `pre-commit` activo desde H0.1 (ruff, black, gitleaks, end-of-file, trailing-ws).
-- `mypy` gradual al inicio, estricto en H10.
-- Python 3.11.
-- Cero MCPs y cero skills custom en H0.1 (ningún MCP es necesario para bootstrap; skills custom se proponen en su hito de consumo).
-
-**Archivos exactos a crear:**
-
-```
-pyproject.toml
-Makefile
-README.md
-.env.example
-.gitignore
-.gitleaks.toml
-.pre-commit-config.yaml
-src/regulaitor/__init__.py
-tests/__init__.py
-tests/unit/__init__.py
-tests/unit/test_smoke.py
-docs/adr/0001-project-scope.md
-docs/adr/0002-skills-mcps-roadmap.md
-.github/workflows/ci.yml
-```
-
-**No se hace en H0.1:** nada de `agents/`, `rag/`, `corpus/`, `mcp_server/`, Docker, Streamlit, FastAPI, descarga de corpus, instalación de embeddings/rerankers, MkDocs, MCPs externos, skills custom.
-
-**Done cuando:**
-
-- `make setup`, `make lint`, `make test`, `pre-commit run --all-files` y `git push` (con CI verde) pasan en limpio.
+- **H3** — MCP server propio (5 tools) + Retriever-Agent + schemas Pydantic (`Citation`, `Finding`, `Answer`, `AuditResult`) + citation_validator inicial. Pendiente: brainstorming abierto sobre tolerancia de match normalizado, transporte del MCP server (stdio vs streamable HTTP), invocación Retriever desde el MCP.
