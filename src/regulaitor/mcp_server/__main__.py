@@ -1,0 +1,14 @@
+"""Entry point for `python -m regulaitor.mcp_server`."""
+
+from __future__ import annotations
+
+import logging
+
+from regulaitor.mcp_server.server import run
+
+if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    )
+    run()

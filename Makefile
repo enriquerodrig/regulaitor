@@ -1,4 +1,4 @@
-.PHONY: help setup lint test test-cov precommit ingest rag-build serve eval redteam docker deploy clean
+.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve eval redteam docker deploy clean
 
 UV ?= uv
 
@@ -10,6 +10,7 @@ help:
 	@echo "  precommit  Run pre-commit on all files"
 	@echo "  ingest     Parse PDF corpora into manifests + processed/ (H1)"
 	@echo "  rag-build  Chunk + embed + populate LanceDB store (H2)"
+	@echo "  mcp-server Run the MCP server on stdio (H3)"
 	@echo "  serve      Run Streamlit UI (TODO H6)"
 	@echo "  eval       Run evaluation harness (TODO H8)"
 	@echo "  redteam    Run red team suite (TODO H9)"
@@ -41,6 +42,9 @@ ingest: ## Parse PDF corpora -> corpus/processed/ + corpus/manifests/
 
 rag-build: ## chunk + embed + rerank-warmup + upsert LanceDB + extend manifest
 	$(UV) run python -m scripts.rag_build --corpus all --lang all
+
+mcp-server: ## Run the MCP server on stdio (H3)
+	$(UV) run python -m regulaitor.mcp_server
 
 serve:
 	@echo "TODO: implementar en H6"
