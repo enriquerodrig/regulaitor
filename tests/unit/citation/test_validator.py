@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 import pytest
 
 from regulaitor.citation.schemas import Citation
@@ -11,7 +9,7 @@ from regulaitor.citation.validator import validate
 
 
 class _FakeLoader:
-    """Minimal loader stub that exposes get_paragraph and get_article-like behaviour."""
+    """Minimal loader stub that satisfies LoaderProtocol for unit tests."""
 
     def __init__(self, articles: dict[tuple[str, str, str], str]) -> None:
         # key: (norma, articulo, language) -> full article text
@@ -29,13 +27,13 @@ class _FakeLoader:
     ) -> None:
         self._paragraphs[(norma, articulo, apartado, language)] = text
 
-    def get_article(self, norma: str, articulo: str, language: str) -> Any:
+    def get_article(self, norma: str, articulo: str, language: str) -> object:
+        # The validator only uses get_article as an existence probe; the
+        # returned object is intentionally opaque (no .text attribute) so the
+        # validator must go through get_article_text for the no-apartado path.
         if (norma, articulo, language) not in self._articles:
             raise KeyError(f"{norma} has no articulo {articulo} in language {language}")
-        # Return a minimal stand-in object; the validator only needs to know it exists
-        # for the article-level "no apartado given, match against full text" path.
-        # The validator pulls full text via a helper we expose:
-        return _FakeArticle(self._articles[(norma, articulo, language)])
+        return object()
 
     def get_paragraph(self, norma: str, articulo: str, apartado: str, language: str) -> str:
         key = (norma, articulo, apartado, language)
@@ -43,17 +41,18 @@ class _FakeLoader:
             raise KeyError(f"no apartado {apartado}")
         return self._paragraphs[key]
 
+    def get_article_text(self, norma: str, articulo: str, language: str) -> str:
+        key = (norma, articulo, language)
+        if key not in self._articles:
+            raise KeyError(f"{norma} has no articulo {articulo} in language {language}")
+        return self._articles[key]
+
     def list_apartados(self, norma: str, articulo: str, language: str) -> list[str]:
         return [
             ap
             for (n, a, ap, lang) in self._paragraphs
             if n == norma and a == articulo and lang == language
         ]
-
-
-class _FakeArticle:
-    def __init__(self, text: str) -> None:
-        self.text = text
 
 
 @pytest.fixture
@@ -174,3 +173,58 @@ def test_validate_normalizes_dashes(loader_with_data: _FakeLoader) -> None:
     )
     r = validate(c, loader=loader_with_data)
     assert r.validated is True
+
+
+def test_validate_text_from_other_apartado_rejected() -> None:
+    """Text that matches a DIFFERENT apartado of the same article must be rejected.
+
+    Regression: ensures the validator scopes the substring search to the
+    claimed apartado, not the whole article. Citation claims apartado 1 but
+    quotes the text of apartado 2; must fail.
+    """
+    fl = _FakeLoader({("ai_act", "6", "es"): "alpha text\n\nbeta text"})
+    fl.add_paragraph("ai_act", "6", "1", "es", "alpha text")
+    fl.add_paragraph("ai_act", "6", "2", "es", "beta text")
+
+    c = Citation(
+        norma="ai_act",
+        articulo="6",
+        apartado="1",
+        language="es",
+        text="beta text",
+    )
+    r = validate(c, loader=fl)
+    assert r.validated is False
+    assert r.article_exists is True
+    assert r.apartado_exists is True
+    assert r.text_normalized_match is False
+    assert r.reason is not None
+    assert "text_not_in_apartado" in r.reason
+
+
+def test_validate_text_from_other_article_rejected() -> None:
+    """Text that matches a DIFFERENT article must be rejected.
+
+    Regression: ensures the no-apartado path scopes the substring search to
+    the claimed article, not the whole corpus. Citation claims article 6 but
+    quotes the text of article 7; must fail.
+    """
+    fl = _FakeLoader(
+        {
+            ("ai_act", "6", "es"): "alpha text",
+            ("ai_act", "7", "es"): "beta text",
+        }
+    )
+
+    c = Citation(
+        norma="ai_act",
+        articulo="6",
+        language="es",
+        text="beta text",
+    )
+    r = validate(c, loader=fl)
+    assert r.validated is False
+    assert r.article_exists is True
+    assert r.text_normalized_match is False
+    assert r.reason is not None
+    assert "text_not_in_article" in r.reason

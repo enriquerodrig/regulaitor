@@ -7,24 +7,45 @@ the same canonical form the chunker uses (decisions log 2026-05-05 entry
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Protocol, cast
 
 from regulaitor.citation.schemas import AuditResult, Citation
 from regulaitor.corpus import loader as default_loader
 from regulaitor.rag.chunking import _normalize
 
 
-def validate(citation: Citation, *, loader: Any | None = None) -> AuditResult:
+class LoaderProtocol(Protocol):
+    """Structural typing for the corpus loader surface used by the validator.
+
+    The real implementation is :mod:`regulaitor.corpus.loader`; tests inject a
+    fake that satisfies these four methods. Using ``Protocol`` (instead of duck
+    typing on ``hasattr``) keeps the validator from silently bypassing the
+    ``_CORPUS`` integrity gate if ``ArticleEntry`` ever grows a ``.text``
+    attribute.
+    """
+
+    def get_article(self, norma: str, articulo: str, language: str) -> object: ...
+
+    def get_paragraph(self, norma: str, articulo: str, apartado: str, language: str) -> str: ...
+
+    def get_article_text(self, norma: str, articulo: str, language: str) -> str: ...
+
+    def list_apartados(self, norma: str, articulo: str, language: str) -> list[str]: ...
+
+
+def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> AuditResult:
     """Run 3 strict checks on `citation`. Fail-fast at first failing check.
 
     The `loader` argument is for test injection; defaults to the corpus.loader
     singleton.
     """
-    ld = loader if loader is not None else default_loader
+    # The corpus.loader module exposes the four functions LoaderProtocol
+    # requires; cast bridges the Module type to the Protocol type for mypy.
+    ld: LoaderProtocol = loader if loader is not None else cast(LoaderProtocol, default_loader)
 
     # Check 1: article_exists
     try:
-        article = ld.get_article(citation.norma, citation.articulo, citation.language)
+        ld.get_article(citation.norma, citation.articulo, citation.language)
     except KeyError:
         return AuditResult(
             citation=citation,
@@ -64,13 +85,7 @@ def validate(citation: Citation, *, loader: Any | None = None) -> AuditResult:
                 ),
             )
     else:
-        # When no apartado is given, match against full article text.
-        # We accept either a real loader (uses get_article_text) or a fake one
-        # exposing article.text (used in unit tests with _FakeArticle).
-        if hasattr(article, "text"):
-            target_text = article.text
-        else:
-            target_text = ld.get_article_text(citation.norma, citation.articulo, citation.language)
+        target_text = ld.get_article_text(citation.norma, citation.articulo, citation.language)
         apartado_exists = None
 
     # Check 3: text_normalized_match
