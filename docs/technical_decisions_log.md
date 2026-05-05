@@ -1024,7 +1024,7 @@ Capturadas durante la ejecución task-by-task. La feedback memory `feedback_deci
 
 ---
 
-## H4 — Analyst + Auditor + Chat E2E (en diseño)
+## H4 — Analyst + Auditor + Chat E2E (cerrado 2026-05-05)
 
 ### 2026-05-05 · Auditor lean en H4: H3 checks + chequeos mecánicos 4-5 + heurística regex 6
 
@@ -1260,6 +1260,84 @@ Capturadas durante la ejecución task-by-task. La feedback memory `feedback_deci
 - **Implicación para conditional edges:** `_route_after_injection(state) -> str` retorna nombre del próximo nodo o `END`. Permite short-circuit cuando `injection_blocked=True`.
 - **Implicación para H11 LangFuse:** `state.model_dump_json()` es trivialmente loggeable; cada nodo puede emitir snapshot pre/post para tracing.
 - **Enlace:** spec H4 §4.6.
+
+### 2026-05-05 · H4 desviaciones de implementación (amendments durante el ciclo)
+
+Capturadas durante la ejecución task-by-task. Feedback memory `feedback_decisions_log_living.md`: el log se actualiza durante/post-implementación si la realidad diverge del brainstorming.
+
+**Task 3 — `models/router.py` (Code review CHANGES REQUESTED → fixed):**
+- **Retry filter (Important):** el plan tenía `@retry(stop=stop_after_attempt(3))` sin filtro de tipo de excepción. Reviewer flagged: 3 retries en errores permanentes 4xx (BadRequestError, AuthenticationError) malgastan ~7s + cost. Fix: `retry_if_exception_type((RateLimitError, APIConnectionError, APITimeoutError, InternalServerError))`. Solo errores transitorios reintentan.
+- **Fail-fast key (Important):** el plan permitía `Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))` con None silencioso. Fix: `_anthropic_client()` ahora raises `RuntimeError` en startup si key vacío. Detecta misconfiguraciones inmediatamente, no después de 3 retries.
+- **Concat text blocks (Important):** el plan extraía solo el primer bloque text. Con extended thinking enabled (Sonnet puede emitir thinking + final answer en bloques separados), el final answer se descartaría silenciosamente. Fix: concatenar todos los text blocks con `\n` separator.
+
+**Task 5 — `agents/analyst.py` (Code review CHANGES REQUESTED → fixed):**
+- **Path traversal (CRITICAL):** `prompt_version` parameter sin validación permitiría `prompt_version="../../etc/passwd"`. Fix: regex `^v\d+\.\d+$` + `is_relative_to(PROMPTS_DIR.resolve())` defense-in-depth check. SSDLC concern explícito.
+- **ValidationError sin contexto (Important):** raw `ValidationError` propagation sin contexto. Fix: wrap en `RuntimeError(f"Analyst emitted malformed Answer: {e.error_count()} validation errors. Errors: {e.errors()}")`. Debugging mejor en integration tests.
+- **`setdefault` → hard set (Important):** `cleaned.setdefault("additionalProperties", False)` no sobrescribe si Pydantic emite `True`. Fix: hard set `cleaned["additionalProperties"] = False`. Defensa contra cambios futuros del schema generation.
+
+**Task 6 — `agents/auditor.py` (Code review CHANGES REQUESTED → fixed):**
+- **Separator collision (Important):** `_aggregate_reason` joineaba con `"; "`. Pero el validator emite reasons como `"text_not_in_apartado: ai_act art. 6.2; cited text not found..."` que YA contiene `"; "`. Downstream parsers se romperían. Fix: cambio a `" | "` (validator nunca lo emite).
+- **Per-Finding result lists in main loop (Important + Suggestion):** original llamaba `_audit_results_for_finding` con filter linear (`r.citation in finding.citations`). Dos problemas: (a) O(n²), (b) duplicates si dos Findings comparten Citation idéntica (frozen Pydantic equality). Fix: build `per_finding_results: list[list[AuditResult]]` durante el main loop. Helper eliminado.
+
+**Task 8 — `orchestration/graph.py` (Code review CHANGES REQUESTED → fixed):**
+- **Compiled graph caching (Important):** `run()` llamaba `build_graph().invoke(initial)` recompilando per request. Fix: `_compiled_graph()` con `lru_cache(maxsize=1)`. `build_graph()` queda uncached para test isolation.
+- **Lazy-init agents (Important):** `_RETRIEVER = RetrieverAgent()` etc. al import time hacía I/O (AnalystAgent lee prompt file). Fix: 3 helpers `_retriever()` / `_analyst()` / `_auditor()` con `lru_cache(maxsize=1)`. Import seguro sin filesystem dependencies.
+- **`ChatState extra='forbid'` (Important):** Pydantic v2 default es `extra='ignore'`. `model_validate(final_dict)` silenciosamente descartaría keys leak de LangGraph reducer. Fix: `model_config = ConfigDict(extra='forbid')`. Auditabilidad mejor.
+
+**Task 10 — Integration tests refactor (Code review encontró durante ejecución):**
+- Original implementation NO mockeaba Retriever; integration tests "no-slow" cargaban BGE-M3 + reranker reales → 30 minutos de wall-clock. Fix: 3 tests (`test_chat_pass_flow`, `test_chat_block_flow`, `test_chat_partial_flow`) ahora mockean ambos `_analyst` y `_retriever` (vía `lambda: mock_X` patching de los lazy helpers de Task 8). Resultado: 13 tests pasan en 23s. Auditor + validator + corpus reales siguen ejercitándose.
+
+### 2026-05-05 · H4 cerrado: Chat E2E operativo
+
+- **Decisión:** H4 cierra como Done. La primera superficie chat E2E del proyecto materializa la regla "no citation, no answer" contra el corpus AI Act + GDPR real, con paper trail completo (spec, plan, ADR 0006, este log).
+- **Stats finales del cierre:**
+  - **Branch:** `feat/h4-chat-e2e`. **20 commits** del primero (`ed9de8a` — gitignore harness lock) al último (`c158a2a` — structured logging). Más spec + plan commits anteriores.
+  - **Tests:** 289 totales (284 fast + 5 slow). 95 nuevos en H4 (vs 189 baseline H3). Por tipo: ~241 unit + 16 contract + 26 integration + 5 slow.
+  - **Coverage global:** **93.87%** sobre `src/regulaitor/` (gate 90%). Per-módulo nuevo: `models/` 100%, `security/injection.py` 100%, `orchestration/state.py` 100%, `orchestration/graph.py` ~91%, `agents/analyst.py` ~95%, `agents/auditor.py` ~95%.
+  - **Smoke validado:** `python -m scripts.chat --query "..." --corpus ai_act --lang es` produce JSON con verdict + cost + latency.
+  - **MCP server**: sin cambios (H3 surface intacta; H4 chat flow no usa MCP loopback).
+  - **5 slow tests** cubren router real Anthropic + chat E2E real LLM. Skip cleanly sin `ANTHROPIC_API_KEY`.
+  - **Skills activadas:** `prompt-versioning` consume `agents/prompts/analyst/system.v1.0.md` (frontmatter completo: agent, role, version, created, author, model_compatibility, changelog).
+- **Decisiones técnicas tomadas durante H4** (las 7 brainstorming + amendments durante implementación, todas con entrada propia más arriba en este log):
+  1. Auditor lean (3 H3 checks + mecánicos 4-5 + heurístico 6).
+  2. Anthropic Claude Sonnet 4.6 primary; H12 router expansión.
+  3. Tool use con schema Pydantic.
+  4. Schemas mínimos (Finding, Answer, AuditVerdict, AuditedAnswer).
+  5. Lenient-strict verdict aggregation.
+  6. Thin router con un backend.
+  7. Pydantic v2 BaseModel para LangGraph state.
+- **Lecciones para H5 (Document mode + sanitizer):**
+  - El pipeline LangGraph es reusable: H5 añade un nuevo flujo `analyze_document` que reutiliza el Auditor + validator. Solo cambia el Retriever/Analyst (recibe segments del documento, no query).
+  - El `Finding.severity` por fin tendrá valores no-default en H5 (riesgo de cumplimiento por hallazgo).
+  - El injection regex list necesitará variante mucho más agresiva para texto de documentos (vector real es más amplio que chat queries cortas).
+  - **Documentar:** el `_render_user_message` actual (formato simple texto) carece de delimitadores estructurados para chunks vs query. En H5 hay que añadir `<chunk>...</chunk>` / `<user_query>...</user_query>` markers para separar contenido confiable vs no confiable.
+- **Lecciones para H6/H7 (Streamlit + FastAPI):**
+  - Renderiza `AuditedAnswer.answer.findings` con badge según `audit_results[*].validated`.
+  - El estado `verdict` mapea a colores UI: PASS (verde), REQUIRES_HUMAN_REVIEW (amarillo + nota), BLOCK (rojo + ocultar Findings problemáticas).
+  - El `query_hash` en logs es para analytics; el query raw NO se persiste (PII).
+  - Format del log: `chat_turn: {"case_id": "ch-...", "query_hash": "abc123", "corpus": "ai_act", "verdict": "pass", "n_findings": 2, "n_citations": 2, "n_validated": 2, "n_blocked": 0, "latency_ms_total": 3420, ...}`.
+- **Lecciones para H8 (Evaluación):**
+  - El harness puede invocar `graph.run(query, corpus, language, case_id)` directamente con queries del gold set.
+  - El `AuditedAnswer.verdict` mapea a métrica `pass_rate / partial_rate / block_rate`. Citation precision se computa de `audit_results[*].validated`.
+  - El `Answer.findings` permite medir "average citations per response" como proxy de groundedness.
+  - Slow E2E tests existentes son base para evals reproducibles; H8 los expande con N>>2 queries del gold set.
+- **Lecciones para H12 (Multi-LLM router):**
+  - Las ramas `cost`, `evaluation`, `fallback` se añaden a `models/router.complete()` sin tocar Analyst.
+  - `models/config.PRICING` extiende con tablas por nuevo modelo.
+  - Test snapshot del schema generado por `Answer.model_json_schema()` valida que tools de cada provider aceptan el schema.
+- **Lecciones para H13 (Council of Judges):**
+  - El Auditor actual es pure-Python; H13 añade un nuevo modo "consultar council" que se invoca cuando severity=high. El council usa el router para 3 calls paralelas.
+  - Los 4 reason codes del validator (`article_not_found`, `apartado_not_found`, `text_not_in_apartado`, `text_not_in_article`) son contrato estable para que el council pueda parsear veredictos previos.
+  - El nuevo separador ` | ` en `_aggregate_reason` permite split unambiguous para el council.
+- **Polish diferido (capturado pero no bloqueante):**
+  1. Test snapshot del JSON Schema generado por `Answer.model_json_schema()` (riesgo Pydantic v2 → JSON Schema inestable entre minor versions).
+  2. Logs estructurados por nodo (latency_ms_retrieval, latency_ms_analyst, latency_ms_audit) — actualmente solo latency_ms_total. Cuando H11 LangFuse llegue, esto se naturaliza.
+  3. Considerar `streaming` en router para H6 Streamlit UI mejor UX.
+  4. `_render_user_message` debería envolver query y chunks en delimitadores estructurados (`<user_query>`, `<chunk id="...">`) — load-bearing en H5/H9.
+  5. `AuditorAgent` debería opcionalmente atrapar exception del validator (loader cold) y producir `BLOCK` con `validator_error` reason — defendería "no citation no answer" incluso en infra failure. Por ahora propaga.
+  6. `_aggregate_reason` aún recibe `answer: Answer` parameter pero ya no lo usa después del refactor de Task 6 fix — drop (cosmético).
+  7. Module-level `REASON_*` constantes en `citation/validator.py` para uso por H4 Auditor downstream parsing.
+- **Enlace:** ADR 0006 (chat E2E architecture); spec `docs/superpowers/specs/2026-05-05-h4-chat-e2e-design.md`; plan `docs/superpowers/plans/2026-05-05-h4-chat-e2e.md`. Branch `feat/h4-chat-e2e`. Tag pendiente: `v0.0.5-h4` (en Task 14).
 
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
