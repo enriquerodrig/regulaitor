@@ -7,24 +7,29 @@ Decisions log 2026-05-05 entries "Anthropic Claude Sonnet 4.6 primary" + "tool u
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 from typing import Any
+
+from pydantic import ValidationError
 
 from regulaitor.citation.schemas import Answer, Context
 from regulaitor.models import router
 
 PROMPTS_DIR = Path(__file__).parent / "prompts" / "analyst"
 
+_PROMPT_VERSION_PATTERN = re.compile(r"^v\d+\.\d+$")
+
 
 def _strip_unsupported_schema_fields(schema: dict[str, Any]) -> dict[str, Any]:
     """Pydantic v2 -> JSON Schema may include fields Anthropic SDK rejects.
 
-    Specifically: top-level `additionalProperties` and `$defs` references that
-    Anthropic does accept, but `additionalProperties: false` should be set
-    explicitly at the root for tool schemas.
+    Hard-sets additionalProperties=False at root regardless of input value
+    (defense against future Pydantic schema generation changes that might
+    emit additionalProperties=True under extra="allow").
     """
     cleaned = dict(schema)
-    cleaned.setdefault("additionalProperties", False)
+    cleaned["additionalProperties"] = False  # hard set, not setdefault
     return cleaned
 
 
@@ -44,8 +49,17 @@ class AnalystAgent:
     """Stateless Analyst: load versioned prompt, call router, parse Answer."""
 
     def __init__(self, prompt_version: str = "v1.0") -> None:
+        if not _PROMPT_VERSION_PATTERN.match(prompt_version):
+            raise ValueError(
+                f"prompt_version must match {_PROMPT_VERSION_PATTERN.pattern}; "
+                f"got {prompt_version!r}"
+            )
         self.prompt_version = prompt_version
         prompt_path = PROMPTS_DIR / f"system.{prompt_version}.md"
+        # Defense in depth: even after regex check, ensure resolved path stays in PROMPTS_DIR
+        resolved = prompt_path.resolve()
+        if not resolved.is_relative_to(PROMPTS_DIR.resolve()):
+            raise ValueError(f"prompt_version {prompt_version!r} resolves outside prompts dir")
         self._system_prompt = prompt_path.read_text(encoding="utf-8")
 
     def analyze(self, query: str, context: Context) -> Answer:
@@ -66,4 +80,10 @@ class AnalystAgent:
         )
         if result.tool_use_input is None:
             raise RuntimeError("Analyst LLM did not emit emit_answer tool call; received text only")
-        return Answer.model_validate(result.tool_use_input)
+        try:
+            return Answer.model_validate(result.tool_use_input)
+        except ValidationError as e:
+            raise RuntimeError(
+                f"Analyst emitted malformed Answer: {e.error_count()} validation errors. "
+                f"Errors: {e.errors()}"
+            ) from e
