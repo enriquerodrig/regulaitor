@@ -63,3 +63,4 @@ corpus/indexes/
 evals/reports/
 redteam/reports/
 notebooks/outputs/
+.claude/scheduled_tasks.lock
