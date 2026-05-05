@@ -121,3 +121,29 @@ H1 closed with the following deviations vs the calendar above. All deferrals red
 ### Calendar updates carried forward
 
 The dependency installation calendar above remains the source of truth for H2 onwards. The H1 deferrals are reflected in `docs/technical_decisions_log.md` H1 closure entry "Skills/MCPs deferrals tras smoke H1" with the same rationales.
+
+---
+
+## H2 closure update (2026-05-05)
+
+H2 closed with the following deviations vs the calendar above. As in H1, all deferrals reduced scope; nothing was introduced ahead of plan.
+
+### Skills
+
+- **`prompt-versioning`** **deferred from H2 to H3**. Rationale: H2 contained no LLM-facing prompts (BGE-M3 / bge-reranker are encoder-only models with no system prompt surface). The skill earns its keep when the first agent prompt lands in H3 (`agents/retriever.py`).
+
+### MCPs
+
+- **No MCPs introduced in H2.** The original calendar slot for `fetch` (H3+) and `langfuse-mcp` (H11) is unchanged. RAG build runs entirely against local files and the local LanceDB index — no external MCPs needed.
+
+### Subagents
+
+- No project-level subagents introduced in H2. Built-in `general-purpose` agent + `superpowers:code-reviewer` covered all 16 tasks (implementer + spec review + code quality review). The first project-level subagent (`software-architect`) remains scheduled for H3 — likely earning its keep on the citation-validator design and the MCP server contract.
+
+### Calendar updates carried forward
+
+- `prompt-versioning` shifts from H2 to H3 brainstorm.
+- `citation-validator` skill arrives in H3 as planned (no shift).
+- `document-analysis` remains H4 (originally H4-H5 boundary).
+
+These shifts are reflected in `docs/technical_decisions_log.md` H2 closure entry.

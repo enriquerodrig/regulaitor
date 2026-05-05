@@ -8,7 +8,8 @@ help:
 	@echo "  lint       Run ruff, black --check, mypy"
 	@echo "  test       Run pytest"
 	@echo "  precommit  Run pre-commit on all files"
-	@echo "  ingest     Ingest corpus (TODO H1)"
+	@echo "  ingest     Parse PDF corpora into manifests + processed/ (H1)"
+	@echo "  rag-build  Chunk + embed + populate LanceDB store (H2)"
 	@echo "  serve      Run Streamlit UI (TODO H6)"
 	@echo "  eval       Run evaluation harness (TODO H8)"
 	@echo "  redteam    Run red team suite (TODO H9)"
@@ -35,8 +36,8 @@ test-cov:
 precommit:
 	$(UV) run pre-commit run --all-files
 
-ingest:
-	@echo "TODO: implementar en H1"
+ingest: ## Parse PDF corpora -> corpus/processed/ + corpus/manifests/
+	$(UV) run python -m scripts.ingest --corpus all --lang all --use-local-only
 
 rag-build: ## chunk + embed + rerank-warmup + upsert LanceDB + extend manifest
 	$(UV) run python -m scripts.rag_build --corpus all --lang all
