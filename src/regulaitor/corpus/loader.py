@@ -254,3 +254,24 @@ def list_apartados(norma: Norma, articulo: str, language: Language) -> list[str]
         if art["articulo"] == articulo:
             return [str(p["apartado"]) for p in art["paragraphs"]]
     return []
+
+
+def get_article_text(norma: Norma, articulo: str, language: Language) -> str:
+    """Return the full article text (all paragraphs joined by ``\\n\\n``).
+
+    Used by :mod:`regulaitor.citation.validator` when no apartado is given in
+    the citation. The real ``ArticleEntry`` (from the manifest) carries no
+    text payload, so we reconstruct it by concatenating the processed-JSON
+    paragraphs in document order.
+
+    Raises:
+        KeyError: if the corpus has not been warmed up, or the articulo is
+            absent for ``(norma, language)``.
+    """
+    key = (norma, language)
+    if norma not in _CORPUS or key not in _PROCESSED_CACHE:
+        raise KeyError(f"corpus {norma}/{language} not loaded; call warmup() first")
+    for art in _PROCESSED_CACHE[key]:
+        if art["articulo"] == articulo:
+            return "\n\n".join(str(p["text"]) for p in art["paragraphs"])
+    raise KeyError(f"{norma} has no articulo {articulo} in language {language}.")
