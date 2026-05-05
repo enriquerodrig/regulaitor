@@ -1022,6 +1022,245 @@ Capturadas durante la ejecución task-by-task. La feedback memory `feedback_deci
   4. Suggestion: extract `REASON_*` constantes en `citation/validator.py` para uso por H4 Auditor downstream.
 - **Enlace:** ADR 0005 (MCP server architecture); spec `docs/superpowers/specs/2026-05-05-h3-mcp-server-design.md`; plan `docs/superpowers/plans/2026-05-05-h3-mcp-server.md`. Branch `feat/h3-mcp-server`. Tag pendiente: `v0.0.4-h3` (en Task 15).
 
+---
+
+## H4 — Analyst + Auditor + Chat E2E (en diseño)
+
+### 2026-05-05 · Auditor lean en H4: H3 checks + chequeos mecánicos 4-5 + heurística regex 6
+
+- **Decisión:** el Auditor de H4 envuelve los 3 chequeos estructurales del validator H3 (article_exists, apartado_exists, text_normalized_match) + dos chequeos mecánicos (cada `Finding` debe tener ≥1 cita; ningún `Finding` con texto sin cita) + un chequeo heurístico de inyección sobre el query del usuario (lista regex curada). LLM-as-judge para "la cita apoya la afirmación" (CLAUDE.md §6 check 4) y análisis sentence-level de "afirmaciones jurídicas no respaldadas" (check 5) **se difieren a H13/H15**.
+- **Justificación:**
+  1. **Match explícito con el roadmap.** H4 entrega "flujo chat E2E"; los checks semánticos sofisticados son material de H13 (Council of Judges) y H15 (calibración). Adelantarlos infla H4 + duplica trabajo en H13.
+  2. **YAGNI con datos.** No hay gold set ni red team todavía. El umbral del LLM-as-judge para check 4 sería arbitrario sin evidencia. Mejor construir baseline mecánico, medir en H8, refinar en H15.
+  3. **Coste por consulta.** CLAUDE.md §17 fija ≤€0.05/consulta. Cada LLM-as-judge añade un round-trip; con 5 citas/respuesta, son 5 calls extra → coste se dispara. Decidir agregar LLM-as-judge requiere medir trade-off.
+  4. **Check 6 (injection) en chat es light.** Documentos llegan en H5; ahí está la superficie real de injection. En chat, el user query es texto corto; un detector heurístico cubre 70-80% del riesgo a coste ~0. Heavy defense viene con H5 sanitizer + H9 redteam.
+  5. **Mecánica de check 4 ya defiende mucho.** El Analyst está obligado por prompt + schema (`Field(min_length=1)` en `Finding.citations`) a producir Findings con citas. El validator confirma estructura. La cita podría no apoyar semánticamente la afirmación, pero al menos existe en el corpus — ese gap se mide en H8 y se cierra en H15.
+  6. **Council of Judges (H13)** es donde la "validación profunda cita-apoya-afirmación" naturalmente vive. Tres jueces para casos de severidad alta. Adelantarlo a H4 lo malgasta.
+- **Alternativas descartadas:**
+  - **B (Core: A + LLM-as-judge para check 4):** rechazada por coste prematuro y umbral arbitrario.
+  - **C (Full: B + sentence-level + clasificador injection):** rechazada por inflar H4 a 25+ tasks; fragmenta H13/H15 sin evidencia.
+- **Implicación para H8 evaluación:** las métricas distinguen "estructuralmente válido" (H4 baseline) vs "semánticamente apoyado" (H13+ extension). Reportes podrán mostrar mejora medida cuando H13 active LLM-as-judge.
+- **Implicación para CLAUDE.md §6 narrative:** H4 cierra checks 1-3 (estructurales) + versiones mecánicas de 4-5 + heurística mínima 6. Honra la regla "no citation, no answer" estructuralmente; refinamiento semántico es trabajo de hitos posteriores.
+- **Enlace:** spec H4 §1, §4.5; ADR 0006 (planeado).
+
+### 2026-05-05 · LLM provider primario en H4: Anthropic Claude Sonnet 4.6
+
+- **Decisión:** H4 wirea **un solo provider LLM**: Anthropic Claude Sonnet 4.6 (`claude-sonnet-4-6`). El router (`models/router.py`) tiene la arquitectura para extender a multi-provider en H12, pero solo Anthropic está implementado. El gate de coste por consulta (≤€0.05) se valida con Sonnet (~€0.017/turno está bajo gate).
+- **Justificación:**
+  1. **Instruction-following y reasoning sobre texto legal denso.** Claude tiene track record más fuerte que GPT-4o y notablemente mejor que Llama-70B en respetar restricciones tipo "responde solo con citas literales del Art. X.Y". La regla "no citation, no answer" depende DIRECTAMENTE de que el modelo no fabrique citas; Claude minimiza esa variable.
+  2. **Tool use nativo produce structured output rock-solid.** `Answer` Pydantic se expone como tool schema; el SDK garantiza JSON parseable contra el schema. Sin parsers frágiles, sin `try/except json.loads`. GPT-4o tiene structured outputs comparable; Llama via Groq necesita prompting + parser.
+  3. **SDK Anthropic Python maduro y bien tipado.** Pydantic-friendly, retries integrados.
+  4. **Reproducibilidad académica.** Anthropic pinnea versiones específicas (`claude-sonnet-4-6`); el TFM puede declarar qué modelo + versión produjo qué métricas. Llama via Groq es más opaco.
+  5. **Multilingüe ES/EN nativo y de calidad pareja.**
+  6. **Coste defendible para H4.** ~€0.017/turno está en el rango del gate; volumen H4-H10 es despreciable absoluto (€17 con 1000 evals).
+  7. **Path of least resistance:** Claude Code es el dev environment; usar Anthropic API en producción mantiene una sola superficie LLM mental.
+- **Análisis de coste por escenario** (PYME 20 chats/día + 5 docs/mes ≈ 675 calls/mes):
+  - Sonnet: ~€11.50/mes
+  - Llama 70B Groq: ~€1.30/mes (9× más barato)
+  - GPT-4o-mini: ~€0.65/mes (18× más barato)
+  Comparación con baseline humano (asesor compliance ~€40-80/hora; chequeo 5 min ≈ €3-7): Sonnet **180-410× más barato que humano**.
+- **Alternativas descartadas para H4:**
+  - **GPT-4o:** válido (~25% más barato, structured outputs first-class), pero el track record de Claude para "respeta restricciones de output" inclina la balanza para "no citation, no answer". Defendible si el usuario cambia de opinión.
+  - **Llama 70B vía Groq:** descartado para H4 primary (riesgo de calidad confunde debugging del flujo); H12 lo añadirá como modo "coste".
+- **Vendor lock-in:** real, pero mitigado por la arquitectura `models/router.py` (Q6) que H4 introduce con UN provider y H12 expande. Las tools del Analyst (Pydantic schema) son agnósticas; el router traduce internamente.
+- **Implicación operativa:** `ANTHROPIC_API_KEY` en `.env` requerido para integration tests slow. Sin key → unit tests con mocks pasan; slow tests skip con mensaje accionable.
+- **Implicación para H12 router multi-LLM:** modos previstos:
+  - `default`/`quality` → Sonnet (H4 actual)
+  - `cost` → Llama 70B vía Groq (H12 add)
+  - `evaluation` → GPT-4o (H12 add; juez distinto al de producción para evals H8 sin contaminación)
+  - `fallback` → GPT-4o-mini (H12 add)
+- **Enlace:** spec H4 §4.1; CLAUDE.md §10.4; ADR 0006 (planeado).
+
+### 2026-05-05 · Output estructurado del Analyst: tool use con schema Pydantic
+
+- **Decisión:** el `AnalystAgent.analyze` produce `Answer` invocando el LLM vía Anthropic SDK con **tool use forzado**: define `Answer` como Pydantic, deriva JSON Schema (`Answer.model_json_schema()`), lo pasa al SDK como tool definition con `tool_choice={"type": "tool", "name": "emit_answer"}`. El modelo emite una `tool_use` con `input` parseable contra el schema. `Answer.model_validate(tool_use.input)` produce el objeto típado.
+- **Justificación:**
+  1. **Type-safety end-to-end.** Anthropic SDK valida la `tool_use.input` contra el schema antes de devolverlo. Si el modelo emite algo malformado, falla en el SDK con error explícito. Cero parsers frágiles.
+  2. **`tool_choice` fuerza output.** Garantía: el modelo USA esa tool exactamente una vez por respuesta. No hay caso "el modelo decidió responder en prosa hoy" que rompe el pipeline. Disciplina arquitectónica importante para "no citation, no answer".
+  3. **Pydantic v2 → JSON Schema es one-liner.** Sin duplicar el schema en YAML/dict aparte. Single source of truth = el modelo Pydantic.
+  4. **JSON mode (B) tiene más superficie de fallo.** Requiere prompt-engineering para garantizar schema; el modelo puede añadir markdown ```json wrapper, prefacios "<thinking>...", etc.
+  5. **Free-form prose (C) es regresión académica.** Inventas un parser custom para un problema ya resuelto.
+  6. **Mantenibilidad para H13 Council of Judges.** Cada juez puede ser una llamada con su propio tool schema; el orquestador del council compone resultados estructurados sin parser por juez.
+  7. **SSDLC: input validation declarativa.** Pydantic constraints (`Field(min_length=1)` en `Citation.text`) se aplican AL VALIDAR el output del modelo. Si el modelo emite cita vacía → ValidationError → Auditor logea y retry.
+- **Alternativas descartadas:**
+  - **B. JSON mode + prompt schema:** rechazada por superficie de fallo (markdown wrappers, prefacios).
+  - **C. Free-form prose + parser:** rechazada por regresión.
+- **Detalle técnico — flujo:**
+  ```python
+  result = router.complete(
+      messages=[{"role": "user", "content": render_user_message(query, context)}],
+      system=load_prompt("analyst/system.v1.0.md"),
+      tools=[{
+          "name": "emit_answer",
+          "description": "Emit the final Answer with findings + citations.",
+          "input_schema": Answer.model_json_schema(),
+      }],
+      tool_choice={"type": "tool", "name": "emit_answer"},
+  )
+  return Answer.model_validate(result.tool_use_input)
+  ```
+- **Implicación para schemas (Q4):** `Finding`, `Answer` se diseñan con tool-use-friendly types — primitivos JSON, `Literal` para enums, sin types que requieran serializers custom.
+- **Riesgo conocido:** Pydantic v2 puede generar JSON Schema con campos que Anthropic no acepta (e.g. `additionalProperties` defaults). Helper `_strip_frontmatter` post-procesa si hace falta. Test snapshot del schema en contract tests.
+- **Implicación para H8 evals:** harness puede assert exactamente la estructura sin parsers ad hoc.
+- **Enlace:** spec H4 §4.4.
+
+### 2026-05-05 · Schemas Finding/Answer/AuditedAnswer: shape mínimo + AuditedAnswer wrapper
+
+- **Decisión:** `citation/schemas.py` se extiende con 4 schemas mínimos:
+  - `Finding(BaseModel, frozen=True)`: `text` (`min_length=1`), `citations: list[Citation] = Field(min_length=1)`, `severity: Literal["info", "low", "medium", "high"] = "info"`.
+  - `Answer(BaseModel, frozen=True)`: `query` (echo), `language` (echo), `text` (`min_length=1`), `findings: list[Finding]`.
+  - `AuditVerdict(StrEnum)`: `PASS`, `BLOCK`, `REQUIRES_HUMAN_REVIEW`.
+  - `AuditedAnswer(BaseModel)`: `answer: Answer`, `verdict: AuditVerdict`, `audit_results: list[AuditResult]`, `reason: str | None`.
+  Campos diferidos: `recommendation` y `requires_human_review` per-Finding (H13), `confidence` per-AuditedAnswer (H15 fuzzy), `audit` field DENTRO de Answer (rechazado por mezclar concerns).
+- **Justificación:**
+  1. **YAGNI consistente con H3.** El mismo principio de schemas mínimos aplicado en H3. `recommendation`/`requires_human_review` requieren prompts del Analyst que razonen sobre necesidad de revisión humana — eso es H13.
+  2. **`Answer` frozen + `AuditedAnswer` wrapper compuesto.** Auditor nunca modifica el Answer original; produce un `AuditedAnswer` que lo envuelve. Patrón análogo a H3: `Citation` frozen, `AuditResult` lo compone sin mutarlo. Frontend (H6) y API (H7) reciben `AuditedAnswer` y muestran `answer.text` para contenido + `verdict + reason` para badge.
+  3. **`Finding.citations: list[Citation] = Field(min_length=1)`** materializa el check 5 del Auditor a nivel de schema. Si el Analyst intenta producir Finding sin citas, Pydantic falla en el output del tool use. Defensa **declarativa** en el contrato.
+  4. **`Finding.severity` con default "info".** Suficiente para H4 chat; H5 documento puede llenarlo seriamente.
+  5. **`Answer.query + language` echo:** trazabilidad. El Auditor puede verificar `Answer.query == state.query` como invariante por turno.
+  6. **`AuditVerdict` como `StrEnum`** (no Literal): más legible en código H4; JSON-serializable nativamente.
+  7. **`AuditedAnswer.audit_results: list[AuditResult]`** (no dict): orden preserva la secuencia, fácil de iterar. Una `AuditResult` por cada `Citation` flatten across Findings.
+- **Alternativas descartadas:**
+  - **B (Rico con `recommendation`/`confidence`):** rechazada por YAGNI; agregar campos cuando H13/H15 los necesite es no-breaking.
+  - **C (Inline audit):** rechazada por mezclar Analyst output + Auditor verdict.
+- **Detalle de schema:**
+  ```python
+  class Finding(BaseModel):
+      model_config = ConfigDict(frozen=True)
+      text: str = Field(min_length=1)
+      citations: list[Citation] = Field(min_length=1)
+      severity: Literal["info", "low", "medium", "high"] = "info"
+
+  class Answer(BaseModel):
+      model_config = ConfigDict(frozen=True)
+      query: str
+      language: Language
+      text: str = Field(min_length=1)
+      findings: list[Finding]
+
+  class AuditVerdict(StrEnum):
+      PASS = "pass"
+      BLOCK = "block"
+      REQUIRES_HUMAN_REVIEW = "requires_human_review"
+
+  class AuditedAnswer(BaseModel):
+      answer: Answer
+      verdict: AuditVerdict
+      audit_results: list[AuditResult]
+      reason: str | None
+  ```
+- **Implicación para tool use:** el JSON Schema que pasamos al Anthropic SDK como tool definition es `Answer.model_json_schema()`. El modelo no ve `AuditVerdict` ni `AuditedAnswer` (no son output del Analyst). Schema limpio.
+- **Implicación para H6/H7 (UI/API):** `AuditedAnswer` es el objeto canónico devuelto al frontend. Renderiza `answer.findings[*]` con badges según `audit_results[*].validated`.
+- **Enlace:** spec H4 §4.3.
+
+### 2026-05-05 · Aggregation policy del Auditor: Lenient-strict
+
+- **Decisión:** el Auditor agrega el verdict según la política **Lenient-strict**:
+  - **Per-Finding (lenient):** una `Finding` PASA si ≥1 de sus citas es válida (las inválidas se reportan como warnings pero no rompen la Finding).
+  - **Per-Answer (strict):**
+    - 0 Findings falladas → `AuditVerdict.PASS`.
+    - ≥1 Finding pasa Y ≥1 Finding falla (todas sus citas inválidas) → `AuditVerdict.REQUIRES_HUMAN_REVIEW`.
+    - Todas las Findings falladas → `AuditVerdict.BLOCK`.
+- **Justificación:**
+  1. **Honra la regla literalmente sin overkill.** CLAUDE.md §6 punto 5 dice "salida no contiene afirmaciones jurídicas no respaldadas" — si una Finding tiene 1 cita válida + 1 inválida, **la afirmación SÍ está respaldada** por la válida. La inválida es ruido, no violación.
+  2. **Strict-strict (A) es académicamente defensible pero operativamente frágil.** Tirar una respuesta entera por una cita ligeramente incorrecta rompe la UX y produce falsos negativos altos en H8 evals.
+  3. **REQUIRES_HUMAN_REVIEW captura el caso "parcial" exactamente como se diseñó el enum.** Patrón típico: 3 Findings, una con 0 citas válidas → REQUIRES_HUMAN_REVIEW. UI muestra las dos PASS normalmente + la blocked con strike-through y nota "no se pudo validar".
+  4. **Defendible académicamente.** Narrativa: "el validator garantiza que cada afirmación visible está respaldada por ≥1 cita literal del corpus oficial; afirmaciones cuyas citas todas fallan se ocultan al usuario y se marcan para revisión humana".
+  5. **Coherente con la decomposición Pydantic:** `AuditedAnswer.audit_results` lista TODAS las AuditResults. La UI/API lee la lista y decide cómo renderizar. El Auditor no muta el Answer.
+  6. **Métricas H8 más útiles.** Con Lenient-strict, las métricas pueden distinguir tres tasas: `pass_rate`, `partial_rate` (REQUIRES_HUMAN_REVIEW), `block_rate`. Con Strict-strict solo tienes pass/block (binario).
+  7. **Migración a strict sin breaking change.** Si en H15 calibración demuestra que Lenient-strict es demasiado permisivo, podemos endurecer modificando solo la función agregadora del Auditor, sin tocar schemas. Empezar lenient → endurecer es seguro; al revés requiere romper acoplamientos.
+- **Alternativas descartadas:**
+  - **A (Strict-strict):** rechazada por fragilidad operativa y falsos negativos.
+  - **C (Lenient-lenient):** rechazada por permitir Answer con todas las Findings falladas con tal de que ≥1 Finding tenga ≥1 cita válida — viola "no citation no answer" cuando una Finding entera no tiene soporte.
+- **Detalle pseudocode:**
+  ```python
+  def _audit_finding(finding: Finding, audit_results: list[AuditResult]) -> Literal["pass", "blocked"]:
+      finding_results = [r for r in audit_results if r.citation in finding.citations]
+      return "pass" if any(r.validated for r in finding_results) else "blocked"
+
+  def aggregate_verdict(answer: Answer, audit_results: list[AuditResult]) -> AuditVerdict:
+      finding_verdicts = [_audit_finding(f, audit_results) for f in answer.findings]
+      if all(v == "pass" for v in finding_verdicts):
+          return AuditVerdict.PASS
+      if all(v == "blocked" for v in finding_verdicts):
+          return AuditVerdict.BLOCK
+      return AuditVerdict.REQUIRES_HUMAN_REVIEW
+  ```
+- **`reason` field aggregation:** para verdict ≠ PASS, agrega los reasons de las citas inválidas con referencia a Finding index. Ejemplo: `"REQUIRES_HUMAN_REVIEW: 2 of 5 citations invalid. Finding #2: 2 of 2 citations invalid (text_not_in_apartado: ai_act art. 6.2; text_not_in_apartado: ai_act art. 6.3)."`
+- **Enlace:** spec H4 §4.5.
+
+### 2026-05-05 · `models/router.py` arquitectura: thin router con un backend en H4
+
+- **Decisión:** H4 introduce `models/router.py` con UN entry point público `complete(messages, system, tools, tool_choice, model_choice="default", max_tokens=2000) -> CompletionResult`. Internamente: `if model_choice in {"default", "quality"}: return _call_anthropic_sonnet(...)`. H12 expandirá ramas para `cost` (Llama Groq) y `evaluation` (GPT-4o). El Analyst conoce solo el router, nunca ve "Anthropic". Companion `models/config.py` con tabla `PRICING` y constantes (`ANTHROPIC_SONNET_4_6`, `USD_TO_EUR`).
+- **Justificación:**
+  1. **Plug del seam en el sitio correcto sin sobrediseño.** Cuando H12 expande, el cambio es localizado en `router.py`; zero refactor en `agents/analyst.py`. Boundary correcto para reviewer académico.
+  2. **C (strategy con ABC) es premature polymorphism.** Con UN provider real, `LLMProvider(ABC)` + `AnthropicProvider` añade ceremonia sin pago. Refactorizar a strategy en H12 es media hora; preconcebirlo ahora añade complejidad sin valor.
+  3. **Single seam = single locus para responsabilidades transversales:**
+     - **Tracking de coste** (CLAUDE.md §10.5): el router computa coste con tabla `PRICING`. El Analyst no debe conocer precios.
+     - **Retries** (red errors, rate limits): el router envuelve con `tenacity`.
+     - **Logging estructurado:** el router emite log con `case_id, model, latency_ms, cost_eur, input_tokens, output_tokens`. El Analyst no logea detalle LLM.
+     - **Mode dispatch (H12):** `model_choice` es contrato externo; cómo se mapea a provider es interno del router.
+  4. **`CompletionResult` como Pydantic schema:** struct con `tool_use_input: dict | None`, `text: str | None`, `usage: Usage`, `model_id: str`, `latency_ms: int`, `cost_eur: float`. El Analyst recibe esto y extrae `tool_use_input`. Schema estable; providers internos lo construyen desde respuestas nativas.
+  5. **A (direct call) malgasta H4.** Si Analyst llama Anthropic directo, en H12 hay que refactorizar el Analyst PARA introducir el router. Trabajo doble + riesgo de regresión.
+- **Alternativas descartadas:**
+  - **A (Direct call sin router):** rechazada por refactor doble en H12.
+  - **C (Strategy pattern con ABC):** rechazada por premature polymorphism.
+- **Implicación para tests:** Analyst tests mockean `models.router.complete`; router tests mockean `Anthropic()`. Dos niveles de mock, sin acoplamiento.
+- **Implicación para SSDLC:** la API key (`ANTHROPIC_API_KEY`) solo se lee en `_call_anthropic_sonnet`. Si en CI no hay key, unit tests con mocks pasan; slow tests fallan limpio.
+- **Implicación para H12:**
+  ```python
+  if model_choice in {"default", "quality"}:
+      return _call_anthropic_sonnet(...)  # H4
+  elif model_choice == "cost":
+      return _call_llama_groq(...)         # H12
+  elif model_choice == "evaluation":
+      return _call_gpt4o(...)              # H12
+  ```
+  Plus `models/config.py::PRICING` extiende con nuevas entries.
+- **Enlace:** spec H4 §4.1.
+
+### 2026-05-05 · LangGraph state shape: Pydantic v2 BaseModel
+
+- **Decisión:** el state de LangGraph se modela como Pydantic v2 `BaseModel` (`ChatState`), no como `TypedDict` ni `dataclass`. Cada nodo retorna un dict parcial que LangGraph valida al merge contra el BaseModel. Inner objects (`Context`, `Answer`, `AuditedAnswer`) son frozen; el state container es mutable por construcción.
+- **Justificación:**
+  1. **Consistencia total con el codebase.** Todos los schemas H1-H3 son Pydantic v2. Mezclar TypedDict en H4 introduce dos formas distintas de modelar datos; el reviewer académico nota la inconsistencia.
+  2. **Validación en boundary.** Cada vez que un nodo actualiza state, Pydantic valida el shape. Si el Analyst intenta poner un `str` donde se espera `Answer`, falla **en el sitio**, no 3 nodos después con AttributeError críptico.
+  3. **LangGraph soporta BaseModel nativamente** desde 0.2+. Firma de un nodo: `def my_node(state: ChatState) -> dict[str, Any]`. Return dict se merge-a contra el BaseModel; validación corre on-merge.
+  4. **Trazabilidad por turno = trivialmente serializable.** `state.model_dump_json()` es one-liner. Útil para snapshots, logs estructurados, LangFuse en H11. Con TypedDict requiere encoder custom para inner Pydantic objects.
+  5. **TypedDict (A) es solo "más idiomatic" si ignoras que el resto del proyecto es Pydantic.** Tutorials de LangGraph usan TypedDict porque son ejemplos pequeños sin schemas previos.
+  6. **dataclass (C) no aporta nada vs Pydantic.**
+- **Alternativas descartadas:**
+  - **A (TypedDict):** rechazada por inconsistencia con codebase.
+  - **C (dataclass):** rechazada por falta de validación.
+- **Schema:**
+  ```python
+  class ChatState(BaseModel):
+      case_id: str = Field(min_length=1)
+      query: str = Field(min_length=1)
+      corpus: Norma
+      language: Language
+      context: Context | None = None
+      answer: Answer | None = None
+      audited_answer: AuditedAnswer | None = None
+      injection_blocked: bool = False
+      injection_reason: str | None = None
+      errors: list[str] = Field(default_factory=list)
+  ```
+- **Patrón frozen vs mutable:** `ChatState` NO es frozen (mutable por construcción de LangGraph). Inner objects (`Context`, `Answer`, `AuditedAnswer`) sí son frozen. Container mutable de objetos inmutables.
+- **Implicación para nodos LangGraph:**
+  ```python
+  def _retriever_node(state: ChatState) -> dict[str, Any]:
+      ctx = retriever_agent.retrieve(state.query, state.corpus, state.language)
+      return {"context": ctx}  # LangGraph merges into ChatState
+
+  def _injection_check_node(state: ChatState) -> dict[str, Any]:
+      blocked, reason = injection.is_injection(state.query)
+      return {"injection_blocked": blocked, "injection_reason": reason}
+  ```
+- **Implicación para conditional edges:** `_route_after_injection(state) -> str` retorna nombre del próximo nodo o `END`. Permite short-circuit cuando `injection_blocked=True`.
+- **Implicación para H11 LangFuse:** `state.model_dump_json()` es trivialmente loggeable; cada nodo puede emitir snapshot pre/post para tracing.
+- **Enlace:** spec H4 §4.6.
+
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
 1. Añadir entrada al hito correspondiente.
