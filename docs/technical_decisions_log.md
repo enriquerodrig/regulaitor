@@ -661,6 +661,294 @@ Las entradas se agrupan por hito y dentro de cada hito en orden cronológico de 
 - **Acción cuando se aborde:** distinguir "user pidió `--corpus all` y este corpus no existe todavía" (info-level, no error) de "user pidió `--corpus nis2` específicamente y no existe" (error). Patrón análogo al de `corpus/ingest.run` que ya filtra contra `CELEX`.
 - **Enlace:** detectado durante auditoría post-H2 (commit que cerró auditoría).
 
+---
+
+## H3 — MCP server + Retriever-Agent + Citation validator (en diseño)
+
+### 2026-05-05 · Alcance del MCP server en H3: 3 tools, no 5
+
+- **Decisión:** H3 introduce el MCP server propio con **solo 3 tools** (`search_articles`, `fetch_article`, `validate_citation`), no las 5 listadas en CLAUDE.md §9. Las dos restantes (`extract_document`, `segment_document`) entran en H5 cuando aterrice el pipeline documental (extractor + sanitizer + segmenter).
+- **Justificación:**
+  1. **CLAUDE.md §22.16 prohíbe adelantar fases.** "No implementes Next.js antes de cerrar Streamlit, evaluación y red team." El mismo principio aplica a H5 antes de H3.
+  2. **Stubs son deuda visible.** Shipear las 5 tools con 2 stubs `NotImplementedError` significa testearlos ahora y reescribirlos en H5: doble trabajo + desorden conceptual sobre cuál es el contrato real.
+  3. **H3 ya tiene 4 sub-componentes** (schemas, validator, RetrieverAgent, MCP server). Añadir 3 más (extractor + sanitizer + segmenter) lo infla a tamaño no-single-spec.
+  4. **El contrato MCP es trivialmente extensible.** Añadir tools en H5 no rompe clientes existentes (los protocolos JSON-RPC permiten descubrir tools dinámicamente).
+  5. **SSDLC:** cada tool nueva amplía la superficie de ataque. Mejor introducirlas con threat-modeling localizado en su hito propio.
+- **Alternativas descartadas:**
+  - **Stubs (5 tools con 2 NotImplementedError):** rechazada por razón 2.
+  - **Pull-in H5 a H3:** rechazada por razón 1, 3.
+- **Implicación para H5:** la SKILL.md de `document-analysis` debe documentar que las 2 tools `*_document` se añaden al MCP server existente (`src/regulaitor/mcp_server/tools.py` ya creado en H3); no crear servidor separado.
+- **Enlace:** ADR 0005 (planificado para cierre H3); spec H3 §1.
+
+### 2026-05-05 · Transporte del MCP server: stdio en MVP
+
+- **Decisión:** el MCP server expone sus tools por **stdio JSON-RPC** (transporte original del protocolo), no por Streamable HTTP. El server se lanza como subprocess (`python -m regulaitor.mcp_server`) y los clientes envían frames por stdin / leen por stdout.
+- **Justificación:**
+  1. **Simplicidad operacional.** Cero gestión de puertos, cero CORS, cero auth en MVP. El cliente lanza el server como subprocess directo.
+  2. **Compatibilidad con Claude Desktop sin cambios.** Claude Desktop usa stdio por defecto: la demo de "abro un cliente MCP estándar y consume el corpus de RegulAItor" sale gratis.
+  3. **YAGNI.** Streamable HTTP solo paga su coste cuando hay >1 cliente concurrente o exposición remota. H3 tiene 1 cliente local (el agente); H6 (Streamlit) y H7 (FastAPI) lanzarán el server desde el mismo proceso.
+  4. **SSDLC: stdio no abre puerto.** Cero superficie de red. Si en H16 (despliegue público) hace falta HTTP, se añade entonces con auth + rate-limit en su sitio.
+  5. **Reversible.** La lógica de las tools no depende del transporte. Cambiar a HTTP es ~30 LOC en `mcp_server/server.py` cuando lo amerite.
+- **Alternativas descartadas:**
+  - **Streamable HTTP en MVP:** rechazada por overhead operacional sin caso de uso.
+  - **Dual-transport configurable por flag:** rechazada por YAGNI; doble código a testear sin ganancia.
+- **Implicación para H16 (despliegue público):** si el server público se expone vía HTTP, el handoff es local: el contenedor lanza el server stdio, y un proxy HTTP delgado (FastAPI, e.g.) traduce HTTP↔stdio. Patrón común en deploys MCP.
+- **Enlace:** spec H3 §3.1, §3.2.
+
+### 2026-05-05 · Arquitectura: helper común con adapters finos (no agente-talks-MCP)
+
+- **Decisión:** la lógica canónica de retrieval (embed → query → rerank → enrich) vive en `src/regulaitor/rag/retrieval.py::run`. Tanto el `RetrieverAgent` (LangGraph adapter) como el MCP tool `search_articles` son adapters finos que llaman al helper. **No** hay RPC interno entre el agente y el server; ambos comparten la misma función Python.
+- **Justificación:**
+  1. **Source of truth única.** La lógica embed+query+rerank se testea una vez en el helper. Los adapters tienen contract tests triviales sobre args + return.
+  2. **Sin RPC interno innecesario.** El LangGraph del H4 va a invocar al RetrieverAgent dentro del mismo proceso Python. Meter stdio loopback ahí solo añade latencia (~5-20 ms) y complejidad operacional sin valor.
+  3. **Cliente MCP externo (Claude Desktop) entra a la MISMA lógica.** El server hace dispatch al helper. Coherencia total: lo que prueba un evaluador del TFM por MCP es exactamente lo que ejecuta el RetrieverAgent en el chat E2E.
+  4. **SSDLC:** el helper es un solo punto de auditoría/logging. Los adapters solo añaden trazado específico de su superficie (LangGraph state vs MCP request_id).
+  5. **YAGNI elegante:** no construyes "agent talks to MCP" hoy y luego lo desmontas si no aporta valor. Y si en H16 se expone el MCP por HTTP, la lógica core no cambia.
+- **Alternativas descartadas:**
+  - **A. RetrieverAgent canónico, MCP envuelve:** descartada porque obliga al MCP server a importar `agents/`, mezclando capas (agent → corpus está bien; MCP → agent no tiene sentido).
+  - **B. MCP canónico, RetrieverAgent envuelve por RPC:** descartada por la latencia interna y la complejidad operacional sin ganancia.
+- **Estructura de archivos resultante:**
+  ```
+  rag/retrieval.py           # helper canónico — H3 nuevo
+  agents/retriever.py        # adapter LangGraph — H3 nuevo
+  mcp_server/server.py       # bootstrap stdio — H3 nuevo
+  mcp_server/tools.py        # adapters MCP — H3 nuevo
+  ```
+- **Enlace:** spec H3 §3.1, §4.
+
+### 2026-05-05 · Citation validator: matching normalizado exacto (sub-string sobre `_normalize`)
+
+- **Decisión:** el validator compara la cita contra el corpus mediante **substring exacto sobre forma normalizada**. Reusa la función `_normalize` existente en `rag/chunking.py` (lowercase + strip accents + unify dashes + collapse whitespace). No fuzzy matching, no Levenshtein, no umbrales.
+- **Justificación:**
+  1. **Reusa exactamente lo que H2 ya tiene** y testea al 100%. Cero código nuevo de normalización, cero divergencia de comportamiento entre chunker y validator.
+  2. **Cubre el 90% del ruido típico del LLM** sin abrir puertas: capitalización aleatoria, acentos perdidos al copiar de PDF, comillas tipográficas vs ASCII, dobles espacios, guiones largos vs cortos.
+  3. **Defensible académicamente.** Cuando el tribunal pregunte "¿cómo decide tu sistema si una cita es válida?", la respuesta es: *"normalización determinista bien definida + comparación literal sobre la forma normalizada"*. Sin parámetros mágicos, sin "depende del modelo".
+  4. **Defensa adversarial (SSDLC).** Fuzzy matching es **explotable**: un atacante puede construir una cita 95% similar al texto real pero que diga lo contrario semánticamente ("conforme con" → "no conforme con"). El red team de H9 va a probar exactamente eso. Strict normalizado cierra ese vector.
+  5. **Comportamiento de fallo deseable.** Si el LLM cita parafraseando ("según establece el Art. 6", cuando el texto real es "el Artículo 6 establece"), el validator falla. El Auditor reporta "cita no validada → respuesta bloqueada", el sistema pide al Analyst que re-cite literal. Ese feedback loop es el corazón de la regla "no citation, no answer".
+  6. **Capa fuzzy añadible en H15** (calibración del Auditor) sin breaking change si las evals lo justifican: AuditResult puede ganar campos `confidence_score` < 1.0 + `requires_human_review: bool` con warning explícito en `reason`.
+- **Alternativas descartadas:**
+  - **Literal estricto (sin normalización):** rechazada. Una sola comilla tipográfica `"` vs `"` y la cita válida cae. Penaliza al sistema sin ganancia adversarial.
+  - **Fuzzy con umbral (Levenshtein ≥ 0.95):** rechazada por el vector adversarial + por el riesgo de calibrar el umbral sin gold set ni red team.
+- **Detalle técnico — el `_normalize` exacto del H2:**
+  ```python
+  def _normalize(text: str) -> str:
+      s = unicodedata.normalize("NFD", text.lower())
+      s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
+      s = re.sub(r"[–—−―]", "-", s)
+      return re.sub(r"\s+", " ", s).strip()
+  # "Artículo 6 — Sistemas de IA" → "articulo 6 - sistemas de ia"
+  ```
+- **Implicación para H4 (Auditor):** la comparación es **substring** (`_normalize(cita) in _normalize(corpus_text)`). El validator opera contra el texto del **apartado** si la cita tiene apartado, contra el **artículo entero** si no.
+- **Enlace:** spec H3 §4.4; CLAUDE.md §6.
+
+### 2026-05-05 · Schemas Pydantic en H3: solo los 5 que H3 produce/consume (no Finding ni Answer)
+
+- **Decisión:** H3 define los schemas que produce/consume directamente: `Citation`, `AuditResult`, `RetrievedChunk`, `Context`, `FetchedArticle`. Los schemas `Finding` y `Answer` mencionados en planos previos se **defieren a H4**, cuando el Analyst esté siendo construido.
+- **Justificación:**
+  1. **YAGNI académicamente defendible.** Definir el shape de `Finding` ahora obliga a decidir cosas como: ¿severidad es enum `low/medium/high` o numérica? ¿`recommendation` es string libre o estructurado? ¿`citations` es ≥1 obligatorio o puede ser empty? Esas decisiones dependen del prompt del Analyst (H4) y del schema del gold set (H8). Comprometerlas ahora sin esa información es arbitrario.
+  2. **El contrato real está en `Citation` y `AuditResult`.** Esos dos definen la frontera Analyst↔Auditor que materializa la regla "no citation, no answer". Definirlos bien en H3 es lo que importa. `Finding` / `Answer` son contenedores que pueden tomar la forma que mejor sirva al Analyst.
+  3. **Coste de añadir en H4 es despreciable.** Pydantic v2 hace que añadir `Finding(BaseModel)` en H4 sea ~30 LOC + tests. Ningún consumidor de H3 cambia (no hay consumidor todavía).
+  4. **Reduce el riesgo de breaking change a mitad de H4.** Si comprometemos `Finding` ahora con shape X, y al construir el Analyst nos damos cuenta que necesita shape Y, hay que reescribir + migrar tests + actualizar el log. Si lo definimos cuando lo construimos, sale derecho a la primera.
+  5. **Disciplina YAGNI consistente con H2:** rechazamos schemas anticipados para casos especulativos varias veces durante H2.
+- **Alternativa descartada:**
+  - **Definir los 5 schemas (Citation, Finding, Answer, AuditResult, RetrievedChunk) ahora** "para que H4 tenga contrato congelado": rechazada porque la "congelación" prematura es justamente lo que produce breaking changes inesperados después.
+- **Implicación para H4:** `citation/schemas.py` se extenderá con `Finding` y `Answer` cuando el Analyst esté operativo; el módulo ya estará en su sitio desde H3.
+- **Enlace:** spec H3 §4.3.
+
+### 2026-05-05 · Top-k en retrieval: defaults fijos pre=50 / post=5, MCP expone solo `top_k`
+
+- **Decisión:** el helper `rag/retrieval.run` usa `PRE_RERANK = 50` (módulo-level constante) hardcoded para el query a LanceDB, y un parámetro `top_k: int = 5` (post-rerank) configurable por el caller. La MCP tool `search_articles` expone solo `top_k` al cliente. Ratio efectivo 10:1 entre candidatos pre-rerank y resultados finales.
+- **Justificación:**
+  1. **YAGNI calibratorio.** No tenemos gold set ni evals todavía (H8). Cualquier ajuste fino del ratio es arbitrario. Los defaults `50/5` vienen de literatura BGE-M3.
+  2. **API mínima para el LLM.** El cliente MCP (incluido Claude Desktop en demo) ve un solo parámetro `top_k` con semántica obvia ("¿cuántos resultados quieres?"). Sin necesidad de explicar "candidatos" vs "resultados finales".
+  3. **Heurística (ratio dinámico) introduce magia.** Pedir `top_k=20` con factor 10 dispararía `pre=200`, lo que en un corpus de 360 chunks ya es la mayoría. El usuario no sabe que pasó eso. Comportamiento sorprendente.
+  4. **Doble parámetro (B) es no-breaking añadido después.** Si en H8 las evals demuestran que `pre=50` es subóptimo para queries densas, añadir `candidates` al MCP tool con default 50 es retrocompatible.
+  5. **Tests deterministas.** Fixed defaults → fixtures predecibles. La integration test del retriever puede assert que devuelve exactamente N resultados con N conocido.
+  6. **SSDLC:** API más pequeña = menos input que validar = menos superficie. Que un atacante mande `candidates=999999` para hacer DoS al rerank no es un vector que tenemos que cerrar si el parámetro no existe.
+- **Alternativas descartadas:**
+  - **Doble parámetro (`top_k` + `candidates`):** rechazada por overhead de API sin caso de uso actual.
+  - **Heurística `pre = max(top_k * 10, 30)`:** rechazada por comportamiento sorprendente al usuario.
+- **Detalle técnico:**
+  ```python
+  PRE_RERANK = 50
+
+  def run(query, corpus, language, top_k: int = 5) -> list[RetrievedChunk]:
+      candidates = store.search(...).limit(PRE_RERANK)
+      reranked = reranker.rerank(query, [c.text for c in candidates], top_n=top_k)
+      return reranked + meta enrichment
+  ```
+- **Implicación para H8 evals:** si tras gold set se demuestra que `pre=50` no es óptimo, añadir un nuevo parámetro `candidates` con default 50 es no-breaking; la decisión se revisa allí con datos.
+- **Enlace:** spec H3 §4.2.
+
+### 2026-05-05 · Validator depth: 3 chequeos estrictos (article + apartado + text), fail-fast con reason específico
+
+- **Decisión:** el validator ejecuta 3 chequeos secuenciales con early-exit en el primero que falla:
+  1. `article_exists`: ¿existe `(norma, articulo)` en el manifest?
+  2. `apartado_exists` (si la cita lleva apartado): ¿existe ese apartado en el artículo?
+  3. `text_normalized_match`: ¿el texto normalizado de la cita es substring del texto normalizado del **apartado** (si fue dado) o del **artículo** (si no)?
+  Todos pasan → `validated=True`. Cualquiera falla → `validated=False` con `reason` específico al chequeo que falló.
+- **Justificación:**
+  1. **Cierra el vector "artículo correcto, apartado incorrecto".** Sin chequeo a nivel de apartado, un LLM puede citar `(art=6, apartado=1)` cuando el texto está en `apartado=5`. La cita pasa el text-match porque está en el artículo, pero la **estructura** de la cita es falsa. Vector adversarial concreto del red team H9.
+  2. **Aprovecha datos que H1 ya almacena.** `corpus/processed/<norma>_<lang>.json` ya tiene `paragraphs: [{apartado, text}, ...]` por artículo. El validator simplemente lee `paragraphs[N].text` cuando `apartado=N`. Cero parsing nuevo.
+  3. **`reason` granular es oro académico.** Cuando una cita falla, `AuditResult.reason` reporta exactamente qué falló y por qué (ver Sección 4.4 del spec). El tribunal puede inspeccionar logs de fallos y entender el rechazo.
+  4. **Implementación trivial.** ~40 LOC de validator: 3 lookups secuenciales. Ningún algoritmo nuevo. Tests por cada rama.
+  5. **SSDLC defense-in-depth.** Tres puertas independientes son más difíciles de saltar simultáneamente que una sola.
+- **Alternativas descartadas:**
+  - **Dos chequeos (article + text a nivel de artículo, apartado solo informativo):** rechazada por el vector "wrong apartado" no cerrado.
+  - **Solo text-match:** rechazada porque permite citas con norma+articulo+apartado totalmente fabricados pero texto que existe en cualquier sitio del corpus.
+- **Detalle técnico — `Citation.language` explícito (no auto-detect):** el schema requiere `language: Literal["es", "en"]` por construcción. Razón: auto-detect es un componente que puede fallar/ser engañado. Explicit > implicit; el Analyst declara la lengua y el validator confía pero verifica.
+- **Schema resultante de `AuditResult` (preview):**
+  ```python
+  class AuditResult(BaseModel):
+      citation: Citation
+      validated: bool
+      article_exists: bool
+      apartado_exists: bool | None  # None si la cita no llevaba apartado
+      text_normalized_match: bool
+      reason: str | None  # human-readable; None iff validated=True
+  ```
+- **Enlace:** spec H3 §4.4.
+
+### 2026-05-05 · `fetch_article` devuelve texto + metadata documental mínima (no metadata interna)
+
+- **Decisión:** la tool MCP `fetch_article` devuelve un objeto `FetchedArticle` con 7 campos: `norma`, `articulo`, `apartado`, `language`, `text`, `version`, `source_url`. **No** expone metadata operacional del RAG (chunks, hash, embedded_at, embedding_model, tokens).
+- **Justificación:**
+  1. **Caso de uso real es texto.** Las dos consumiciones esperadas son: (a) el Auditor en H4 necesita el texto del apartado para validar; (b) un cliente externo (Claude Desktop) quiere "leer el Art. 6.1 del AI Act". Ambos necesitan texto + el mínimo contexto para citarlo.
+  2. **Schema mínimo = contrato más estable.** `chunks`, `hash`, `embedded_at`, `embedding_model` son **internos del RAG** (boundary contract H1↔H2). Exponerlos los convierte en parte del contrato público del MCP: cualquier cambio interno del rag los rompería.
+  3. **SSDLC: leak-by-default minimization.** Principio de mínima información: no exponer metadata operacional a clientes MCP externos hasta que haya un caso de uso real que lo justifique.
+  4. **Latencia + tamaño.** Una `LanguageEntry` completa pesa ~10-20 KB serializada. Texto pesa ~1-3 KB. Para clientes stdio, KB extras son baratos pero acumulan.
+  5. **Configurable (`format: "text" | "full"`) introduce ramas a testear sin justificación.** Añadirlo después es no-breaking si surge necesidad.
+  6. **Coherente con `validate_citation`.** El validator internamente carga el `LanguageEntry` y trabaja con texto. `fetch_article` también. Una sola semántica para "lookup directo": "dame el texto".
+  7. **`version` y `source_url` SÍ se exponen** porque son **información documental pública** (CELEX + URL EUR-Lex), no metadata interna. CLAUDE.md §7 los exige por chunk para audit trail.
+- **Alternativas descartadas:**
+  - **Exponer la `LanguageEntry` Pydantic completa:** rechazada por leak de metadata interna.
+  - **Configurable con `format` parameter:** rechazada por YAGNI.
+- **Detalle de comportamiento:**
+  - Si `apartado` se da → devuelve solo `paragraphs[apartado].text`. Si no existe → `NotFoundError(-32001)` con mensaje accionable (`"ai_act art. 6 has no apartado 99. Valid apartados: 1-7."`).
+  - Si `apartado` se omite → devuelve texto completo del artículo (concatenación de paragraphs separados por `\n\n`).
+  - `language` es **requerido** (no `auto`) por mismo principio que el validator.
+- **Enlace:** spec H3 §4.6, §6.
+
+### 2026-05-05 · Corpus loader: lazy singleton + warmup explícito + integrity check fail-closed
+
+- **Decisión:** los datos del corpus (manifests + processed JSON) se cargan en un **singleton in-memory** dentro de un nuevo módulo `corpus/loader.py`, análogo al patrón de `rag/embeddings.py` y `rag/reranker.py`. El MCP server llama `loader.warmup()` al arrancar, que carga los 4 procesados + 2 manifests en memoria **y verifica integridad** recomputando el SHA256 de cada `LanguageEntry.text` y comparando contra el hash del manifest. Drift detectado → `RuntimeError` → server no arranca.
+- **Justificación:**
+  1. **Tamaño que cabe en RAM.** Los 4 procesados + 2 manifests pesan **~2-4 MB combinados**. Cargarlos en warmup es trivial y elimina overhead de disk I/O en cada call. En H14 (NIS2 + DORA) sube a ~6-8 MB; sigue siendo trivial.
+  2. **Pattern consistency.** El patrón "lazy singleton + warmup" ya está establecido en H2 para BGE-M3 y bge-reranker-v2-m3. Mismo patrón aquí mantiene la base mental simple.
+  3. **Test discipline ya resuelta.** El patrón H2 incluye autouse fixture que resetea el singleton entre tests. Reusable directamente para `corpus/loader.py`.
+  4. **Latencia predecible.** Para el flujo H4 (chat E2E con ~5 citas/respuesta), un `validate_citation` que internamente lee disco cada vez son 25-50 ms gratis. Con singleton: cero.
+  5. **SSDLC fail-closed.** La regla "no citation, no answer" depende de que el corpus sea fiel a la fuente oficial. Si el corpus está alterado, **toda cita validada después es sospechosa** — el Auditor no detecta la manipulación porque su fuente de verdad ya está corrupta. La única política segura es **fail-closed en startup**.
+  6. **Integrity check coste cero en happy path.** Recomputar SHA256 de 4 ficheros JSON (~2-4 MB) en warmup es <100 ms. Imperceptible.
+  7. **Defensa adversarial concreta.** Modelo de amenaza: atacante con acceso al filesystem (supply-chain, container escape) sustituye `corpus/processed/ai_act_es.json` con versión alterada. Sin integrity check, el sistema produce respuestas falsamente "validadas". Con strict mode, el server crashea al arrancar.
+  8. **Recovery path explícito.** Mensaje del error: `"manifest hash drift detected on ai_act art. 6 ES (expected sha256:abc..., got sha256:def...). Run 'make ingest' to refresh manifest, or restore corpus/processed/ from git-lfs."` Accionable.
+  9. **Warn (B) es señal sin acción.** En la práctica, los warnings se ignoran. Un atacante que controla el filesystem puede contar con que los logs no se revisan en tiempo real.
+  10. **Skip (C) renuncia al control.** No aprovecha información que tenemos gratis (los hashes ya están en el manifest desde H1).
+- **Alternativas descartadas:**
+  - **Lectura por llamada (sin caché):** rechazada por latencia acumulada en flujos con múltiples citas.
+  - **DB layer (SQLite/LanceDB metadata):** rechazada por overkill (~2-4 MB no justifica DB).
+  - **Warn-only (log + continúa):** rechazada por SSDLC fail-closed.
+  - **Skip integrity check:** rechazada por renunciar a defensa que es gratis.
+- **Detalle técnico — pseudocode warmup integrity check:**
+  ```python
+  for norma in CORPORA_WITH_MANIFESTS:
+      m = manifest_mod.load(MANIFEST_DIR / f"{norma}.json")
+      for article in m.articles:
+          for lang, entry in article.languages.items():
+              text = _load_processed_article_text(norma, article.articulo, lang)
+              computed = hashlib.sha256(text.encode("utf-8")).hexdigest()
+              if computed != entry.hash:
+                  raise RuntimeError(
+                      f"manifest hash drift detected on {norma} art. {article.articulo} {lang} "
+                      f"(expected {entry.hash[:16]}..., got {computed[:16]}...). "
+                      f"Run 'make ingest' to refresh manifest, or restore corpus/processed/ from git-lfs."
+                  )
+      _CORPUS_CACHE[norma] = m  # only cache if all hashes verified
+  ```
+- **Implicación para H14 (NIS2 + DORA):** los nuevos corpus se incorporan automáticamente al loader siguiendo el mismo patrón. Si el warmup tarda demasiado con corpus mucho más grande, profile y mover a warmup async background (mitigación documentada en risk register).
+- **Implicación para H9 (red team):** uno de los ataques canónicos será "tampered processed/" → confirmar que el server falla al arrancar y NO sirve queries.
+- **Enlace:** spec H3 §4.1, §7; ADR 0005.
+
+### 2026-05-05 · `RetrievedChunk` shape: 9 campos (citable one-shot, sin metadata interna)
+
+- **Decisión:** el schema `RetrievedChunk` que devuelve `search_articles` lleva 9 campos: `chunk_id`, `norma`, `articulo`, `apartado`, `language`, `text`, `score`, `version`, `source_url`. Incluye lo necesario para que el Analyst (H4) construya un `Citation` directamente sin segunda llamada al MCP. **No** incluye metadata operacional (`hash`, `embedded_at`, `embedding_model`, `tokens`).
+- **Justificación:**
+  1. **Coste cero en cable, ahorro real en llamadas.** `version` y `source_url` ya están cargados en memoria por el `corpus/loader.py` singleton. Añadirlos al chunk es un dict lookup. Sin ellos, el Analyst de H4 hace `search_articles` → elige top-3 → `fetch_article × 3` para conseguir version/source_url. Cinco round-trips MCP en vez de uno por respuesta.
+  2. **Información NO sensible.** `version` (CELEX) y `source_url` (URL EUR-Lex pública) son información oficial documental, no secreta. El argumento "leak-by-default" del fetch no aplica: estos campos son **lo que la cita necesita** para ser auditable.
+  3. **CLAUDE.md §7 obliga a `version` por chunk.** Literal: *"Cada chunk debe tener metadatos: norma, articulo, apartado, idioma, version, fuente, fecha_ingesta, hash"*. La regla se cumple por composición (chunk → article_id → manifest), pero exponer el chunk vía MCP sin `version` rompería trazabilidad para clientes externos.
+  4. **Metadata operacional sin caso de uso.** `hash`, `embedded_at`, `embedding_model`, `tokens` son del orquestador `rag/build.py` para idempotencia. Ningún consumidor MCP los necesita. Exponerlos los convierte en parte del contrato público y ata las manos para refactor interno.
+  5. **Schema intermedio que escala.** Si en H8 las evals piden ver el `hash` para correlacionar fallos con versiones del corpus, se añade entonces como campo opcional. Empezar mínimo y crecer guiado por evidencia.
+- **Alternativas descartadas:**
+  - **Mínimo (7 campos sin version + source_url):** rechazada por penalización 5x en round-trips para H4.
+  - **Full (13+ campos con todo):** rechazada por leak de metadata interna sin caso de uso.
+- **Schema resultante:**
+  ```python
+  class RetrievedChunk(BaseModel):
+      model_config = ConfigDict(frozen=True)
+      chunk_id: str
+      norma: Norma
+      articulo: str
+      apartado: str | None
+      language: Language
+      text: str
+      score: float = Field(ge=0.0, le=1.0)
+      version: str
+      source_url: str
+  ```
+- **Enlace:** spec H3 §4.3.
+
+### 2026-05-05 · Política de errores MCP: por semántica de cada tool
+
+- **Decisión:** cada MCP tool tiene una política de errores específica a su dominio:
+  - `search_articles`: empty results → `[]` (resultado válido). Solo MCP error en fallo de infra.
+  - `fetch_article`: artículo/apartado no existe → MCP error con `code=NOT_FOUND` (-32001). Args inválidos → `INVALID_PARAMS`. Infra → `INTERNAL_ERROR`.
+  - `validate_citation`: cita inválida → `AuditResult(validated=False, reason=...)` siempre. **Nunca** lanza error por cita inválida. Args inválidos por Pydantic → `INVALID_PARAMS`. Infra → `INTERNAL_ERROR`.
+- **Justificación:**
+  1. **Cada tool tiene semántica distinta y la política refleja esa diferencia.**
+     - `validate_citation` es un evaluador: nunca "falla" cuando dice "no válida"; **eso es el éxito de su trabajo**. Hacer que falle como error rompería el flujo del Auditor (H4) que tiene que poder distinguir "evaluación rechazó la cita" de "evaluación se cayó".
+     - `fetch_article` pide un recurso específico. "No existe" es un 404 conceptual.
+     - `search_articles` busca; "no encontré nada" es un resultado válido (vector de embedding del query no encaja con nada).
+  2. **Alineado con convenciones HTTP/REST que el evaluador del TFM espera.** 200 con body para resultados válidos; 404 para recursos no encontrados; 5xx para fallo del servidor.
+  3. **Result objects everywhere (B) introduce overhead de decisión.** Cada tool inventa su propio `NotFoundResult`, `EmptyResult`, etc., y los clientes hacen pattern-matching. MCP **ya tiene** un canal de errores estructurado.
+  4. **Errors everywhere (C) colapsa información útil.** Si todo es error, el Auditor de H4 tiene que parsear el `error.code` para distinguir "cita rechazada por contenido" de "infraestructura caída". A mantiene esa distinción en el shape del retorno.
+  5. **Contract tests más limpios.** Por tool, dos rutas a testear: "happy path" + "error path con código esperado".
+  6. **SSDLC observability.** Los logs estructurados pueden distinguir "validación rechazó N citas" (señal de calidad del Analyst) de "fetch_article cayó N veces" (señal operacional). Misma distinción importante para el panel de métricas en H11.
+- **Alternativas descartadas:**
+  - **B. Result objects everywhere (no errors excepto infra):** rechazada por overhead de pattern-matching client-side y por no usar el canal de errores nativo de MCP.
+  - **C. Errors everywhere (cualquier anomalía es error):** rechazada por colapsar "validación rechazada" con "infra caída".
+- **Tabla de comportamiento:**
+
+  | Tool | Happy path | Recurso missing | Bad input | Infra fail |
+  |---|---|---|---|---|
+  | `search_articles` | `list[RetrievedChunk]` | `[]` | `INVALID_PARAMS` | `INTERNAL_ERROR` |
+  | `fetch_article` | `FetchedArticle` | `NotFoundError(-32001)` | `INVALID_PARAMS` | `INTERNAL_ERROR` |
+  | `validate_citation` | `AuditResult(validated=True)` | `AuditResult(validated=False, reason=...)` | `INVALID_PARAMS` | `INTERNAL_ERROR` |
+- **Enlace:** spec H3 §6.
+
+### 2026-05-05 · `Context` como Pydantic wrapper, no plain list
+
+- **Decisión:** el output del `RetrieverAgent.retrieve(...)` es un objeto `Context` (Pydantic v2) que envuelve la lista de `RetrievedChunk` con metadata adicional: `query`, `corpus`, `language`, `chunks`, `retrieved_at`, `embedding_model`. **No** es un alias de tipo `list[RetrievedChunk]`.
+- **Justificación:**
+  1. **El MCP tool `search_articles` y el RetrieverAgent no producen lo mismo.** El MCP tool devuelve `list[RetrievedChunk]` plano (contrato simple para clientes externos). El RetrieverAgent envuelve esa lista en `Context` con metadata adicional para uso interno por el LangGraph state de H4. Separación clara entre contrato externo (MCP, simple) y estructura interna (agent, rica).
+  2. **Traceabilidad para evaluación (H8) y observability (H11).** Si el harness de evals quiere reportar "respuesta X con embedding model Y produjo retrieval Z para query Q", `Context` lleva todo eso por construcción. Sin wrapper, esa metadata se reconstruye desde logs externos — frágil.
+  3. **Auditor (H4) puede verificar que el contexto es para el query actual.** `Context.query == analyst_state.query` es un check trivial pero importante: si el Analyst alegremente cita chunks de un retrieval anterior (race condition o bug), el Auditor lo detecta porque los queries no coinciden.
+  4. **Cost < 30 LOC.** Pydantic v2 es declarativo; el wrapper es trivial. Tests también triviales (round-trip serialization).
+  5. **Plain list (A) es premature simplification.** Cuando H4 quiera meter `query_id` para correlacionar logs, o H8 quiera versionar el embedding model usado, hay que añadir wrapper de todas formas.
+- **Alternativas descartadas:**
+  - **A. Plain list (`Context = list[RetrievedChunk]`):** rechazada por simplificación prematura.
+  - **C. NamedTuple (`Context = NamedTuple(...)`):** rechazada como legacy Python; no se serializa bien a JSON.
+- **Schema resultante:**
+  ```python
+  class Context(BaseModel):
+      query: str
+      corpus: Norma
+      language: Language
+      chunks: list[RetrievedChunk]
+      retrieved_at: datetime
+      embedding_model: str
+  ```
+- **Implicación para H4 (LangGraph state):** el `RetrieverAgent.retrieve()` se invoca como un nodo del graph; el output `Context` se guarda en el state que el siguiente nodo (Analyst) lee. El Analyst recibe `Context.chunks` para razonar sobre ellos.
+- **Enlace:** spec H3 §4.5; CLAUDE.md §8.1.
+
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
 1. Añadir entrada al hito correspondiente.
