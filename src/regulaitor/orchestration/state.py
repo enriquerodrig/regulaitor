@@ -8,7 +8,7 @@ inner objects (Context, Answer, AuditedAnswer) are frozen.
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from regulaitor.citation.schemas import Answer, AuditedAnswer, Context
 from regulaitor.corpus.schemas import Language, Norma
@@ -16,6 +16,8 @@ from regulaitor.corpus.schemas import Language, Norma
 
 class ChatState(BaseModel):
     """LangGraph state for chat E2E. Mutable across nodes."""
+
+    model_config = ConfigDict(extra="forbid")
 
     case_id: str = Field(min_length=1)
     query: str = Field(min_length=1)
