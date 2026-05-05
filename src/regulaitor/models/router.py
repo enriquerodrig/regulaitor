@@ -12,9 +12,15 @@ import os
 import time
 from typing import Any, Literal
 
-from anthropic import Anthropic
+from anthropic import (
+    Anthropic,
+    APIConnectionError,
+    APITimeoutError,
+    InternalServerError,
+    RateLimitError,
+)
 from pydantic import BaseModel
-from tenacity import retry, stop_after_attempt, wait_exponential
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 from regulaitor.models.config import ANTHROPIC_SONNET_4_6, cost_eur
 
@@ -42,9 +48,17 @@ class CompletionResult(BaseModel):
 def _anthropic_client() -> Anthropic:
     """Construct an Anthropic client. Reads ANTHROPIC_API_KEY from env.
 
+    Fails fast at construction time if key is missing (rather than waiting for
+    the SDK to fail at request time inside the retry decorator).
     Wrapped in a function so tests can monkeypatch this attribute.
     """
-    return Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+    key = os.environ.get("ANTHROPIC_API_KEY")
+    if not key:
+        raise RuntimeError(
+            "ANTHROPIC_API_KEY not set; required for router.complete(). "
+            "Set the environment variable or use a mocked router in tests."
+        )
+    return Anthropic(api_key=key)
 
 
 def complete(
@@ -71,6 +85,9 @@ def complete(
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=1, max=10),
+    retry=retry_if_exception_type(
+        (RateLimitError, APIConnectionError, APITimeoutError, InternalServerError)
+    ),
     reraise=True,
 )
 def _call_anthropic_sonnet(
@@ -101,14 +118,16 @@ def _call_anthropic_sonnet(
     response = client.messages.create(**kwargs)
     latency_ms = int((time.monotonic() - t0) * 1000)
 
-    # Extract first text block + first tool_use block (if present)
-    text: str | None = None
+    # Extract: concatenate all text blocks (handles thinking + final response);
+    # keep first tool_use block (tool_choice="any"/specific guarantees <=1).
+    text_parts: list[str] = []
     tool_use_input: dict[str, Any] | None = None
     for block in response.content:
-        if block.type == "text" and text is None:
-            text = block.text
+        if block.type == "text":
+            text_parts.append(block.text)
         elif block.type == "tool_use" and tool_use_input is None:
             tool_use_input = dict(block.input)
+    text: str | None = "\n".join(text_parts) if text_parts else None
 
     usage = Usage(
         input_tokens=response.usage.input_tokens,
