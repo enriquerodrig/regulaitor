@@ -85,7 +85,9 @@ def test_fetch_article_apartado_missing_raises_notfound(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     paragraph_mock = MagicMock(side_effect=KeyError("no apartado 99"))
+    meta_mock = MagicMock(return_value={"version": "v", "source_url": "https://example.com"})
     monkeypatch.setattr(tools.loader, "get_paragraph", paragraph_mock)
+    monkeypatch.setattr(tools.loader, "get_manifest_meta", meta_mock)
 
     with pytest.raises(NotFoundError, match="apartado"):
         tools.fetch_article(norma="ai_act", articulo="6", language="es", apartado="99")
@@ -94,11 +96,13 @@ def test_fetch_article_apartado_missing_raises_notfound(
 def test_fetch_article_article_missing_raises_notfound(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    meta_mock = MagicMock(return_value={"version": "v", "source_url": "https://example.com"})
     monkeypatch.setattr(
         tools.loader,
         "get_article_text",
         MagicMock(side_effect=KeyError("no article 999")),
     )
+    monkeypatch.setattr(tools.loader, "get_manifest_meta", meta_mock)
 
     with pytest.raises(NotFoundError, match="article"):
         tools.fetch_article(norma="ai_act", articulo="999", language="es")
@@ -123,3 +127,50 @@ def test_validate_citation_returns_audit_result(
 
     assert result == expected
     validate_mock.assert_called_once_with(c)
+
+
+def test_validate_citation_returns_audit_result_when_invalid(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Critical: validate_citation must NEVER convert AuditResult(validated=False)
+    to an MCP error. The H4 Auditor needs to distinguish content rejection from
+    tool crash.
+    """
+    c = Citation(norma="ai_act", articulo="999", language="es", text="t")
+    expected = AuditResult(
+        citation=c,
+        validated=False,
+        article_exists=False,
+        apartado_exists=None,
+        text_normalized_match=False,
+        reason="article_not_found: ai_act has no articulo 999 in language es",
+    )
+    validate_mock = MagicMock(return_value=expected)
+    monkeypatch.setattr(tools.validator_mod, "validate", validate_mock)
+
+    result = tools.validate_citation(c)
+
+    # Critical: returns the AuditResult, does NOT raise
+    assert result == expected
+    assert result.validated is False
+
+
+def test_fetch_article_manifest_meta_missing_raises_notfound(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """If get_manifest_meta raises KeyError (e.g. corpus not warmed up),
+    fetch_article must wrap as NotFoundError, not let the KeyError leak.
+    """
+    monkeypatch.setattr(
+        tools.loader,
+        "get_manifest_meta",
+        MagicMock(side_effect=KeyError("corpus ai_act not loaded; call warmup() first")),
+    )
+    monkeypatch.setattr(
+        tools.loader,
+        "get_article_text",
+        MagicMock(return_value="text"),
+    )
+
+    with pytest.raises(NotFoundError, match="not loaded"):
+        tools.fetch_article(norma="ai_act", articulo="6", language="es")

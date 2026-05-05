@@ -41,8 +41,14 @@ def fetch_article(
     """Direct lookup of an article or paragraph in the corpus.
 
     Raises NotFoundError with an actionable message when the resource is absent.
+
+    Note: NotFoundError messages may include hints with valid article IDs (e.g.
+    "Valid range: 1-113"). This is acceptable because all current corpora are
+    public (EUR-Lex AI Act, GDPR). If private corpora are added in future
+    milestones, revisit whether to redact these hints at the MCP boundary.
     """
     try:
+        meta = loader.get_manifest_meta(norma)
         if apartado is not None:
             text = loader.get_paragraph(norma, articulo, apartado, language)
         else:
@@ -50,7 +56,6 @@ def fetch_article(
     except KeyError as e:
         raise NotFoundError(str(e)) from e
 
-    meta = loader.get_manifest_meta(norma)
     return FetchedArticle(
         norma=norma,
         articulo=articulo,
