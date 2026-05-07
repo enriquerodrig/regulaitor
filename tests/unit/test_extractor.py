@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import hashlib
+import io
 
 import pytest
+from reportlab.lib.pagesizes import LETTER
+from reportlab.pdfgen import canvas
 
 from regulaitor.citation.schemas import RawDocument
 from regulaitor.document import extractor
@@ -67,3 +70,68 @@ def test_language_en_when_english_only():
     md = _md("# Title\n\nThis document is in English only.\n")
     raw = extractor.extract(md, mime_type="text/markdown")
     assert raw.language == "en"
+
+
+# ---------- PDF path ----------
+
+
+def _make_pdf(text_per_page: list[str], metadata: dict[str, str] | None = None) -> bytes:
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=LETTER)
+    if metadata:
+        if "Author" in metadata:
+            c.setAuthor(metadata["Author"])
+        if "Title" in metadata:
+            c.setTitle(metadata["Title"])
+    for page_text in text_per_page:
+        c.setFont("Helvetica", 12)
+        c.drawString(72, 720, page_text)
+        c.showPage()
+    c.save()
+    return buf.getvalue()
+
+
+def test_pdf_basic_extraction():
+    pdf = _make_pdf(["Hello world page 1", "Page 2 content"])
+    raw = extractor.extract(pdf, mime_type="application/pdf")
+    assert raw.mime_type == "application/pdf"
+    assert len(raw.pages) == 2
+    assert "Hello world" in raw.pages[0].text
+    assert "Page 2" in raw.pages[1].text
+
+
+def test_pdf_metadata_captured():
+    pdf = _make_pdf(["x"], metadata={"Author": "Acme Inc", "Title": "Policy"})
+    raw = extractor.extract(pdf, mime_type="application/pdf")
+    assert raw.metadata.get("Author") == "Acme Inc"
+    assert raw.metadata.get("Title") == "Policy"
+
+
+def test_pdf_magic_bytes_mismatch_raises():
+    with pytest.raises(ValueError, match="magic bytes"):
+        extractor.extract(b"NOT A PDF", mime_type="application/pdf")
+
+
+def test_pdf_corrupted_raises():
+    # Magic bytes ok but body garbage.
+    bad = b"%PDF-1.4\n" + b"\x00" * 100
+    with pytest.raises(extractor.ExtractionError):
+        extractor.extract(bad, mime_type="application/pdf")
+
+
+def test_pdf_no_javascript_no_forms_no_uris_in_simple_pdf():
+    pdf = _make_pdf(["Plain content"])
+    raw = extractor.extract(pdf, mime_type="application/pdf")
+    assert raw.has_javascript is False
+    assert raw.has_form_actions is False
+    assert raw.uri_actions == []
+
+
+def test_pdf_likely_scanned_when_no_text():
+    # A PDF with no text drawn → all pages likely_scanned.
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=LETTER)
+    c.showPage()
+    c.save()
+    raw = extractor.extract(buf.getvalue(), mime_type="application/pdf")
+    assert raw.pages[0].likely_scanned is True

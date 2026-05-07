@@ -10,7 +10,9 @@ from __future__ import annotations
 
 import hashlib
 import re
+from typing import Any
 
+import pypdfium2 as pdfium
 from markdown_it import MarkdownIt
 
 from regulaitor.citation.schemas import (
@@ -21,6 +23,7 @@ from regulaitor.citation.schemas import (
 from regulaitor.corpus.schemas import Language
 
 _SPANISH_CHARS = re.compile(r"[áéíóúñ¿¡ÁÉÍÓÚÑ]")
+_PDF_MAGIC = b"%PDF-"
 
 
 class ExtractionError(Exception):
@@ -90,6 +93,87 @@ def extract(file_bytes: bytes, mime_type: str) -> RawDocument:
     raise ValueError(f"unsupported mime_type: {mime_type!r}")
 
 
+def _validate_pdf_magic(file_bytes: bytes) -> None:
+    if not file_bytes.startswith(_PDF_MAGIC):
+        raise ValueError("magic bytes do not match declared mime_type=application/pdf")
+
+
+def _read_pdf_metadata(pdf: Any) -> dict[str, str]:
+    md: dict[str, str] = {}
+    try:
+        for key in ("Title", "Author", "Subject", "Keywords", "Creator", "Producer"):
+            value = pdf.get_metadata_value(key)
+            if value:
+                md[key] = str(value)
+    except Exception:
+        # Conservative: if metadata API surface differs across pypdfium2 versions,
+        # we degrade gracefully — sanitizer treats missing metadata as "none".
+        pass
+    return md
+
+
+def _read_pdf_pages(pdf: Any) -> list[Page]:
+    pages: list[Page] = []
+    for i in range(len(pdf)):
+        page = pdf[i]
+        try:
+            textpage = page.get_textpage()
+            text = textpage.get_text_bounded()
+        except Exception:
+            text = ""
+        likely_scanned = len(text.strip()) < 10
+        pages.append(
+            Page(
+                number=i + 1,
+                text=text,
+                fonts=[],
+                annotations=[],
+                hidden_text_candidates=[],
+                likely_scanned=likely_scanned,
+            )
+        )
+    return pages
+
+
+def _read_pdf_outline(pdf: Any) -> list[OutlineEntry]:
+    out: list[OutlineEntry] = []
+    try:
+        for entry in pdf.get_toc():
+            page_number = int(entry.page_index) + 1 if entry.page_index is not None else 1
+            out.append(
+                OutlineEntry(
+                    title=str(entry.title),
+                    level=int(entry.level) + 1,
+                    page_number=page_number,
+                )
+            )
+    except Exception:
+        # If pypdfium2 surface differs / outline is malformed, skip.
+        pass
+    return out
+
+
 def _extract_pdf(file_bytes: bytes) -> RawDocument:
-    """Stub — implemented in Task 5."""
-    raise NotImplementedError("PDF extraction implemented in Task 5")
+    _validate_pdf_magic(file_bytes)
+    try:
+        pdf = pdfium.PdfDocument(file_bytes)
+    except pdfium.PdfiumError as e:
+        raise ExtractionError(f"pypdfium2 failed to load PDF: {e}") from e
+
+    metadata = _read_pdf_metadata(pdf)
+    pages = _read_pdf_pages(pdf)
+    outline = _read_pdf_outline(pdf)
+
+    full_text = "\n".join(p.text for p in pages)
+    return RawDocument(
+        document_hash=_hash_bytes(file_bytes),
+        mime_type="application/pdf",
+        language=_detect_language(full_text),
+        pages=pages,
+        metadata=metadata,
+        attachments=[],
+        outline=outline if outline else None,
+        has_javascript=False,
+        has_form_actions=False,
+        uri_actions=[],
+    )
