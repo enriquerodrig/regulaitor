@@ -24,6 +24,7 @@ dependencies = [
     "nanoid>=2.0,<3.0",
     "markdown-it-py>=3.0,<4.0",
     "pypdfium2>=4.30,<5.0",
+    "pikepdf>=9.0,<10.0",
 ]
 
 [project.optional-dependencies]
@@ -112,6 +113,14 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "pypdfium2"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pikepdf"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pikepdf.*"
 ignore_missing_imports = true
 
 [tool.coverage.run]

@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import io
 
+import pikepdf
 import pytest
 from reportlab.lib.pagesizes import LETTER
 from reportlab.pdfgen import canvas
@@ -135,3 +136,61 @@ def test_pdf_likely_scanned_when_no_text():
     c.save()
     raw = extractor.extract(buf.getvalue(), mime_type="application/pdf")
     assert raw.pages[0].likely_scanned is True
+
+
+# ---------- PDF deep-scan via pikepdf ----------
+
+
+def _pdf_with_javascript() -> bytes:
+    """Construct a minimal PDF that declares document-level JavaScript."""
+    pdf = pikepdf.Pdf.new()
+    pdf.add_blank_page()
+    js_action = pikepdf.Dictionary(
+        S=pikepdf.Name.JavaScript,
+        JS=pikepdf.String("app.alert('hi')"),
+    )
+    names_tree = pikepdf.Dictionary(
+        Names=pikepdf.Array([pikepdf.String("attack"), js_action]),
+    )
+    pdf.Root[pikepdf.Name.Names] = pikepdf.Dictionary(JavaScript=names_tree)
+    buf = io.BytesIO()
+    pdf.save(buf)
+    return buf.getvalue()
+
+
+def _pdf_with_external_uri(domain: str = "attacker.example") -> bytes:
+    pdf = pikepdf.Pdf.new()
+    page = pdf.add_blank_page()
+    link_action = pikepdf.Dictionary(
+        Type=pikepdf.Name.Annot,
+        Subtype=pikepdf.Name.Link,
+        Rect=pikepdf.Array([0, 0, 100, 100]),
+        A=pikepdf.Dictionary(
+            S=pikepdf.Name.URI,
+            URI=pikepdf.String(f"https://{domain}/payload"),
+        ),
+    )
+    page.Annots = pikepdf.Array([link_action])
+    buf = io.BytesIO()
+    pdf.save(buf)
+    return buf.getvalue()
+
+
+def test_pdf_deep_scan_detects_javascript():
+    pdf_bytes = _pdf_with_javascript()
+    raw = extractor.extract(pdf_bytes, mime_type="application/pdf")
+    assert raw.has_javascript is True
+
+
+def test_pdf_deep_scan_detects_external_uri():
+    pdf_bytes = _pdf_with_external_uri()
+    raw = extractor.extract(pdf_bytes, mime_type="application/pdf")
+    assert any("attacker.example" in u for u in raw.uri_actions)
+
+
+def test_pdf_deep_scan_clean_pdf_has_no_flags():
+    pdf = _make_pdf(["Plain content of a normal document."])
+    raw = extractor.extract(pdf, mime_type="application/pdf")
+    assert raw.has_javascript is False
+    assert raw.has_form_actions is False
+    assert raw.uri_actions == []

@@ -9,13 +9,16 @@ See spec docs/superpowers/specs/2026-05-06-h5-document-pipeline-design.md §4.2.
 from __future__ import annotations
 
 import hashlib
+import io
 import re
 from typing import Any
 
+import pikepdf
 import pypdfium2 as pdfium
 from markdown_it import MarkdownIt
 
 from regulaitor.citation.schemas import (
+    Attachment,
     OutlineEntry,
     Page,
     RawDocument,
@@ -153,6 +156,116 @@ def _read_pdf_outline(pdf: Any) -> list[OutlineEntry]:
     return out
 
 
+def _deep_scan_pdf_bytes(
+    file_bytes: bytes,
+) -> tuple[bool, bool, list[str], list[Attachment]]:
+    """Walk the PDF catalog with pikepdf for JS / forms / URIs / attachments.
+
+    pypdfium2's high-level API does not enumerate these structures from
+    Python; pikepdf owns a full QPDF binding and can. We accept the small
+    dependency overhead in exchange for accurate critical-block detection.
+
+    Returns (has_js, has_form_actions, uri_actions, attachments).
+
+    Defensive contract: never raises. If pikepdf cannot open or traverse,
+    returns conservative defaults (False/empty). The sanitizer + Auditor
+    downstream provide deeper safety nets.
+    """
+    has_js = False
+    has_form = False
+    uri_actions: list[str] = []
+    attachments: list[Attachment] = []
+
+    try:
+        with pikepdf.open(io.BytesIO(file_bytes)) as pdf:
+            root = pdf.Root
+
+            # JavaScript via /Names /JavaScript tree
+            try:
+                names = root.get(pikepdf.Name.Names)
+                if names is not None and pikepdf.Name.JavaScript in names:
+                    has_js = True
+            except Exception:
+                pass
+
+            # Form actions: /AcroForm with /Fields and an action dictionary
+            try:
+                acro = root.get(pikepdf.Name.AcroForm)
+                if acro is not None and pikepdf.Name.Fields in acro:
+                    has_form = bool(acro[pikepdf.Name.Fields])
+            except Exception:
+                pass
+
+            # URI actions in page annotations
+            try:
+                for page in pdf.pages:
+                    annots = page.get(pikepdf.Name.Annots)
+                    if annots is None:
+                        continue
+                    for annot in annots:  # type: ignore[attr-defined]
+                        try:
+                            action = annot.get(pikepdf.Name.A)
+                            if action is None:
+                                continue
+                            if action.get(pikepdf.Name.S) == pikepdf.Name.URI:
+                                uri = action.get(pikepdf.Name.URI)
+                                if uri is not None:
+                                    uri_actions.append(str(uri))
+                        except Exception:
+                            continue
+            except Exception:
+                pass
+
+            # Attachments via /Names /EmbeddedFiles
+            try:
+                names = root.get(pikepdf.Name.Names)
+                if names is not None and pikepdf.Name.EmbeddedFiles in names:
+                    embedded = names[pikepdf.Name.EmbeddedFiles]
+                    name_array = embedded.get(pikepdf.Name.Names)
+                    if name_array is not None:
+                        for i in range(0, len(name_array), 2):
+                            try:
+                                spec = name_array[i + 1]
+                                ef = spec.get(pikepdf.Name.EF)
+                                if ef is None:
+                                    continue
+                                stream = ef.get(pikepdf.Name.F)
+                                if stream is None:
+                                    continue
+                                data = (
+                                    bytes(stream.read_bytes())
+                                    if hasattr(stream, "read_bytes")
+                                    else b""
+                                )
+                                attachments.append(
+                                    Attachment(
+                                        name=str(
+                                            spec.get(pikepdf.Name.UF)
+                                            or spec.get(pikepdf.Name.F)
+                                            or "unknown"
+                                        ),
+                                        mime=str(
+                                            stream.get(pikepdf.Name.Subtype)
+                                            or "application/octet-stream"
+                                        ),
+                                        size_bytes=len(data),
+                                        hash="sha256:" + hashlib.sha256(data).hexdigest(),
+                                    )
+                                )
+                            except Exception:
+                                continue
+            except Exception:
+                pass
+    except (pikepdf.PdfError, pikepdf.PasswordError):
+        pass
+    except Exception:
+        # Last-resort defensive catch: any other pikepdf surface change should
+        # degrade to conservative defaults rather than abort extraction.
+        pass
+
+    return has_js, has_form, uri_actions, attachments
+
+
 def _extract_pdf(file_bytes: bytes) -> RawDocument:
     _validate_pdf_magic(file_bytes)
     try:
@@ -163,6 +276,7 @@ def _extract_pdf(file_bytes: bytes) -> RawDocument:
     metadata = _read_pdf_metadata(pdf)
     pages = _read_pdf_pages(pdf)
     outline = _read_pdf_outline(pdf)
+    has_js, has_form, uri_actions, attachments = _deep_scan_pdf_bytes(file_bytes)
 
     full_text = "\n".join(p.text for p in pages)
     return RawDocument(
@@ -171,9 +285,9 @@ def _extract_pdf(file_bytes: bytes) -> RawDocument:
         language=_detect_language(full_text),
         pages=pages,
         metadata=metadata,
-        attachments=[],
+        attachments=attachments,
         outline=outline if outline else None,
-        has_javascript=False,
-        has_form_actions=False,
-        uri_actions=[],
+        has_javascript=has_js,
+        has_form_actions=has_form,
+        uri_actions=uri_actions,
     )
