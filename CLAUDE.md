@@ -758,7 +758,7 @@ Primero:
 - **H3** — MCP server propio (5 tools) + Retriever-Agent + citation_validator inicial cerrado (2026-05-05). Tag `v0.0.4-h3`. ADR 0005. Ver `docs/technical_decisions_log.md` §H3.
 - **H4** — Analyst-Agent + Auditor-Agent + flujo chat E2E (LangGraph) cerrado (2026-05-05). Tag `v0.0.5-h4`. ADR 0006. Ver `docs/technical_decisions_log.md` §H4.
 - **H5** — Pipeline documental cerrado (2026-05-07). Tag `v0.0.6-h5` publicado. Squash commit `415d269` en main. ADR 0007. Sanitizer + segmenter + document_graph operativos. Skill `document-analysis` activa. Ver `docs/technical_decisions_log.md` §H5.
-- **H6** — Streamlit MVP cerrado (2026-05-07). Tag `v0.0.7-h6` (pendiente de publicar tras merge). ADR 0008. Dos pestañas (Pregunta / Analiza documento) envolviendo `run()` y `run_document()` sin tocar el backend H1-H5. Aviso jurídico persistente. Skill `ui-ux-pro-max` referenciada en memoria pero NO activada (alcance pelado). Ver `docs/technical_decisions_log.md` §H6.
+- **H6** — Streamlit MVP cerrado (2026-05-07). Tag `v0.0.7-h6` publicado. Squash commit `e53f295` en main. ADR 0008. Dos pestañas (Pregunta / Analiza documento) envolviendo `run()` y `run_document()` sin tocar el backend H1-H5. Aviso jurídico persistente. Skill `ui-ux-pro-max` referenciada en memoria pero NO activada (alcance pelado). Ver `docs/technical_decisions_log.md` §H6.
 
 ### Hito siguiente
 
