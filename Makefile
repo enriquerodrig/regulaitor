@@ -13,7 +13,7 @@ help:
 	@echo "  mcp-server Run the MCP server on stdio (H3)"
 	@echo "  regenerate-fixtures  Regenerate synthesized policy PDFs (H5)"
 	@echo "  smoke-document       Run analyze CLI on the clean policy fixture (H5)"
-	@echo "  serve      Run Streamlit UI (TODO H6)"
+	@echo "  serve      Run Streamlit UI (H6)"
 	@echo "  eval       Run evaluation harness (TODO H8)"
 	@echo "  redteam    Run red team suite (TODO H9)"
 	@echo "  docker     Build docker image (TODO H16)"
@@ -48,8 +48,8 @@ rag-build: ## chunk + embed + rerank-warmup + upsert LanceDB + extend manifest
 mcp-server: ## Run the MCP server on stdio (H3)
 	$(UV) run python -m regulaitor.mcp_server
 
-serve:
-	@echo "TODO: implementar en H6"
+serve: ## Run the Streamlit MVP UI (H6)
+	$(UV) run streamlit run src/regulaitor/ui_streamlit/app.py
 
 eval:
 	@echo "TODO: implementar en H8"
