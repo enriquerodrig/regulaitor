@@ -9,16 +9,19 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import ValidationError
 
 from regulaitor.citation.schemas import Answer, Context
 from regulaitor.models import router
 
-PROMPTS_DIR = Path(__file__).parent / "prompts" / "analyst"
+# H5: prompts now live in subdirectories per role.
+PROMPTS_ROOT = Path(__file__).parent / "prompts"
+PROMPTS_DIR = PROMPTS_ROOT / "analyst"  # backcompat alias for tests + H4 callers
 
 _PROMPT_VERSION_PATTERN = re.compile(r"^v\d+\.\d+$")
+_PROMPT_ROLE_PATTERN = re.compile(r"^(analyst|document_analyst)$")
 
 
 def _strip_unsupported_schema_fields(schema: dict[str, Any]) -> dict[str, Any]:
@@ -48,18 +51,29 @@ def _render_user_message(query: str, context: Context) -> str:
 class AnalystAgent:
     """Stateless Analyst: load versioned prompt, call router, parse Answer."""
 
-    def __init__(self, prompt_version: str = "v1.0") -> None:
+    def __init__(
+        self,
+        prompt_role: Literal["analyst", "document_analyst"] = "analyst",
+        prompt_version: str = "v1.0",
+    ) -> None:
+        if not _PROMPT_ROLE_PATTERN.match(prompt_role):
+            raise ValueError(
+                f"prompt_role must match {_PROMPT_ROLE_PATTERN.pattern}; " f"got {prompt_role!r}"
+            )
         if not _PROMPT_VERSION_PATTERN.match(prompt_version):
             raise ValueError(
                 f"prompt_version must match {_PROMPT_VERSION_PATTERN.pattern}; "
                 f"got {prompt_version!r}"
             )
+        self.prompt_role = prompt_role
         self.prompt_version = prompt_version
-        prompt_path = PROMPTS_DIR / f"system.{prompt_version}.md"
-        # Defense in depth: even after regex check, ensure resolved path stays in PROMPTS_DIR
+        prompt_path = PROMPTS_ROOT / prompt_role / f"system.{prompt_version}.md"
+        # Defense in depth.
         resolved = prompt_path.resolve()
-        if not resolved.is_relative_to(PROMPTS_DIR.resolve()):
-            raise ValueError(f"prompt_version {prompt_version!r} resolves outside prompts dir")
+        if not resolved.is_relative_to(PROMPTS_ROOT.resolve()):
+            raise ValueError(
+                f"prompt_role/version {prompt_role}/{prompt_version} resolves outside prompts dir"
+            )
         self._system_prompt = prompt_path.read_text(encoding="utf-8")
 
     def analyze(self, query: str, context: Context) -> Answer:

@@ -124,3 +124,167 @@ class AuditedAnswer(BaseModel):
     verdict: AuditVerdict
     audit_results: list[AuditResult]
     reason: str | None
+
+
+# ---------------------------------------------------------------------------
+# H5 — Document pipeline schemas
+# ---------------------------------------------------------------------------
+
+
+class FontInfo(BaseModel):
+    """Font metadata captured per text run for invisible-text heuristics."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    name: str
+    size_pt: float
+    color_hex: str
+    is_visible_estimated: bool
+
+
+class Page(BaseModel):
+    """One page of an extracted document; pre-sanitization."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    number: int
+    text: str
+    fonts: list[FontInfo]
+    annotations: list[str]
+    hidden_text_candidates: list[str]
+    likely_scanned: bool
+
+
+class Attachment(BaseModel):
+    """Embedded file declared inside the document."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    name: str
+    mime: str
+    size_bytes: int
+    hash: str
+
+
+class OutlineEntry(BaseModel):
+    """One bookmark / outline entry, used by the segmenter."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    title: str
+    level: int
+    page_number: int
+
+
+class RawDocument(BaseModel):
+    """Output of extractor.extract; pre-sanitization."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    document_hash: str
+    mime_type: Literal["application/pdf", "text/markdown"]
+    language: Language
+    pages: list[Page]
+    metadata: dict[str, str]
+    attachments: list[Attachment]
+    outline: list[OutlineEntry] | None
+    has_javascript: bool
+    has_form_actions: bool
+    uri_actions: list[str]
+
+
+class SanitizerEvent(BaseModel):
+    """One audit-trail entry recording a sanitizer decision."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    severity: Literal["info", "warning", "critical"]
+    category: Literal[
+        "metadata_stripped",
+        "annotation_stripped",
+        "invisible_text_stripped",
+        "javascript_blocked",
+        "attachment_blocked",
+        "form_action_blocked",
+        "uri_action_blocked",
+        "hidden_layer_stripped",
+        "unicode_trick_stripped",
+        "encrypted_with_password",
+        "outline_extracted",
+        "large_document_warning",
+    ]
+    location: str
+    content_hash: str  # sha256[:12]; never plain text (CLAUDE.md §18.8)
+    reason: str
+
+
+class SanitizedDocument(BaseModel):
+    """Output of sanitizer.sanitize; safe to pass to segmenter."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    document_hash: str
+    language: Language
+    clean_text: str = Field(min_length=50)
+    outline: list[OutlineEntry] | None
+    sanitizer_log: list[SanitizerEvent]
+
+
+class Segment(BaseModel):
+    """One unit of analysis produced by segmenter.segment."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    id: int = Field(ge=1)
+    title: str | None
+    text: str = Field(min_length=1)
+    token_count: int = Field(ge=1)
+    is_continuation: bool
+
+
+class SegmentResult(BaseModel):
+    """Per-segment outcome wrapping AuditedAnswer or skip reason."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    segment: Segment
+    skipped: bool
+    skip_reason: str | None
+    audited_answer: AuditedAnswer | None
+    latency_ms: int = Field(ge=0)
+    cost_eur: float = Field(ge=0)
+
+
+class DocumentReport(BaseModel):
+    """End-to-end output of orchestration.document_graph.run_document."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    case_id: str
+    document_hash: str
+    language: Language
+    corpus: list[str]
+    sanitizer_log: list[SanitizerEvent]
+    segments: list[SegmentResult]
+    document_verdict: AuditVerdict
+    document_reason: str | None
+    n_segments_total: int = Field(ge=0)
+    n_segments_blocked_by_injection: int = Field(ge=0)
+    n_segments_pass: int = Field(ge=0)
+    n_segments_block: int = Field(ge=0)
+    n_segments_review: int = Field(ge=0)
+    latency_ms_total: int = Field(ge=0)
+    cost_eur_total: float = Field(ge=0)
+
+
+class DocumentBlockedError(Exception):
+    """Raised by sanitizer when a critical-block category is hit.
+
+    Carries the partial sanitizer_log so the caller can build a
+    DocumentReport with verdict=REQUIRES_HUMAN_REVIEW and segments=[].
+    """
+
+    def __init__(self, reason: str, sanitizer_log: list[SanitizerEvent]) -> None:
+        super().__init__(reason)
+        self.reason = reason
+        self.sanitizer_log = sanitizer_log

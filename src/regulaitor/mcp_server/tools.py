@@ -14,10 +14,15 @@ from regulaitor.citation.schemas import (
     AuditResult,
     Citation,
     FetchedArticle,
+    RawDocument,
     RetrievedChunk,
+    SanitizedDocument,
+    Segment,
 )
 from regulaitor.corpus import loader
 from regulaitor.corpus.schemas import Language, Norma
+from regulaitor.document import extractor as _extractor
+from regulaitor.document import segmenter as _segmenter
 from regulaitor.mcp_server.errors import NotFoundError
 from regulaitor.rag import retrieval as rag_retrieval
 
@@ -70,3 +75,36 @@ def fetch_article(
 def validate_citation(citation: Citation) -> AuditResult:
     """Validate a citation against the corpus. Always returns AuditResult."""
     return validator_mod.validate(citation)
+
+
+# H5 document tools (H3-deferred per ADR 0005).
+
+
+def extract_document(*, file_bytes: bytes, mime_type: str) -> RawDocument:
+    """Extract a document into a RawDocument (pre-sanitization).
+
+    Thin wrapper over document.extractor.extract. Callers should pass the
+    result through sanitizer/segmenter manually OR use the end-to-end
+    flow via the in-process document_graph (NOT exposed as a tool by
+    design — see spec §4.10).
+    """
+    return _extractor.extract(file_bytes, mime_type=mime_type)
+
+
+def segment_document(*, text: str, max_tokens: int = 1500) -> list[Segment]:
+    """Segment already-sanitized text into Segments.
+
+    Caller must have sanitized the text out-of-band; this tool does NOT
+    perform sanitization. The text is wrapped in a minimal SanitizedDocument
+    for compatibility with the segmenter signature.
+    """
+    if not text or not text.strip():
+        raise ValueError("text must be non-empty")
+    sd = SanitizedDocument(
+        document_hash="sha256:caller",
+        language="es",
+        clean_text=text if len(text) >= 50 else text + " " * (50 - len(text)),
+        outline=None,
+        sanitizer_log=[],
+    )
+    return _segmenter.segment(sd, max_tokens=max_tokens)
