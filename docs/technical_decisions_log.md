@@ -1396,8 +1396,8 @@ New SSDLC controls introduced in H5:
 - **Linters:** ruff + black + mypy all clean.
 - **Pre-commit (gitleaks + EOF + trailing):** clean.
 - **bandit / pip-audit:** clean (no high/critical findings introduced).
-- **Squash commit SHA:** (populated post-merge)
-- **Tag `v0.0.6-h5`:** (published post-merge with explicit user OK)
+- **Squash commit SHA:** `415d269` on main (PR #5 squash-merged 2026-05-07).
+- **Tag `v0.0.6-h5`:** published 2026-05-07.
 - **Enlace:** ADR 0007 (document pipeline architecture); spec `docs/superpowers/specs/2026-05-06-h5-document-pipeline-design.md`; plan `docs/superpowers/plans/2026-05-06-h5-document-pipeline.md`. Branch `feat/h5-document-pipeline`.
 
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
