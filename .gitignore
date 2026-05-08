@@ -51,6 +51,9 @@ coverage.xml
 .claude/settings.json
 .claude/settings.local.json
 
+# Superpowers brainstorming visual companion — local mockup cache
+.superpowers/
+
 # OS
 .DS_Store
 Thumbs.db

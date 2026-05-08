@@ -1400,6 +1400,54 @@ New SSDLC controls introduced in H5:
 - **Tag `v0.0.6-h5`:** published 2026-05-07.
 - **Enlace:** ADR 0007 (document pipeline architecture); spec `docs/superpowers/specs/2026-05-06-h5-document-pipeline-design.md`; plan `docs/superpowers/plans/2026-05-06-h5-document-pipeline.md`. Branch `feat/h5-document-pipeline`.
 
+## H6 — Streamlit MVP (cerrado 2026-05-07)
+
+**Tag:** `v0.0.7-h6` (pending publish post-merge). **Spec:** `docs/superpowers/specs/2026-05-07-h6-streamlit-mvp-design.md`. **Plan:** `docs/superpowers/plans/2026-05-07-h6-streamlit-mvp.md`. **ADR:** `docs/adr/0008-streamlit-ui-architecture.md`.
+
+### Decisiones tomadas en brainstorming (2026-05-07)
+
+1. **MVP pelado funcional** (Q1 A / D1 ADR 0008). Sin custom CSS, solo componentes Streamlit nativos. Polish a H17/HX2.
+2. **DocumentReport viz: badge + métricas + expander per-segmento** (Q2 A / D2 ADR 0008). 5-second read del global, drill-down opcional.
+3. **Cita inline blockquote** (Q3 A / D3 ADR 0008). Texto literal del corpus siempre visible bajo cada Finding.
+4. **Banner persistente top con st.warning** (Q4 A / D4 ADR 0008). No descartable, imposible de miss.
+5. **ANTHROPIC_API_KEY solo via env var** (Q5 A / D5 ADR 0008). Sin UI input — la key no toca el DOM. SSDLC narrower.
+6. **Single-slot session_state** (Q6 A / D6 ADR 0008). Sin historial, coherente con run() / run_document() stateless.
+
+### Amendments durante implementación
+
+- **Pre-Task-1 (`.env.example` removed)**: el archivo template fue eliminado del repo (commit `896415a`) — keys viven directamente en `.env`. El error message de `app.py` apunta a `.env` directamente (plan parcheado commit `70a85c4`).
+- **Task 1 (`>=` ASCII)**: Conventional Commit message usó `>=` ASCII en lugar de `≥` Unicode para evitar ambigüedades de encoding en metadata git. Cosmetic.
+- **Task 2 (anthropic SDK exception fixtures)**: las excepciones reales `AuthenticationError` y `BadRequestError` requieren `response` que no es `None`; pasarles `response=None` lanza `AttributeError` (no `TypeError`). Tests de fixture ampliados a `except (TypeError, AttributeError)` con fake classes `_AuthError`/`_BadReqError` (renombradas para ruff `N818`). El producción code's `type(exc).__name__` matching funciona contra los nombres reales.
+- **Task 2 (mypy metric tuple)**: lista de tuplas `[("PASS", n_segments_pass), ...]` mezclaba int + str → mypy infería `list[tuple[str, object]]`. Resuelto coercionando ints a `str(...)` y anotando `list[tuple[str, str]]`. `st.metric` acepta strings.
+- **Task 4 (Language Literal cast)**: `run_document()` requiere `Language = Literal["es", "en"]` pero `st.selectbox` retorna `str` plano. Añadido `cast(Language, language)` en el call site de `tab_analyze`. `tab_ask` no lo necesita porque `graph.run()` acepta `str` directamente — diferencia de strictness entre los dos backends.
+- **Task 4 (mypy assignment-narrowing)**: variables locales `state`/`report` se narrowed implícitamente por el return de `run()`/`run_document()`; lookup posterior `st.session_state.get(...)` falló type-check. Resuelto renombrando los lookups a `last_state`/`last_report`.
+- **Task 5 (AppTest path resolution)**: `AppTest.from_file()` resuelve paths relativos contra el directorio del test file, no CWD. Pytest CWD = repo root pero AppTest joinea sobre `tests/integration/`. Resuelto con `Path(__file__).resolve().parents[2] / "src" / ...` (absoluto).
+- **Task 5 (timeout)**: `timeout=10` insuficiente en Windows — cold-start de `tab_analyze` import pulls la H5 document pipeline (~20s primera vez). Bumped a `timeout=60` con comentario inline. Subsequent runs warm completan en ~1s.
+- **Task 5 (lazy imports flagged future)**: el cold-start de tab_analyze top-level import dilata el smoke. Optimización futura: lazy-import dentro de `main()`. No en alcance H6.
+
+### Security delta
+
+- ANTHROPIC_API_KEY nunca renderizada en UI (env var only); cero riesgo de exposure incidental vía DOM o screenshot. Defensa SSDLC alineada con `feedback_ssdlc.md`.
+- Anti-injection `pattern_name` (chat) y `skip_reason` (segmento documental) **nunca** aparecen en texto user-visible — defensa contra iteración de evasiones por parte de un atacante. El usuario ve el efecto (consulta bloqueada / segmento saltado); el log captura el detalle. Tests unitarios en `test_ui_render_helpers.py` verifican explícitamente la ausencia de `"ignore-previous"` y `"document_self_validating"` en el output.
+- Stack traces filtrados en `_render.error_message`: solo copy en español user-friendly llega al UI; el traceback completo va a stderr. Tests verifican que el nombre de la clase Exception (`"RuntimeError"`) y el raw message (`"boom"`) NO aparecen en el output.
+- `st.stop()` tras error de API key faltante: corta el resto del render; los tabs no se exponen sin la key (defensa en profundidad — el guard ocurre antes del import indirecto via `st.tabs(...)`).
+- Sin auth multi-tenant: H6 es single-operator local. No abre superficie de sesiones.
+- Streamlit 1.57.0 + transitive deps verificadas en `pip-audit`: clean al cierre.
+
+### Métricas de cierre
+
+- **Tests fast:** 418 passing (391 H5 baseline + ~24 unit nuevos H6 + 3 smoke H6 en `tests/integration/test_streamlit_smoke.py`).
+- **Tests AppTest smoke:** 3 (disclaimer always, API-key guard blocks, both tabs render when key set).
+- **Coverage global:** ≥90% mantenido.
+- **Coverage `ui_streamlit/_render.py`:** ≥85% (objetivo cumplido per spec §9.4).
+- **Coverage `ui_streamlit/tab_ask.py` + `tab_analyze.py`:** ≥60% (Streamlit framework limitations on testability — relaxed gate justificado en ADR 0008 D7).
+- **Coverage `ui_streamlit/app.py`:** ≥80%.
+- **Linters:** ruff + black + mypy clean en `ui_streamlit/`.
+- **Pre-commit (gitleaks + EOF + trailing):** clean en todos los commits H6.
+- **Manual smoke:** pendiente del usuario en máquina con `make serve` + ANTHROPIC_API_KEY válida (la cuenta Anthropic está sin créditos al cierre H5; carga prevista pre-H8). El gate H6 se puede aprobar en base a smoke automático + visual review del implementer; el run manual end-to-end con LLM real cierra cuando los créditos estén disponibles.
+- **Squash commit SHA:** (populated post-merge)
+- **Tag `v0.0.7-h6`:** (published post-merge with explicit user OK)
+
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
 1. Añadir entrada al hito correspondiente.

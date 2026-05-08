@@ -43,6 +43,18 @@ python -m scripts.analyze \
 
 Output is a JSON `DocumentReport` with per-segment audit verdicts and a global verdict (PASS / BLOCK / REQUIRES_HUMAN_REVIEW). Exit code 0 on PASS, 1 on BLOCK or REQUIRES_HUMAN_REVIEW, 2 on extraction error, 3 on configuration error. **No respuesta sin cita validada — incluso para documentos.**
 
+### UI Streamlit (H6)
+
+Lanza el MVP de dos pestañas (Pregunta / Analiza documento):
+
+```bash
+make serve
+```
+
+Streamlit imprime una URL local (típicamente `http://localhost:8501`). El banner amarillo de aviso jurídico es persistente; si `ANTHROPIC_API_KEY` no está en `.env`, la app muestra un error rojo y no expone los tabs. Usa el flujo Pregunta para queries de chat o el flujo Analiza documento para subir un PDF/Markdown corporativo y ver el `DocumentReport` con verdict por segmento + sanitizer log + audit trail por cita.
+
+**No respuesta sin cita validada — incluso en la UI**.
+
 ## Stack (current + planned)
 
 Python 3.11 · `uv` · Pydantic v2 · **LanceDB · BGE-M3 · bge-reranker-v2-m3** (active) · FastAPI · LangGraph · Streamlit (MVP) · Next.js (advanced) · Docker · GitHub Actions · LangFuse · Ragas + DeepEval (planned).
