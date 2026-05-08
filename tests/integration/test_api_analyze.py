@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import io
-
 import pytest
 
 from regulaitor.citation.schemas import (
@@ -39,14 +37,32 @@ _MINIMAL_PDF_BYTES = (
 )
 
 
+def _multipart(file_name: str, file_bytes: bytes, corpus: str, language: str) -> list:
+    """Build multipart fields list compatible with httpx 0.28+.
+
+    httpx 0.28 deprecated passing io.BytesIO objects in the files tuple and no
+    longer merges ``data=`` with ``files=`` into a single multipart body.
+    Sending all fields as entries in the ``files`` list (using ``(None, value)``
+    for plain text parts) is the supported approach across all versions.
+    """
+    mime = "application/pdf" if file_name.endswith(".pdf") else "text/plain"
+    return [
+        ("file", (file_name, file_bytes, mime)),
+        ("corpus", (None, corpus)),
+        ("language", (None, language)),
+    ]
+
+
 def test_analyze_happy_path(client, auth_headers, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(
         "regulaitor.api.routes_analyze.run_document",
         lambda **_kw: _ok_report(),
     )
-    files = {"file": ("policy.pdf", io.BytesIO(_MINIMAL_PDF_BYTES), "application/pdf")}
-    data = [("corpus", "ai_act"), ("language", "es")]
-    response = client.post("/analyze", headers=auth_headers, files=files, data=data)
+    response = client.post(
+        "/analyze",
+        headers=auth_headers,
+        files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "ai_act", "es"),
+    )
     assert response.status_code == 200
     body = response.json()
     assert body["document_verdict"] == "pass"
@@ -54,8 +70,10 @@ def test_analyze_happy_path(client, auth_headers, monkeypatch: pytest.MonkeyPatc
 
 
 def test_analyze_no_auth_returns_401(client) -> None:
-    files = {"file": ("policy.pdf", io.BytesIO(_MINIMAL_PDF_BYTES), "application/pdf")}
-    response = client.post("/analyze", files=files, data=[("corpus", "ai_act"), ("language", "es")])
+    response = client.post(
+        "/analyze",
+        files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "ai_act", "es"),
+    )
     assert response.status_code == 401
 
 
@@ -64,56 +82,51 @@ def test_analyze_oversize_returns_413(
 ) -> None:
     monkeypatch.setenv("REGULAITOR_MAX_UPLOAD_BYTES", "100")
     big = b"%PDF-1.4\n" + (b"x" * 200)
-    files = {"file": ("big.pdf", io.BytesIO(big), "application/pdf")}
     response = client.post(
         "/analyze",
         headers=auth_headers,
-        files=files,
-        data=[("corpus", "ai_act"), ("language", "es")],
+        files=_multipart("big.pdf", big, "ai_act", "es"),
     )
     assert response.status_code == 413
 
 
 def test_analyze_empty_returns_415(client, auth_headers) -> None:
-    files = {"file": ("empty.pdf", io.BytesIO(b""), "application/pdf")}
     response = client.post(
         "/analyze",
         headers=auth_headers,
-        files=files,
-        data=[("corpus", "ai_act"), ("language", "es")],
+        files=_multipart("empty.pdf", b"", "ai_act", "es"),
     )
     assert response.status_code == 415
 
 
 def test_analyze_unsupported_mime_returns_415(client, auth_headers) -> None:
-    files = {"file": ("bad.txt", io.BytesIO(b"plain text"), "text/plain")}
+    # Pass a non-PDF, non-Markdown filename so _detect_mime raises UnsupportedMediaType
     response = client.post(
         "/analyze",
         headers=auth_headers,
-        files=files,
-        data=[("corpus", "ai_act"), ("language", "es")],
+        files=[
+            ("file", ("bad.txt", b"plain text", "text/plain")),
+            ("corpus", (None, "ai_act")),
+            ("language", (None, "es")),
+        ],
     )
     assert response.status_code == 415
 
 
 def test_analyze_invalid_language_returns_415(client, auth_headers) -> None:
-    files = {"file": ("policy.pdf", io.BytesIO(_MINIMAL_PDF_BYTES), "application/pdf")}
     response = client.post(
         "/analyze",
         headers=auth_headers,
-        files=files,
-        data=[("corpus", "ai_act"), ("language", "fr")],
+        files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "ai_act", "fr"),
     )
     assert response.status_code == 415
 
 
 def test_analyze_invalid_corpus_returns_415(client, auth_headers) -> None:
-    files = {"file": ("policy.pdf", io.BytesIO(_MINIMAL_PDF_BYTES), "application/pdf")}
     response = client.post(
         "/analyze",
         headers=auth_headers,
-        files=files,
-        data=[("corpus", "nis2"), ("language", "es")],
+        files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "nis2", "es"),
     )
     assert response.status_code == 415
 
@@ -125,12 +138,10 @@ def test_analyze_document_blocked_returns_422(
         raise DocumentBlockedError(reason="javascript detected", sanitizer_log=[])
 
     monkeypatch.setattr("regulaitor.api.routes_analyze.run_document", _raise)
-    files = {"file": ("policy.pdf", io.BytesIO(_MINIMAL_PDF_BYTES), "application/pdf")}
     response = client.post(
         "/analyze",
         headers=auth_headers,
-        files=files,
-        data=[("corpus", "ai_act"), ("language", "es")],
+        files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "ai_act", "es"),
     )
     assert response.status_code == 422
     body = response.json()
