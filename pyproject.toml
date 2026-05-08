@@ -22,6 +22,9 @@ dependencies = [
     "langgraph>=1.0.10,<2.0",
     "langgraph-checkpoint>=4.0.0,<5.0",
     "nanoid>=2.0,<3.0",
+    "markdown-it-py>=3.0,<4.0",
+    "pypdfium2>=4.30,<5.0",
+    "pikepdf>=9.0,<10.0",
 ]
 
 [project.optional-dependencies]
@@ -35,6 +38,7 @@ dev = [
     "bandit>=1.7,<2.0",
     "pip-audit>=2.7,<3.0",
     "pre-commit>=3.8,<5.0",
+    "reportlab>=4.0,<5.0",
 ]
 
 [build-system]
@@ -107,8 +111,34 @@ ignore_missing_imports = true
 module = "nanoid"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "pypdfium2"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pikepdf"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pikepdf.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "reportlab.*"
+ignore_missing_imports = true
+
 [tool.coverage.run]
-source = ["src/regulaitor"]
+source = [
+    "src/regulaitor/corpus",
+    "src/regulaitor/rag",
+    "src/regulaitor/citation",
+    "src/regulaitor/agents",
+    "src/regulaitor/mcp_server",
+    "src/regulaitor/models",
+    "src/regulaitor/orchestration",
+    "src/regulaitor/security",
+    "src/regulaitor/document",
+]
 branch = true
 
 [tool.coverage.report]
@@ -126,11 +156,12 @@ exclude_also = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-addopts = "-ra -q --strict-markers --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov-report=term-missing --cov-fail-under=90"
+addopts = "-ra -q --strict-markers --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov-report=term-missing --cov-fail-under=90"
 markers = [
     "integration: integration tests using stub HTTP server",
     "contract: contract tests using hypothesis",
     "slow: tests that load real ML models (only in cached CI)",
+    "document_slow: H5 document E2E tests — load BGE-M3, real corpus, real Anthropic API",
 ]
 
 [tool.bandit]

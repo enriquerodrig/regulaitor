@@ -55,10 +55,15 @@ def run() -> None:  # pragma: no cover - exercised by integration test (Task 11)
 
     mcp_server: FastMCP = FastMCP("regulaitor")
 
-    # Register the 3 tools. FastMCP auto-derives JSON Schemas from the function
+    # Register the tools. FastMCP auto-derives JSON Schemas from the function
     # signatures + Pydantic types.
     mcp_server.add_tool(tools.search_articles)
     mcp_server.add_tool(tools.fetch_article)
     mcp_server.add_tool(tools.validate_citation)
+    # H5 document tools (H3-deferred per ADR 0005). End-to-end flow is
+    # intentionally NOT exposed — only run_document() can chain extract +
+    # sanitize + segment + loop.
+    mcp_server.add_tool(tools.extract_document)
+    mcp_server.add_tool(tools.segment_document)
 
     asyncio.run(mcp_server.run_stdio_async())

@@ -755,7 +755,10 @@ Primero:
 - **H0.1** — Bootstrap reproducible cerrado (2026-04-30). Tag `v0.0.1-h0.1`. Ver `docs/technical_decisions_log.md` §H0.1.
 - **H1** — Corpus AI Act + RGPD ingestado (2026-05-04). Tag `v0.0.2-h1`. Pivote a PDF documentado en ADR 0003. Ver `docs/technical_decisions_log.md` §H1.
 - **H2** — RAG base operativo: chunker + BGE-M3 + reranker + LanceDB (2026-05-05). Tag `v0.0.3-h2`. ADR 0004. 1011 chunks indexados. Ver `docs/technical_decisions_log.md` §H2.
+- **H3** — MCP server propio (5 tools) + Retriever-Agent + citation_validator inicial cerrado (2026-05-05). Tag `v0.0.4-h3`. ADR 0005. Ver `docs/technical_decisions_log.md` §H3.
+- **H4** — Analyst-Agent + Auditor-Agent + flujo chat E2E (LangGraph) cerrado (2026-05-05). Tag `v0.0.5-h4`. ADR 0006. Ver `docs/technical_decisions_log.md` §H4.
+- **H5** — Pipeline documental cerrado (2026-05-07). Tag `v0.0.6-h5` (pendiente de publicar tras merge). ADR 0007. Sanitizer + segmenter + document_graph operativos. Skill `document-analysis` activa. Ver `docs/technical_decisions_log.md` §H5.
 
 ### Hito siguiente
 
-- **H3** — MCP server propio (5 tools) + Retriever-Agent + schemas Pydantic (`Citation`, `Finding`, `Answer`, `AuditResult`) + citation_validator inicial. Pendiente: brainstorming abierto sobre tolerancia de match normalizado, transporte del MCP server (stdio vs streamable HTTP), invocación Retriever desde el MCP.
+- **H6** — Streamlit MVP (dos pestañas: Pregunta / Analiza documento). Pendiente: brainstorming sobre componentes UI, manejo de upload, presentación del DocumentReport, aviso "no sustituye asesoría jurídica".

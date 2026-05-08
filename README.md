@@ -30,6 +30,19 @@ make rag-build    # chunk + embed + populate LanceDB (downloads ~3 GB on first r
 
 The first `make rag-build` downloads BGE-M3 (~2.3 GB) and bge-reranker-v2-m3 (~600 MB) from HuggingFace Hub into `~/.cache/huggingface/`. Re-runs are idempotent (`chunks_added=0` when nothing changed).
 
+### Document analysis mode (H5)
+
+Analyze a corporate policy PDF or Markdown against the EU regulatory corpus:
+
+```bash
+python -m scripts.analyze \
+    --file path/to/policy.pdf \
+    --lang es \
+    --corpus ai_act,gdpr
+```
+
+Output is a JSON `DocumentReport` with per-segment audit verdicts and a global verdict (PASS / BLOCK / REQUIRES_HUMAN_REVIEW). Exit code 0 on PASS, 1 on BLOCK or REQUIRES_HUMAN_REVIEW, 2 on extraction error, 3 on configuration error. **No respuesta sin cita validada — incluso para documentos.**
+
 ## Stack (current + planned)
 
 Python 3.11 · `uv` · Pydantic v2 · **LanceDB · BGE-M3 · bge-reranker-v2-m3** (active) · FastAPI · LangGraph · Streamlit (MVP) · Next.js (advanced) · Docker · GitHub Actions · LangFuse · Ragas + DeepEval (planned).
