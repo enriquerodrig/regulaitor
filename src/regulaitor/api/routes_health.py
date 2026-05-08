@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from typing import Literal
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
@@ -44,7 +45,9 @@ def _check_api_token() -> HealthCheck:
 @router.get("/health", response_model=HealthResponse)
 async def health() -> HealthResponse | JSONResponse:
     checks = [_check_lancedb(), _check_anthropic_key(), _check_api_token()]
-    overall = "ok" if all(c.status in ("ok", "present") for c in checks) else "degraded"
+    overall: Literal["ok", "degraded"] = (
+        "ok" if all(c.status in ("ok", "present") for c in checks) else "degraded"
+    )
     response = HealthResponse(status=overall, version=_VERSION, checks=checks)
     if overall != "ok":
         return JSONResponse(status_code=503, content=response.model_dump())

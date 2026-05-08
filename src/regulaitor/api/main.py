@@ -49,13 +49,13 @@ async def _validation_handler(request: Request, exc: RequestValidationError) -> 
     return JSONResponse(status_code=422, content=body.model_dump())
 
 
-app.add_exception_handler(RequestValidationError, _validation_handler)
-app.add_exception_handler(RateLimitExceeded, errors.rate_limit_handler)
-app.add_exception_handler(errors.InjectionDetected, errors.injection_handler)
-app.add_exception_handler(errors.FileSizeExceeded, errors.file_size_handler)
-app.add_exception_handler(errors.UnsupportedMediaType, errors.unsupported_media_handler)
-app.add_exception_handler(errors.BackendError, errors.backend_error_handler)
-app.add_exception_handler(DocumentBlockedError, errors.document_blocked_handler)
+app.add_exception_handler(RequestValidationError, _validation_handler)  # type: ignore[arg-type]
+app.add_exception_handler(RateLimitExceeded, errors.rate_limit_handler)  # type: ignore[arg-type]
+app.add_exception_handler(errors.InjectionDetected, errors.injection_handler)  # type: ignore[arg-type]
+app.add_exception_handler(errors.FileSizeExceeded, errors.file_size_handler)  # type: ignore[arg-type]
+app.add_exception_handler(errors.UnsupportedMediaType, errors.unsupported_media_handler)  # type: ignore[arg-type]
+app.add_exception_handler(errors.BackendError, errors.backend_error_handler)  # type: ignore[arg-type]
+app.add_exception_handler(DocumentBlockedError, errors.document_blocked_handler)  # type: ignore[arg-type]
 errors.register_anthropic_handlers(app)
 app.add_exception_handler(Exception, errors.generic_handler)
 

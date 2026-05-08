@@ -238,7 +238,7 @@ def _segment_result_to_dto(seg_result: SegmentResult) -> SegmentResultDTO:
     if audited is not None:
         answer_dto = _to_answer_dto(audited.answer)
         audit_dtos = [_to_audit_result_dto(r) for r in audited.audit_results]
-        verdict = audited.verdict.value  # type: ignore[assignment]
+        verdict = audited.verdict.value
     return SegmentResultDTO(
         segment_id=seg_result.segment.id,
         title=seg_result.segment.title,
@@ -263,7 +263,7 @@ def to_ask_response(state: ChatState, response_time_ms: int) -> AskResponse:
         raise ValueError("to_ask_response requires state.audited_answer to be set")
     return AskResponse(
         case_id=state.case_id,
-        verdict=audited.verdict.value,  # type: ignore[arg-type]
+        verdict=audited.verdict.value,
         answer=_to_answer_dto(audited.answer),
         audit_results=[_to_audit_result_dto(r) for r in audited.audit_results],
         reason=audited.reason,
@@ -280,7 +280,7 @@ def to_analyze_response(report: DocumentReport, response_time_ms: int) -> Analyz
     """
     return AnalyzeResponse(
         case_id=report.case_id,
-        document_verdict=report.document_verdict.value,  # type: ignore[arg-type]
+        document_verdict=report.document_verdict.value,
         document_reason=report.document_reason,
         n_segments_total=report.n_segments_total,
         n_segments_pass=report.n_segments_pass,

@@ -226,5 +226,5 @@ def register_anthropic_handlers(app: FastAPI) -> None:
         )
         return _json(body, 502)
 
-    app.add_exception_handler(AuthenticationError, auth_handler)
-    app.add_exception_handler(BadRequestError, bad_request_handler)
+    app.add_exception_handler(AuthenticationError, auth_handler)  # type: ignore[arg-type]
+    app.add_exception_handler(BadRequestError, bad_request_handler)  # type: ignore[arg-type]
