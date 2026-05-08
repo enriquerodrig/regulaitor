@@ -1192,7 +1192,7 @@ def main() -> None:
     if not os.getenv("ANTHROPIC_API_KEY"):
         st.error(
             "ANTHROPIC_API_KEY no configurada. "
-            "Copia `.env.example` a `.env` y añade tu clave."
+            "Añade ANTHROPIC_API_KEY=sk-ant-... al archivo `.env` del proyecto."
         )
         st.stop()
 
