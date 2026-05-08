@@ -16,6 +16,8 @@ ALLOWED_DOMAINS_OFFICIAL_EU: Final[frozenset[str]] = frozenset(
         "boe.es",
         "digital-strategy.ec.europa.eu",
         "edpb.europa.eu",
+        # EU Open Data Portal — referenced from EUR-Lex GDPR PDFs (H5 inspection 2026-05-07).
+        "data.europa.eu",
     }
 )
 

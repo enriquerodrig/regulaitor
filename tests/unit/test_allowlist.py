@@ -16,7 +16,9 @@ def test_allowlist_contains_eur_lex():
 
 def test_allowlist_size_is_bounded_for_h5():
     # H5 minimal — H7 will expand. Pin to detect accidental drift.
-    assert len(ALLOWED_DOMAINS_OFFICIAL_EU) == 4
+    # 5 entries: the original 4 + data.europa.eu (added 2026-05-07 after
+    # real-PDF inspection found GDPR EUR-Lex PDFs link to it).
+    assert len(ALLOWED_DOMAINS_OFFICIAL_EU) == 5
 
 
 @pytest.mark.parametrize(
@@ -29,6 +31,7 @@ def test_allowlist_size_is_bounded_for_h5():
         "https://boe.es/abc",
         "https://digital-strategy.ec.europa.eu/q",
         "https://edpb.europa.eu/r",
+        "https://data.europa.eu/eli/reg/2016/679/oj",  # GDPR consolidated text
     ],
 )
 def test_allowlist_passes_official_eu(uri):
