@@ -35,6 +35,18 @@ def test_load_api_token_or_raise_too_short(monkeypatch: pytest.MonkeyPatch) -> N
         auth.load_api_token_or_raise()
 
 
+def test_load_api_token_or_raise_exactly_15_chars_rejected(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("REGULAITOR_API_TOKEN", "a" * 15)
+    with pytest.raises(RuntimeError, match="at least 16 characters"):
+        auth.load_api_token_or_raise()
+
+
+def test_load_api_token_or_raise_exactly_16_chars_accepted(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("REGULAITOR_API_TOKEN", "a" * 16)
+    auth.load_api_token_or_raise()
+    assert auth._API_TOKEN == "a" * 16
+
+
 def test_load_api_token_or_raise_loads_valid_token(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("REGULAITOR_API_TOKEN", "this_is_a_valid_token_at_least_16_chars")
     auth.load_api_token_or_raise()
@@ -89,6 +101,18 @@ async def test_verify_token_invalid(monkeypatch: pytest.MonkeyPatch) -> None:
     request = _build_request()
     with pytest.raises(HTTPException) as exc_info:
         await auth.verify_token(request, authorization="Bearer wrong_token")
+    assert exc_info.value.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_verify_token_trailing_whitespace_rejected(monkeypatch: pytest.MonkeyPatch) -> None:
+    """RFC 6750: Bearer token must be compared exactly. Trailing whitespace is invalid."""
+    token = "valid_token_at_least_16_chars__"
+    monkeypatch.setenv("REGULAITOR_API_TOKEN", token)
+    auth.load_api_token_or_raise()
+    request = _build_request()
+    with pytest.raises(HTTPException) as exc_info:
+        await auth.verify_token(request, authorization=f"Bearer {token}   ")
     assert exc_info.value.status_code == 401
 
 

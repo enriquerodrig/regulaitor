@@ -39,10 +39,11 @@ async def verify_token(
 ) -> None:
     """FastAPI Depends. Raises 401 on any auth failure; injects token_hash on success."""
     if _API_TOKEN is None:
-        raise HTTPException(status_code=500, detail="API token not loaded")
+        # Defensive: lifespan loads token; this branch should be unreachable in production.
+        raise HTTPException(status_code=500, detail="Internal server error")
     if authorization is None or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Missing or malformed Authorization header")
-    presented = authorization[len("Bearer ") :].strip()
+    presented = authorization[len("Bearer ") :]
     if not hmac.compare_digest(presented, _API_TOKEN):
         raise HTTPException(status_code=401, detail="Invalid API token")
     request.state.token_hash = _token_hash(presented)
