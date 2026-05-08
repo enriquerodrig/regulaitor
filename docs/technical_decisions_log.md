@@ -1402,7 +1402,7 @@ New SSDLC controls introduced in H5:
 
 ## H6 — Streamlit MVP (cerrado 2026-05-07)
 
-**Tag:** `v0.0.7-h6` (pending publish post-merge). **Spec:** `docs/superpowers/specs/2026-05-07-h6-streamlit-mvp-design.md`. **Plan:** `docs/superpowers/plans/2026-05-07-h6-streamlit-mvp.md`. **ADR:** `docs/adr/0008-streamlit-ui-architecture.md`.
+**Tag:** `v0.0.7-h6` published 2026-05-07. **Spec:** `docs/superpowers/specs/2026-05-07-h6-streamlit-mvp-design.md`. **Plan:** `docs/superpowers/plans/2026-05-07-h6-streamlit-mvp.md`. **ADR:** `docs/adr/0008-streamlit-ui-architecture.md`.
 
 ### Decisiones tomadas en brainstorming (2026-05-07)
 
@@ -1445,8 +1445,8 @@ New SSDLC controls introduced in H5:
 - **Linters:** ruff + black + mypy clean en `ui_streamlit/`.
 - **Pre-commit (gitleaks + EOF + trailing):** clean en todos los commits H6.
 - **Manual smoke:** pendiente del usuario en máquina con `make serve` + ANTHROPIC_API_KEY válida (la cuenta Anthropic está sin créditos al cierre H5; carga prevista pre-H8). El gate H6 se puede aprobar en base a smoke automático + visual review del implementer; el run manual end-to-end con LLM real cierra cuando los créditos estén disponibles.
-- **Squash commit SHA:** (populated post-merge)
-- **Tag `v0.0.7-h6`:** (published post-merge with explicit user OK)
+- **Squash commit SHA:** `e53f295` on main (PR #6 squash-merged 2026-05-07).
+- **Tag `v0.0.7-h6`:** published 2026-05-07.
 
 Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK`, `A`, etc. en una sesión de brainstorming, una decisión en un PR review, o una elección de stack):
 
