@@ -151,6 +151,7 @@ markers = [
     "integration: integration tests using stub HTTP server",
     "contract: contract tests using hypothesis",
     "slow: tests that load real ML models (only in cached CI)",
+    "document_slow: H5 document E2E tests — load BGE-M3, real corpus, real Anthropic API",
 ]
 
 [tool.bandit]
