@@ -25,6 +25,7 @@ dependencies = [
     "markdown-it-py>=3.0,<4.0",
     "pypdfium2>=4.30,<5.0",
     "pikepdf>=9.0,<10.0",
+    "streamlit>=1.40,<2.0",
 ]
 
 [project.optional-dependencies]
@@ -127,6 +128,14 @@ ignore_missing_imports = true
 module = "reportlab.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "streamlit"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "streamlit.*"
+ignore_missing_imports = true
+
 [tool.coverage.run]
 source = [
     "src/regulaitor/corpus",
@@ -138,6 +147,7 @@ source = [
     "src/regulaitor/orchestration",
     "src/regulaitor/security",
     "src/regulaitor/document",
+    "src/regulaitor/ui_streamlit",
 ]
 branch = true
 
