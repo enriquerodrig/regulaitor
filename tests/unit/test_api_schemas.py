@@ -95,6 +95,14 @@ def test_ask_request_rejects_unknown_corpus() -> None:
         AskRequest(query="hi", corpus="nis2", language="es")  # type: ignore[arg-type]
 
 
+def test_ask_request_rejects_unknown_language() -> None:
+    import pytest
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError):
+        AskRequest(query="hi", corpus="ai_act", language="fr")  # type: ignore[arg-type]
+
+
 def test_to_ask_response_translates_pass_state() -> None:
     state = _make_chat_state(blocked=False)
     response = to_ask_response(state, response_time_ms=1234)
@@ -113,6 +121,21 @@ def test_to_ask_response_does_not_leak_injection_reason() -> None:
     serialized = response.model_dump_json()
     assert "injection_pattern_X" not in serialized
     assert "injection_reason" not in serialized
+
+
+def test_to_ask_response_raises_if_audited_answer_is_none() -> None:
+    """Defensive: caller must handle injection_blocked/errors before calling converter."""
+    import pytest
+
+    state = ChatState(
+        case_id="api-ch-x",
+        query="q",
+        corpus="ai_act",
+        language="es",
+    )
+    assert state.audited_answer is None
+    with pytest.raises(ValueError, match="audited_answer"):
+        to_ask_response(state, response_time_ms=0)
 
 
 def _make_document_report(*, with_skip: bool = False) -> DocumentReport:
