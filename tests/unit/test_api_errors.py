@@ -102,6 +102,17 @@ def test_custom_exception_constructors() -> None:
     assert e4.reason_code == "bad"
 
 
+@pytest.mark.asyncio
+async def test_backend_error_handler_empty_errors_list() -> None:
+    """Boundary: empty errors list is valid input; handler returns 500 cleanly."""
+    exc = errors.BackendError(case_id="api-ch-1", errors=[])
+    response = await errors.backend_error_handler(_request(case_id="api-ch-1"), exc)
+    assert response.status_code == 500
+    body = _body(response)
+    assert body["error_code"] == "backend_error"
+    assert body["case_id"] == "api-ch-1"
+
+
 def test_register_anthropic_handlers_skips_when_uninstalled(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

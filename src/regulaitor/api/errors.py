@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 
-class InjectionDetected(Exception):  # noqa: N818
+class InjectionDetected(Exception):  # noqa: N818 — spec uses non-Error suffix; see ADR 0009
     """Anti-injection gate rejected the input. Raised by routes_ask."""
 
     def __init__(self, case_id: str, reason_code: str) -> None:
@@ -44,7 +44,7 @@ class BackendError(Exception):
         self.errors = errors  # logged only, never returned
 
 
-class FileSizeExceeded(Exception):  # noqa: N818
+class FileSizeExceeded(Exception):  # noqa: N818 — spec uses non-Error suffix; see ADR 0009
     """Upload exceeds the configured max size."""
 
     def __init__(self, size: int, max_size: int) -> None:
@@ -53,7 +53,7 @@ class FileSizeExceeded(Exception):  # noqa: N818
         self.max_size = max_size
 
 
-class UnsupportedMediaType(Exception):  # noqa: N818
+class UnsupportedMediaType(Exception):  # noqa: N818 — spec uses non-Error suffix; see ADR 0009
     """Upload has an unsupported MIME type, missing magic bytes, or invalid form fields."""
 
     def __init__(self, reason: str) -> None:
@@ -147,12 +147,15 @@ async def backend_error_handler(request: Request, exc: BackendError) -> JSONResp
         f"Internal pipeline error. Reference: {exc.case_id}",
         exc.case_id,
     )
+    # Truncate per-string (200 chars) and per-list (10 entries) to avoid logging
+    # sensitive backend payloads in plain text (CLAUDE.md §18).
+    truncated = [e[:200] for e in exc.errors[:10]]
     _log_error(
         request,
         status=500,
         error_code="backend_error",
         case_id=exc.case_id,
-        backend_errors=exc.errors,
+        backend_errors=truncated,
     )
     return _json(body, 500)
 
@@ -172,10 +175,14 @@ async def generic_handler(request: Request, exc: Exception) -> JSONResponse:
 
 
 def register_anthropic_handlers(app: FastAPI) -> None:
-    """Lazy import to avoid forcing anthropic dep at module import."""
+    """Lazy import to avoid forcing anthropic dep at module import.
+
+    Catches both ImportError (anthropic not installed) and AttributeError
+    (partial install where the class names changed between versions).
+    """
     try:
         from anthropic import AuthenticationError, BadRequestError
-    except ImportError:
+    except (ImportError, AttributeError):
         return
 
     async def auth_handler(request: Request, exc: AuthenticationError) -> JSONResponse:
@@ -197,14 +204,26 @@ def register_anthropic_handlers(app: FastAPI) -> None:
                 "Upstream LLM billing issue. Try again later.",
                 case_id,
             )
-            _log_error(request, status=503, error_code="upstream_billing", case_id=case_id)
+            _log_error(
+                request,
+                status=503,
+                error_code="upstream_billing",
+                case_id=case_id,
+                exc_type=type(exc).__name__,
+            )
             return _json(body, 503)
         body = _build(
             "upstream_bad_request",
             "Upstream LLM rejected the request.",
             case_id,
         )
-        _log_error(request, status=502, error_code="upstream_bad_request", case_id=case_id)
+        _log_error(
+            request,
+            status=502,
+            error_code="upstream_bad_request",
+            case_id=case_id,
+            exc_type=type(exc).__name__,
+        )
         return _json(body, 502)
 
     app.add_exception_handler(AuthenticationError, auth_handler)
