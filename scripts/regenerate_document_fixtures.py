@@ -28,13 +28,29 @@ ROOT = Path(__file__).resolve().parents[1]
 CASES = ROOT / "evals" / "document_cases"
 
 
+_SPAN_RE = re.compile(
+    r'<span\s+style="color:\s*([#\w]+)"\s*>(.*?)</span>',
+    re.IGNORECASE | re.DOTALL,
+)
+
+
+def _translate_inline_html(text: str) -> str:
+    """Translate the small HTML subset used in source.md to reportlab's mini-language.
+
+    Currently only `<span style="color:NAME">...</span>` is rewritten to
+    `<font color="NAME">...</font>` — sufficient for the white-on-white
+    adversarial pattern. Anything else passes through unchanged.
+    """
+    return _SPAN_RE.sub(r'<font color="\1">\2</font>', text)
+
+
 def _markdown_to_flowables(md_text: str) -> list:
     """Convert markdown text into a list of reportlab Flowables.
 
     Supports: # H1, ## H2, ### H3, paragraphs separated by blank lines.
-    Inline HTML spans (used by adversarial fixture for white-on-white text)
-    pass through to reportlab, which interprets a small subset of HTML in
-    Paragraph contents.
+    Inline `<span style="color:NAME">...</span>` is translated to reportlab's
+    `<font color="NAME">...</font>` mini-language (used by the adversarial
+    fixture for white-on-white invisible-instruction text).
     """
     styles = getSampleStyleSheet()
     h1 = ParagraphStyle("H1", parent=styles["Heading1"], fontSize=22, spaceAfter=28, spaceBefore=14)
@@ -59,7 +75,7 @@ def _markdown_to_flowables(md_text: str) -> list:
         elif block.startswith("### "):
             flowables.append(Paragraph(block[4:].strip(), h2))
         else:
-            text = block.replace("\n", " ")
+            text = _translate_inline_html(block.replace("\n", " "))
             flowables.append(Paragraph(text, body))
         flowables.append(Spacer(1, 6))
     return flowables
