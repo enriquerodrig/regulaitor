@@ -45,6 +45,7 @@ dev = [
     "pre-commit>=3.8,<5.0",
     "reportlab>=4.0,<5.0",
     "schemathesis>=4.0,<5.0",
+    "pytest-asyncio>=1.0,<2.0",
 ]
 
 [build-system]
@@ -171,6 +172,7 @@ exclude_also = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+asyncio_mode = "auto"
 addopts = "-ra -q --strict-markers --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov-report=term-missing --cov-fail-under=90"
 markers = [
     "integration: integration tests using stub HTTP server",
