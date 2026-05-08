@@ -1,4 +1,4 @@
-.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve eval redteam docker deploy clean
+.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve eval redteam docker deploy clean regenerate-fixtures smoke-document
 
 UV ?= uv
 
@@ -11,6 +11,8 @@ help:
 	@echo "  ingest     Parse PDF corpora into manifests + processed/ (H1)"
 	@echo "  rag-build  Chunk + embed + populate LanceDB store (H2)"
 	@echo "  mcp-server Run the MCP server on stdio (H3)"
+	@echo "  regenerate-fixtures  Regenerate synthesized policy PDFs (H5)"
+	@echo "  smoke-document       Run analyze CLI on the clean policy fixture (H5)"
 	@echo "  serve      Run Streamlit UI (TODO H6)"
 	@echo "  eval       Run evaluation harness (TODO H8)"
 	@echo "  redteam    Run red team suite (TODO H9)"
@@ -65,3 +67,9 @@ clean:
 	rm -rf .pytest_cache .mypy_cache .ruff_cache build dist
 	find . -type d -name "*.egg-info" -exec rm -rf {} +
 	find . -type d -name "__pycache__" -exec rm -rf {} +
+
+regenerate-fixtures: ## Regenerate evals/document_cases/*.pdf from .source.md (H5)
+	$(UV) run python -m scripts.regenerate_document_fixtures
+
+smoke-document: ## Run analyze CLI on the clean synthesized policy fixture (H5)
+	$(UV) run python -m scripts.analyze --file evals/document_cases/synthesized_policy_clean.pdf --lang es --corpus ai_act,gdpr
