@@ -68,6 +68,68 @@ jobs:
         # they're local-only per spec H3 §11.3 and H2 §11.3.
         run: uv run pytest -m "not slow"
 
+  test-document-e2e:
+    name: Document E2E (slow)
+    # H5 closure: run the slow document_slow tests on main pushes and on PRs
+    # touching the document pipeline. Adversarial fixture is verifiable without
+    # ANTHROPIC_API_KEY (sanitizer short-circuits); clean PASS path skips
+    # cleanly when the secret is absent.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Detect document pipeline changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            document:
+              - 'src/regulaitor/document/**'
+              - 'src/regulaitor/orchestration/document_graph.py'
+              - 'src/regulaitor/security/injection.py'
+              - 'src/regulaitor/security/allowlist.py'
+              - 'scripts/analyze.py'
+              - 'scripts/regenerate_document_fixtures.py'
+              - 'evals/document_cases/**'
+      - name: Should run
+        id: should-run
+        run: |
+          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          elif [ "${{ steps.changes.outputs.document }}" = "true" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Cache HuggingFace models
+        if: steps.should-run.outputs.run == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: ${{ runner.os }}-hf-bgem3-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-hf-bgem3-
+      - name: Install uv
+        if: steps.should-run.outputs.run == 'true'
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - name: Set up Python 3.11
+        if: steps.should-run.outputs.run == 'true'
+        run: uv python install 3.11
+      - name: Install dependencies
+        if: steps.should-run.outputs.run == 'true'
+        run: uv sync --extra dev
+      - name: Regenerate fixtures
+        if: steps.should-run.outputs.run == 'true'
+        run: uv run python -m scripts.regenerate_document_fixtures
+      - name: Run slow document E2E tests
+        if: steps.should-run.outputs.run == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: uv run pytest -m document_slow -v --tb=short
+
   security:
     name: Security
     runs-on: ubuntu-latest
