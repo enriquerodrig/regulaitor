@@ -30,7 +30,11 @@ from regulaitor.orchestration.state import ChatState
 
 
 class AskRequest(BaseModel):
-    """Body for POST /ask."""
+    """Body for POST /ask.
+
+    Mutable (no frozen=True) because FastAPI mutates request models during
+    validation. Response/data DTOs are frozen.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
@@ -54,6 +58,8 @@ class CitationDTO(BaseModel):
 
 
 class AuditResultDTO(BaseModel):
+    """Subset of AuditResult: validated + 3 sub-flags + reason. No internal Citation echo."""
+
     model_config = ConfigDict(frozen=True, extra="forbid")
     citation: CitationDTO
     validated: bool
@@ -86,12 +92,28 @@ class AskResponse(BaseModel):
     response_time_ms: int = Field(ge=0)
 
 
+SanitizerCategory = Literal[
+    "metadata_stripped",
+    "annotation_stripped",
+    "invisible_text_stripped",
+    "javascript_blocked",
+    "attachment_blocked",
+    "form_action_blocked",
+    "uri_action_blocked",
+    "hidden_layer_stripped",
+    "unicode_trick_stripped",
+    "encrypted_with_password",
+    "outline_extracted",
+    "large_document_warning",
+]
+
+
 class SanitizerEventDTO(BaseModel):
-    """Subset of SanitizerEvent. Excludes location and raw reason."""
+    """Subset of SanitizerEvent. Excludes location and raw reason (SSDLC redaction)."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
     severity: Literal["info", "warning", "critical"]
-    category: str
+    category: SanitizerCategory
     content_hash: str
 
 
@@ -203,7 +225,7 @@ def _classify_skip_category(
     if not seg_result.skipped:
         return "clean"
     reason = (seg_result.skip_reason or "").lower()
-    if reason.startswith("injection") or "injection" in reason:
+    if "injection" in reason:
         return "injection_blocked"
     return "internal_error"
 

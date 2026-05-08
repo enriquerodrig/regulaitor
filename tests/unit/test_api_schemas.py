@@ -1,6 +1,7 @@
 """Unit tests for api.schemas — DTOs + converters with SSDLC redaction."""
 
 from regulaitor.api.schemas import (
+    # smoke imports: ensure the public types are exposed by the schemas module.
     AnalyzeResponse,  # noqa: F401
     AskRequest,
     AskResponse,  # noqa: F401
@@ -250,6 +251,73 @@ def test_to_analyze_response_redacts_sanitizer_location_and_reason() -> None:
     # category and content_hash are exposed
     assert "metadata_stripped" in serialized
     assert "a1b2c3d4e5f6" in serialized
+
+
+def test_to_analyze_response_classifies_non_injection_skip_as_internal_error() -> None:
+    """SSDLC: a non-injection skip_reason maps to internal_error and the raw text is redacted."""
+    seg = Segment(id=1, title=None, text="text", token_count=5, is_continuation=False)
+    seg_result = SegmentResult(
+        segment=seg,
+        skipped=True,
+        skip_reason="parse_error_at_offset_42",
+        audited_answer=None,
+        latency_ms=2,
+        cost_eur=0.0,
+    )
+    report = DocumentReport(
+        case_id="api-doc-x",
+        document_hash="d" * 64,
+        language="es",
+        corpus=["ai_act"],
+        sanitizer_log=[],
+        segments=[seg_result],
+        document_verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+        document_reason="1 segment skipped",
+        n_segments_total=1,
+        n_segments_blocked_by_injection=0,
+        n_segments_pass=0,
+        n_segments_block=0,
+        n_segments_review=1,
+        latency_ms_total=2,
+        cost_eur_total=0.0,
+    )
+    response = to_analyze_response(report, response_time_ms=0)
+    serialized = response.model_dump_json()
+    assert response.segments[0].skip_category == "internal_error"
+    assert "parse_error_at_offset_42" not in serialized
+    assert "skip_reason" not in serialized
+
+
+def test_to_analyze_response_handles_skip_reason_none() -> None:
+    """A skipped segment with skip_reason=None falls into internal_error without leaking 'None'."""
+    seg = Segment(id=1, title=None, text="text", token_count=5, is_continuation=False)
+    seg_result = SegmentResult(
+        segment=seg,
+        skipped=True,
+        skip_reason=None,
+        audited_answer=None,
+        latency_ms=1,
+        cost_eur=0.0,
+    )
+    report = DocumentReport(
+        case_id="api-doc-x",
+        document_hash="d" * 64,
+        language="es",
+        corpus=["ai_act"],
+        sanitizer_log=[],
+        segments=[seg_result],
+        document_verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+        document_reason=None,
+        n_segments_total=1,
+        n_segments_blocked_by_injection=0,
+        n_segments_pass=0,
+        n_segments_block=0,
+        n_segments_review=1,
+        latency_ms_total=1,
+        cost_eur_total=0.0,
+    )
+    response = to_analyze_response(report, response_time_ms=0)
+    assert response.segments[0].skip_category == "internal_error"
 
 
 def test_error_response_shape() -> None:
