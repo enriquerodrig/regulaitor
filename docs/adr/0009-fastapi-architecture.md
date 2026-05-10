@@ -1,7 +1,7 @@
 # ADR 0009 — FastAPI mínima architecture for H7
 
 - **Status:** Accepted
-- **Date:** 2026-05-08 (H7 closure)
+- **Date:** 2026-05-08 (decision); 2026-05-10 (H7 merged, squash `5b1f664`, tag `v0.0.8-h7`)
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0001 (project scope), 0007 (document pipeline architecture), 0008 (Streamlit UI architecture).
 

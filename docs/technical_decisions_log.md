@@ -1456,9 +1456,9 @@ Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK
 
 Cuando se cierre un hito, mover sus decisiones a una sección "cerrado" (no borrar) para que el log sirva como narrativa de defensa.
 
-## H7 — FastAPI mínima (cerrado 2026-05-08)
+## H7 — FastAPI mínima (cerrado 2026-05-10)
 
-**Squash commit:** TBD (filled in post-merge). Tag `v0.0.8-h7` (TBD post-merge). **Spec:** `docs/superpowers/specs/2026-05-08-h7-fastapi-design.md`. **Plan:** `docs/superpowers/plans/2026-05-08-h7-fastapi-mvp.md`. **ADR:** `docs/adr/0009-fastapi-architecture.md`.
+**Squash commit:** `5b1f664` en main (PR #7 squash-merged 2026-05-10). Tag `v0.0.8-h7` publicado. **Spec:** `docs/superpowers/specs/2026-05-08-h7-fastapi-design.md`. **Plan:** `docs/superpowers/plans/2026-05-08-h7-fastapi-mvp.md`. **ADR:** `docs/adr/0009-fastapi-architecture.md`.
 
 ### Brainstorming Qs (2026-05-08)
 
