@@ -64,6 +64,11 @@ Thumbs.db
 corpus/indexes/
 *.lance
 evals/reports/
+evals/cache/
+evals/reports/archive/
 redteam/reports/
 notebooks/outputs/
 .claude/scheduled_tasks.lock
+
+# Spurious file created by Windows bash touch emulation — never commit
+null
