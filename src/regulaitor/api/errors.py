@@ -16,7 +16,6 @@ from fastapi.responses import JSONResponse
 from slowapi.errors import RateLimitExceeded
 
 from regulaitor.api.schemas import ErrorResponse
-from regulaitor.citation.schemas import DocumentBlockedError
 
 logger = logging.getLogger(__name__)
 
@@ -107,17 +106,6 @@ async def injection_handler(request: Request, exc: InjectionDetected) -> JSONRes
     body = _build("injection_blocked", "Input rejected by anti-injection gate.", exc.case_id)
     _log_error(request, status=400, error_code="injection_blocked", case_id=exc.case_id)
     return _json(body, 400)
-
-
-async def document_blocked_handler(request: Request, exc: DocumentBlockedError) -> JSONResponse:
-    case_id = getattr(request.state, "case_id", None)
-    body = _build(
-        "document_blocked",
-        "Document rejected by sanitizer (critical content).",
-        case_id,
-    )
-    _log_error(request, status=422, error_code="document_blocked", case_id=case_id)
-    return _json(body, 422)
 
 
 async def file_size_handler(request: Request, exc: FileSizeExceeded) -> JSONResponse:

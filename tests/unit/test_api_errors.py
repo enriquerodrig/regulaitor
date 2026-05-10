@@ -11,7 +11,6 @@ from fastapi.responses import JSONResponse
 from slowapi.errors import RateLimitExceeded
 
 from regulaitor.api import errors
-from regulaitor.citation.schemas import DocumentBlockedError
 
 
 def _request(case_id: str | None = None, token_hash: str | None = None) -> SimpleNamespace:
@@ -35,15 +34,6 @@ async def test_injection_handler_returns_400() -> None:
     body = _body(response)
     assert body["error_code"] == "injection_blocked"
     assert body["case_id"] == "api-ch-1"
-
-
-@pytest.mark.asyncio
-async def test_document_blocked_handler_returns_422() -> None:
-    exc = DocumentBlockedError(reason="javascript detected", sanitizer_log=[])
-    response = await errors.document_blocked_handler(_request(case_id="api-doc-1"), exc)
-    assert response.status_code == 422
-    body = _body(response)
-    assert body["error_code"] == "document_blocked"
 
 
 @pytest.mark.asyncio

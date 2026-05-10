@@ -20,7 +20,6 @@ from regulaitor.api.routes_analyze import router as analyze_router
 from regulaitor.api.routes_ask import router as ask_router
 from regulaitor.api.routes_health import router as health_router
 from regulaitor.api.schemas import ErrorResponse
-from regulaitor.citation.schemas import DocumentBlockedError
 from regulaitor.security.rate_limit import limiter
 
 
@@ -55,7 +54,6 @@ app.add_exception_handler(errors.InjectionDetected, errors.injection_handler)  #
 app.add_exception_handler(errors.FileSizeExceeded, errors.file_size_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.UnsupportedMediaType, errors.unsupported_media_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.BackendError, errors.backend_error_handler)  # type: ignore[arg-type]
-app.add_exception_handler(DocumentBlockedError, errors.document_blocked_handler)  # type: ignore[arg-type]
 errors.register_anthropic_handlers(app)
 app.add_exception_handler(Exception, errors.generic_handler)
 

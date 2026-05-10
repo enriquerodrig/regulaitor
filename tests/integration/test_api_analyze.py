@@ -6,7 +6,6 @@ import pytest
 
 from regulaitor.citation.schemas import (
     AuditVerdict,
-    DocumentBlockedError,
     DocumentReport,
 )
 
@@ -131,18 +130,39 @@ def test_analyze_invalid_corpus_returns_415(client, auth_headers) -> None:
     assert response.status_code == 415
 
 
-def test_analyze_document_blocked_returns_422(
+def test_analyze_sanitizer_critical_returns_200_review(
     client, auth_headers, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    def _raise(**_kw):
-        raise DocumentBlockedError(reason="javascript detected", sanitizer_log=[])
+    """When run_document detects sanitizer-critical content it returns a partial DocumentReport
+    with verdict=requires_human_review (NOT a raised exception). The API surfaces this as HTTP 200.
+    """
 
-    monkeypatch.setattr("regulaitor.api.routes_analyze.run_document", _raise)
+    def _critical_report(**_kw) -> DocumentReport:
+        return DocumentReport(
+            case_id="api-doc-x",
+            document_hash="d" * 64,
+            language="es",
+            corpus=["ai_act"],
+            sanitizer_log=[],
+            segments=[],
+            document_verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+            document_reason="sanitizer_critical:javascript_blocked",
+            n_segments_total=0,
+            n_segments_blocked_by_injection=0,
+            n_segments_pass=0,
+            n_segments_block=0,
+            n_segments_review=0,
+            latency_ms_total=120,
+            cost_eur_total=0.0,
+        )
+
+    monkeypatch.setattr("regulaitor.api.routes_analyze.run_document", _critical_report)
     response = client.post(
         "/analyze",
         headers=auth_headers,
         files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "ai_act", "es"),
     )
-    assert response.status_code == 422
+    assert response.status_code == 200
     body = response.json()
-    assert body["error_code"] == "document_blocked"
+    assert body["document_verdict"] == "requires_human_review"
+    assert body["document_reason"] == "sanitizer_critical:javascript_blocked"
