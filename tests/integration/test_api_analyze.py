@@ -74,6 +74,9 @@ def test_analyze_no_auth_returns_401(client) -> None:
         files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "ai_act", "es"),
     )
     assert response.status_code == 401
+    body = response.json()
+    assert body["error_code"] == "http_401"
+    assert "case_id" in body
 
 
 def test_analyze_oversize_returns_413(

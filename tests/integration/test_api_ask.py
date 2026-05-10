@@ -68,6 +68,9 @@ def test_ask_happy_path(client, auth_headers, monkeypatch: pytest.MonkeyPatch) -
 def test_ask_missing_auth_returns_401(client) -> None:
     response = client.post("/ask", json={"query": "test", "corpus": "ai_act", "language": "es"})
     assert response.status_code == 401
+    body = response.json()
+    assert body["error_code"] == "http_401"
+    assert "case_id" in body
 
 
 def test_ask_invalid_token_returns_401(client) -> None:
@@ -77,6 +80,9 @@ def test_ask_invalid_token_returns_401(client) -> None:
         json={"query": "test", "corpus": "ai_act", "language": "es"},
     )
     assert response.status_code == 401
+    body = response.json()
+    assert body["error_code"] == "http_401"
+    assert "case_id" in body
 
 
 def test_ask_oversize_query_returns_422(client, auth_headers) -> None:

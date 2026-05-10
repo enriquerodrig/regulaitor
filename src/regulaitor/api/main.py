@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from slowapi.errors import RateLimitExceeded
@@ -48,7 +48,26 @@ async def _validation_handler(request: Request, exc: RequestValidationError) -> 
     return JSONResponse(status_code=422, content=body.model_dump())
 
 
+async def _http_exception_handler(request: Request, exc: HTTPException) -> JSONResponse:
+    """Map HTTPException 401/403 (e.g. from verify_token Depends) to ErrorResponse format.
+
+    Narrowed to 401/403 only: RateLimitExceeded inherits from HTTPException and is
+    handled by its own dedicated handler registered on the more-specific class.
+    Other HTTPException status codes fall through to Starlette's default plain-text handler.
+    """
+    if exc.status_code not in (401, 403):
+        raise exc
+    case_id = getattr(request.state, "case_id", None)
+    body = ErrorResponse(
+        error_code=f"http_{exc.status_code}",
+        message=str(exc.detail) if exc.detail else "Request failed.",
+        case_id=case_id,
+    )
+    return JSONResponse(status_code=exc.status_code, content=body.model_dump())
+
+
 app.add_exception_handler(RequestValidationError, _validation_handler)  # type: ignore[arg-type]
+app.add_exception_handler(HTTPException, _http_exception_handler)  # type: ignore[arg-type]
 app.add_exception_handler(RateLimitExceeded, errors.rate_limit_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.InjectionDetected, errors.injection_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.FileSizeExceeded, errors.file_size_handler)  # type: ignore[arg-type]
