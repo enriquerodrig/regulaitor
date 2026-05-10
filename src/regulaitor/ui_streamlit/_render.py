@@ -150,8 +150,11 @@ def document_report(report: DocumentReport) -> None:
         with col:
             st.metric(label, value)
 
+    # nosec B105 -- "pass" is an AuditVerdict enum value (Lenient-strict policy),
+    # not a password. Bandit flags any string literal next to a key containing
+    # "pass" regardless of context.
     emoji = {
-        "pass": "✓",
+        "pass": "✓",  # nosec B105
         "block": "✗",
         "requires_human_review": "⚠",
         "skipped": "⚠",
@@ -169,7 +172,9 @@ def document_report(report: DocumentReport) -> None:
                     "manipulación. Revisión humana requerida."
                 )
             else:
-                assert sr.audited_answer is not None
+                assert (
+                    sr.audited_answer is not None
+                )  # nosec B101 -- mypy narrowing; the not-skipped branch guarantees audited_answer is set per SegmentResult invariant
                 st.markdown(sr.audited_answer.answer.text)
                 for f in sr.audited_answer.answer.findings:
                     finding(f)
