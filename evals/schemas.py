@@ -26,7 +26,7 @@ class GoldCaseChat(BaseModel):
     tipo: Literal["chat"]
     entrada: str = Field(min_length=1, max_length=2000)
     corpus_esperado: Literal["ai_act", "gdpr"]
-    articulos_esperados: list[str] = Field(min_length=1)
+    articulos_esperados: list[str]  # empty list valid for block cases (no citation expected)
     severidad_esperada: Literal["info", "low", "medium", "high"] | None
     criterios_evaluacion: list[str] = Field(min_length=1)
     salida_esperada: str | None

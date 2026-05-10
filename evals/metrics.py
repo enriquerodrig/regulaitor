@@ -380,11 +380,13 @@ def aggregate(
     context_precision_values = [r.context_precision for r in chat_results]
     context_recall_values = [r.context_recall for r in chat_results]
 
-    citation_precision_values = [r.citations.precision for r in chat_results] + [
-        r.findings_citations.precision for r in doc_results
-    ]
-    citation_recall_values = [r.citations.recall for r in chat_results] + [
-        r.findings_citations.recall for r in doc_results
+    # Exclude cases where no citation was expected (block cases) — citation metrics
+    # don't apply when the gold expectation is "system should refuse to cite".
+    citation_precision_values = [
+        r.citations.precision for r in chat_results if r.citations.expected
+    ] + [r.findings_citations.precision for r in doc_results if r.findings_citations.expected]
+    citation_recall_values = [r.citations.recall for r in chat_results if r.citations.expected] + [
+        r.findings_citations.recall for r in doc_results if r.findings_citations.expected
     ]
 
     verdict_match_values = [1.0 if r.verdict_match else 0.0 for r in chat_results] + [

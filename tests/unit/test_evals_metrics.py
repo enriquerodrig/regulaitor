@@ -550,6 +550,34 @@ def test_compute_doc_metrics_full_orchestration(monkeypatch: pytest.MonkeyPatch)
     assert "seg" in captured_contexts[0][0]  # segment text
 
 
+def test_aggregate_excludes_block_cases_from_citation_metrics() -> None:
+    """Block cases (no expected articles) must not drag citation_precision_mean down."""
+    # 1 valid chat (precision=1.0) + 1 block chat (no expected, precision=0.0 sentinel)
+    valid = _chat_result("c1", latency_ms=2000, cost=0.04, cache_hit=False)
+    block = ChatCaseResult(
+        case_id="c2",
+        expected_verdict="block",
+        actual_verdict="blocked_injection",
+        verdict_match=True,
+        expected_severity=None,
+        actual_severity=None,
+        severity_match=None,
+        citations=CitationMetrics(emitted=[], expected=[], precision=0.0, recall=0.0),
+        faithfulness=0.0,
+        answer_relevancy=0.0,
+        context_precision=0.0,
+        context_recall=0.0,
+        criteria_scores=[CriteriaScore(criterion="c", passed=True, reason=None)],
+        latency_ms=100,
+        cost_eur=0.0,
+        cache_hit=False,
+    )
+    agg = aggregate([valid, block], [])
+    # Mean over [1.0] only (block excluded) → 1.0
+    assert agg.citation_precision_mean == pytest.approx(1.0)
+    assert agg.citation_recall_mean == pytest.approx(1.0)
+
+
 # ---------------------------------------------------------------------------
 # _safe_p95 single-value branch
 # ---------------------------------------------------------------------------
