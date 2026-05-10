@@ -1455,3 +1455,84 @@ Cada vez que el autor apruebe una decisión técnica (incluida una respuesta `OK
 3. Mantener el orden cronológico dentro de cada hito.
 
 Cuando se cierre un hito, mover sus decisiones a una sección "cerrado" (no borrar) para que el log sirva como narrativa de defensa.
+
+## H7 — FastAPI mínima (cerrado 2026-05-08)
+
+**Squash commit:** TBD (filled in post-merge). Tag `v0.0.8-h7` (TBD post-merge). **Spec:** `docs/superpowers/specs/2026-05-08-h7-fastapi-design.md`. **Plan:** `docs/superpowers/plans/2026-05-08-h7-fastapi-mvp.md`. **ADR:** `docs/adr/0009-fastapi-architecture.md`.
+
+### Brainstorming Qs (2026-05-08)
+
+- **Q1 — Auth scheme:** A. Token estático en env var `REGULAITOR_API_TOKEN`,
+  Bearer header, `hmac.compare_digest`, ≥16 chars. Defensible single-operator;
+  no hipoteca H16 público; mismo middleware sirve para rotación manual.
+- **Q2 — Rate limit lib:** A. slowapi in-memory, key por `token_hash`,
+  configurable env, switch `_DISABLED=1` para tests/CI. Redis futuro H16.
+- **Q3 — Upload `/analyze`:** A. `UploadFile` multipart + cap 10 MB (env
+  configurable). Magic-byte antes de extension. URL-based descartado por SSRF.
+- **Q4 — Exception mapping:** A. Handlers globales con mapping table.
+  Redacción centralizada de traces y campos internos. Mismo principio de
+  H6 `_render.error_message`.
+- **Q5 — Scope:** A. Baseline. NO `/cases`, NO CORS, NO `/v1/`. Deferrals
+  para future-work doc H17.
+- **Q6 — Logging:** A. Reuse + extend backend `_log_turn` / `_log_document_turn`
+  con prefix `api-` en case_id y HTTP fields (status, token_hash, IP redacted).
+  Un log record por request.
+- **Q7 — Schemas:** B. DTOs explícitas en `api/schemas.py` + converters
+  backend→DTO. SSDLC redaction (skip_reason, injection_reason, location)
+  por construcción.
+- **Q8 — Tests:** C. Schemathesis (fuzz contract) + httpx (integration) + unit
+  por módulo. Backend fakes vía monkeypatch — cero coste LLM.
+- **Q9 — Health semantics:** B. Readiness completo (LanceDB count_rows,
+  anthropic_key present, api_token loaded). Sin auth, sin rate limit.
+- **Q10 — Rate limit values:** C. Configurables vía env vars
+  (`REGULAITOR_RATE_LIMIT_ASK=30/minute`, `_ANALYZE=5/minute`). Switch
+  `_DISABLED=1` para tests.
+
+### Future-work doc convention
+
+Decisión transversal capturada durante Q5 (2026-05-08): ítems out-of-scope
+se mencionan en spec/ADR de cada hito y se consolidan en un único
+`docs/future_work.md` en H17 sobre el entregable final, NO eagerly durante
+hitos intermedios. Memoria interna: `feedback_future_work_doc.md`.
+
+### Implementation amendments
+
+Aplicados durante Tasks 1-12. Patrón heredado de H1 PDF pivot + H5
+data.europa.eu allowlist (capturar deltas reales sin re-litigar el spec).
+
+1. **Schemathesis pin → `>=4.0,<5.0`** (Task 1). 3.40 no existe en PyPI; 3.x
+   conflicta con `pytest>=9` y `starlette>=1.0`. v4 resuelve clean.
+2. **pytest-asyncio pin → `>=1.0,<2.0`** (Task 3). Conflicto con
+   `pytest>=9.0.3` (PluginValidationError alrededor de `Package.obj`).
+3. **`.strip()` removido en Bearer compare** (Task 3, code review). Violaba
+   RFC 6750 exact-match. Fix: comparación literal del token tras `Bearer `.
+4. **`register_anthropic_handlers` captura `(ImportError, AttributeError)`**
+   (Task 5, code review). Defensa contra partial install del SDK de Anthropic.
+5. **`BackendError.errors` truncado a 200 chars/string × 10 entries/list**
+   antes de logging (Task 5, code review). CLAUDE.md §18 — logs sin datos
+   sensibles.
+6. **`bad_request_handler` logea `exc_type=type(exc).__name__`** en ambas
+   ramas 502/503 (Task 5, code review). Observabilidad sin leak de str(exc).
+7. **`datetime.now(UTC)` en lugar de `datetime.utcnow()` deprecated**
+   (Tasks 8, 9). H6 `tab_ask.py` queda con `utcnow()`; cleanup en PR
+   separado próximo hito.
+8. **httpx 0.28 multipart format change** (Task 10). Tests reescritos con
+   `files=[list-of-tuples]` all-in-one + raw bytes (no `io.BytesIO`).
+9. **`reset_limiter` autouse fixture en `tests/integration/conftest.py`**
+   (Task 10). Rate limit counter persistía entre tests por storage in-memory
+   compartido.
+10. **Schemathesis v4 API** (Task 11): `case.call_and_validate()` single-step
+    + `included_check_names=["not_a_server_error"]`. Dos checks excluidos
+    documentados en el módulo de test (positive_data_acceptance para Literal
+    language strings vacíos; status_code_conformance para 400 a nivel
+    framework en multipart malformado). El invariant crítico (zero unhandled
+    500s) se preserva; los falsos positivos no aportan valor SSDLC.
+
+### Métricas de cierre
+
+- 481 tests pass, 0 failed.
+- Coverage 92.40% global.
+- Schemathesis 60 fuzz cases (3 endpoints × 20 examples) — 0 unhandled 500s.
+- Pre-commit verde (ruff, black, gitleaks, end-of-file, trim-whitespace).
+- Pip-audit verde para nuevas deps (fastapi, uvicorn, slowapi,
+  python-multipart, schemathesis, pytest-asyncio).

@@ -55,6 +55,54 @@ Streamlit imprime una URL local (típicamente `http://localhost:8501`). El banne
 
 **No respuesta sin cita validada — incluso en la UI**.
 
+## API Quickstart (H7)
+
+The API exposes three endpoints (`POST /ask`, `POST /analyze`, `GET /health`)
+behind a static Bearer token. Same backend pipelines as the Streamlit UI.
+
+### Prerequisites
+
+- Set `REGULAITOR_API_TOKEN` (≥16 chars) and `ANTHROPIC_API_KEY` in `.env`.
+- LanceDB index populated via `make rag-build` (≥1 chunk required for `/health` to report `ok`).
+
+### Running
+
+```bash
+make serve-api
+```
+
+The API listens on `http://localhost:8000`. OpenAPI docs at `/docs`.
+
+### Examples
+
+```bash
+# Health (no auth)
+curl http://localhost:8000/health
+
+# Chat
+curl -X POST http://localhost:8000/ask \
+  -H "Authorization: Bearer ${REGULAITOR_API_TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"¿Qué dice el AI Act sobre sistemas de alto riesgo?","corpus":"ai_act","language":"es"}'
+
+# Document analysis
+curl -X POST http://localhost:8000/analyze \
+  -H "Authorization: Bearer ${REGULAITOR_API_TOKEN}" \
+  -F "file=@policy.pdf;type=application/pdf" \
+  -F "corpus=ai_act" \
+  -F "language=es"
+```
+
+### Configuration
+
+| Env var | Default | Purpose |
+|---|---|---|
+| `REGULAITOR_API_TOKEN` | (required) | Bearer token (≥16 chars) |
+| `REGULAITOR_RATE_LIMIT_ASK` | `30/minute` | per-token quota for `/ask` |
+| `REGULAITOR_RATE_LIMIT_ANALYZE` | `5/minute` | per-token quota for `/analyze` |
+| `REGULAITOR_MAX_UPLOAD_BYTES` | `10485760` (10 MB) | max upload size for `/analyze` |
+| `REGULAITOR_RATE_LIMIT_DISABLED` | (unset) | set to `1` to disable rate limiting (tests) |
+
 ## Stack (current + planned)
 
 Python 3.11 · `uv` · Pydantic v2 · **LanceDB · BGE-M3 · bge-reranker-v2-m3** (active) · FastAPI · LangGraph · Streamlit (MVP) · Next.js (advanced) · Docker · GitHub Actions · LangFuse · Ragas + DeepEval (planned).
