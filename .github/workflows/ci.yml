@@ -133,7 +133,9 @@ jobs:
         if: steps.should-run.outputs.run == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: uv run pytest -m document_slow -v --tb=short
+        # --no-cov: aggregate coverage is enforced by the main `test` job; this
+        # subset run would always trip the 90% gate on its own (only 2 tests).
+        run: uv run pytest -m document_slow -v --tb=short --no-cov
 
   security:
     name: Security
@@ -160,10 +162,13 @@ jobs:
       - name: Bandit
         run: uv run bandit -r src
       - name: Pip-audit
-        # Ignored: CVE-2026-1839 affects transformers.Trainer._load_rng_state, only
-        # reachable via Trainer.train(resume_from_checkpoint=...). RegulAItor uses
-        # pretrained models via FlagEmbedding -> AutoModel.from_pretrained (safetensors),
-        # never instantiates Trainer. See docs/technical_decisions_log.md H2 entry
-        # "CVE-2026-1839 transformers — descartada por ruta de código no usada".
+        # --skip-editable: the project itself (regulaitor) is installed editable
+        # by `uv sync` and is not on PyPI; pip-audit would otherwise fail with
+        # "Dependency not found on PyPI" for our own package.
+        # --ignore-vuln CVE-2026-1839: affects transformers.Trainer._load_rng_state,
+        # only reachable via Trainer.train(resume_from_checkpoint=...). RegulAItor
+        # uses pretrained models via FlagEmbedding -> AutoModel.from_pretrained
+        # (safetensors), never instantiates Trainer. See docs/technical_decisions_log.md
+        # H2 entry "CVE-2026-1839 transformers — descartada por ruta de código no usada".
         # Re-evaluate when FlagEmbedding releases transformers 5.x compatibility.
-        run: uv run pip-audit --ignore-vuln CVE-2026-1839
+        run: uv run pip-audit --skip-editable --ignore-vuln CVE-2026-1839
