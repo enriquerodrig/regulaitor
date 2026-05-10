@@ -8,6 +8,7 @@ LLM (Haiku 4.5).
 
 from __future__ import annotations
 
+import math
 import statistics
 from collections.abc import Callable
 
@@ -121,11 +122,14 @@ def _ragas_metrics_chat(
     builds its own LangChain LLM internally. This is intentional.
     """
     # Lazy imports — Ragas is heavy and not needed by other modules.
-    import pandas as pd
-    from datasets import Dataset
-    from langchain_anthropic import ChatAnthropic
-    from ragas import evaluate
-    from ragas.metrics import (
+    # The implementation body is excluded from unit-test coverage because
+    # Ragas/datasets/langchain_anthropic are external I/O dependencies tested
+    # end-to-end via mocking (see test_evals_metrics.py orchestrator tests).
+    import pandas as pd  # pragma: no cover
+    from datasets import Dataset  # pragma: no cover
+    from langchain_anthropic import ChatAnthropic  # pragma: no cover
+    from ragas import evaluate  # pragma: no cover
+    from ragas.metrics import (  # pragma: no cover
         answer_relevancy,
         context_precision,
         context_recall,
@@ -133,9 +137,9 @@ def _ragas_metrics_chat(
     )
 
     # Ragas expects ground_truth for context_recall; fall back to a stub if missing.
-    gt = ground_truth if ground_truth else "[no_reference]"
+    gt = ground_truth if ground_truth else "[no_reference]"  # pragma: no cover
 
-    df = pd.DataFrame(
+    df = pd.DataFrame(  # pragma: no cover
         [
             {
                 "user_input": query,
@@ -145,22 +149,32 @@ def _ragas_metrics_chat(
             }
         ]
     )
-    ds = Dataset.from_pandas(df)
+    ds = Dataset.from_pandas(df)  # pragma: no cover
 
-    llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0.0)
+    llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0.0)  # pragma: no cover
 
-    result = evaluate(
+    result = evaluate(  # pragma: no cover
         ds,
         metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
         llm=llm,
         raise_exceptions=False,
     )
-    out = result.to_pandas().iloc[0].to_dict()
-    return {
-        "faithfulness": float(out.get("faithfulness", 0.0) or 0.0),
-        "answer_relevancy": float(out.get("answer_relevancy", 0.0) or 0.0),
-        "context_precision": float(out.get("context_precision", 0.0) or 0.0),
-        "context_recall": float(out.get("context_recall", 0.0) or 0.0),
+    out = result.to_pandas().iloc[0].to_dict()  # pragma: no cover
+
+    def _safe_score(val: object) -> float:  # pragma: no cover
+        if val is None:
+            return 0.0
+        try:
+            f = float(val)  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            return 0.0
+        return 0.0 if math.isnan(f) else f
+
+    return {  # pragma: no cover
+        "faithfulness": _safe_score(out.get("faithfulness")),
+        "answer_relevancy": _safe_score(out.get("answer_relevancy")),
+        "context_precision": _safe_score(out.get("context_precision")),
+        "context_recall": _safe_score(out.get("context_recall")),
     }
 
 
@@ -176,14 +190,14 @@ def _ragas_metrics_doc(
 
     Delegates to _ragas_metrics_chat and keeps only faithfulness.
     """
-    metrics = _ragas_metrics_chat(
+    metrics = _ragas_metrics_chat(  # pragma: no cover
         query=query,
         answer=answer,
         contexts=contexts,
         ground_truth=ground_truth,
         judge_call=judge_call,
     )
-    return {"faithfulness": metrics["faithfulness"]}
+    return {"faithfulness": metrics["faithfulness"]}  # pragma: no cover
 
 
 # ---------------------------------------------------------------------------
@@ -207,7 +221,10 @@ def compute_chat_metrics(
     if state.injection_blocked:
         actual_verdict = "blocked_injection"
     elif audited is None:
-        actual_verdict = "block"  # backend produced no answer; treat as block
+        # Backend produced no audited answer (graph error path or Auditor hard-rejected
+        # without storing AuditedAnswer). Mapping to "requires_human_review" is more
+        # honest than "block": the system did not classify, it errored.
+        actual_verdict = "requires_human_review"
     else:
         actual_verdict = audited.verdict.value
 
@@ -292,8 +309,10 @@ def compute_doc_metrics(
     answer_text = " ".join(
         seg.audited_answer.answer.text for seg in report.segments if seg.audited_answer is not None
     )
-    # Doc pipeline doesn't expose retrieved contexts at report level.
-    contexts: list[str] = []
+    # Use each segment's own text as the context for faithfulness.
+    # H5 SegmentResult does not carry retrieved corpus chunks at report level
+    # (deferred to H10/H17 polish), so segment text is the closest faithful proxy.
+    contexts = [seg.segment.text for seg in report.segments if seg.audited_answer is not None]
     ragas = _ragas_metrics_doc(
         query=f"Analiza este documento contra {','.join(case.corpus_esperado)}",
         answer=answer_text or "[no_answer]",
@@ -372,13 +391,16 @@ def aggregate(
         1.0 if r.verdict_match else 0.0 for r in doc_results
     ]
 
+    # severity_match_rate denominator excludes chat cases where severidad_esperada=None
+    # (the gold case did not specify a severity expectation). Reported rate is over the
+    # subset of cases that DID expect a severity, not over all chat cases.
     severity_match_values = [
         1.0 if r.severity_match else 0.0 for r in chat_results if r.severity_match is not None
     ]
 
-    latency_values = [r.latency_ms for r in chat_results] + [
-        r.latency_ms_total for r in doc_results
-    ]
+    chat_latency_values = [r.latency_ms for r in chat_results]
+    doc_latency_values = [r.latency_ms_total for r in doc_results]
+    latency_values = chat_latency_values + doc_latency_values
 
     chat_costs = [r.cost_eur for r in chat_results]
     doc_costs = [r.cost_eur_total for r in doc_results]
@@ -397,6 +419,8 @@ def aggregate(
         citation_recall_mean=_safe_mean(citation_recall_values),
         verdict_match_rate=_safe_mean(verdict_match_values),
         severity_match_rate=_safe_mean(severity_match_values),
+        chat_latency_p95_ms=_safe_p95(chat_latency_values),
+        doc_latency_p95_ms=_safe_p95(doc_latency_values),
         latency_p95_ms=_safe_p95(latency_values),
         cost_per_chat_eur=_safe_mean(chat_costs),
         cost_per_doc_eur=_safe_mean(doc_costs),
