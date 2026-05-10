@@ -23,11 +23,14 @@ from regulaitor.citation.schemas import (
 from regulaitor.security.allowlist import is_uri_allowed
 
 # Unicode codepoints used in injection tricks; stripped if present.
+# nosec B613 -- this set IS the trojan-source defense (we strip these chars
+# from user-supplied documents). Bandit flags the literal RLO char as if it
+# were a trojan vector; here it is the detection fingerprint, not an attack.
 _UNICODE_TRICKS = {
     "​",  # zero-width space
     "‌",  # zero-width non-joiner
     "‍",  # zero-width joiner
-    "‮",  # right-to-left override
+    "‮",  # right-to-left override  # nosec B613
     "⁠",  # word joiner
     "﻿",  # zero-width no-break space (BOM)
 }
