@@ -1,0 +1,22 @@
+{
+  "id": "doc-009",
+  "tipo": "document",
+  "pdf_path": "case_doc-009_contrato-con-proveedor-de-ia-q.pdf",
+  "corpus_esperado": [
+    "ai_act",
+    "gdpr"
+  ],
+  "expected_findings_articulos": [
+    "28.3",
+    "50.1",
+    "6.1"
+  ],
+  "expected_document_verdict": "requires_human_review",
+  "expected_n_segments": 7,
+  "n_segments_tolerance": 2,
+  "criterios_evaluacion": [
+    "Identifica las ambigüedades en la cobertura AI Act del contrato (falta de documentación técnica y evaluación de conformidad del proveedor)",
+    "Cita el artículo 28.3 del RGPD en hallazgos sobre los elementos faltantes del contrato de encargado del tratamiento",
+    "Señala correctamente los puntos de indeterminación que requieren revisión humana (transferencias sin garantías, chatbot sin cláusula de transparencia)"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "doc-006",
+  "tipo": "document",
+  "pdf_path": "case_doc-006_politica-de-privacidad-que-no-.pdf",
+  "corpus_esperado": [
+    "gdpr"
+  ],
+  "expected_findings_articulos": [
+    "12.1",
+    "15.1",
+    "17.1"
+  ],
+  "expected_document_verdict": "pass",
+  "expected_n_segments": 5,
+  "n_segments_tolerance": 2,
+  "criterios_evaluacion": [
+    "Identifica la ausencia de información sobre los procedimientos de ejercicio de derechos de acceso (artículo 15.1 del RGPD) y supresión (artículo 17.1 del RGPD)",
+    "Cita el artículo 12.1 del RGPD en hallazgos sobre la obligación de facilitar la información de manera accesible",
+    "Severidad reportada como medium coherente con déficits de información al interesado"
+  ]
+}
