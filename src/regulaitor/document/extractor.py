@@ -108,10 +108,10 @@ def _read_pdf_metadata(pdf: Any) -> dict[str, str]:
             value = pdf.get_metadata_value(key)
             if value:
                 md[key] = str(value)
-    except Exception:
+    except Exception:  # noqa: BLE001 -- defensive: pypdfium2 metadata API surface
         # Conservative: if metadata API surface differs across pypdfium2 versions,
         # we degrade gracefully — sanitizer treats missing metadata as "none".
-        pass
+        pass  # nosec B110 -- intentional defensive swallow (see comment above)
     return md
 
 
@@ -150,9 +150,9 @@ def _read_pdf_outline(pdf: Any) -> list[OutlineEntry]:
                     page_number=page_number,
                 )
             )
-    except Exception:
+    except Exception:  # noqa: BLE001 -- defensive: pypdfium2 TOC API surface
         # If pypdfium2 surface differs / outline is malformed, skip.
-        pass
+        pass  # nosec B110 -- intentional defensive swallow (see comment above)
     return out
 
 
@@ -185,16 +185,16 @@ def _deep_scan_pdf_bytes(
                 names = root.get(pikepdf.Name.Names)
                 if names is not None and pikepdf.Name.JavaScript in names:
                     has_js = True
-            except Exception:
-                pass
+            except Exception:  # noqa: BLE001 -- defensive (see _deep_scan_pdf_bytes contract)
+                pass  # nosec B110 -- conservative default has_js=False if pikepdf surface differs
 
             # Form actions: /AcroForm with /Fields and an action dictionary
             try:
                 acro = root.get(pikepdf.Name.AcroForm)
                 if acro is not None and pikepdf.Name.Fields in acro:
                     has_form = bool(acro[pikepdf.Name.Fields])
-            except Exception:
-                pass
+            except Exception:  # noqa: BLE001 -- defensive (see _deep_scan_pdf_bytes contract)
+                pass  # nosec B110 -- conservative default has_form=False if pikepdf surface differs
 
             # URI actions in page annotations
             try:
@@ -211,10 +211,10 @@ def _deep_scan_pdf_bytes(
                                 uri = action.get(pikepdf.Name.URI)
                                 if uri is not None:
                                     uri_actions.append(str(uri))
-                        except Exception:
-                            continue
-            except Exception:
-                pass
+                        except Exception:  # noqa: BLE001 -- defensive per-annot
+                            continue  # nosec B112 -- skip malformed annot, keep scanning others
+            except Exception:  # noqa: BLE001 -- defensive: pikepdf pages enumeration
+                pass  # nosec B110 -- conservative default: empty uri_actions if traversal fails
 
             # Attachments via /Names /EmbeddedFiles
             try:
@@ -252,16 +252,16 @@ def _deep_scan_pdf_bytes(
                                         hash="sha256:" + hashlib.sha256(data).hexdigest(),
                                     )
                                 )
-                            except Exception:
-                                continue
-            except Exception:
-                pass
+                            except Exception:  # noqa: BLE001 -- defensive per-attachment
+                                continue  # nosec B112 -- skip malformed attachment entry
+            except Exception:  # noqa: BLE001 -- defensive: /Names /EmbeddedFiles traversal
+                pass  # nosec B110 -- conservative default: empty attachments if traversal fails
     except (pikepdf.PdfError, pikepdf.PasswordError):
         pass
-    except Exception:
+    except Exception:  # noqa: BLE001
         # Last-resort defensive catch: any other pikepdf surface change should
         # degrade to conservative defaults rather than abort extraction.
-        pass
+        pass  # nosec B110 -- intentional swallow; conservative defaults documented above
 
     return has_js, has_form, uri_actions, attachments
 
