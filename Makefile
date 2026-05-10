@@ -1,4 +1,4 @@
-.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve serve-api eval redteam docker deploy clean regenerate-fixtures smoke-document
+.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve serve-api eval eval-subset eval-from-cache redteam docker deploy clean regenerate-fixtures smoke-document
 
 UV ?= uv
 
@@ -15,7 +15,9 @@ help:
 	@echo "  smoke-document       Run analyze CLI on the clean policy fixture (H5)"
 	@echo "  serve      Run Streamlit UI (H6)"
 	@echo "  serve-api  Run FastAPI server on port 8000 (H7)"
-	@echo "  eval       Run evaluation harness (TODO H8)"
+	@echo "  eval       Run full evaluation (~$7 Anthropic credit; populates cache)"
+	@echo "  eval-subset       Run first 5 chat + ~1 doc case for harness debugging (~$1)"
+	@echo "  eval-from-cache   Regenerate report from cached responses (free; fails on miss)"
 	@echo "  redteam    Run red team suite (TODO H9)"
 	@echo "  docker     Build docker image (TODO H16)"
 	@echo "  deploy     Deploy to HF Spaces (TODO H16)"
@@ -55,8 +57,14 @@ serve: ## Run the Streamlit MVP UI (H6)
 serve-api: ## Run the FastAPI server with auto-reload on port 8000 (H7)
 	$(UV) run uvicorn regulaitor.api.main:app --reload --port 8000
 
-eval:
-	@echo "TODO: implementar en H8"
+eval: ## Run full evaluation (~$7 Anthropic credit; populates cache)
+	$(UV) run python -m scripts.evaluate
+
+eval-subset: ## Run first 5 chat + ~1 doc case for harness debugging (~$1)
+	$(UV) run python -m scripts.evaluate --subset 5
+
+eval-from-cache: ## Regenerate report from cached responses (free; fails on miss)
+	$(UV) run python -m scripts.evaluate --cache-only
 
 redteam:
 	@echo "TODO: implementar en H9"
