@@ -20,6 +20,10 @@ from pathlib import Path
 # Filesystem location for the cache. Tests monkeypatch this to tmp_path.
 _CACHE_DIR = Path(__file__).resolve().parent / "cache"
 
+# Separator joining (system, user) into the canonical prompt before hashing.
+# A future caller computing cache_key() manually must use this same separator.
+_PROMPT_SEP = "\n---\n"
+
 # Anthropic prices per 1M tokens (USD), converted to EUR at ~0.92.
 # Rates as of 2026-Q1: Sonnet 4.6 $3/M in, $15/M out; Haiku 4.5 $1/M in, $5/M out.
 _PRICE_EUR_PER_M_TOKENS: dict[str, tuple[float, float]] = {
@@ -66,13 +70,18 @@ def cache_call(
     On hit: zero-cost; on miss with cache_only=False: live API + persist;
     on miss with cache_only=True: raises RuntimeError.
     """
-    prompt = f"{system}\n---\n{user}"
+    prompt = f"{system}{_PROMPT_SEP}{user}"
     key = cache_key(model=model, prompt=prompt, temperature=temperature)
     path = _cache_path(key)
 
     if path.exists():
-        record = json.loads(path.read_text(encoding="utf-8"))
-        return record["response"], 0.0  # cache hit -> zero marginal cost
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+            return record["response"], 0.0  # cache hit -> zero marginal cost
+        except (json.JSONDecodeError, KeyError):
+            # Corrupt or partial cache entry (e.g. process killed mid-write).
+            # Treat as miss so the live API call rebuilds it.
+            pass
 
     if cache_only:
         raise RuntimeError(f"cache miss for {key} in --cache-only mode")
