@@ -144,6 +144,7 @@ ignore_missing_imports = true
 
 [tool.coverage.run]
 source = [
+    "src/regulaitor/api",
     "src/regulaitor/corpus",
     "src/regulaitor/rag",
     "src/regulaitor/citation",
@@ -173,7 +174,7 @@ exclude_also = [
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 asyncio_mode = "auto"
-addopts = "-ra -q --strict-markers --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov-report=term-missing --cov-fail-under=90"
+addopts = "-ra -q --strict-markers --cov=src/regulaitor/api --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov-report=term-missing --cov-fail-under=90"
 markers = [
     "integration: integration tests using stub HTTP server",
     "contract: contract tests using hypothesis",
