@@ -759,7 +759,8 @@ Primero:
 - **H4** — Analyst-Agent + Auditor-Agent + flujo chat E2E (LangGraph) cerrado (2026-05-05). Tag `v0.0.5-h4`. ADR 0006. Ver `docs/technical_decisions_log.md` §H4.
 - **H5** — Pipeline documental cerrado (2026-05-07). Tag `v0.0.6-h5` publicado. Squash commit `415d269` en main. ADR 0007. Sanitizer + segmenter + document_graph operativos. Skill `document-analysis` activa. Ver `docs/technical_decisions_log.md` §H5.
 - **H6** — Streamlit MVP cerrado (2026-05-07). Tag `v0.0.7-h6` publicado. Squash commit `e53f295` en main. ADR 0008. Dos pestañas (Pregunta / Analiza documento) envolviendo `run()` y `run_document()` sin tocar el backend H1-H5. Aviso jurídico persistente. Skill `ui-ux-pro-max` referenciada en memoria pero NO activada (alcance pelado). Ver `docs/technical_decisions_log.md` §H6.
+- **H7** — FastAPI mínima cerrado (2026-05-08). Tag `v0.0.8-h7` publicado. Squash commit `<sha>` en main (TBD post-merge). ADR 0009. Tres endpoints (`/ask`, `/analyze`, `/health`) wrapping H4/H5 sin tocar backend. Auth Bearer + slowapi rate limit + DTOs explícitas + handlers globales + readiness `/health`. Schemathesis 4.x contract (60 fuzz cases) + httpx integration tests con backend fakes (cero coste LLM). 481 tests, 92.40% coverage. Ver `docs/technical_decisions_log.md` §H7.
 
 ### Hito siguiente
 
-- **H7** — FastAPI mínima (`/ask`, `/analyze`, `/health`) + auth básica + rate limiting. Pendiente: brainstorming sobre auth scheme (token estático vs sin auth para MVP), rate limiting (slowapi vs custom middleware), upload handling (`UploadFile` streaming), OpenAPI auto-generation review.
+- **H8** — Gold set + harness de evaluación + métricas + informe. Pendiente: cargar créditos Anthropic, diseñar gold_set.jsonl (≥30 chat + ≥10 documentos), implementar `evals/harness.py` y `evals/metrics.py`, generar primer `evals/reports/latest.md` con citation precision/recall/faithfulness reales.

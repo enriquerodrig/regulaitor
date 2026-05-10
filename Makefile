@@ -1,4 +1,4 @@
-.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve eval redteam docker deploy clean regenerate-fixtures smoke-document
+.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve serve-api eval redteam docker deploy clean regenerate-fixtures smoke-document
 
 UV ?= uv
 
@@ -14,6 +14,7 @@ help:
 	@echo "  regenerate-fixtures  Regenerate synthesized policy PDFs (H5)"
 	@echo "  smoke-document       Run analyze CLI on the clean policy fixture (H5)"
 	@echo "  serve      Run Streamlit UI (H6)"
+	@echo "  serve-api  Run FastAPI server on port 8000 (H7)"
 	@echo "  eval       Run evaluation harness (TODO H8)"
 	@echo "  redteam    Run red team suite (TODO H9)"
 	@echo "  docker     Build docker image (TODO H16)"
@@ -50,6 +51,9 @@ mcp-server: ## Run the MCP server on stdio (H3)
 
 serve: ## Run the Streamlit MVP UI (H6)
 	$(UV) run streamlit run src/regulaitor/ui_streamlit/app.py
+
+serve-api: ## Run the FastAPI server with auto-reload on port 8000 (H7)
+	$(UV) run uvicorn regulaitor.api.main:app --reload --port 8000
 
 eval:
 	@echo "TODO: implementar en H8"
