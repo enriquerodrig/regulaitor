@@ -4,9 +4,14 @@ from __future__ import annotations
 
 import pytest
 from fastapi import HTTPException
+from fastapi.security import HTTPAuthorizationCredentials
 from starlette.requests import Request
 
 from regulaitor.api import auth
+
+
+def _creds(scheme: str, token: str) -> HTTPAuthorizationCredentials:
+    return HTTPAuthorizationCredentials(scheme=scheme, credentials=token)
 
 
 @pytest.fixture(autouse=True)
@@ -80,7 +85,7 @@ async def test_verify_token_missing_header(monkeypatch: pytest.MonkeyPatch) -> N
     auth.load_api_token_or_raise()
     request = _build_request(headers={})
     with pytest.raises(HTTPException) as exc_info:
-        await auth.verify_token(request, authorization=None)
+        await auth.verify_token(request, credentials=None)
     assert exc_info.value.status_code == 401
 
 
@@ -90,7 +95,7 @@ async def test_verify_token_malformed(monkeypatch: pytest.MonkeyPatch) -> None:
     auth.load_api_token_or_raise()
     request = _build_request()
     with pytest.raises(HTTPException) as exc_info:
-        await auth.verify_token(request, authorization="Basic abc123")
+        await auth.verify_token(request, credentials=_creds("Basic", "abc123"))
     assert exc_info.value.status_code == 401
 
 
@@ -100,7 +105,7 @@ async def test_verify_token_invalid(monkeypatch: pytest.MonkeyPatch) -> None:
     auth.load_api_token_or_raise()
     request = _build_request()
     with pytest.raises(HTTPException) as exc_info:
-        await auth.verify_token(request, authorization="Bearer wrong_token")
+        await auth.verify_token(request, credentials=_creds("Bearer", "wrong_token"))
     assert exc_info.value.status_code == 401
 
 
@@ -112,7 +117,7 @@ async def test_verify_token_trailing_whitespace_rejected(monkeypatch: pytest.Mon
     auth.load_api_token_or_raise()
     request = _build_request()
     with pytest.raises(HTTPException) as exc_info:
-        await auth.verify_token(request, authorization=f"Bearer {token}   ")
+        await auth.verify_token(request, credentials=_creds("Bearer", f"{token}   "))
     assert exc_info.value.status_code == 401
 
 
@@ -122,7 +127,7 @@ async def test_verify_token_valid_sets_state_hash(monkeypatch: pytest.MonkeyPatc
     monkeypatch.setenv("REGULAITOR_API_TOKEN", token)
     auth.load_api_token_or_raise()
     request = _build_request()
-    await auth.verify_token(request, authorization=f"Bearer {token}")
+    await auth.verify_token(request, credentials=_creds("Bearer", token))
     assert request.state.token_hash == auth._token_hash(token)
 
 
@@ -132,5 +137,5 @@ async def test_verify_token_unloaded_token_raises_500(monkeypatch: pytest.Monkey
     # Do NOT call load_api_token_or_raise → _API_TOKEN stays None
     request = _build_request()
     with pytest.raises(HTTPException) as exc_info:
-        await auth.verify_token(request, authorization="Bearer anything")
+        await auth.verify_token(request, credentials=_creds("Bearer", "anything"))
     assert exc_info.value.status_code == 500

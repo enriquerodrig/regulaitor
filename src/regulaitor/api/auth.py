@@ -2,6 +2,9 @@
 
 Single static token loaded from REGULAITOR_API_TOKEN env var at app startup.
 Validation uses hmac.compare_digest (timing-attack safe).
+
+verify_token uses Security(HTTPBearer) so that FastAPI/OpenAPI automatically
+advertises the Bearer scheme in /openapi.json, enabling the Authorize button in /docs.
 """
 
 from __future__ import annotations
@@ -10,9 +13,12 @@ import hashlib
 import hmac
 import os
 
-from fastapi import Header, HTTPException, Request
+from fastapi import HTTPException, Request, Security
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 _API_TOKEN: str | None = None
+
+_bearer = HTTPBearer(auto_error=False, scheme_name="REGULAITOR_API_TOKEN")
 
 
 def load_api_token_or_raise() -> None:
@@ -21,7 +27,7 @@ def load_api_token_or_raise() -> None:
     raw = os.getenv("REGULAITOR_API_TOKEN", "").strip()
     if not raw:
         raise RuntimeError(
-            "REGULAITOR_API_TOKEN missing or empty. " "Set it in .env before starting the API."
+            "REGULAITOR_API_TOKEN missing or empty. Set it in .env before starting the API."
         )
     if len(raw) < 16:
         raise RuntimeError("REGULAITOR_API_TOKEN must be at least 16 characters (entropy guard).")
@@ -35,15 +41,19 @@ def _token_hash(token: str) -> str:
 
 async def verify_token(
     request: Request,
-    authorization: str | None = Header(default=None),
+    credentials: HTTPAuthorizationCredentials | None = Security(_bearer),  # noqa: B008
 ) -> None:
-    """FastAPI Depends. Raises 401 on any auth failure; injects token_hash on success."""
+    """FastAPI Depends. Raises 401 on any auth failure; injects token_hash on success.
+
+    Using Security(HTTPBearer) causes FastAPI to advertise the Bearer scheme in
+    /openapi.json so the Swagger UI /docs shows the Authorize button.
+    """
     if _API_TOKEN is None:
         # Defensive: lifespan loads token; this branch should be unreachable in production.
         raise HTTPException(status_code=500, detail="Internal server error")
-    if authorization is None or not authorization.startswith("Bearer "):
+    if credentials is None or credentials.scheme.lower() != "bearer":
         raise HTTPException(status_code=401, detail="Missing or malformed Authorization header")
-    presented = authorization[len("Bearer ") :]
+    presented = credentials.credentials
     if not hmac.compare_digest(presented, _API_TOKEN):
         raise HTTPException(status_code=401, detail="Invalid API token")
     request.state.token_hash = _token_hash(presented)
