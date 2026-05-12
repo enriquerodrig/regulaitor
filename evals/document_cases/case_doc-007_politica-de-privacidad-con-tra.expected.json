@@ -1,0 +1,20 @@
+{
+  "id": "doc-007",
+  "tipo": "document",
+  "pdf_path": "case_doc-007_politica-de-privacidad-con-tra.pdf",
+  "corpus_esperado": [
+    "gdpr"
+  ],
+  "expected_findings_articulos": [
+    "9.1",
+    "9.2"
+  ],
+  "expected_document_verdict": "requires_human_review",
+  "expected_n_segments": 6,
+  "n_segments_tolerance": 2,
+  "criterios_evaluacion": [
+    "Identifica la ambigüedad en la condición habilitante para el tratamiento de datos sensibles (categorías especiales del artículo 9.1 del RGPD)",
+    "Señala que la política no identifica el apartado concreto del artículo 9.2 que ampara el tratamiento de datos de salud y afiliación sindical",
+    "Severidad reportada como medium o high coherente con el riesgo de tratamiento sin base jurídica explícita de datos sensibles"
+  ]
+}
