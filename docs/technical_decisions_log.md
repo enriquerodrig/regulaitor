@@ -1652,10 +1652,29 @@ data.europa.eu allowlist + H7 (capturar deltas reales sin re-litigar el spec).
 
 ### Métricas de cierre
 
-TBD — se poblará post-run desde `evals/reports/latest.md` al hacer squash-merge.
-Métricas esperadas: citation_precision, citation_recall, faithfulness,
-answer_relevancy, verdict_match_rate, severity_match_rate, latency_p95_ms,
-cost_total_eur, cache_hit_rate.
+Full run sobre 30 chat + 10 docs (commit `fa8decf` parent, run 2026-05-12T14:11:25 UTC,
+$2.51 gastados, cache hits/misses 0/40 — primera full run, cache vacía pre-run):
+
+| Métrica | Valor | Threshold §17 | Lectura |
+|---|---|---|---|
+| faithfulness_mean | 0.47 | ≥0.85 | calibración → H15 |
+| answer_relevancy_mean | 0.49 | ≥0.85 | calibración → H15 |
+| context_precision_mean | 0.37 | ≥0.80 | retriever drift → H15 |
+| context_recall_mean | 0.32 | (info) | — |
+| citation_precision_mean | 0.16 | ≥0.90 | over-citation severa del Analyst → H10/H15 |
+| citation_recall_mean | 0.37 | ≥0.80 | calibración → H15 |
+| verdict_match_rate | 0.33 | ≥0.85 | H4 bug (`findings` ocasional missing) + drift |
+| severity_match_rate | 0.19 | ≥0.80 | drift Auditor → H15 |
+| latency_p95_ms (combined) | 588 104 | ≤12 000 | Ragas overhead esperado; chat p95 535s, doc p95 712s |
+| cost_per_chat_eur | 0.019 | ≤0.05 | ✅ |
+| cost_per_doc_eur | 0.193 | ≤0.50 | ✅ |
+| cost_total_eur | 2.51 | (info) | dentro budget $10 |
+| cache_hit_rate | 0.00 | (info) | primera full run, cache vacía pre-run |
+
+Per spec §17 + amendment 11 arriba: estos números son **diagnósticos**, no
+failures de H8. El harness produciendo métricas reales sobre 40 casos ES el
+entregable H8. Los umbrales son objetivos para H10 (pre-gate MVP) y H15
+(calibración Auditor). Cierre H8 squash `fe7b2e5` en main, tag `v0.0.9-h8`.
 
 ### Skill activada
 

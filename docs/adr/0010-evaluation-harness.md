@@ -1,7 +1,7 @@
 # ADR 0010 — Evaluation harness for H8
 
 - **Status:** Accepted
-- **Date:** 2026-05-10 (decision); 2026-05-12 (H8 merged, squash `<sha>` TBD post-merge, tag `v0.0.9-h8` TBD)
+- **Date:** 2026-05-10 (decision); 2026-05-12 (H8 merged, squash `fe7b2e5` en main, tag `v0.0.9-h8`)
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0001 (project scope), 0006 (chat E2E), 0007 (document pipeline), 0009 (FastAPI architecture).
 
