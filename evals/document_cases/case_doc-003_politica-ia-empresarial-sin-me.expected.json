@@ -1,0 +1,20 @@
+{
+  "id": "doc-003",
+  "tipo": "document",
+  "pdf_path": "case_doc-003_politica-ia-empresarial-sin-me.pdf",
+  "corpus_esperado": [
+    "ai_act"
+  ],
+  "expected_findings_articulos": [
+    "14.1",
+    "14.2"
+  ],
+  "expected_document_verdict": "pass",
+  "expected_n_segments": 6,
+  "n_segments_tolerance": 2,
+  "criterios_evaluacion": [
+    "Identifica la ausencia de mecanismos de supervisión humana efectiva (artículo 14.1 del AI Act)",
+    "Cita el artículo 14.2 en hallazgos sobre la falta de protocolo de intervención humana para resultados de baja confiabilidad",
+    "Severidad reportada como high coherente con el riesgo de decisiones automatizadas sin supervisión"
+  ]
+}

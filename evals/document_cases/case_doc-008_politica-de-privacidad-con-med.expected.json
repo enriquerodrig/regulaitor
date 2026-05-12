@@ -1,0 +1,19 @@
+{
+  "id": "doc-008",
+  "tipo": "document",
+  "pdf_path": "case_doc-008_politica-de-privacidad-con-med.pdf",
+  "corpus_esperado": [
+    "gdpr"
+  ],
+  "expected_findings_articulos": [
+    "32.1"
+  ],
+  "expected_document_verdict": "pass",
+  "expected_n_segments": 4,
+  "n_segments_tolerance": 2,
+  "criterios_evaluacion": [
+    "Identifica las deficiencias en las medidas de seguridad respecto a los requisitos del artículo 32.1 del RGPD (ausencia de evaluación periódica, falta de plan de notificación de brechas)",
+    "Cita el artículo 32.1 del RGPD en hallazgos sobre la proporcionalidad de las medidas al riesgo",
+    "Severidad reportada como medium o high coherente con medidas insuficientes para los datos tratados"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "doc-001",
+  "tipo": "document",
+  "pdf_path": "case_doc-001_politica-ia-empresarial-con-si.pdf",
+  "corpus_esperado": [
+    "ai_act"
+  ],
+  "expected_findings_articulos": [
+    "6.1",
+    "6.2",
+    "9.1"
+  ],
+  "expected_document_verdict": "requires_human_review",
+  "expected_n_segments": 5,
+  "n_segments_tolerance": 2,
+  "criterios_evaluacion": [
+    "Identifica la ausencia de clasificación formal de riesgo según el AI Act (artículo 6.1 / 6.2) para los sistemas listados",
+    "Cita el artículo 9.1 en hallazgos indicando la falta de sistema de gestión de riesgos documentado",
+    "Severidad reportada coherente con alto riesgo no gestionado (medium o high)"
+  ]
+}

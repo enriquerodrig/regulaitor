@@ -1,0 +1,20 @@
+{
+  "id": "doc-005",
+  "tipo": "document",
+  "pdf_path": "case_doc-005_politica-de-privacidad-sin-bas.pdf",
+  "corpus_esperado": [
+    "gdpr"
+  ],
+  "expected_findings_articulos": [
+    "6.1",
+    "13.1"
+  ],
+  "expected_document_verdict": "pass",
+  "expected_n_segments": 5,
+  "n_segments_tolerance": 2,
+  "criterios_evaluacion": [
+    "Identifica la ausencia de identificación de la base jurídica del tratamiento para cada finalidad (artículo 6.1 del RGPD)",
+    "Cita el artículo 13.1 del RGPD en hallazgos sobre la información incompleta facilitada al interesado",
+    "Severidad reportada coherente con la falta de base jurídica identificada (medium o high)"
+  ]
+}
