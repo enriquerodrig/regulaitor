@@ -1536,3 +1536,129 @@ data.europa.eu allowlist (capturar deltas reales sin re-litigar el spec).
 - Pre-commit verde (ruff, black, gitleaks, end-of-file, trim-whitespace).
 - Pip-audit verde para nuevas deps (fastapi, uvicorn, slowapi,
   python-multipart, schemathesis, pytest-asyncio).
+
+---
+
+## H8 — Gold set + harness de evaluación + métricas + informe (cerrado 2026-05-XX)
+
+**Squash commit:** `<sha>` en main (PR squash-merged 2026-05-XX). Tag `v0.0.9-h8`
+publicado. **Spec:** `docs/superpowers/specs/2026-05-10-h8-evaluation-harness-design.md`.
+**Plan:** `docs/superpowers/plans/2026-05-10-h8-evaluation-harness.md`. **ADR:**
+`docs/adr/0010-evaluation-harness.md`.
+
+### Brainstorming Qs (2026-05-10)
+
+- **Q1 — Judge model:** A. Anthropic Haiku 4.5 (`claude-haiku-4-5-20251001`), modelo
+  distinto a Sonnet 4.6 de producción. Un único API key cubre ambos. Caveat "mismo
+  proveedor" documentado en ADR 0010 D1 y en el bloque Caveats del report. Deferral
+  a H12 router multi-LLM real donde se introduce GPT-4o-mini u otro vendor externo
+  como juez independiente.
+- **Q2 — Framework:** A. Ragas + custom layer. Ragas aporta las métricas estándar
+  RAG (faithfulness, answer_relevancy, context_precision, context_recall) citables
+  en la defensa del TFM Módulo 3. La capa custom añade métricas RegulAItor-específicas
+  (citation_precision, citation_recall, verdict_match_rate, severity_match_rate).
+  DeepEval diferido a H15 calibración — redundante para H8.
+- **Q3 — Scope:** A. 30 chat + 10 docs estratificados. Estratificación: 15/15 por
+  corpus (ai_act/gdpr); 24/9/7 por verdict (pass/requires_human_review/block) en
+  chat; 4/4/2 por corpus (ai_act/gdpr/mixed) en docs. Cache obligatorio en
+  `evals/cache/` (SHA256 hash-keyed, gitignored) — sin él el budget de $10 se consume
+  en la primera iteración de debugging.
+- **Q4 — Execution:** A. Solo local + manual commit del report. CI corre únicamente
+  los tests unitarios del harness (`tests/unit/test_evals_*.py`) sin coste LLM.
+  Flags `--subset N` y `--cache-only` para debugging sin gasto. Decisión firme:
+  $7/PR es insostenible con $10 de presupuesto total.
+- **Q5 — Authoring:** B. Hybrid. Esqueleto humano (~3-4h, estratificación + topics),
+  draft subagente para `gold_set.jsonl` + 10 PDFs ReportLab + manifests (~1-2h en
+  background), revisión humana en PR (~1-2h). Autoría manual completa (10-15h)
+  rechazada por coste de oportunidad.
+- **Q6 — Report:** B. Aggregate + per-case appendix (~5-7 páginas markdown). Bake-ins:
+  `temperature=0`, bloque Caveats (vendor único, coste heurístico, gold set
+  sintético), bloque Reproducibilidad con comandos literales, pass/fail marks por
+  threshold CLAUDE.md §17. Breakdown estratificado por corpus/verdict diferido a
+  H10/H17 polish.
+
+### Future-work doc convention
+
+Decisión transversal heredada de H7 (2026-05-08): ítems out-of-scope se mencionan
+en spec/ADR de cada hito y se consolidan en un único `docs/future_work.md` en H17
+sobre el entregable final, NO eagerly durante hitos intermedios. El ADR 0010
+§"Deferred" captura los ítems de H8 para esa consolidación futura. Memoria
+interna: `feedback_future_work_doc.md`.
+
+### Implementation amendments
+
+Aplicados durante Tasks 1-12. Patrón heredado de H1 PDF pivot + H5
+data.europa.eu allowlist + H7 (capturar deltas reales sin re-litigar el spec).
+
+1. **Task 2 — `schemas.py` lint fixes.** Import sort y eliminación de un import
+   `DocCaseResult` no utilizado. Funcionalmente idéntico al spec.
+
+2. **Task 3 — `cache.py` resilience hardening.** `try/except JSONDecodeError`
+   añadido para tratar cache files corruptos como miss en lugar de crash. Constante
+   `_PROMPT_SEP` extraída. Assertions de file schema en tests. Test de coste con
+   ambos tokens non-zero. Regression test para archivo corrupto.
+
+3. **Task 4 — `metrics.py` fixes críticos.** NaN guard en `_ragas_metrics_chat`
+   (Ragas puede producir `nan` → Pydantic `ValidationError` → crash del harness).
+   Doc faithfulness usa texto del segmento como contexto (era `contexts=[]`,
+   producía faithfulness=0 espúrea). `audited=None` mapeado a
+   `requires_human_review` (no a `block`). Latency p95 dividido en tres sub-campos
+   `chat`/`doc`/`combined` en `AggregateMetrics`. Tests unitarios añadidos para
+   todos estos paths.
+
+4. **Task 5 — `judge.py` strip-markdown-fence helper.** Helper `_strip_markdown_fence`
+   añadido a `score_criteria`. Haiku 4.5 envuelve el JSON en fences ` ```json `
+   ocasionalmente a pesar del prompt; el parsing resiliente extrae el JSON interior.
+
+5. **Task 7 — `harness.py` sentinel wrapping.** `run_chat_case` y `run_doc_case`
+   envueltos en `try/except` con resultado sentinel en caso de fallo. El Analyst de
+   H4 produce ocasionalmente una respuesta tool-use sin campo `findings` → Pydantic
+   `ValidationError` → sin este guard el harness terminaría a mitad de run. El
+   sentinel preserva el error en el report. El backend NO se modifica (D8).
+
+6. **Task 7 — `corpus_loader.warmup()` en harness.** El warmup solo era llamado
+   por `mcp_server` al arrancar el proceso; `harness.main()` no lo hacía, causando
+   fallo en el primer call de retrieval en proceso Python fresco. Añadido al inicio
+   de `main()`.
+
+7. **Task 7 — `langchain-anthropic>=0.3,<1.0` en dev.** Ragas requiere este
+   paquete como backend LLM; no es una dependencia transitiva de `ragas` en sí.
+
+8. **Task 7 — `langchain-huggingface>=1.0,<2.0` + `HuggingFaceEmbeddings`.** Sin
+   adaptador de embeddings explícito, Ragas usa OpenAI por defecto. Pasar
+   `HuggingFaceEmbeddings("BAAI/bge-m3")` evita un segundo API key (rechazado por
+   Q1). Añadido a dependencias de desarrollo.
+
+9. **Task 7 — `ChatAnthropic(max_tokens=4096)`.** El default de `max_tokens=1024`
+   causaba `LLMDidNotFinishException` en Ragas faithfulness para pasajes largos.
+
+10. **Task 10 — Fix sentinel de block cases.** Block cases usaban inicialmente
+    `articulos_esperados=["N/A"]` (el schema exigía `min_length=1`). Fix-pass:
+    schema relaxado para admitir lista vacía `[]`; aggregate excluye casos con
+    expected vacío de las métricas de cita; 4 registros block-case actualizados.
+    Nuevo script `scripts/generate_h8_gold_set.py` (no extiende
+    `regenerate_document_fixtures.py` de H5 para evitar acoplamiento).
+
+11. **Task 11 — Dos CVEs transitivos ignorados.** CVE-2025-69872 (diskcache pickle
+    RCE, sin fix upstream; explotable solo con acceso de escritura a `evals/cache/`
+    que es local al operador) y CVE-2026-6587 (ragas SSRF en módulo
+    `multi_modal_faithfulness`, no ejercido por nuestro conjunto de métricas
+    text-only). Ambos usan `--ignore-vuln` en CI workflow con comentario de
+    justificación.
+
+12. **Task 11 — Eliminación de `.env.example`.** Instrucción del usuario que
+    prevalece sobre CLAUDE.md §22.6: único `.env` sin ejemplo público. Capturado
+    en memoria interna.
+
+### Métricas de cierre
+
+TBD — se poblará post-run desde `evals/reports/latest.md` al hacer squash-merge.
+Métricas esperadas: citation_precision, citation_recall, faithfulness,
+answer_relevancy, verdict_match_rate, severity_match_rate, latency_p95_ms,
+cost_total_eur, cache_hit_rate.
+
+### Skill activada
+
+- `evals-runner` activada en cierre H8 — procedimiento canónico de "cuándo y cómo
+  correr el eval, cómo leer el report, qué anti-patterns evitar". Ver
+  `.claude/skills/evals-runner/SKILL.md`.

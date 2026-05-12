@@ -103,6 +103,53 @@ curl -X POST http://localhost:8000/analyze \
 | `REGULAITOR_MAX_UPLOAD_BYTES` | `10485760` (10 MB) | max upload size for `/analyze` |
 | `REGULAITOR_RATE_LIMIT_DISABLED` | (unset) | set to `1` to disable rate limiting (tests) |
 
+## Evaluation (H8)
+
+The harness runs the full RegulAItor pipeline against a curated gold set
+(30 chat + 10 docs), computes Ragas + custom metrics with a Haiku 4.5
+LLM judge, and emits `evals/reports/latest.md`.
+
+### Quickstart
+
+```bash
+# First time: populate the cache (~$7 Anthropic credit)
+make eval
+
+# Subsequent regenerations from cache: free
+make eval-from-cache
+
+# Debugging the harness with a small subset (~$1)
+make eval-subset
+```
+
+> **Partial reproducibility caveat:** `make eval-from-cache` replays only the
+> judge layer (Haiku 4.5 calls are cached). The H4 chat graph and H5 document
+> pipeline make their own live LLM calls on every run. To fully re-run production
+> calls use `make eval` (~$3-5 Anthropic credit per full run).
+
+### Reading the report
+
+`evals/reports/latest.md` has five sections:
+
+1. **Header** — run date, commit SHA, model versions, total cost.
+2. **Aggregate table** — each metric with its threshold from CLAUDE.md §17 and
+   a pass/fail mark.
+3. **Per-case appendix** — 40 sections (one per gold case) showing actual vs
+   expected verdict, citations emitted vs expected, RAG metrics, criteria scores.
+4. **Reproducibility block** — literal commands to regenerate the report.
+5. **Caveats** — limitations of the eval setup (same-vendor judge, heuristic cost
+   estimation, synthetic gold set).
+
+### Configuration
+
+| Env var | Default | Purpose |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | (required) | Production model + judge model access |
+
+The judge model (`claude-haiku-4-5-20251001`) and production model
+(`claude-sonnet-4-6`) are hardcoded in `evals/harness.py`; change there
+if migrating to a different vendor (deferred to H12 per ADR 0010).
+
 ## Stack (current + planned)
 
 Python 3.11 · `uv` · Pydantic v2 · **LanceDB · BGE-M3 · bge-reranker-v2-m3** (active) · FastAPI · LangGraph · Streamlit (MVP) · Next.js (advanced) · Docker · GitHub Actions · LangFuse · Ragas + DeepEval (planned).
