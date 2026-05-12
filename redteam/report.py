@@ -7,6 +7,7 @@ markdown content for redteam/reports/latest.md. No side effects.
 from __future__ import annotations
 
 from redteam.schemas import (
+    LAYERS_WITH_NONE,
     Attack,
     AttackAggregate,
     AttackOutcome,
@@ -64,7 +65,7 @@ def render_report(
     sections.append("")
     sections.append("| Layer | Blocks fired |")
     sections.append("|---|---|")
-    for layer in ("sanitizer", "injection", "validator", "auditor", "none"):
+    for layer in LAYERS_WITH_NONE:
         sections.append(f"| {layer} | {agg.per_layer.get(layer, 0)} |")
     sections.append("")
     sections.append("## Per-attack appendix")

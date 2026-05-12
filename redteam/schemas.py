@@ -18,6 +18,24 @@ _LayerOrAny = Literal["sanitizer", "injection", "validator", "auditor", "any"]
 _Mode = Literal["chat", "document"]
 _ExpectedVerdict = Literal["block", "requires_human_review"]
 
+# Public tuple constants — single source of truth shared with runner + report.
+# Typed as tuples of the corresponding Literal alias so mypy treats each entry
+# as a valid key for dict[Literal, ...] lookups (used in per_layer aggregation).
+LAYERS_WITH_NONE: tuple[_LayerWithNone, ...] = (
+    "sanitizer",
+    "injection",
+    "validator",
+    "auditor",
+    "none",
+)
+LAYERS_OR_ANY: tuple[_LayerOrAny, ...] = (
+    "sanitizer",
+    "injection",
+    "validator",
+    "auditor",
+    "any",
+)
+
 
 class Attack(BaseModel):
     """One adversarial test case. Immutable, declared in attacks.jsonl."""
