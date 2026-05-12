@@ -61,7 +61,7 @@ def test_attack_rejects_extra_fields() -> None:
 def test_attack_frozen() -> None:
     a = Attack.model_validate(_make_attack())
     with pytest.raises(ValidationError):
-        a.id = "attack-002"  # type: ignore[misc]
+        a.id = "attack-002"
 
 
 def test_attack_outcome_basic() -> None:
