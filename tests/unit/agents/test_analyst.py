@@ -154,3 +154,98 @@ def test_init_rejects_path_traversal() -> None:
     """AnalystAgent must reject prompt_version values that could enable path traversal."""
     with pytest.raises(ValueError):
         AnalystAgent(prompt_version="../../etc/passwd")
+
+
+# ---------------------------------------------------------------------------
+# H8 fix: retry-once on `findings` missing (analyst.py:79 docstring)
+# ---------------------------------------------------------------------------
+
+
+def _make_completion_result_missing_findings() -> CompletionResult:
+    """Mock LLM emits tool_use_input WITHOUT the findings field (the H8 bug)."""
+    return CompletionResult(
+        text=None,
+        tool_use_input={
+            "query": "alto riesgo",
+            "language": "es",
+            "text": "El AI Act trata los sistemas de alto riesgo.",
+            # findings field omitted (the bug)
+        },
+        usage=Usage(input_tokens=1000, output_tokens=500),
+        model_id="claude-sonnet-4-6",
+        latency_ms=2500,
+        cost_eur=0.018,
+    )
+
+
+def test_analyze_retries_once_when_findings_missing(monkeypatch: pytest.MonkeyPatch) -> None:
+    """First response omits `findings` -> retry once with tool_result error -> accept."""
+    from regulaitor.agents import analyst
+
+    complete_mock = MagicMock(
+        side_effect=[
+            _make_completion_result_missing_findings(),
+            _make_completion_result_with_answer(),
+        ]
+    )
+    monkeypatch.setattr(analyst.router, "complete", complete_mock)
+
+    agent = AnalystAgent()
+    answer = agent.analyze(query="alto riesgo", context=_make_context())
+
+    assert isinstance(answer, Answer)
+    assert len(answer.findings) == 1
+    assert complete_mock.call_count == 2
+
+    second_messages = complete_mock.call_args_list[1].kwargs["messages"]
+    assert len(second_messages) == 3, "retry should append assistant tool_use + user tool_result"
+    assert second_messages[1]["role"] == "assistant"
+    assert second_messages[1]["content"][0]["type"] == "tool_use"
+    assert second_messages[2]["role"] == "user"
+    tool_result = second_messages[2]["content"][0]
+    assert tool_result["type"] == "tool_result"
+    assert tool_result["is_error"] is True
+    assert "findings" in tool_result["content"]
+
+
+def test_analyze_no_retry_when_other_validation_errors(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """If validation errors include fields other than findings, do NOT retry."""
+    from regulaitor.agents import analyst
+
+    malformed = CompletionResult(
+        text=None,
+        tool_use_input={"query": "x"},  # missing language, text, AND findings
+        usage=Usage(input_tokens=100, output_tokens=50),
+        model_id="claude-sonnet-4-6",
+        latency_ms=500,
+        cost_eur=0.001,
+    )
+    complete_mock = MagicMock(return_value=malformed)
+    monkeypatch.setattr(analyst.router, "complete", complete_mock)
+
+    agent = AnalystAgent()
+    with pytest.raises(RuntimeError, match="malformed Answer:"):
+        agent.analyze(query="q", context=_make_context())
+
+    assert complete_mock.call_count == 1, "must not retry when error is not findings-only"
+
+
+def test_analyze_raises_after_two_failed_attempts(monkeypatch: pytest.MonkeyPatch) -> None:
+    """If both attempts omit `findings`, raise RuntimeError with 'after retry' marker."""
+    from regulaitor.agents import analyst
+
+    complete_mock = MagicMock(
+        side_effect=[
+            _make_completion_result_missing_findings(),
+            _make_completion_result_missing_findings(),
+        ]
+    )
+    monkeypatch.setattr(analyst.router, "complete", complete_mock)
+
+    agent = AnalystAgent()
+    with pytest.raises(RuntimeError, match="malformed Answer after retry"):
+        agent.analyze(query="q", context=_make_context())
+
+    assert complete_mock.call_count == 2

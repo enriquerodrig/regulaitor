@@ -77,27 +77,93 @@ class AnalystAgent:
         self._system_prompt = prompt_path.read_text(encoding="utf-8")
 
     def analyze(self, query: str, context: Context) -> Answer:
-        """Produce a validated Answer via Anthropic tool use."""
-        result = router.complete(
-            messages=[{"role": "user", "content": _render_user_message(query, context)}],
-            system=self._system_prompt,
-            tools=[
-                {
-                    "name": "emit_answer",
-                    "description": "Emit the final Answer with findings + citations.",
-                    "input_schema": _strip_unsupported_schema_fields(Answer.model_json_schema()),
-                }
-            ],
-            tool_choice={"type": "tool", "name": "emit_answer"},
-            model_choice="default",
-            max_tokens=2000,
-        )
-        if result.tool_use_input is None:
-            raise RuntimeError("Analyst LLM did not emit emit_answer tool call; received text only")
-        try:
-            return Answer.model_validate(result.tool_use_input)
-        except ValidationError as e:
-            raise RuntimeError(
-                f"Analyst emitted malformed Answer: {e.error_count()} validation errors. "
-                f"Errors: {e.errors()}"
-            ) from e
+        """Produce a validated Answer via Anthropic tool use.
+
+        H8 finding: Sonnet occasionally drops the `findings` field despite the
+        tool_use input_schema marking it required. One retry with a `tool_result`
+        error message recovers the case without contaminating downstream with
+        sentinel fallbacks. Spec §6 "no citation, no answer" stays intact —
+        if the second attempt also fails, RuntimeError surfaces as before.
+        """
+        tools_spec = [
+            {
+                "name": "emit_answer",
+                "description": "Emit the final Answer with findings + citations.",
+                "input_schema": _strip_unsupported_schema_fields(Answer.model_json_schema()),
+            }
+        ]
+        messages: list[dict[str, Any]] = [
+            {"role": "user", "content": _render_user_message(query, context)}
+        ]
+        last_error: ValidationError | None = None
+        retried = False
+        for attempt in (1, 2):
+            result = router.complete(
+                messages=messages,
+                system=self._system_prompt,
+                tools=tools_spec,
+                tool_choice={"type": "tool", "name": "emit_answer"},
+                model_choice="default",
+                max_tokens=2000,
+            )
+            if result.tool_use_input is None:
+                raise RuntimeError(
+                    f"Analyst LLM did not emit emit_answer tool call (attempt {attempt})"
+                )
+            try:
+                return Answer.model_validate(result.tool_use_input)
+            except ValidationError as e:
+                last_error = e
+                if attempt == 2 or not _is_findings_missing(e):
+                    break
+                # H8 retry: feed back the malformed tool_use with a tool_result error
+                tool_use_id = "retry_h4_findings"
+                messages = messages + [
+                    {
+                        "role": "assistant",
+                        "content": [
+                            {
+                                "type": "tool_use",
+                                "id": tool_use_id,
+                                "name": "emit_answer",
+                                "input": result.tool_use_input,
+                            }
+                        ],
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "tool_result",
+                                "tool_use_id": tool_use_id,
+                                "content": (
+                                    "Your emit_answer call was missing the required "
+                                    "`findings` field. Re-emit the Answer with all "
+                                    "required fields. If the corpus does not support "
+                                    "specific findings, emit `findings: []` as your "
+                                    "system instructions describe."
+                                ),
+                                "is_error": True,
+                            }
+                        ],
+                    },
+                ]
+                retried = True
+        suffix = " after retry" if retried else ""
+        raise RuntimeError(
+            f"Analyst emitted malformed Answer{suffix}: "
+            f"{last_error.error_count() if last_error else 0} validation errors. "
+            f"Errors: {last_error.errors() if last_error else []}"
+        ) from last_error
+
+
+def _is_findings_missing(e: ValidationError) -> bool:
+    """True if validation errors are EXCLUSIVELY about `findings` being absent.
+
+    Conservative: returns False if there are any other validation errors so
+    we don't waste a retry when the model's response is broken in multiple ways.
+    """
+    errors = e.errors()
+    if not errors:
+        return False
+    return all(err.get("loc") == ("findings",) and err.get("type") == "missing" for err in errors)
