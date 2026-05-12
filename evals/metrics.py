@@ -128,6 +128,7 @@ def _ragas_metrics_chat(
     import pandas as pd  # pragma: no cover
     from datasets import Dataset  # pragma: no cover
     from langchain_anthropic import ChatAnthropic  # pragma: no cover
+    from langchain_huggingface import HuggingFaceEmbeddings  # pragma: no cover
     from ragas import evaluate  # pragma: no cover
     from ragas.metrics import (  # pragma: no cover
         answer_relevancy,
@@ -151,12 +152,25 @@ def _ragas_metrics_chat(
     )
     ds = Dataset.from_pandas(df)  # pragma: no cover
 
-    llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0.0)  # pragma: no cover
+    llm = ChatAnthropic(  # pragma: no cover
+        model="claude-haiku-4-5-20251001",
+        temperature=0.0,
+        max_tokens=4096,  # Ragas faithfulness emits ~1-2k tokens; bump to avoid LLMDidNotFinish
+    )
+    # BGE-M3 is the same embedding model the retriever uses; semantically aligned
+    # with production. Without an explicit embeddings backend Ragas falls back to
+    # OpenAI which would require a separate API key (rejected per H8 Q1 decision).
+    embeddings = HuggingFaceEmbeddings(  # pragma: no cover
+        model_name="BAAI/bge-m3",
+        model_kwargs={"device": "cpu"},
+        encode_kwargs={"normalize_embeddings": True},
+    )
 
     result = evaluate(  # pragma: no cover
         ds,
         metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
         llm=llm,
+        embeddings=embeddings,
         raise_exceptions=False,
     )
     out = result.to_pandas().iloc[0].to_dict()  # pragma: no cover

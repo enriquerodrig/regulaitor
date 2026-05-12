@@ -31,6 +31,23 @@ def _load_judge_prompt() -> str:
     return _PROMPT_PATH.read_text(encoding="utf-8")
 
 
+def _strip_markdown_fence(text: str) -> str:
+    """Strip ```json ... ``` or ``` ... ``` code fences if the LLM wrapped its JSON.
+
+    The judge prompt asks for raw JSON, but Haiku 4.5 occasionally wraps in markdown
+    despite the explicit instruction. Resilient parsing: strip the fence and return
+    the inner content.
+    """
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        first_newline = stripped.find("\n")
+        if first_newline != -1:
+            stripped = stripped[first_newline + 1 :]
+        if stripped.endswith("```"):
+            stripped = stripped[:-3].rstrip()
+    return stripped
+
+
 def score_criteria(
     *,
     criteria: list[str],
@@ -66,5 +83,5 @@ def score_criteria(
         temperature=0.0,
         max_tokens=_MAX_TOKENS,
     )
-    parsed = json.loads(response_text)
+    parsed = json.loads(_strip_markdown_fence(response_text))
     return [CriteriaScore(**s) for s in parsed["scores"]]

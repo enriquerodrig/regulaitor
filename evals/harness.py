@@ -25,6 +25,7 @@ from evals.schemas import (
     GoldCaseDoc,
 )
 from regulaitor.citation.schemas import DocumentReport
+from regulaitor.corpus import loader as corpus_loader
 from regulaitor.orchestration.document_graph import run_document
 from regulaitor.orchestration.graph import run as run_chat
 from regulaitor.orchestration.state import ChatState
@@ -86,6 +87,45 @@ def _real_anthropic_invoke(
     return text, response.usage.input_tokens, response.usage.output_tokens
 
 
+def _error_doc_report(case_id: str, error_msg: str, corpus: list[str]) -> DocumentReport:
+    """Build a sentinel DocumentReport for cases where the H5 pipeline raised."""
+    from regulaitor.citation.schemas import AuditVerdict
+
+    return DocumentReport(
+        case_id=case_id,
+        document_hash="0" * 64,
+        language="es",
+        corpus=corpus,
+        sanitizer_log=[],
+        segments=[],
+        document_verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+        document_reason=f"harness_backend_error: {error_msg[:200]}",
+        n_segments_total=0,
+        n_segments_blocked_by_injection=0,
+        n_segments_pass=0,
+        n_segments_block=0,
+        n_segments_review=0,
+        latency_ms_total=0,
+        cost_eur_total=0.0,
+    )
+
+
+def _error_chat_state(case_id: str, error_msg: str) -> ChatState:
+    """Build a sentinel ChatState for cases where the backend raised.
+
+    metrics.compute_chat_metrics handles audited_answer=None by mapping
+    actual_verdict to requires_human_review (more honest than 'block'
+    for backend errors). The errors list is preserved for the report.
+    """
+    return ChatState(
+        case_id=case_id,
+        query="(backend error)",
+        corpus="ai_act",
+        language="es",
+        errors=[error_msg[:500]],  # truncate to keep logs hygienic
+    )
+
+
 def run_chat_case(
     case: GoldCaseChat,
     *,
@@ -101,12 +141,15 @@ def run_chat_case(
     """
     case_id = f"eval-{case.id}"
     t0 = time.monotonic()
-    state = run_chat(
-        query=case.entrada,
-        corpus=case.corpus_esperado,
-        language="es",
-        case_id=case_id,
-    )
+    try:
+        state = run_chat(
+            query=case.entrada,
+            corpus=case.corpus_esperado,
+            language="es",
+            case_id=case_id,
+        )
+    except Exception as exc:  # noqa: BLE001 — per-case backend errors must not crash full run
+        state = _error_chat_state(case_id, f"{type(exc).__name__}: {exc}")
     latency_ms = int((time.monotonic() - t0) * 1000)
 
     # Cost estimation: extract tokens from state if available; fallback to heuristic.
@@ -129,13 +172,18 @@ def run_doc_case(
     file_bytes = pdf_path.read_bytes()
     case_id = f"eval-{case.id}"
     t0 = time.monotonic()
-    report = run_document(
-        file_bytes=file_bytes,
-        mime_type="application/pdf",
-        language="es",
-        corpus=list(case.corpus_esperado),
-        case_id=case_id,
-    )
+    try:
+        report = run_document(
+            file_bytes=file_bytes,
+            mime_type="application/pdf",
+            language="es",
+            corpus=list(case.corpus_esperado),
+            case_id=case_id,
+        )
+    except Exception as exc:  # noqa: BLE001 — per-case backend errors must not crash full run
+        report = _error_doc_report(
+            case_id, f"{type(exc).__name__}: {exc}", list(case.corpus_esperado)
+        )
     latency_ms_total = int((time.monotonic() - t0) * 1000)
     # Estimate ~30k input + 8k output per doc on Sonnet
     estimated_cost_eur = estimate_cost_eur(
@@ -151,6 +199,11 @@ def main(
     cache_only: bool = False,
 ) -> None:
     """Entry point. Loads gold, runs all cases, writes the report."""
+    # Corpus loader must be populated before the retriever calls get_manifest_meta.
+    # H4 chat graph and H5 document graph both depend on this. mcp_server does it
+    # at startup; for the eval harness we do it here.
+    corpus_loader.warmup()
+
     chat_cases, doc_cases = load_gold_set(gold_path=gold_set_path)
 
     if subset is not None:
