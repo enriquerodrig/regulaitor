@@ -1,4 +1,4 @@
-.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve serve-api eval eval-subset eval-from-cache redteam docker deploy clean regenerate-fixtures smoke-document
+.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve serve-api eval eval-subset eval-from-cache redteam redteam-smoke docker deploy clean regenerate-fixtures smoke-document
 
 UV ?= uv
 
@@ -18,7 +18,8 @@ help:
 	@echo "  eval       Run full evaluation (~$7 Anthropic credit; populates cache)"
 	@echo "  eval-subset       Run first 5 chat + ~1 doc case for harness debugging (~$1)"
 	@echo "  eval-from-cache   Regenerate report from cached responses (free; fails on miss)"
-	@echo "  redteam    Run red team suite (TODO H9)"
+	@echo "  redteam    Run full red team suite (50 attacks, ~$2.35 Anthropic credit)"
+	@echo "  redteam-smoke     Run deterministic-only attacks (no LLM, $0, ~30s)"
 	@echo "  docker     Build docker image (TODO H16)"
 	@echo "  deploy     Deploy to HF Spaces (TODO H16)"
 	@echo "  clean      Remove caches and build artifacts"
@@ -66,8 +67,11 @@ eval-subset: ## Run first 5 chat + ~1 doc case for harness debugging (~$1)
 eval-from-cache: ## Regenerate report from cached responses (free; fails on miss)
 	$(UV) run python -m scripts.evaluate --cache-only
 
-redteam:
-	@echo "TODO: implementar en H9"
+redteam: ## Run full red team suite (50 attacks, ~$2.35 Anthropic credit)
+	$(UV) run python -m scripts.redteam
+
+redteam-smoke: ## Run deterministic-only attacks (no LLM, $0, ~30s)
+	$(UV) run python -m scripts.redteam --smoke
 
 docker:
 	@echo "TODO: implementar en H16"
