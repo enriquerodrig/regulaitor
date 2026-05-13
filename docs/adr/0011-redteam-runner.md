@@ -91,7 +91,10 @@ Plus: attack-008 PDF spec trimmed (rendering survival fix — oversized invisibl
 PDF corruption in some viewers, not an injection bypass).
 
 Baseline block_rate (smoke pre-improvements): 0.46. Post-improvements: 0.92.
-Final block_rate over 50 attacks: `<X.XX>` (populated post full-run merge).
+Final block_rate over the 50 full set: **deferred to H11** (first full-run attempt
+hung on Anthropic API silent timeout; runner timeouts pending). Closure evidence:
+smoke block_rate **0.92** sobre el subset deterministic (13 ataques), gate §16.2 #4
+≥ 0.90 ✅. Ver `docs/technical_decisions_log.md §H9 amendment 5`.
 
 ## Consequences
 

@@ -1539,9 +1539,9 @@ data.europa.eu allowlist (capturar deltas reales sin re-litigar el spec).
 
 ---
 
-## H8 — Gold set + harness de evaluación + métricas + informe (cerrado 2026-05-XX)
+## H8 — Gold set + harness de evaluación + métricas + informe (cerrado 2026-05-12)
 
-**Squash commit:** `<sha>` en main (PR squash-merged 2026-05-XX). Tag `v0.0.9-h8`
+**Squash commit:** `fe7b2e5` en main (PR squash-merged 2026-05-12). Tag `v0.0.9-h8`
 publicado. **Spec:** `docs/superpowers/specs/2026-05-10-h8-evaluation-harness-design.md`.
 **Plan:** `docs/superpowers/plans/2026-05-10-h8-evaluation-harness.md`. **ADR:**
 `docs/adr/0010-evaluation-harness.md`.
