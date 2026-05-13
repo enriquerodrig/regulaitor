@@ -145,6 +145,34 @@ ignore_missing_imports = true
 module = "streamlit.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "pandas"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "datasets"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "langchain_anthropic"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "langchain_anthropic.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "langchain_huggingface"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "ragas"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "ragas.*"
+ignore_missing_imports = true
+
 [tool.coverage.run]
 source = [
     "src/regulaitor/api",

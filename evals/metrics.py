@@ -152,10 +152,13 @@ def _ragas_metrics_chat(
     )
     ds = Dataset.from_pandas(df)  # pragma: no cover
 
+    # langchain_anthropic.ChatAnthropic accepts model/max_tokens at runtime
+    # (it's a Pydantic BaseModel that takes **kwargs forwarded to the SDK);
+    # the type stub omits them, so we suppress the call-arg mypy errors.
     llm = ChatAnthropic(  # pragma: no cover
-        model="claude-haiku-4-5-20251001",
+        model="claude-haiku-4-5-20251001",  # type: ignore[call-arg]
         temperature=0.0,
-        max_tokens=4096,  # Ragas faithfulness emits ~1-2k tokens; bump to avoid LLMDidNotFinish
+        max_tokens=4096,  # type: ignore[call-arg] # Ragas faithfulness emits ~1-2k tokens
     )
     # BGE-M3 is the same embedding model the retriever uses; semantically aligned
     # with production. Without an explicit embeddings backend Ragas falls back to
@@ -173,7 +176,10 @@ def _ragas_metrics_chat(
         embeddings=embeddings,
         raise_exceptions=False,
     )
-    out = result.to_pandas().iloc[0].to_dict()  # pragma: no cover
+    # Ragas evaluate() returns EvaluationResult | Executor (Union); to_pandas
+    # is only on the success branch. raise_exceptions=False at runtime
+    # guarantees we get EvaluationResult, but mypy can't narrow the Union.
+    out = result.to_pandas().iloc[0].to_dict()  # type: ignore[union-attr]  # pragma: no cover
 
     def _safe_score(val: object) -> float:  # pragma: no cover
         if val is None:
