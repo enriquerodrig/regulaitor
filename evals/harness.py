@@ -229,10 +229,10 @@ def main(
         chat_results.append(result)
 
     doc_results: list[DocCaseResult] = []
-    for case in doc_cases:
-        report, latency_ms, cost_eur, cache_hit = run_doc_case(case, cache_only=cache_only)
-        result = compute_doc_metrics(
-            case,
+    for doc_case in doc_cases:
+        report, latency_ms, cost_eur, cache_hit = run_doc_case(doc_case, cache_only=cache_only)
+        doc_result = compute_doc_metrics(
+            doc_case,
             report,
             judge_call=judge_call,
             judge_score_fn=judge_score_fn,
@@ -240,7 +240,7 @@ def main(
             cost_eur_total=cost_eur,
             cache_hit=cache_hit,
         )
-        doc_results.append(result)
+        doc_results.append(doc_result)
 
     agg = aggregate(chat_results, doc_results)
     meta = EvalRunMeta(

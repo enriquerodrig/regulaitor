@@ -18,6 +18,7 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -86,7 +87,7 @@ def _inject_js_adversarial(pdf_path: Path) -> None:
 # Chat case generation
 # ---------------------------------------------------------------------------
 
-CHAT_VERDICTS = {
+CHAT_VERDICTS: dict[str, dict[str, Any]] = {
     # --- AI Act pass cases ---
     "chat-001": {
         "entrada": (
@@ -721,7 +722,7 @@ def build_chat_cases(skeleton: list[dict]) -> list[GoldCaseChat]:
     records: list[GoldCaseChat] = []
     for entry in chat_entries:
         cid = entry["id"]
-        extras = CHAT_VERDICTS[cid]
+        extras: dict[str, Any] = CHAT_VERDICTS[cid]
         verdict = entry["verdict"]
         # Block cases have empty articulos_esperados — Pydantic requires min_length=1
         # so we use a sentinel list for block cases. We indicate this in criteria.

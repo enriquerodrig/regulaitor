@@ -161,13 +161,13 @@ def render_report(
     sections.append("")
     sections.append(f"## Per-case appendix — chat ({agg.n_chat_cases} cases)")
     sections.append("")
-    for r in chat_results:
-        sections.append(_render_per_case_chat(r))
+    for chat_r in chat_results:
+        sections.append(_render_per_case_chat(chat_r))
         sections.append("")
     sections.append(f"## Per-case appendix — documents ({agg.n_doc_cases} cases)")
     sections.append("")
-    for r in doc_results:
-        sections.append(_render_per_case_doc(r))
+    for doc_r in doc_results:
+        sections.append(_render_per_case_doc(doc_r))
         sections.append("")
     sections.append("## Reproducibilidad")
     sections.append("")
