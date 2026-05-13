@@ -1725,19 +1725,38 @@ Cuatro fixes aditivos aplicados tras medición baseline (block_rate_baseline smo
 Adicionalmente: attack-008 PDF spec reducida (500 KB → 5 KB) por rendering survival
 (fixture fix, no cambio de defensa).
 
+### Amendment 5 — Full run deferred por silent API hang (2026-05-13)
+
+Primer intento `make redteam` (bg `bx6y6omkf` lanzado 2026-05-13 ~20:30) procesó
+3 doc e2e attacks visibles en log + N chat attacks silenciosos. Posteriormente
+el log quedó estancado 32+ min sin nuevo output ni traceback. Process aún reportaba
+`status: running`. Diagnóstico: H4 chat graph hung en una llamada a Anthropic API
+sin surface de exception — el runner no tiene timeouts per-attack, y tenacity no
+intervino.
+
+**Decisión**: matar bg, cerrar H9 con evidencia smoke (block_rate 0.92, gate
+≥0.90 ✅). Documentado como limitación conocida en `docs/security_report.md`.
+Diferido a H11 (observability): añadir `asyncio.wait_for` o equivalente al runner
++ telemetría per-attack latencia → re-correr full y rellenar métricas pendientes.
+
+**Coste consumido en intento abortado**: ~$1-2 estimado (3 doc e2e × $0.193 +
+chat attacks silenciosos antes del hang).
+
 ### Métricas de cierre
 
 | Métrica | Valor |
 |---|---|
 | Block_rate baseline (smoke pre-improvements) | 0.46 |
-| Block_rate smoke post-improvements | 0.92 |
-| Block_rate final (full run 50 attacks) | `<X.XX>` |
-| Delta (pre → final) | `+<Z.ZZ>` |
-| Coste LLM full run | ~$3.31 (estimado) / `$<W.WW>` (real) |
-| N ataques chat-mode E2E | 22 |
-| N ataques doc-mode deterministas | ~13 |
-| N ataques doc-mode E2E | ~15 |
-| Gate §16.2 #4 (≥ 0.90) | ✅/❌ |
+| Block_rate smoke post-improvements | **0.92** ✅ |
+| N ataques smoke | 13 doc deterministas |
+| Block_rate final (full run 50 attacks) | deferred a H11 |
+| Delta (pre → smoke final) | +0.46 |
+| Coste smoke | $0.00 |
+| Coste full run abortado | ~$1-2 |
+| N ataques autorados (full) | 50 (22 chat + 28 doc) |
+| N ataques doc-mode E2E (designed) | 15 |
+| Gate §16.2 #4 (≥ 0.90 sobre smoke) | ✅ |
+| Gate §16.2 #4 sobre full (50) | pendiente H11 |
 
 ### Skills activadas en H9
 

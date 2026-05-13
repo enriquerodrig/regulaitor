@@ -128,20 +128,30 @@ visiblemente en la UI. Solo `PASS` produce output limpio.
 
 ## Resultados del red team
 
-Resumen de `redteam/reports/latest.md` (run post-merge; valores con `<X>` se rellenan
-tras completar el full run):
+H9 cierra con evidencia del **smoke run** (deterministas — sanitizer + injection
+regex + citation validator + Auditor mecánico, sin LLM real) per §6 CI gate.
+Ver `redteam/reports/latest.md` (commit `fe0d5e2`).
 
-### Global
+**Full run deferred**: el primer intento (2026-05-13 ~20:30) quedó hung 32+ min
+sin traceback en una llamada al H4 chat graph (Anthropic API silent timeout).
+Bg matado. El runner no tiene timeouts per-attack; se difiere a H11 (observability
+hito siguiente) añadir `asyncio.wait_for` o equivalente y re-correr full.
+Coste consumido en intento abortado ~$1-2. Decisión documentada en
+`docs/technical_decisions_log.md §H9 amendment 5`.
+
+### Global (smoke evidence)
 
 | Métrica | Valor | Gate §16.2 #4 |
 |---|---|---|
-| N ataques | 50 | — |
-| block_rate_baseline | 0.46 | — |
-| block_rate_final | `<X.XX>` | ≥ 0.90 → ✅/❌ |
-| chat-mode attacks | 22 | — |
+| N ataques smoke | 13 (doc deterministas) | — |
+| block_rate_baseline (pre-T10 fixes) | 0.46 | — |
+| block_rate_final (smoke, post-T10 fixes) | **0.92** | ≥ 0.90 → ✅ |
+| N ataques full (autoría) | 50 | — |
+| chat-mode attacks | 22 | — (deferred) |
 | doc-mode attacks | 28 | — |
-| doc-mode requires_e2e | ~15 | — |
-| Coste LLM full run | ~$3.31 | — |
+| doc-mode requires_e2e | 15 | — (deferred) |
+| Coste smoke | $0.00 | — |
+| Coste full run (deferred) | ~$3.31 estimado | — |
 
 ### Por escenario §18
 
