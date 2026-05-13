@@ -140,10 +140,23 @@ def run_doc_attack(attack: Attack) -> AttackOutcome:
        Otherwise: layer=none (escaped deterministic defenses).
     """
     pdf_path = _DOC_DIR / attack.payload
-    file_bytes = pdf_path.read_bytes()
-
     t0 = time.monotonic()
     error: str | None = None
+
+    try:
+        file_bytes = pdf_path.read_bytes()
+    except OSError as exc:
+        latency_ms = int((time.monotonic() - t0) * 1000)
+        return AttackOutcome(
+            attack_id=attack.id,
+            blocked=False,
+            actual_block_layer="none",
+            actual_verdict="missing_file",
+            matches_expected=_matches_expected(attack, blocked=False, actual_layer="none"),
+            latency_ms=latency_ms,
+            cost_eur=0.0,
+            error=f"{type(exc).__name__}: {exc}"[:500],
+        )
 
     try:
         raw = extractor_extract(file_bytes=file_bytes, mime_type="application/pdf", language="es")
@@ -154,7 +167,7 @@ def run_doc_attack(attack: Attack) -> AttackOutcome:
             blocked=False,
             actual_block_layer="none",
             actual_verdict="extractor_error",
-            matches_expected=False,
+            matches_expected=_matches_expected(attack, blocked=False, actual_layer="none"),
             latency_ms=latency_ms,
             cost_eur=0.0,
             error=f"{type(exc).__name__}: {exc}"[:500],
@@ -196,7 +209,7 @@ def run_doc_attack(attack: Attack) -> AttackOutcome:
             blocked=False,
             actual_block_layer="none",
             actual_verdict="pass",
-            matches_expected=False,
+            matches_expected=_matches_expected(attack, blocked=False, actual_layer="none"),
             latency_ms=latency_ms,
             cost_eur=0.0,
             error=None,
