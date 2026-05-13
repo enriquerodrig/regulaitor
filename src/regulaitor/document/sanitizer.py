@@ -12,6 +12,7 @@ Spec §4.3 + §6 (canonical lists).
 from __future__ import annotations
 
 import hashlib
+import re
 import unicodedata
 
 from regulaitor.citation.schemas import (
@@ -21,6 +22,7 @@ from regulaitor.citation.schemas import (
     SanitizerEvent,
 )
 from regulaitor.security.allowlist import is_uri_allowed
+from regulaitor.security.injection import is_injection
 
 # Unicode codepoints used in injection tricks; stripped if present.
 # nosec B613 -- this set IS the trojan-source defense (we strip these chars
@@ -36,6 +38,10 @@ _UNICODE_TRICKS = {
 }
 
 _MIN_CLEAN_LENGTH = 50
+
+# H9 addition: detect HTTP(S) URLs in metadata values; non-allowlisted ones
+# are treated as exfiltration vectors (critical-block).
+_URL_PATTERN = re.compile(r"https?://[^\s\"'<>]+", re.I)
 
 
 def _hash12(s: str) -> str:
@@ -110,7 +116,41 @@ def sanitize(raw: RawDocument) -> SanitizedDocument:
             raise DocumentBlockedError("uri_action_blocked", log)
 
     # --- 2. Strip + log (warning) --------------------------------------------
+    # H9 addition: scan metadata values for injection patterns BEFORE stripping,
+    # and for HTTP(S) URLs not on the official allowlist. If either is hit,
+    # escalate to critical-block. Bare strip+log (the original behavior)
+    # neutralized the payload but did not surface the attack; an attacker stuffing
+    # Author/Title fields with "ignore previous instructions" or Creator with an
+    # exfiltration URL was treated the same as a benign metadata tag.
     for key, value in raw.metadata.items():
+        hit, pattern_name = is_injection(value, mode="document")
+        if hit:
+            log.append(
+                SanitizerEvent(
+                    severity="critical",
+                    category="metadata_stripped",
+                    location=f"metadata.{key}",
+                    content_hash=_hash12(value),
+                    reason=f"injection pattern {pattern_name!r} in metadata field {key!r}",
+                )
+            )
+            raise DocumentBlockedError("metadata_injection_blocked", log)
+        for url_match in _URL_PATTERN.finditer(value):
+            url = url_match.group(0)
+            if not is_uri_allowed(url):
+                log.append(
+                    SanitizerEvent(
+                        severity="critical",
+                        category="metadata_stripped",
+                        location=f"metadata.{key}",
+                        content_hash=_hash12(value),
+                        reason=(
+                            f"non-allowlisted URL in metadata field {key!r}; possible "
+                            "exfiltration vector"
+                        ),
+                    )
+                )
+                raise DocumentBlockedError("metadata_url_blocked", log)
         log.append(
             SanitizerEvent(
                 severity="warning",
