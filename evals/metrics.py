@@ -158,7 +158,7 @@ def _ragas_metrics_chat(
     llm = ChatAnthropic(  # pragma: no cover
         model="claude-haiku-4-5-20251001",  # type: ignore[call-arg]
         temperature=0.0,
-        max_tokens=4096,  # type: ignore[call-arg] # Ragas faithfulness emits ~1-2k tokens
+        max_tokens=4096,  # Ragas faithfulness emits ~1-2k tokens to avoid LLMDidNotFinish
     )
     # BGE-M3 is the same embedding model the retriever uses; semantically aligned
     # with production. Without an explicit embeddings backend Ragas falls back to
