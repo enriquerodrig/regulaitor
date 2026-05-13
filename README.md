@@ -150,6 +150,26 @@ The judge model (`claude-haiku-4-5-20251001`) and production model
 (`claude-sonnet-4-6`) are hardcoded in `evals/harness.py`; change there
 if migrating to a different vendor (deferred to H12 per ADR 0010).
 
+## Red Team (H9)
+
+50 adversarial attacks covering the 10 scenarios from CLAUDE.md §18 (22 chat-mode + 28
+doc-mode). See `redteam/attacks.jsonl` for the full attack set.
+
+```bash
+make redteam-smoke    # deterministic subset only ($0, ~30s) — runs in CI
+make redteam          # full run with live LLM (~$3.31)
+```
+
+Gate §16.2 #4: `block_rate_final ≥ 0.90`. Current value: see `redteam/reports/latest.md`.
+
+Defense in depth: sanitizer (12 categories) + injection regex (23+ patterns) + citation
+validator (3 checks) + Auditor lenient-strict aggregator. Details in
+`docs/security_report.md`.
+
+> `make redteam-smoke` runs only the `requires_e2e: false` doc-mode attacks (deterministic,
+> no LLM calls). Full run adds chat-mode E2E and the doc-mode E2E subset. Results are
+> committed to `redteam/reports/latest.md` after each manual full run.
+
 ## Stack (current + planned)
 
 Python 3.11 · `uv` · Pydantic v2 · **LanceDB · BGE-M3 · bge-reranker-v2-m3** (active) · FastAPI · LangGraph · Streamlit (MVP) · Next.js (advanced) · Docker · GitHub Actions · LangFuse · Ragas + DeepEval (planned).
