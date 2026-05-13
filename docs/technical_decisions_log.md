@@ -1678,9 +1678,9 @@ entregable H8. Los umbrales son objetivos para H10 (pre-gate MVP) y H15
 
 ---
 
-## H9 — Red team inicial (cerrado YYYY-MM-DD, squash `<sha>`, tag `v0.0.10-h9`)
+## H9 — Red team inicial (cerrado 2026-05-13, squash `c1e7de6`, tag `v0.0.10-h9`)
 
-**Squash commit:** `<sha>` en main (PR squash-merged YYYY-MM-DD). Tag `v0.0.10-h9`
+**Squash commit:** `c1e7de6` en main (PR squash-merged 2026-05-13). Tag `v0.0.10-h9`
 publicado. **Spec:** `docs/superpowers/specs/2026-05-12-h9-redteam-design.md`.
 **Plan:** `docs/superpowers/plans/2026-05-12-h9-redteam.md`. **ADR:**
 `docs/adr/0011-redteam-runner.md`.

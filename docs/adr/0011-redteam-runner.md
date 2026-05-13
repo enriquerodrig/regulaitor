@@ -1,7 +1,7 @@
 # ADR 0011 — Red Team runner (H9)
 
 - **Status:** Accepted
-- **Date:** 2026-05-12 (decision); YYYY-MM-DD (merged, squash `<sha>`, tag `v0.0.10-h9`)
+- **Date:** 2026-05-12 (decision); 2026-05-13 (merged, squash `c1e7de6`, tag `v0.0.10-h9`)
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0001 (project scope), 0007 (document pipeline), 0010 (H8 evaluation
   harness — precedent for separated stack).
