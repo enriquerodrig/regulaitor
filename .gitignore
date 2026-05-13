@@ -70,7 +70,8 @@ evals/reports/*
 !evals/reports/latest.md
 evals/cache/
 evals/reports/archive/
-redteam/reports/
+redteam/reports/*
+!redteam/reports/latest.md
 notebooks/outputs/
 .claude/scheduled_tasks.lock
 

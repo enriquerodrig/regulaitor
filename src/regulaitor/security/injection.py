@@ -24,7 +24,24 @@ from typing import Literal
 # H4 chat patterns (unchanged).
 _CHAT_PATTERNS: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"ignore (?:all )?previous instructions?", re.I), "ignore-previous"),
-    (re.compile(r"olvida (?:todas las )?instrucciones? anteriores?", re.I), "olvida-anteriores"),
+    # H9: widened to cover "olvida (las|todas|mis|estas) instrucciones anteriores"
+    # (previously required exactly "todas las"; attack-006 exposed the gap).
+    (
+        re.compile(
+            r"olvida\s+(?:(?:todas\s+)?(?:las\s+)?|mis\s+|estas\s+)?instrucciones?\s+anteriores?",
+            re.I,
+        ),
+        "olvida-anteriores",
+    ),
+    # H9: Spanish "ignora ... instrucciones anteriores" was an uncovered variant
+    # (attack-011 metadata exposed the gap).
+    (
+        re.compile(
+            r"ignora\s+(?:(?:todas\s+)?(?:las\s+)?|mis\s+|estas\s+)?instrucciones?\s+anteriores?",
+            re.I,
+        ),
+        "ignora-anteriores",
+    ),
     (re.compile(r"</?(?:system|instructions?|prompt)>", re.I), "fake-tag"),
     (re.compile(r"new instructions?:", re.I), "new-instructions"),
     (re.compile(r"nuevas instrucciones?:", re.I), "nuevas-instrucciones"),
@@ -46,6 +63,17 @@ _DOCUMENT_PATTERNS: list[tuple[re.Pattern[str], str]] = [
             re.I | re.U,
         ),
         "document_instruction_to_evaluator",
+    ),
+    (
+        # H9: catches "el sistema evaluador debe omitir/ignorar" without the
+        # "que evalúe esta política" qualifier (attack-007 exposed the gap).
+        re.compile(
+            r"(?:el|la)\s+(?:asesor|asesora|analista|evaluador|evaluadora|revisor|revisora|sistema(?:\s+evaluador)?)\s+"
+            r"(?:debe|deber[íi]a|tiene\s+que)\s+"
+            r"(?:omitir|ignorar|saltarse|saltar|reportar|reportar\s+cumplimiento|concluir|confirmar)",
+            re.I | re.U,
+        ),
+        "document_instruction_to_evaluator_direct",
     ),
     (
         re.compile(
