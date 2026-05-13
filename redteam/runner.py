@@ -312,11 +312,20 @@ def main(
     baseline: float | None = None,
 ) -> None:
     """Entry point. Loads, dispatches, aggregates, writes report."""
-    corpus_loader.warmup()
     attacks = load_attacks(attacks_path)
 
     if smoke:
         attacks = [a for a in attacks if a.mode == "document" and not a.requires_e2e]
+
+    # Corpus warmup is only needed for chat-mode (H4 retriever) or for doc-mode
+    # requires_e2e=True (H5 pipeline). Smoke runs only the deterministic doc layers
+    # (sanitizer + injection regex), so we skip warmup — this also lets CI run the
+    # smoke gate without pulling LFS corpus files.
+    needs_corpus = any(
+        a.mode == "chat" or (a.mode == "document" and a.requires_e2e) for a in attacks
+    )
+    if needs_corpus:
+        corpus_loader.warmup()
 
     outcomes: list[AttackOutcome] = []
     for attack in attacks:
