@@ -40,7 +40,9 @@ def _load_specs(path: Path) -> list[dict[str, Any]]:
 
 def _make_pdf(spec: dict[str, Any], output_path: Path) -> None:
     """Generate one PDF based on spec.kind."""
-    c = canvas.Canvas(str(output_path), pagesize=A4)
+    # invariant=True freezes the timestamp embedded in the PDF so re-runs are
+    # byte-identical (the docstring claims idempotency; this delivers it).
+    c = canvas.Canvas(str(output_path), pagesize=A4, invariant=True)
 
     # Metadata (some attacks rely on malicious metadata)
     metadata = spec.get("metadata", {})
