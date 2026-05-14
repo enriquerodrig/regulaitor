@@ -150,11 +150,8 @@ def document_report(report: DocumentReport) -> None:
         with col:
             st.metric(label, value)
 
-    # nosec B105 -- "pass" is an AuditVerdict enum value (Lenient-strict policy),
-    # not a password. Bandit flags any string literal next to a key containing
-    # "pass" regardless of context.
     emoji = {
-        "pass": "✓",  # nosec B105
+        "pass": "✓",  # nosec B105 -- U+2713 checkmark, not a password
         "block": "✗",
         "requires_human_review": "⚠",
         "skipped": "⚠",
