@@ -38,6 +38,8 @@ make ingest       # parse PDF corpora into manifests + processed/
 make rag-build    # chunk + embed + populate LanceDB (downloads ~3 GB on first run)
 ```
 
+> **Windows note:** `make` is not bundled with Git for Windows. Either install GNU Make (e.g., via `choco install make` or `scoop install make`) or run the underlying `uv` commands directly. The `Makefile` is one short file; each target is one `uv run ...` line. CI runs on Ubuntu (`make` always available there), so the gate §16.2 #1 reproducibility is verified on Linux per push.
+
 The first `make rag-build` downloads BGE-M3 (~2.3 GB) and bge-reranker-v2-m3 (~600 MB) from HuggingFace Hub into `~/.cache/huggingface/`. Re-runs are idempotent (`chunks_added=0` when nothing changed).
 
 ### Document analysis mode (H5)
