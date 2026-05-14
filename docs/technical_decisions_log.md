@@ -1796,3 +1796,82 @@ chat attacks silenciosos antes del hang).
 - `evals-runner` activada en cierre H8 — procedimiento canónico de "cuándo y cómo
   correr el eval, cómo leer el report, qué anti-patterns evitar". Ver
   `.claude/skills/evals-runner/SKILL.md`.
+
+---
+
+## H10 — Documentación MVP + congelación (en progreso, abierto 2026-05-14)
+
+H10 es el hito de **documentación final del MVP** + verificación de los 10 gates
+§16.2 + tag `v0.1.0-mvp`. No introduce código de producción nuevo; consolida
+artefactos H0-H9 y cierra el contrato del MVP académico.
+
+### Decisiones tomadas en arranque (2026-05-14)
+
+1. **Gate §16.2 #5 (citation_precision) — opción B aprobada**: bajar el threshold
+   MVP de ≥0.85 a un valor más realista alcanzable post-fix H4 + post-calibración
+   ligera. Razón: spec §17 explícita "objetivos, no garantizados" + el 0.85 es
+   aspirational. Threshold concreto se fija tras re-correr `make eval` (en progreso)
+   para medir post-fix. **0.85 queda como objetivo avanzado** (H15 Council +
+   calibración Auditor).
+
+2. **Re-eval autorizado ($3)**: el report H8 (`evals/reports/latest.md`) midió 0.16
+   pre-H4-fix. Post-fix `0d0409a` (retry-once en Analyst) estimación inicial
+   0.30-0.40. **Para defender el TFM con números reales (no estimados)** se autoriza
+   gastar $3 más en re-correr full eval. Bg `bsdxgkzdn` lanzado 2026-05-14.
+
+3. **Ambición extendida a H11+ si tiempo permite**: el usuario manifiesta intención
+   de avanzar a hitos avanzados (H11 LangFuse, H13 Council, H14 NIS2/DORA, H15
+   calibración, H16 deploy) en lugar de cerrar solo MVP. Implica que documentación
+   H10 debe quedar **inputs ordenados para H17 memoria** sin necesidad de
+   re-investigación posterior.
+
+4. **Bandit cleanup additive (commit `cb75d48` main)**: el emoji `'✓'` (U+2713)
+   de `ui_streamlit/_render.py:157` era flagged como B105 hardcoded-password
+   (false positive). Nosec inline con rationale ("U+2713 checkmark, not a
+   password") en lugar de bloque comentario explicativo legacy. No cambio de
+   comportamiento.
+
+### Gates §16.2 status snapshot (auditoría 2026-05-14)
+
+| # | Gate | Estado pre-H10 cleanup | Notas |
+|---|---|---|---|
+| 1 | Reproducibilidad clone limpio | ⏳ verificar | Pendiente smoke test |
+| 2 | Coverage ≥80% citation/agents/rag | ✅ 92.61% | citation 100%, agents 92-100%, rag 91-100% |
+| 3 | Evals committed con métricas reales | ✅ | H8 report + re-eval bg en curso |
+| 4 | redteam block_rate ≥0.90 | ✅ smoke | 0.92 smoke; full diferido a H11 |
+| 5 | citation_precision ≥0.85 | ❌ pre-fix 0.16 → B revisar threshold | Re-eval bg medirá real |
+| 6 | gitleaks | ✅ | |
+| 7 | bandit/pip-audit | ✅ post cb75d48 | 0/0/0 high/med/low |
+| 8 | Demo reproducible (README) | ⏳ polish | H10 trabajo principal |
+| 9 | ADRs al día | ✅ | 0001-0011 (11 ADRs) |
+| 10 | tag v0.1.0-mvp | ⏳ pending | Cierre H10 |
+
+### Amendments durante implementación (en progreso)
+
+Pendiente de poblar al cierre H10.
+
+### Métricas de cierre
+
+Pendiente de poblar:
+- `citation_precision_mean` (re-eval): `<X.XX>`
+- `citation_recall_mean` (re-eval): `<X.XX>`
+- `verdict_match_rate` (re-eval): `<X.XX>`
+- New MVP threshold citation_precision (decisión B): `<Y.YY>`
+- Coste re-eval real: `$<W.WW>`
+- Coverage total: 92.61%
+- Tag publicado: `v0.1.0-mvp`
+- Squash commit en main: `<sha>` (post-merge)
+- Fecha de cierre: `<YYYY-MM-DD>` (post-merge)
+
+### Skill activada
+
+Pendiente de decisión: ¿activar alguna skill nueva en H10?
+
+Candidatos potenciales (de la lista CLAUDE.md §12):
+- `model-card` + `data-card` activación (originalmente H8 per §12.5, pero no
+  activadas allí; H10 sería buen momento si se quiere documentación formal).
+- `ai-act-assessment` (originalmente H17, pero los inputs ya existen).
+
+Decisión por defecto: **NO** activar skills nuevas en H10. Mantener scope acotado
+a docs MVP + gates. Activación de model_card/data_card/ai-act-assessment se
+mueve a H17 (cierre académico) salvo decisión explícita posterior.
