@@ -148,10 +148,12 @@ def _trace_record(state: ChatState, latency_ms_total: int) -> dict[str, object]:
     }
 
 
-def _log_turn(state: ChatState, latency_ms_total: int) -> None:
-    """Emit the structured JSON log line (unchanged output)."""
+def _log_turn(state: ChatState, latency_ms_total: int) -> dict[str, object]:
+    """Emit the structured JSON log line and return the record. Single
+    source of truth for both the log line and the LangFuse trace."""
     record = _trace_record(state, latency_ms_total)
     logger.info("chat_turn: %s", json.dumps(record, ensure_ascii=False))
+    return record
 
 
 def run(*, query: str, corpus: str, language: str, case_id: str) -> ChatState:
@@ -167,8 +169,7 @@ def run(*, query: str, corpus: str, language: str, case_id: str) -> ChatState:
         final_dict = _compiled_graph().invoke(initial)
         latency_ms_total = int((time.monotonic() - t0) * 1000)
         state = ChatState.model_validate(final_dict)
-        record = _trace_record(state, latency_ms_total)
-        logger.info("chat_turn: %s", json.dumps(record, ensure_ascii=False))
+        record = _log_turn(state, latency_ms_total)
         tt.set_root(
             verdict=record["verdict"],
             query_sha256_12=record["query_hash"],

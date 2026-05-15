@@ -63,5 +63,11 @@ def test_run_emits_trace_metadata_when_enabled(
     assert "verdict" in captured
     assert "latency_ms_total" in captured
     assert "query_sha256_12" in captured
-    # Redaction: raw query never in the captured metadata values.
+    # Chat emits a root summary only — no per-span calls.
+    assert not any(str(k).startswith("span:") for k in captured)
+    # Redaction: only the sha256[:12] prefix leaves the process, never
+    # the raw query (pin the primitive end-to-end, not just absence).
+    from regulaitor.observability.langfuse_client import hash12
+
+    assert captured["query_sha256_12"] == hash12("test query")
     assert "test query" not in repr(captured)
