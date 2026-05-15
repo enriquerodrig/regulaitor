@@ -1799,7 +1799,7 @@ chat attacks silenciosos antes del hang).
 
 ---
 
-## H10 — Documentación MVP + congelación (en progreso, abierto 2026-05-14)
+## H10 — Documentación MVP + congelación (cerrado 2026-05-15, squash `b8dbf10`, tag `v0.1.0-mvp`)
 
 H10 es el hito de **documentación final del MVP** + verificación de los 10 gates
 §16.2 + tag `v0.1.0-mvp`. No introduce código de producción nuevo; consolida
@@ -1942,8 +1942,9 @@ ad-hoc. ~3-4 iteraciones → ~$10 + horas. El TFM gana un capítulo de
 - New MVP gate §16.2 #5: **citation_recall ≥0.40** (medido 0.44 ✅).
 - Coste re-eval H10: **$2.51** (primer intento abortado por low-credit ~$1-2 perdido; user recargó $10).
 - Tag publicado: `v0.1.0-mvp` (post-merge).
-- Squash commit en main: `<sha>` (post-merge).
-- Fecha de cierre: `<YYYY-MM-DD>` (post-merge).
+- Squash commit en main: `b8dbf10`.
+- Fecha de cierre: 2026-05-15.
+- **MVP completo (H0-H10) cerrado.** Tag `v0.1.0-mvp`. Gate §16.2: 10/10 verdes (con reframe #5 documentado). Próximo: H11 (LangFuse observability + redteam runner timeouts + full 50-attack run).
 
 ### Skill activada
 
