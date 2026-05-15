@@ -78,9 +78,33 @@ def test_run_emits_trace_metadata_when_enabled(
 # ---------------------------------------------------------------------------
 
 
+def _stub_doc_pipeline(monkeypatch: pytest.MonkeyPatch, *, doc_hash: str) -> None:
+    """Patch extractor/sanitizer/segmenter so run_document reaches a clean
+    `return report` with no LLM/network: empty segments → PASS aggregate."""
+    from regulaitor.citation.schemas import SanitizedDocument
+    from regulaitor.orchestration import document_graph as dg
+
+    fake_raw = type(
+        "_FakeRaw",
+        (),
+        {"document_hash": doc_hash, "text": "stub", "mime_type": "text/plain"},
+    )()
+    fake_sanitized = SanitizedDocument(
+        document_hash=doc_hash,
+        language="es",
+        clean_text="stub clean text for testing purposes only - padded to meet minimum length",
+        outline=None,
+        sanitizer_log=[],
+    )
+    monkeypatch.setattr(dg.extractor, "extract", lambda *_a, **_kw: fake_raw)
+    monkeypatch.setattr(dg.sanitizer, "sanitize", lambda _raw: fake_sanitized)
+    monkeypatch.setattr(dg.segmenter, "segment", lambda _san: [])
+
+
 def test_run_document_emits_trace_metadata_when_enabled(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    from regulaitor.citation.schemas import AuditVerdict
     from regulaitor.orchestration import document_graph as dg
 
     captured: dict = {}
@@ -99,32 +123,7 @@ def test_run_document_emits_trace_metadata_when_enabled(
         yield _TT()
 
     monkeypatch.setattr(dg, "trace_turn", _fake_trace_turn)
-
-    from regulaitor.citation.schemas import AuditVerdict, SanitizedDocument
-
-    # Stub the internal seam so run_document reaches a clean `return report`.
-    # extractor.extract is the first real call; returning a fake raw doc lets
-    # sanitize pass too (we patch both). segmenter returns empty list so the
-    # segment loop is a no-op and _aggregate_document produces the expected
-    # verdict. We then verify trace wiring via captured.
-
-    fake_raw = type(
-        "_FakeRaw",
-        (),
-        {"document_hash": "0" * 64, "text": "stub", "mime_type": "text/plain"},
-    )()
-
-    fake_sanitized = SanitizedDocument(
-        document_hash="0" * 64,
-        language="es",
-        clean_text="stub clean text for testing purposes only - padded to meet minimum length",
-        outline=None,
-        sanitizer_log=[],
-    )
-
-    monkeypatch.setattr(dg.extractor, "extract", lambda *_a, **_kw: fake_raw)
-    monkeypatch.setattr(dg.sanitizer, "sanitize", lambda _raw: fake_sanitized)
-    monkeypatch.setattr(dg.segmenter, "segment", lambda _san: [])
+    _stub_doc_pipeline(monkeypatch, doc_hash="0" * 64)
 
     result = dg.run_document(
         file_bytes=b"%PDF-1.4 stub",
@@ -137,7 +136,8 @@ def test_run_document_emits_trace_metadata_when_enabled(
     # Trace wiring assertions
     assert "document_verdict" in captured
     assert captured["document_verdict"] == AuditVerdict.PASS.value  # no segments → PASS
-    assert captured["document_sha256_12"] == "000000000000"
+    # ("0"*64)[:12] — slice of the all-zeros sha256 sentinel
+    assert captured["document_sha256_12"] == ("0" * 64)[:12]
     assert captured["case_id"] == "d1"
     assert captured["language"] == "es"
     assert captured["corpus"] == "ai_act"
@@ -161,26 +161,10 @@ def test_run_document_without_keys_is_unchanged(
     for k in ("LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST"):
         monkeypatch.delenv(k, raising=False)
 
-    from regulaitor.citation.schemas import AuditVerdict, SanitizedDocument
+    from regulaitor.citation.schemas import AuditVerdict
     from regulaitor.orchestration import document_graph as dg
 
-    fake_raw = type(
-        "_FakeRaw",
-        (),
-        {"document_hash": "a" * 64, "text": "stub", "mime_type": "text/plain"},
-    )()
-
-    fake_sanitized = SanitizedDocument(
-        document_hash="a" * 64,
-        language="es",
-        clean_text="stub clean text for testing purposes only - padded to meet minimum length",
-        outline=None,
-        sanitizer_log=[],
-    )
-
-    monkeypatch.setattr(dg.extractor, "extract", lambda *_a, **_kw: fake_raw)
-    monkeypatch.setattr(dg.sanitizer, "sanitize", lambda _raw: fake_sanitized)
-    monkeypatch.setattr(dg.segmenter, "segment", lambda _san: [])
+    _stub_doc_pipeline(monkeypatch, doc_hash="a" * 64)
 
     result = dg.run_document(
         file_bytes=b"stub bytes",

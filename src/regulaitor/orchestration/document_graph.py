@@ -191,6 +191,9 @@ def _doc_trace_record(report: DocumentReport) -> dict[str, object]:
     JSON log line; see observability.langfuse_client redaction allowlist."""
     return {
         "case_id": report.case_id,
+        # document_hash is already a full sha256 (extractor/sanitizer);
+        # [:12] mirrors the chat side's hash12() 12-char prefix without
+        # re-hashing. Both trace builders emit the same redaction primitive.
         "document_sha256_12": report.document_hash[:12],
         "corpus": ",".join(report.corpus),
         "language": report.language,
