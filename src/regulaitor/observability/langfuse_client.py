@@ -58,10 +58,35 @@ def trace_turn(
     language: str,
 ) -> Iterator[TurnTrace]:
     """Yield a TurnTrace. No-op if not is_enabled() (SDK not imported).
-    Enabled path is added in the next task."""
+    When enabled: open a LangFuse trace, accumulate metadata via the
+    yielded TurnTrace, and on exit emit root metadata + sub-spans and
+    async-flush. Any LangFuse error is logged WARNING and swallowed —
+    the pipeline is never broken or blocked."""
     tt = TurnTrace(kind=kind, case_id=case_id, corpus=corpus, language=language)
     if not is_enabled():
         yield tt
         return
-    # Enabled path implemented in Task 3.
-    yield tt
+    client: Any = None
+    trace: Any = None
+    try:
+        from langfuse import Langfuse  # lazy import — only on enabled path
+
+        client = Langfuse()
+        trace = client.trace(
+            name=f"{kind}_turn",
+            metadata={"case_id": case_id, "corpus": corpus, "language": language},
+        )
+    except Exception as exc:  # noqa: BLE001 — observability must never break the pipeline
+        logger.warning("langfuse init failed; tracing skipped this turn: %s", exc)
+        yield tt
+        return
+    try:
+        yield tt
+    finally:
+        try:
+            trace.update(metadata=dict(tt._root_meta))
+            for span_name, span_meta in tt._spans.items():
+                trace.span(name=span_name, metadata=dict(span_meta))
+            client.flush()
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("langfuse flush failed; trace dropped: %s", exc)
