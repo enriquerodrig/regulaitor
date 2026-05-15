@@ -7,8 +7,12 @@ and H5 document pipeline read-only per spec §H9 (no backend modification).
 
 from __future__ import annotations
 
+import os
 import subprocess
 import time
+from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FuturesTimeout
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -33,6 +37,9 @@ from regulaitor.security.injection import is_injection
 _ATTACKS_PATH = Path("redteam/attacks.jsonl")
 _DOC_DIR = Path("redteam/documents")
 _REPORT_PATH = Path("redteam/reports/latest.md")
+
+_CHAT_TIMEOUT_S = int(os.environ.get("REGULAITOR_REDTEAM_TIMEOUT_CHAT", "300"))
+_DOC_TIMEOUT_S = int(os.environ.get("REGULAITOR_REDTEAM_TIMEOUT_DOC", "900"))
 
 
 def extractor_extract(file_bytes: bytes, mime_type: str, language: str) -> Any:
@@ -248,6 +255,30 @@ def run_doc_attack(attack: Attack) -> AttackOutcome:
     )
 
 
+def _run_with_timeout(
+    fn: Callable[[Attack], AttackOutcome], attack: Attack, timeout_s: int
+) -> AttackOutcome:
+    """Run fn(attack) in a worker thread; if it exceeds timeout_s, return a
+    timeout AttackOutcome instead of hanging the whole run (H9 lesson:
+    Anthropic API can hang silently with no traceback). The orphaned thread
+    is abandoned (consumes at most one in-flight API call ~$0.02-0.19)."""
+    with ThreadPoolExecutor(max_workers=1) as ex:
+        fut = ex.submit(fn, attack)
+        try:
+            return fut.result(timeout=timeout_s)
+        except FuturesTimeout:
+            return AttackOutcome(
+                attack_id=attack.id,
+                blocked=False,
+                actual_block_layer="none",
+                actual_verdict="timeout",
+                matches_expected=False,
+                latency_ms=timeout_s * 1000,
+                cost_eur=0.0,
+                error=f"timeout: attack exceeded {timeout_s}s (likely Anthropic hang)",
+            )
+
+
 def aggregate(
     outcomes: list[AttackOutcome],
     attacks: list[Attack],
@@ -330,9 +361,9 @@ def main(
     outcomes: list[AttackOutcome] = []
     for attack in attacks:
         if attack.mode == "chat":
-            outcomes.append(run_chat_attack(attack))
+            outcomes.append(_run_with_timeout(run_chat_attack, attack, _CHAT_TIMEOUT_S))
         else:
-            outcomes.append(run_doc_attack(attack))
+            outcomes.append(_run_with_timeout(run_doc_attack, attack, _DOC_TIMEOUT_S))
 
     agg = aggregate(outcomes, attacks, baseline=baseline)
     meta = RedTeamRunMeta(
@@ -341,6 +372,27 @@ def main(
         mode="smoke" if smoke else "full",
         corpus_languages=["es"],
     )
+
+    try:
+        from regulaitor.observability.langfuse_client import is_enabled
+
+        if is_enabled():
+            from langfuse import Langfuse  # lazy
+
+            _lf = Langfuse()
+            _lf.score(
+                name="block_rate",
+                value=agg.block_rate,
+                comment=f"redteam {meta.mode} run, n={agg.n_total}",
+            )
+            _lf.flush()
+    except Exception as exc:  # noqa: BLE001 — observability never breaks the run
+        import logging
+
+        logging.getLogger("regulaitor.observability").warning(
+            "langfuse block_rate score emit failed: %s", exc
+        )
+
     markdown = render_report(meta, agg, outcomes, attacks)
     _REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     _REPORT_PATH.write_text(markdown, encoding="utf-8")

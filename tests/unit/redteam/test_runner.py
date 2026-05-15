@@ -276,6 +276,58 @@ def test_run_doc_attack_e2e_runs_full_pipeline(
     assert outcome.actual_block_layer == "auditor"
 
 
+def test_run_with_timeout_returns_timeout_outcome(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import time as _time
+
+    from redteam import runner as r
+
+    attack = Attack.model_validate(
+        _attack_dict(
+            id="attack-099", mode="chat", payload="slow query", expected_block_layer="auditor"
+        )
+    )
+
+    def _slow(_a: object) -> object:
+        _time.sleep(2)
+        raise AssertionError("should have timed out before returning")
+
+    outcome = r._run_with_timeout(_slow, attack, timeout_s=1)
+    assert outcome.attack_id == "attack-099"
+    assert outcome.blocked is False
+    assert outcome.actual_verdict == "timeout"
+    assert "timeout" in (outcome.error or "")
+    assert outcome.actual_block_layer == "none"
+
+
+def test_run_with_timeout_passthrough_on_fast_fn() -> None:
+    from redteam import runner as r
+    from redteam.schemas import AttackOutcome
+
+    attack = Attack.model_validate(
+        _attack_dict(
+            id="attack-100", mode="chat", payload="fast query", expected_block_layer="auditor"
+        )
+    )
+
+    def _fast(a: object) -> AttackOutcome:
+        return AttackOutcome(
+            attack_id=attack.id,
+            blocked=True,
+            actual_block_layer="auditor",
+            actual_verdict="block",
+            matches_expected=True,
+            latency_ms=10,
+            cost_eur=0.0,
+            error=None,
+        )
+
+    outcome = r._run_with_timeout(_fast, attack, timeout_s=5)
+    assert outcome.blocked is True
+    assert outcome.actual_verdict == "block"
+
+
 def test_aggregate_basic() -> None:
     outcomes = [
         AttackOutcome(
@@ -310,3 +362,53 @@ def test_aggregate_basic() -> None:
     assert agg.cost_total_eur == pytest.approx(0.019)
     assert agg.per_layer["sanitizer"] == 1
     assert agg.per_layer["none"] == 1
+
+
+def test_main_langfuse_score_is_noop_without_env_vars(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """main() completes and writes the report unchanged when LANGFUSE_* vars are absent.
+
+    Verifies the block_rate score path is a true no-op when is_enabled() is False:
+    no exception is raised and the report file is created with expected content.
+    """
+    # Ensure all three LANGFUSE env vars are absent (no-op path).
+    for var in ("LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST"):
+        monkeypatch.delenv(var, raising=False)
+
+    # Prepare a minimal attacks.jsonl with one deterministic doc attack (no E2E, no LLM).
+    attacks_file = tmp_path / "attacks.jsonl"
+    import json as _json
+
+    attacks_file.write_text(
+        _json.dumps(_attack_dict(id="attack-lf01", payload="lf_attack.pdf")) + "\n",
+        encoding="utf-8",
+    )
+
+    # Provide the fake PDF so load/file-read doesn't fail.
+    doc_dir = tmp_path / "docs"
+    doc_dir.mkdir()
+    (doc_dir / "lf_attack.pdf").write_bytes(b"%PDF-1.4\nfake\n")
+
+    report_path = tmp_path / "report.md"
+
+    # Monkeypatch runner internals to avoid real backend calls.
+    fake_sanitized = MagicMock()
+    fake_sanitized.clean_text = "benign text"
+    monkeypatch.setattr(runner, "_DOC_DIR", doc_dir)
+    monkeypatch.setattr(runner, "_REPORT_PATH", report_path)
+    monkeypatch.setattr(runner, "extractor_extract", lambda **kw: MagicMock())
+    monkeypatch.setattr(runner, "sanitizer_sanitize", lambda raw: fake_sanitized)
+    monkeypatch.setattr(runner, "is_injection", lambda text, mode: (False, None))
+    # corpus_loader.warmup not needed — no chat / e2e attacks; patch it defensively.
+    import regulaitor.corpus.loader as _loader
+
+    monkeypatch.setattr(_loader, "warmup", lambda: None)
+
+    # main() must complete without exception.
+    runner.main(attacks_path=attacks_file, smoke=False, baseline=None)
+
+    # Report must have been written.
+    assert report_path.exists(), "report file was not created"
+    content = report_path.read_text(encoding="utf-8")
+    assert "block_rate" in content.lower() or "n_total" in content.lower() or len(content) > 0
