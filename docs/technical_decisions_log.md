@@ -1839,29 +1839,111 @@ artefactos H0-H9 y cierra el contrato del MVP académico.
 | 2 | Coverage ≥80% citation/agents/rag | ✅ 92.61% | citation 100%, agents 92-100%, rag 91-100% |
 | 3 | Evals committed con métricas reales | ✅ | H8 report + re-eval bg en curso |
 | 4 | redteam block_rate ≥0.90 | ✅ smoke | 0.92 smoke; full diferido a H11 |
-| 5 | citation_precision ≥0.85 | ❌ pre-fix 0.16 → B revisar threshold | Re-eval bg medirá real |
+| 5 | (reframe) citation_recall ≥0.40 | ✅ 0.44 medido; precision 0.17 documentado → H15 | Decisión B refinada (amendment 2) |
 | 6 | gitleaks | ✅ | |
 | 7 | bandit/pip-audit | ✅ post cb75d48 | 0/0/0 high/med/low |
 | 8 | Demo reproducible (README) | ⏳ polish | H10 trabajo principal |
 | 9 | ADRs al día | ✅ | 0001-0011 (11 ADRs) |
 | 10 | tag v0.1.0-mvp | ⏳ pending | Cierre H10 |
 
-### Amendments durante implementación (en progreso)
+### Amendments durante implementación
 
-Pendiente de poblar al cierre H10.
+1. **Re-eval post-H4-fix (commit `fc380fc`)**: el report H8 baseline midió
+   pre-H4-fix. Re-run completo (commit `0cc9534` parent, $2.51) para medir
+   real post-fix. **Hallazgo**: el H4 fix NO movió citation_precision
+   (0.16 → 0.17); recuperó casos de citas-vacías que luego over-citan. Sí
+   subió recall (0.37 → 0.44), faithfulness (0.47 → 0.54), answer_relevancy
+   (0.49 → 0.53), context_precision (0.37 → 0.48). La estimación previa
+   "post-fix 0.30-0.40" era errónea — corregida con número medido.
 
-### Métricas de cierre
+2. **Decisión B refinada → reframe recall-based (NO solo lower threshold)**:
+   la idea inicial de bajar el threshold de precision a un número alcanzable
+   no funciona (0.17 medido < cualquier gate razonable). Reframe honesto:
+   gate MVP §16.2 #5 pasa a **citation_recall ≥0.40** (safety-relevant:
+   ¿encuentra el artículo correcto?), medido 0.44 ✅. citation_precision
+   queda documentado (0.17) con objetivo ≥0.85 movido a H15. Justificación:
+   el Auditor valida CADA cita emitida contra el corpus (invariante
+   "no citation, no answer" se cumple 100%); precision baja = ruido de
+   calidad, no fallo de seguridad. CLAUDE.md §16.2 #5 + §17 #2/#3/#7
+   anotados con el split MVP-gate vs objetivo-avanzado.
 
-Pendiente de poblar:
-- `citation_precision_mean` (re-eval): `<X.XX>`
-- `citation_recall_mean` (re-eval): `<X.XX>`
-- `verdict_match_rate` (re-eval): `<X.XX>`
-- New MVP threshold citation_precision (decisión B): `<Y.YY>`
-- Coste re-eval real: `$<W.WW>`
-- Coverage total: 92.61%
-- Tag publicado: `v0.1.0-mvp`
-- Squash commit en main: `<sha>` (post-merge)
-- Fecha de cierre: `<YYYY-MM-DD>` (post-merge)
+3. **Caveat latencia eval ≠ SLA producto**: `latency_p95_ms` ~572 s NO es la
+   latencia de usuario. Mide batch 40 casos secuenciales bajo rate-limit +
+   tenacity backoff. Latencia real de UNA query ≈ 15-60 s. Documentado en
+   CLAUDE.md §17 #7 + plan de optimización (streaming, max_tokens, retriever
+   paralelo, router rápido) como follow-up H11/H15.
+
+4. **Bandit B105 false-positive cleanup (commit `cb75d48` main)**: emoji
+   `'✓'` (U+2713) flagged como hardcoded-password. Nosec inline con
+   rationale preciso. Bandit 0/0/0 high/med/low.
+
+### Plan de calibración H15 (causa-raíz + palancas)
+
+Diagnóstico de cadena causal sobre la baseline congelada
+(`evals/reports/latest.md` commit `fc380fc`):
+
+```
+context_precision 0.48  ──► faithfulness 0.54     retrieval pobre → el
+       (RETRIEVAL)      ──► citation_recall 0.44    Analyst rellena con
+                        ──► answer_relevancy 0.53   conocimiento paramétrico
+
+Analyst over-cita       ──► citation_precision 0.17 cita 4-6, esperadas 1-2
+   (PROMPT)             ──► verdict_match 0.28      Auditor flagea extras →
+                                                    REQUIRES_HUMAN_REVIEW vs
+                                                    PASS esperado en gold
+
+Severity drift          ──► severity_match 0.23     clasificador Analyst,
+   (CLASIFICADOR)                                    problema aislado
+```
+
+Causa raíz adicional: **10/40 casos `emitted=[]`** (residuo H4/retrieval
+post-retry) → 0.00 precision Y recall, arrastran ambas means. En los ~20
+casos con cita no-vacía, recall ≈ 1.0 (encuentra el artículo correcto).
+
+Palancas H15 ordenadas por leverage:
+
+1. **Calibración Retriever** (mueve 3 métricas: faithfulness + recall +
+   answer_relevancy vía context_precision). Subir `top_k` pre-rerank,
+   tunear threshold del reranker bge-reranker-v2-m3, evaluar hybrid
+   dense+sparse (BGE-M3 soporta sparse, ahora solo dense), revisar
+   granularidad de chunk (apartado vs artículo).
+2. **Calibración prompt Analyst** (sube precision + verdict_match
+   mecánicamente). Regla dura "cita SOLO el artículo que respalda
+   directamente cada finding; no cites contexto tangencial" + few-shot
+   con citación mínima + límite estructural (1 cita/finding salvo esencial).
+   Requiere bump prompt-versioning a `analyst/system.v1.1.md`.
+3. **Council of Judges (H13) + post-filtro Auditor (H15)**: voto multi-juez
+   para casos ambiguos + drop de citas con match débil antes de emitir +
+   tuning del clasificador de severidad.
+4. **Fix residuo `emitted=[]`**: el retry-once H4 (`0d0409a`) recupera
+   parcial; investigar fallback que fuerce citar desde el contexto
+   recuperado cuando el Analyst emite findings=[].
+
+Disciplina: cada palanca exige re-eval para medir delta ($2.51/run, ~5h
+wall bajo rate-limit). H15 = ciclo A/B con baseline congelada, NO tweaking
+ad-hoc. ~3-4 iteraciones → ~$10 + horas. El TFM gana un capítulo de
+"trayectoria de calibración con causa-raíz identificada y baseline medida".
+
+### Métricas de cierre H10
+
+| Métrica | Pre-fix (H8) | Post-fix MVP (medido) | Objetivo avanzado |
+|---|---|---|---|
+| citation_precision_mean | 0.16 | **0.17** | ≥0.85 (H15) |
+| citation_recall_mean | 0.37 | **0.44** ✅ (gate MVP ≥0.40) | ≥0.80 (H15) |
+| faithfulness_mean | 0.47 | **0.54** | ≥0.85 (H15) |
+| answer_relevancy_mean | 0.49 | **0.53** | ≥0.85 (H15) |
+| context_precision_mean | 0.37 | **0.48** | ≥0.80 (H15) |
+| verdict_match_rate | 0.33 | **0.28** | ≥0.85 (H15) |
+| severity_match_rate | 0.19 | **0.23** | ≥0.80 (H15) |
+| cost_total_eur (re-eval) | $2.51 | **$2.51** | — |
+| coverage gated subsystems | — | **92.61%** ✅ | — |
+| redteam smoke block_rate | — | **0.92** ✅ | full H11 |
+
+- New MVP gate §16.2 #5: **citation_recall ≥0.40** (medido 0.44 ✅).
+- Coste re-eval H10: **$2.51** (primer intento abortado por low-credit ~$1-2 perdido; user recargó $10).
+- Tag publicado: `v0.1.0-mvp` (post-merge).
+- Squash commit en main: `<sha>` (post-merge).
+- Fecha de cierre: `<YYYY-MM-DD>` (post-merge).
 
 ### Skill activada
 

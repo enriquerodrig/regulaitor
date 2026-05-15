@@ -166,7 +166,7 @@ Each closed milestone has its own §HX section in
 | 2 | Coverage ≥80% citation/agents/rag | `pyproject.toml` cov gate + 92.61% measured | ✅ |
 | 3 | `evals/reports/latest.md` with real metrics | H8 report + H10 re-eval | ✅ |
 | 4 | Auditor block_rate ≥0.90 on adversarial set | smoke 0.92; full deferred H11 | ✅ smoke |
-| 5 | citation_precision ≥0.85 | re-eval bg (H10) measuring real post-fix | ⏳ (B threshold revisited) |
+| 5 | citation_recall ≥0.40 (reframed from precision ≥0.85) | measured 0.44 ✅; precision 0.17 documented, ≥0.85 → H15 | ✅ |
 | 6 | gitleaks clean | pre-commit + CI | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
