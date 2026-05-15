@@ -34,6 +34,7 @@ from regulaitor.citation.schemas import (
 )
 from regulaitor.corpus.schemas import Language, Norma
 from regulaitor.document import extractor, sanitizer, segmenter
+from regulaitor.observability.langfuse_client import trace_turn
 from regulaitor.security import injection
 
 logger = logging.getLogger("regulaitor.orchestration.document_graph")
@@ -184,6 +185,26 @@ def _log_document_turn(report: DocumentReport) -> None:
     logger.info("document_turn: %s", json.dumps(record, ensure_ascii=False))
 
 
+def _doc_trace_record(report: DocumentReport) -> dict[str, object]:
+    """Metadata-only summary of a document turn. NO raw document text —
+    only a sha256[:12] prefix. Mirrors the allowlist-safe subset of the
+    JSON log line; see observability.langfuse_client redaction allowlist."""
+    return {
+        "case_id": report.case_id,
+        "document_sha256_12": report.document_hash[:12],
+        "corpus": ",".join(report.corpus),
+        "language": report.language,
+        "document_verdict": report.document_verdict.value,
+        "n_segments_total": report.n_segments_total,
+        "n_segments_pass": report.n_segments_pass,
+        "n_segments_block": report.n_segments_block,
+        "n_segments_review": report.n_segments_review,
+        "n_segments_blocked_by_injection": report.n_segments_blocked_by_injection,
+        "latency_ms_total": report.latency_ms_total,
+        "cost_eur_total": report.cost_eur_total,
+    }
+
+
 def run_document(
     *,
     file_bytes: bytes,
@@ -203,61 +224,69 @@ def run_document(
     REQUIRES_HUMAN_REVIEW, ``segments=[]`` and the partial sanitizer_log.
     """
     case_id = case_id or _generate_case_id()
-    t0 = time.monotonic()
+    with trace_turn(
+        kind="document",
+        case_id=case_id,
+        corpus=",".join(corpus),
+        language=language,
+    ) as tt:
+        t0 = time.monotonic()
 
-    raw = extractor.extract(file_bytes, mime_type=mime_type)
-    try:
-        sanitized: SanitizedDocument = sanitizer.sanitize(raw)
-    except DocumentBlockedError as e:
+        raw = extractor.extract(file_bytes, mime_type=mime_type)
+        try:
+            sanitized: SanitizedDocument = sanitizer.sanitize(raw)
+        except DocumentBlockedError as e:
+            latency = int((time.monotonic() - t0) * 1000)
+            report = DocumentReport(
+                case_id=case_id,
+                document_hash=raw.document_hash,
+                language=language,
+                corpus=corpus,
+                sanitizer_log=e.sanitizer_log,
+                segments=[],
+                document_verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+                document_reason=f"sanitizer_critical:{e.reason}",
+                n_segments_total=0,
+                n_segments_blocked_by_injection=0,
+                n_segments_pass=0,
+                n_segments_block=0,
+                n_segments_review=0,
+                latency_ms_total=latency,
+                cost_eur_total=0.0,
+            )
+            _log_document_turn(report)
+            tt.set_root(**_doc_trace_record(report))
+            return report
+
+        segs = segmenter.segment(sanitized)
+        primary_corpus = cast(Norma, corpus[0])
+        segment_results: list[SegmentResult] = []
+        for seg in segs:
+            sr = _process_segment(seg, primary_corpus, language)
+            segment_results.append(sr)
+
+        verdict, reason, n_pass, n_block, n_review, n_inj = _aggregate_document(
+            segment_results, sanitized.sanitizer_log
+        )
         latency = int((time.monotonic() - t0) * 1000)
+
         report = DocumentReport(
             case_id=case_id,
-            document_hash=raw.document_hash,
+            document_hash=sanitized.document_hash,
             language=language,
             corpus=corpus,
-            sanitizer_log=e.sanitizer_log,
-            segments=[],
-            document_verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
-            document_reason=f"sanitizer_critical:{e.reason}",
-            n_segments_total=0,
-            n_segments_blocked_by_injection=0,
-            n_segments_pass=0,
-            n_segments_block=0,
-            n_segments_review=0,
+            sanitizer_log=sanitized.sanitizer_log,
+            segments=segment_results,
+            document_verdict=verdict,
+            document_reason=reason,
+            n_segments_total=len(segment_results),
+            n_segments_blocked_by_injection=n_inj,
+            n_segments_pass=n_pass,
+            n_segments_block=n_block,
+            n_segments_review=n_review,
             latency_ms_total=latency,
-            cost_eur_total=0.0,
+            cost_eur_total=sum(sr.cost_eur for sr in segment_results),
         )
         _log_document_turn(report)
+        tt.set_root(**_doc_trace_record(report))
         return report
-
-    segs = segmenter.segment(sanitized)
-    primary_corpus = cast(Norma, corpus[0])
-    segment_results: list[SegmentResult] = []
-    for seg in segs:
-        sr = _process_segment(seg, primary_corpus, language)
-        segment_results.append(sr)
-
-    verdict, reason, n_pass, n_block, n_review, n_inj = _aggregate_document(
-        segment_results, sanitized.sanitizer_log
-    )
-    latency = int((time.monotonic() - t0) * 1000)
-
-    report = DocumentReport(
-        case_id=case_id,
-        document_hash=sanitized.document_hash,
-        language=language,
-        corpus=corpus,
-        sanitizer_log=sanitized.sanitizer_log,
-        segments=segment_results,
-        document_verdict=verdict,
-        document_reason=reason,
-        n_segments_total=len(segment_results),
-        n_segments_blocked_by_injection=n_inj,
-        n_segments_pass=n_pass,
-        n_segments_block=n_block,
-        n_segments_review=n_review,
-        latency_ms_total=latency,
-        cost_eur_total=sum(sr.cost_eur for sr in segment_results),
-    )
-    _log_document_turn(report)
-    return report

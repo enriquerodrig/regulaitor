@@ -71,3 +71,126 @@ def test_run_emits_trace_metadata_when_enabled(
 
     assert captured["query_sha256_12"] == hash12("test query")
     assert "test query" not in repr(captured)
+
+
+# ---------------------------------------------------------------------------
+# Document-pipeline tracing tests (Task 5, H11)
+# ---------------------------------------------------------------------------
+
+
+def test_run_document_emits_trace_metadata_when_enabled(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from regulaitor.orchestration import document_graph as dg
+
+    captured: dict = {}
+
+    class _TT:
+        def set_root(self, **kw: object) -> None:
+            captured.update(kw)
+
+        def span(self, name: str, **kw: object) -> None:
+            captured[f"span:{name}"] = kw
+
+    import contextlib
+
+    @contextlib.contextmanager
+    def _fake_trace_turn(**_kw: object):
+        yield _TT()
+
+    monkeypatch.setattr(dg, "trace_turn", _fake_trace_turn)
+
+    from regulaitor.citation.schemas import AuditVerdict, SanitizedDocument
+
+    # Stub the internal seam so run_document reaches a clean `return report`.
+    # extractor.extract is the first real call; returning a fake raw doc lets
+    # sanitize pass too (we patch both). segmenter returns empty list so the
+    # segment loop is a no-op and _aggregate_document produces the expected
+    # verdict. We then verify trace wiring via captured.
+
+    fake_raw = type(
+        "_FakeRaw",
+        (),
+        {"document_hash": "0" * 64, "text": "stub", "mime_type": "text/plain"},
+    )()
+
+    fake_sanitized = SanitizedDocument(
+        document_hash="0" * 64,
+        language="es",
+        clean_text="stub clean text for testing purposes only - padded to meet minimum length",
+        outline=None,
+        sanitizer_log=[],
+    )
+
+    monkeypatch.setattr(dg.extractor, "extract", lambda *_a, **_kw: fake_raw)
+    monkeypatch.setattr(dg.sanitizer, "sanitize", lambda _raw: fake_sanitized)
+    monkeypatch.setattr(dg.segmenter, "segment", lambda _san: [])
+
+    result = dg.run_document(
+        file_bytes=b"%PDF-1.4 stub",
+        mime_type="application/pdf",
+        language="es",
+        corpus=["ai_act"],
+        case_id="d1",
+    )
+
+    # Trace wiring assertions
+    assert "document_verdict" in captured
+    assert captured["document_verdict"] == AuditVerdict.PASS.value  # no segments → PASS
+    assert captured["document_sha256_12"] == "000000000000"
+    assert captured["case_id"] == "d1"
+    assert captured["language"] == "es"
+    assert captured["corpus"] == "ai_act"
+    assert captured["n_segments_total"] == 0
+    assert captured["cost_eur_total"] == 0.0
+    # Redaction: raw bytes and document text must never appear in trace metadata
+    assert "%PDF" not in repr(captured)
+    assert "stub" not in repr(captured)
+    # No per-span calls for the document pipeline (root summary only)
+    assert not any(str(k).startswith("span:") for k in captured)
+    # Sanity: run_document returned the correct report
+    assert result.case_id == "d1"
+    assert result.document_verdict == AuditVerdict.PASS
+
+
+def test_run_document_without_keys_is_unchanged(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Regression-zero: without LANGFUSE_* env vars the document pipeline
+    returns an unchanged DocumentReport and no tracing overhead is added."""
+    for k in ("LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST"):
+        monkeypatch.delenv(k, raising=False)
+
+    from regulaitor.citation.schemas import AuditVerdict, SanitizedDocument
+    from regulaitor.orchestration import document_graph as dg
+
+    fake_raw = type(
+        "_FakeRaw",
+        (),
+        {"document_hash": "a" * 64, "text": "stub", "mime_type": "text/plain"},
+    )()
+
+    fake_sanitized = SanitizedDocument(
+        document_hash="a" * 64,
+        language="es",
+        clean_text="stub clean text for testing purposes only - padded to meet minimum length",
+        outline=None,
+        sanitizer_log=[],
+    )
+
+    monkeypatch.setattr(dg.extractor, "extract", lambda *_a, **_kw: fake_raw)
+    monkeypatch.setattr(dg.sanitizer, "sanitize", lambda _raw: fake_sanitized)
+    monkeypatch.setattr(dg.segmenter, "segment", lambda _san: [])
+
+    result = dg.run_document(
+        file_bytes=b"stub bytes",
+        mime_type="application/pdf",
+        language="es",
+        corpus=["rgpd"],
+        case_id="d2",
+    )
+
+    assert result.case_id == "d2"
+    assert result.corpus == ["rgpd"]
+    assert result.document_verdict == AuditVerdict.PASS
+    assert result.document_hash == "a" * 64
