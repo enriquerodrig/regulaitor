@@ -6,15 +6,25 @@ Multi-agent regulatory compliance service with strict citation verification. TFM
 
 ## Status
 
-**H2 closed (2026-05-05) — RAG base operational.** Tag `v0.0.3-h2`.
+**H9 closed (2026-05-13) — red team initial.** Tag `v0.0.10-h9`. MVP feature-complete; H10 closes documentation + freezes tag `v0.1.0-mvp`.
 
-- H0 / H0.1 / H1 / H2 closed. See [`docs/technical_decisions_log.md`](docs/technical_decisions_log.md).
-- Corpus AI Act + GDPR ingested (PDF snapshot, 113 + 99 articles, ES + EN).
-- LanceDB index `corpus/indexes/regulaitor.lance/` populated with 1011 chunks (BGE-M3 1024-dim dense + bge-reranker-v2-m3).
-- 111 tests, 92.55% coverage. CI green.
-- Next: H3 (MCP server + Retriever-Agent + citation validator).
+| Milestone | Tag | Closure date | Highlight |
+|---|---|---|---|
+| H0.1 bootstrap | `v0.0.1-h0.1` | 2026-04-30 | repo + CI + lint |
+| H1 corpus | `v0.0.2-h1` | 2026-05-04 | AI Act + GDPR PDF snapshot (113 + 99 articles, ES + EN) |
+| H2 RAG base | `v0.0.3-h2` | 2026-05-05 | LanceDB + BGE-M3 + reranker; 1011 chunks |
+| H3 MCP server | `v0.0.4-h3` | 2026-05-05 | 5 tools + Retriever-Agent + citation validator |
+| H4 chat E2E | `v0.0.5-h4` | 2026-05-05 | Analyst + Auditor + LangGraph |
+| H5 document pipeline | `v0.0.6-h5` | 2026-05-07 | Extractor + sanitizer + segmenter |
+| H6 Streamlit MVP | `v0.0.7-h6` | 2026-05-07 | Two-tab UI (Pregunta / Analiza documento) |
+| H7 FastAPI MVP | `v0.0.8-h7` | 2026-05-10 | `/ask`, `/analyze`, `/health` + Bearer auth + rate limit |
+| H8 eval harness | `v0.0.9-h8` | 2026-05-12 | Gold set 30 + 10; Ragas + custom + Haiku judge |
+| H9 red team | `v0.0.10-h9` | 2026-05-13 | 50 attacks + smoke gate 0.92 |
+| **H10 docs MVP freeze** | `v0.1.0-mvp` | in progress | Documentation + reproducibility verification |
 
-⚠️ This system does not replace legal counsel. It is a first-line analysis tool that returns auditable findings with verified citations against an official regulatory corpus.
+Codebase: ~13k LOC Python (src/), 538+ tests, 92.61% coverage on gated subsystems (citation/agents/rag/security all > 90%). CI: lint + test + Document E2E + security + redteam smoke jobs all green.
+
+⚠️ This system does not replace legal counsel. It is a first-line analysis tool that returns auditable findings with verified citations against the official regulatory corpus.
 
 ## Quickstart
 
@@ -27,6 +37,8 @@ make test         # pytest (excludes slow integration tests)
 make ingest       # parse PDF corpora into manifests + processed/
 make rag-build    # chunk + embed + populate LanceDB (downloads ~3 GB on first run)
 ```
+
+> **Windows note:** `make` is not bundled with Git for Windows. Either install GNU Make (e.g., via `choco install make` or `scoop install make`) or run the underlying `uv` commands directly. The `Makefile` is one short file; each target is one `uv run ...` line. CI runs on Ubuntu (`make` always available there), so the gate §16.2 #1 reproducibility is verified on Linux per push.
 
 The first `make rag-build` downloads BGE-M3 (~2.3 GB) and bge-reranker-v2-m3 (~600 MB) from HuggingFace Hub into `~/.cache/huggingface/`. Re-runs are idempotent (`chunks_added=0` when nothing changed).
 
@@ -112,13 +124,14 @@ LLM judge, and emits `evals/reports/latest.md`.
 ### Quickstart
 
 ```bash
-# First time: populate the cache (~$7 Anthropic credit)
+# Full run with live LLM (~$2.50-$3.50 Anthropic credit; populates judge cache)
 make eval
 
-# Subsequent regenerations from cache: free
+# Subsequent regenerations from judge cache: free (H4/H5 calls are not cached, so
+# this only refreshes the judge-layer outputs — see ADR 0010 §6.4)
 make eval-from-cache
 
-# Debugging the harness with a small subset (~$1)
+# Debugging the harness with first 5 chat + 1 doc case (~$0.30)
 make eval-subset
 ```
 
@@ -176,7 +189,21 @@ Python 3.11 · `uv` · Pydantic v2 · **LanceDB · BGE-M3 · bge-reranker-v2-m3*
 
 ## Roadmap
 
-See `CLAUDE.md` §16 for the full milestone roadmap (H0 → H17 + optional HX). Active milestone: **H3 (MCP server + Retriever-Agent + citation validator)**.
+See `CLAUDE.md` §16 for the full milestone roadmap (H0 → H17 + optional HX).
+
+**MVP track (H0-H10)** — feature freeze at `v0.1.0-mvp`:
+- H0-H9 closed (see Status table). H10 in progress.
+
+**Advanced track (H11-H17)** — gated on §16.2 (all 10 MVP gates green):
+- H11 LangFuse observability + per-attack timeouts in red team runner.
+- H12 Multi-LLM router (Sonnet + GPT-4o + Llama via Groq) + cost analysis.
+- H13 Council of Judges for high-severity findings.
+- H14 NIS2 + DORA corpus expansion.
+- H15 Auditor calibration + A/B testing (target: citation_precision ≥ 0.85).
+- H16 Public Docker deploy (Hugging Face Spaces).
+- H17 Academic closure (memoria + model card + data card + AI Act assessment + runbook + demo video).
+
+Active milestone: **H10 — Documentation MVP + freeze (`v0.1.0-mvp`)**.
 
 ## Documentation
 
