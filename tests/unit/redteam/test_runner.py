@@ -351,6 +351,25 @@ def test_run_with_timeout_passthrough_on_fast_fn() -> None:
     assert outcome.actual_verdict == "block"
 
 
+def test_run_with_timeout_reraises_worker_exception() -> None:
+    """Exception-parity with the old fut.result(): a worker that raises
+    before the timeout must surface the ORIGINAL exception to the caller,
+    not a KeyError from a missing box['v']."""
+    from redteam import runner as r
+
+    attack = Attack.model_validate(
+        _attack_dict(
+            id="attack-102", mode="chat", payload="raising query", expected_block_layer="auditor"
+        )
+    )
+
+    def _raiser(a: object) -> AttackOutcome:
+        raise RuntimeError("analyst blew up")
+
+    with pytest.raises(RuntimeError, match="analyst blew up"):
+        r._run_with_timeout(_raiser, attack, timeout_s=5)
+
+
 def test_aggregate_basic() -> None:
     outcomes = [
         AttackOutcome(
