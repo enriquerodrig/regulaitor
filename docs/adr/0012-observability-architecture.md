@@ -1,7 +1,7 @@
 # ADR 0012 — Observability architecture (H11)
 
 - **Status:** Accepted
-- **Date:** 2026-05-15 (decision); 2026-05-16 (implemented; squash `<squash-sha>`, tag `v0.1.1-h11` — finalized post-merge)
+- **Date:** 2026-05-15 (decision); 2026-05-16 (implemented; squash `8378015`, tag `v0.1.1-h11`)
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0001 (project scope), 0006 (chat graph), 0007 (document pipeline),
   0011 (redteam runner — this ADR closes its H9-deferred full run).

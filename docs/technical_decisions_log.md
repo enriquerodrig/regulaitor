@@ -1991,7 +1991,7 @@ mueve a H17 (cierre académico) salvo decisión explícita posterior.
 
 ---
 
-## H11 — Observabilidad (LangFuse) + redteam reliability (cerrado 2026-05-16, squash `<squash-sha>`, tag `v0.1.1-h11`)
+## H11 — Observabilidad (LangFuse) + redteam reliability (cerrado 2026-05-16, squash `8378015`, tag `v0.1.1-h11`)
 
 Primer hito de la pista avanzada. Bundle de 3 piezas: instrumentación LangFuse
 (observability-layer), timeout per-attack en el redteam runner, y el full
@@ -2134,6 +2134,6 @@ Scope acotado mantenido.
 
 ### Cierre
 
-H11 cerrado 2026-05-16. Squash `<squash-sha>`, tag `v0.1.1-h11` (post-merge).
+H11 cerrado 2026-05-16. Squash `8378015`, tag `v0.1.1-h11` (post-merge).
 Próximo: **H12** — Router multi-LLM real + análisis de coste + modos
 coste/calidad.
