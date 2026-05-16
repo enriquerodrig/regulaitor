@@ -301,6 +301,29 @@ def test_run_with_timeout_returns_timeout_outcome(
     assert outcome.actual_block_layer == "none"
 
 
+def test_run_with_timeout_returns_promptly_not_after_slow_fn() -> None:
+    import time as _time
+
+    from redteam import runner as r
+
+    attack = Attack.model_validate(
+        _attack_dict(
+            id="attack-101", mode="chat", payload="slow query", expected_block_layer="auditor"
+        )
+    )
+
+    def _very_slow(_a: object) -> object:
+        _time.sleep(5)  # 5x the timeout — must NOT be waited out
+        raise AssertionError("worker should have been abandoned")
+
+    t0 = _time.monotonic()
+    outcome = r._run_with_timeout(_very_slow, attack, timeout_s=1)
+    elapsed = _time.monotonic() - t0
+    assert elapsed < 3.0, f"timeout did not return promptly: {elapsed:.2f}s"
+    assert outcome.actual_verdict == "timeout"
+    assert outcome.blocked is False
+
+
 def test_run_with_timeout_passthrough_on_fast_fn() -> None:
     from redteam import runner as r
     from redteam.schemas import AttackOutcome
@@ -411,4 +434,5 @@ def test_main_langfuse_score_is_noop_without_env_vars(
     # Report must have been written.
     assert report_path.exists(), "report file was not created"
     content = report_path.read_text(encoding="utf-8")
-    assert "block_rate" in content.lower() or "n_total" in content.lower() or len(content) > 0
+    assert "# RegulAItor — Red Team Report" in content
+    assert "block_rate (final):" in content
