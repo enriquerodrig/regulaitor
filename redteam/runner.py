@@ -271,7 +271,7 @@ def _run_with_timeout(
     at context exit AND registers an atexit join over non-daemon workers,
     either of which would re-introduce the very hang this guards against."""
     box: dict[str, AttackOutcome] = {}
-    err: dict[str, BaseException] = {}
+    err: dict[str, Exception] = {}
 
     def _target() -> None:
         try:
