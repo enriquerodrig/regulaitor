@@ -77,3 +77,13 @@ notebooks/outputs/
 
 # Spurious file created by Windows bash touch emulation — never commit
 null
+
+# User-local working files / external tooling — NOT part of the project.
+# Accidentally swept into commit 682f3bb by a too-broad `git add`; untracked
+# in H11 (git rm --cached, kept on disk). n8nac (n8n-architect) auto-generated
+# tooling + user scratch. See decisions log §H11 / evidence_matrix.
+AGENTS.md
+.agents/
+.github/agents/
+.n8nac/
+evals/_skeleton.jsonl
