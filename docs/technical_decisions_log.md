@@ -1742,6 +1742,34 @@ Diferido a H11 (observability): añadir `asyncio.wait_for` o equivalente al runn
 **Coste consumido en intento abortado**: ~$1-2 estimado (3 doc e2e × $0.193 +
 chat attacks silenciosos antes del hang).
 
+### Amendment 6 — Full run completado en H11 (2026-05-16)
+
+Resuelto en H11. T6 añadió timeout per-attack (daemon-thread, 300 s chat / 900 s
+doc — ver §H11 para el Critical del plan corregido). Full run `make redteam`
+(bg `b6mle9irq`, 2026-05-16, commit `602c2da`, exit 0, ~4 h wall, **coste 1.99 €**).
+
+**Resultado**: `block_rate` raw = **0.28** (14/50). **Contaminado**: la API de
+Anthropic estuvo degradada durante el run y **21/50 ataques hicieron timeout**
+(19 chat @300 s + 2 doc @900 s); el timeout de T6 los cortó (run terminó + coste
+acotado — exactamente el modo de fallo de H9 ahora controlado). Esos 21 cuentan
+como no-bloqueados por prudencia → hunden mecánicamente el block_rate.
+
+Desglose honesto de los 50: 14 bloqueados (13 block + 1 requires_human_review),
+21 timeout (API), 12 escapes genuinos (verdict=pass), 3 error. **Entre los 26 que
+completaron veredicto: 14/26 = 0.54** — sigue < 0.90, consistente con el gap de
+calibración Auditor/Analyst ya documentado en §H10 (precision 0.17, verdict 0.28)
+y diferido a H15. Los 12 escapes genuinos son señal de calibración H15, no
+regresión nueva.
+
+**No re-abre H9 y no falla el gate**: el gate §16.2 #4 descansa en el smoke 0.92
+(determinista, sin LLM → inmune a timeouts de API) por el reframe aprobado en §H10.
+El full run era "correr y reportar con transparencia, señal → H15", no condición
+de gate (decisión usuario 2026-05-16: opción "aceptar + documentar", sin re-run —
+re-correr para un número más bonito sería menos honesto y el gate no depende de
+ello). Capas deterministas (sanitizer 3 + injection 9, ms/0 €) operaron con
+normalidad. Detalle por ataque en `redteam/reports/latest.md`; análisis completo
+en §H11 de este log.
+
 ### Métricas de cierre
 
 | Métrica | Valor |
@@ -1749,14 +1777,16 @@ chat attacks silenciosos antes del hang).
 | Block_rate baseline (smoke pre-improvements) | 0.46 |
 | Block_rate smoke post-improvements | **0.92** ✅ |
 | N ataques smoke | 13 doc deterministas |
-| Block_rate final (full run 50 attacks) | deferred a H11 |
+| Block_rate full (50, raw) — H11 commit `602c2da` | **0.28** (contaminado: 21 timeout API; ver Amendment 6) |
+| Block_rate full entre 26 completados | 0.54 (señal H15, no gate) |
 | Delta (pre → smoke final) | +0.46 |
 | Coste smoke | $0.00 |
-| Coste full run abortado | ~$1-2 |
+| Coste full run abortado (H9) | ~$1-2 |
+| Coste full run completado (H11, medido) | 1.99 € |
 | N ataques autorados (full) | 50 (22 chat + 28 doc) |
 | N ataques doc-mode E2E (designed) | 15 |
-| Gate §16.2 #4 (≥ 0.90 sobre smoke) | ✅ |
-| Gate §16.2 #4 sobre full (50) | pendiente H11 |
+| Gate §16.2 #4 (≥ 0.90 sobre smoke) | ✅ (base del gate, inmune a API) |
+| Gate §16.2 #4 sobre full (50) | N/A — full run es señal calibración → H15, no condición de gate (reframe §H10) |
 
 ### Skills activadas en H9
 
