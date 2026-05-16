@@ -113,6 +113,50 @@ def test_render_report_includes_per_layer_attribution() -> None:
     assert "14" in md
 
 
+def _make_timeout_outcome(idx: int) -> AttackOutcome:
+    return AttackOutcome(
+        attack_id=f"attack-{idx:03d}",
+        blocked=False,
+        actual_block_layer="none",  # type: ignore[arg-type]
+        actual_verdict="timeout",
+        matches_expected=False,
+        latency_ms=300000,
+        cost_eur=0.0,
+        error="timeout: attack exceeded 300s (likely Anthropic hang)",
+    )
+
+
+def test_render_report_emits_timeout_contamination_banner() -> None:
+    """When attacks time out (API degradation), the report must surface the
+    contamination honestly in both the Gate banner and Caveats (C1 fix)."""
+    meta = _make_meta()
+    agg = _make_agg(n_total=3, n_blocked=1)
+    attacks = [_make_attack(1), _make_attack(2), _make_attack(3)]
+    outcomes = [
+        _make_outcome(1, blocked=True, layer="sanitizer"),
+        _make_timeout_outcome(2),
+        _make_outcome(3, blocked=False, layer="none"),
+    ]
+    md = render_report(meta, agg, outcomes, attacks)
+    assert "Timeout contamination" in md
+    assert "1/3 attacks timed out" in md
+    assert "0.50" in md  # 1 blocked / 2 completed (3 - 1 timeout - 0 error)
+    assert "smoke 0.92" in md
+    assert "not an H9 re-open" in md
+    assert "Contaminación por timeout" in md  # also in Caveats
+
+
+def test_render_report_no_banner_when_no_timeouts() -> None:
+    """Clean / smoke runs (zero timeouts) must NOT carry the banner."""
+    meta = _make_meta()
+    agg = _make_agg(n_total=2, n_blocked=2)
+    attacks = [_make_attack(1), _make_attack(2)]
+    outcomes = [_make_outcome(1), _make_outcome(2)]
+    md = render_report(meta, agg, outcomes, attacks)
+    assert "Timeout contamination" not in md
+    assert "Contaminación por timeout" not in md
+
+
 def test_render_report_per_attack_appendix_marks_escaped() -> None:
     meta = _make_meta()
     agg = _make_agg(n_total=2, n_blocked=1)

@@ -91,10 +91,18 @@ Plus: attack-008 PDF spec trimmed (rendering survival fix — oversized invisibl
 PDF corruption in some viewers, not an injection bypass).
 
 Baseline block_rate (smoke pre-improvements): 0.46. Post-improvements: 0.92.
-Final block_rate over the 50 full set: **deferred to H11** (first full-run attempt
-hung on Anthropic API silent timeout; runner timeouts pending). Closure evidence:
-smoke block_rate **0.92** sobre el subset deterministic (13 ataques), gate §16.2 #4
-≥ 0.90 ✅. Ver `docs/technical_decisions_log.md §H9 amendment 5`.
+Final block_rate over the 50 full set: **completed in H11** (commit `602c2da`,
+2026-05-16, cost 1.99 €). Raw block_rate = **0.28** (14/50) but contaminated:
+21/50 attacks timed out under Anthropic API degradation (19 chat @300 s + 2 doc
+@900 s — the H11/T6 per-attack timeout fired, resolving the H9 hang failure mode)
+and are conservatively counted as non-blocked. Among the 26 attacks that completed
+a verdict: 14/26 = **0.54** (still < 0.90 → the already-documented Auditor/Analyst
+calibration gap, deferred to H15; consistent with H10 precision 0.17 / verdict
+0.28). Gate §16.2 #4 (≥ 0.90) closure evidence remains the smoke block_rate
+**0.92** over the deterministic subset (13 attacks, no LLM → immune to API
+timeouts); the full run is a transparent calibration signal, not a gate condition
+(H10-approved reframe). This does NOT re-open H9. See
+`docs/technical_decisions_log.md §H9 amendment 6` and §H11.
 
 ## Consequences
 

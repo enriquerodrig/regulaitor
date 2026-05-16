@@ -49,6 +49,7 @@ dev = [
     "ragas>=0.2,<1.0",
     "langchain-anthropic>=0.3,<1.0",
     "langchain-huggingface>=1.0,<2.0",
+    "langfuse>=2,<3",
 ]
 
 [build-system]
@@ -173,6 +174,14 @@ ignore_missing_imports = true
 module = "ragas.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "langfuse"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "langfuse.*"
+ignore_missing_imports = true
+
 [tool.coverage.run]
 source = [
     "src/regulaitor/api",
@@ -185,6 +194,7 @@ source = [
     "src/regulaitor/orchestration",
     "src/regulaitor/security",
     "src/regulaitor/document",
+    "src/regulaitor/observability",
     "src/regulaitor/ui_streamlit",
 ]
 branch = true
@@ -205,7 +215,7 @@ exclude_also = [
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 asyncio_mode = "auto"
-addopts = "-ra -q --strict-markers --cov=src/regulaitor/api --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov-report=term-missing --cov-fail-under=90"
+addopts = "-ra -q --strict-markers --cov=src/regulaitor/api --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov=src/regulaitor/observability --cov-report=term-missing --cov-fail-under=90"
 markers = [
     "integration: integration tests using stub HTTP server",
     "contract: contract tests using hypothesis",

@@ -78,7 +78,7 @@ labelled advanced milestone.
 | CI/CD pipeline | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (5 jobs: Lint, Test, Document E2E, Security, Red Team Smoke) | ✅ H7 + H8 + H9 cleanup |
 | Reproducibility commands | `Makefile` (`setup`, `lint`, `test`, `ingest`, `rag-build`, `eval`, `eval-from-cache`, `redteam`, `redteam-smoke`, `serve`, `serve-api`) | ✅ H0.1 + extended |
 | Observability (structured logging) | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py) | ✅ H4 (case_id, cost, latency, token_hash) |
-| LangFuse traces | `src/regulaitor/observability/langfuse_client.py` | **deferred H11** |
+| LangFuse traces | [`src/regulaitor/observability/langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [ADR 0012](adr/0012-observability-architecture.md) | ✅ H11 (metadata-only, no-op without keys; redaction proven end-to-end vs live backend) |
 | Public deploy (Docker / HF Spaces) | `docker-compose.yml` + `.github/workflows/deploy.yml` | **deferred H16** |
 | ADRs | [`docs/adr/0003-corpus-pipeline.md`](adr/0003-corpus-pipeline.md), [`0004-rag-architecture.md`](adr/0004-rag-architecture.md), [`0010-evaluation-harness.md`](adr/0010-evaluation-harness.md) | ✅ committed |
 
@@ -105,10 +105,10 @@ labelled advanced milestone.
 | Security report (formal MVP) | [`docs/security_report.md`](security_report.md) | ✅ H9 |
 | Bandit static analysis | CI `Security` job — 0 high / 0 medium / 0 low | ✅ |
 | Pip-audit | CI `Security` job (3 CVEs ignored with documented rationale) | ✅ |
-| Gitleaks pre-commit | `.gitleaks.toml` + pre-commit hook | ✅ H0.1 |
+| Gitleaks secret scan | `.gitleaks.toml`; pre-commit hook (Linux/CI) + [`ci.yml`](../.github/workflows/ci.yml) Security job (pinned v8.21.2) | ✅ H0.1 + **CI-enforced H11** (local Windows hook is golang/no-Go → CI is authoritative; §16.2 #6) |
 | Semgrep | (not adopted; bandit + manual review sufficient for MVP) | n/a |
-| Red team gate | §16.2 #4 (block_rate ≥ 0.90) — smoke ✅, full deferred H11 | ✅ smoke |
-| Full red team run | 50 attacks E2E | **deferred H11** (runner timeouts pending) |
+| Red team gate | §16.2 #4 (block_rate ≥ 0.90) — smoke 0.92 ✅ (gate basis, API-immune); full 0.28 raw / 0.54 completed (H11, timeout-contaminated → H15 signal, not gate) | ✅ smoke |
+| Full red team run | 50 attacks E2E ([`redteam/reports/latest.md`](../redteam/reports/latest.md), commit `602c2da`, 1.99 €) | ✅ H11 (21/50 API timeouts — see §H9 amendment 6 / §H11; T6 timeout prevented H9-style hang) |
 | Skills active | [`redteam-runner`](../.claude/skills/redteam-runner/SKILL.md), [`secure-coding-checklist`](../.claude/skills/secure-coding-checklist/SKILL.md) | ✅ H9 |
 | ADRs | [`docs/adr/0011-redteam-runner.md`](adr/0011-redteam-runner.md) | ✅ committed |
 
@@ -126,7 +126,7 @@ labelled advanced milestone.
 | **P4 — Modelos y prompts** | [`src/regulaitor/models/`](../src/regulaitor/models/), [`src/regulaitor/agents/prompts/`](../src/regulaitor/agents/prompts/) | ✅ H4 + H5 + H8 |
 | **P5 — Evaluaciones y seguridad** | [`evals/`](../evals/), [`redteam/`](../redteam/), [`docs/security_report.md`](security_report.md) | ✅ H8 + H9 |
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
-| **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); LangFuse traces; postmortems | partial: logs ✅; LangFuse **deferred H11**; postmortems opt HX6 |
+| **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
 **TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (1798+ lines as of MVP closure; every approved technical decision from H0 to H9 plus H10 in progress).
 
@@ -165,9 +165,9 @@ Each closed milestone has its own §HX section in
 | 1 | `make setup && make ingest && make eval && make redteam && make serve` clean clone | H10 reproducibility verification (pending) | ⏳ |
 | 2 | Coverage ≥80% citation/agents/rag | `pyproject.toml` cov gate + 92.61% measured | ✅ |
 | 3 | `evals/reports/latest.md` with real metrics | H8 report + H10 re-eval | ✅ |
-| 4 | Auditor block_rate ≥0.90 on adversarial set | smoke 0.92; full deferred H11 | ✅ smoke |
+| 4 | Auditor block_rate ≥0.90 on adversarial set | smoke 0.92 ✅ (gate basis, deterministic/API-immune); full H11 0.28 raw / 0.54 completed — timeout-contaminated, H15 signal not gate (§H9 amend. 6) | ✅ smoke |
 | 5 | citation_recall ≥0.40 (reframed from precision ≥0.85) | measured 0.44 ✅; precision 0.17 documented, ≥0.85 → H15 | ✅ |
-| 6 | gitleaks clean | pre-commit + CI | ✅ |
+| 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
 | 9 | ADRs current | 0001-0011 (11 ADRs) | ✅ |
@@ -182,10 +182,13 @@ section.
 
 | Item | Originally surfaced | Target hito | Notes |
 |---|---|---|---|
-| Full red team run on 50 attacks | H9 (silent API hang) | H11 | Add per-attack timeouts to runner; re-run; populate `block_rate_final`. |
+| Full red team run on 50 attacks | H9 (silent API hang) | ✅ **done H11** | Daemon-thread per-attack timeout added; full run 1.99 € (commit `602c2da`); block_rate 0.28 raw / 0.54 completed — 21/50 API timeouts, gate stays on smoke 0.92 (§H9 amend. 6). |
 | Citation precision to 0.85 | H8 (measured 0.16) → H10 (revised threshold) | H15 | Auditor calibration + Council voting reduces over-citation. |
 | Severity match rate to 0.80 | H8 (measured 0.19) | H15 | Auditor severity assignment drift; A/B threshold tuning. |
-| LangFuse observability | from H4 design | H11 | Per-agent traces + cost dashboard. |
+| LangFuse observability | from H4 design | ✅ **done H11** | Orchestration-layer traces (chat + doc), metadata-only, no-op without keys; verified live (trace in LangFuse Cloud + redaction proven end-to-end). [ADR 0012](adr/0012-observability-architecture.md). |
+| langfuse-mcp (assistant trace querying) | H11 Q6 | **deferred (user, 2026-05-16)** | Lowest-value H11 item; no product/TFM impact; can add any session (needs new `.mcp.json` + community MCP). |
+| Latency optimization (per-query SLA ≤12 s) | H11 runbook §3 (real ~15–60 s > target) | H12/H15 | Streaming, max_tokens, parallel retriever, fast-model router. Measured cleanly via LangFuse per-span (H11). |
+| Analyst schema-adherence (`findings` sometimes missing) | H11 (live-trace demo) | H15 | Analyst occasionally emits prose without structured `findings` even after retry; add to H15 Auditor/Analyst calibration levers. |
 | Multi-LLM router (GPT-4o + Llama) | from H4 router decision | H12 | Real comparison run for `cost_analysis.md`. |
 | Council of Judges | H4 + H13 | H13 | High-severity case voting. |
 | NIS2 + DORA corpus | H1 deferred | H14 | Parser per norma; reuse pipeline. |

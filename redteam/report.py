@@ -49,6 +49,26 @@ def render_report(
             f"- **block_rate (baseline pre-H9 improvements):** "
             f"{agg.block_rate_baseline:.2f} | **Delta:** {sign}{delta:.2f}"
         )
+    n_timeout = sum(1 for o in outcomes if o.actual_verdict == "timeout")
+    if n_timeout:
+        n_error = sum(1 for o in outcomes if o.actual_verdict == "error")
+        n_blocked = sum(1 for o in outcomes if o.blocked)
+        n_completed = agg.n_total - n_timeout - n_error
+        completed_rate = n_blocked / n_completed if n_completed else 0.0
+        sections.append("")
+        sections.append(
+            f"> ⚠️ **Timeout contamination — read before citing the rate "
+            f"above.** {n_timeout}/{agg.n_total} attacks timed out (Anthropic "
+            f"API degradation, *not* Auditor failures) and are conservatively "
+            f"counted as non-blocked, so the raw block_rate is "
+            f"timeout-depressed. Among the {n_completed} attacks that produced "
+            f"a verdict: **{completed_rate:.2f}**. Gate §16.2 #4 rests on the "
+            f"H9 smoke 0.92 (deterministic, API-immune; H10 reframe), NOT this "
+            f"full run — this is an H15 calibration signal, not an H9 re-open. "
+            f"The per-attack timeout (H11/T6) is what prevented an H9-style "
+            f"infinite hang. See `docs/security_report.md` / decisions log "
+            f"§H9 amendment 6 + §H11."
+        )
     sections.append("")
     sections.append("## Per-scenario block rate (CLAUDE.md §18)")
     sections.append("")
@@ -110,4 +130,13 @@ def render_report(
         "fuzzing automatizado diferido a HX1+. Mejoras intra-H9 visibles "
         "en diff `block_rate_baseline` → `block_rate_final`."
     )
+    if n_timeout:
+        sections.append("")
+        sections.append(
+            f"**Contaminación por timeout:** este run tuvo {n_timeout}/"
+            f"{agg.n_total} ataques en timeout por degradación de la API de "
+            f"Anthropic (no fallos del Auditor) — ver el banner de la sección "
+            f"Gate §16.2 #4. El `block_rate` crudo NO debe citarse como medida "
+            f"de eficacia del Auditor; el gate descansa en el smoke 0.92."
+        )
     return "\n".join(sections) + "\n"

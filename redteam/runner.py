@@ -7,8 +7,12 @@ and H5 document pipeline read-only per spec §H9 (no backend modification).
 
 from __future__ import annotations
 
+import logging
+import os
 import subprocess
+import threading
 import time
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -30,9 +34,16 @@ from regulaitor.orchestration.document_graph import run_document
 from regulaitor.orchestration.graph import run as run_chat
 from regulaitor.security.injection import is_injection
 
+logger = logging.getLogger("regulaitor.observability")
+
 _ATTACKS_PATH = Path("redteam/attacks.jsonl")
 _DOC_DIR = Path("redteam/documents")
 _REPORT_PATH = Path("redteam/reports/latest.md")
+
+# Generous ceilings — chat is retriever+LLM (~15-60s typical), doc-E2E is
+# multi-segment (minutes); these only trip on a true silent API hang (H9).
+_CHAT_TIMEOUT_S = int(os.environ.get("REGULAITOR_REDTEAM_TIMEOUT_CHAT", "300"))
+_DOC_TIMEOUT_S = int(os.environ.get("REGULAITOR_REDTEAM_TIMEOUT_DOC", "900"))
 
 
 def extractor_extract(file_bytes: bytes, mime_type: str, language: str) -> Any:
@@ -248,6 +259,45 @@ def run_doc_attack(attack: Attack) -> AttackOutcome:
     )
 
 
+def _run_with_timeout(
+    fn: Callable[[Attack], AttackOutcome], attack: Attack, timeout_s: int
+) -> AttackOutcome:
+    """Run fn(attack) in a daemon thread; if it exceeds timeout_s, return a
+    timeout AttackOutcome instead of hanging the whole run (H9 lesson:
+    Anthropic API can hang silently with no traceback). The orphaned daemon
+    thread is abandoned — it does not block process exit, and consumes at
+    most one in-flight API call (~$0.02-0.19). A daemon thread is used
+    deliberately: concurrent.futures' executor blocks on shutdown(wait=True)
+    at context exit AND registers an atexit join over non-daemon workers,
+    either of which would re-introduce the very hang this guards against."""
+    box: dict[str, AttackOutcome] = {}
+    err: dict[str, Exception] = {}
+
+    def _target() -> None:
+        try:
+            box["v"] = fn(attack)
+        except Exception as exc:  # noqa: BLE001 — marshalled and re-raised below
+            err["e"] = exc
+
+    th = threading.Thread(target=_target, daemon=True, name=f"redteam-attack-{attack.id}")
+    th.start()
+    th.join(timeout=timeout_s)
+    if th.is_alive():
+        return AttackOutcome(
+            attack_id=attack.id,
+            blocked=False,
+            actual_block_layer="none",
+            actual_verdict="timeout",
+            matches_expected=False,
+            latency_ms=timeout_s * 1000,
+            cost_eur=0.0,
+            error=f"timeout: attack exceeded {timeout_s}s (likely Anthropic hang)",
+        )
+    if "e" in err:
+        raise err["e"]
+    return box["v"]
+
+
 def aggregate(
     outcomes: list[AttackOutcome],
     attacks: list[Attack],
@@ -330,9 +380,9 @@ def main(
     outcomes: list[AttackOutcome] = []
     for attack in attacks:
         if attack.mode == "chat":
-            outcomes.append(run_chat_attack(attack))
+            outcomes.append(_run_with_timeout(run_chat_attack, attack, _CHAT_TIMEOUT_S))
         else:
-            outcomes.append(run_doc_attack(attack))
+            outcomes.append(_run_with_timeout(run_doc_attack, attack, _DOC_TIMEOUT_S))
 
     agg = aggregate(outcomes, attacks, baseline=baseline)
     meta = RedTeamRunMeta(
@@ -341,6 +391,23 @@ def main(
         mode="smoke" if smoke else "full",
         corpus_languages=["es"],
     )
+
+    try:
+        from regulaitor.observability.langfuse_client import is_enabled
+
+        if is_enabled():
+            from langfuse import Langfuse  # lazy
+
+            _lf = Langfuse()
+            _lf.score(
+                name="block_rate",
+                value=agg.block_rate,
+                comment=f"redteam {meta.mode} run, n={agg.n_total}",
+            )
+            _lf.flush()
+    except Exception as exc:  # noqa: BLE001 — observability never breaks the run
+        logger.warning("langfuse block_rate score emit failed: %s", exc)
+
     markdown = render_report(meta, agg, outcomes, attacks)
     _REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     _REPORT_PATH.write_text(markdown, encoding="utf-8")

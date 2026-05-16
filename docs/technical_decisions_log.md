@@ -1742,6 +1742,34 @@ Diferido a H11 (observability): añadir `asyncio.wait_for` o equivalente al runn
 **Coste consumido en intento abortado**: ~$1-2 estimado (3 doc e2e × $0.193 +
 chat attacks silenciosos antes del hang).
 
+### Amendment 6 — Full run completado en H11 (2026-05-16)
+
+Resuelto en H11. T6 añadió timeout per-attack (daemon-thread, 300 s chat / 900 s
+doc — ver §H11 para el Critical del plan corregido). Full run `make redteam`
+(bg `b6mle9irq`, 2026-05-16, commit `602c2da`, exit 0, ~4 h wall, **coste 1.99 €**).
+
+**Resultado**: `block_rate` raw = **0.28** (14/50). **Contaminado**: la API de
+Anthropic estuvo degradada durante el run y **21/50 ataques hicieron timeout**
+(19 chat @300 s + 2 doc @900 s); el timeout de T6 los cortó (run terminó + coste
+acotado — exactamente el modo de fallo de H9 ahora controlado). Esos 21 cuentan
+como no-bloqueados por prudencia → hunden mecánicamente el block_rate.
+
+Desglose honesto de los 50: 14 bloqueados (13 block + 1 requires_human_review),
+21 timeout (API), 12 escapes genuinos (verdict=pass), 3 error. **Entre los 26 que
+completaron veredicto: 14/26 = 0.54** — sigue < 0.90, consistente con el gap de
+calibración Auditor/Analyst ya documentado en §H10 (precision 0.17, verdict 0.28)
+y diferido a H15. Los 12 escapes genuinos son señal de calibración H15, no
+regresión nueva.
+
+**No re-abre H9 y no falla el gate**: el gate §16.2 #4 descansa en el smoke 0.92
+(determinista, sin LLM → inmune a timeouts de API) por el reframe aprobado en §H10.
+El full run era "correr y reportar con transparencia, señal → H15", no condición
+de gate (decisión usuario 2026-05-16: opción "aceptar + documentar", sin re-run —
+re-correr para un número más bonito sería menos honesto y el gate no depende de
+ello). Capas deterministas (sanitizer 3 + injection 9, ms/0 €) operaron con
+normalidad. Detalle por ataque en `redteam/reports/latest.md`; análisis completo
+en §H11 de este log.
+
 ### Métricas de cierre
 
 | Métrica | Valor |
@@ -1749,14 +1777,16 @@ chat attacks silenciosos antes del hang).
 | Block_rate baseline (smoke pre-improvements) | 0.46 |
 | Block_rate smoke post-improvements | **0.92** ✅ |
 | N ataques smoke | 13 doc deterministas |
-| Block_rate final (full run 50 attacks) | deferred a H11 |
+| Block_rate full (50, raw) — H11 commit `602c2da` | **0.28** (contaminado: 21 timeout API; ver Amendment 6) |
+| Block_rate full entre 26 completados | 0.54 (señal H15, no gate) |
 | Delta (pre → smoke final) | +0.46 |
 | Coste smoke | $0.00 |
-| Coste full run abortado | ~$1-2 |
+| Coste full run abortado (H9) | ~$1-2 |
+| Coste full run completado (H11, medido) | 1.99 € |
 | N ataques autorados (full) | 50 (22 chat + 28 doc) |
 | N ataques doc-mode E2E (designed) | 15 |
-| Gate §16.2 #4 (≥ 0.90 sobre smoke) | ✅ |
-| Gate §16.2 #4 sobre full (50) | pendiente H11 |
+| Gate §16.2 #4 (≥ 0.90 sobre smoke) | ✅ (base del gate, inmune a API) |
+| Gate §16.2 #4 sobre full (50) | N/A — full run es señal calibración → H15, no condición de gate (reframe §H10) |
 
 ### Skills activadas en H9
 
@@ -1958,3 +1988,152 @@ Candidatos potenciales (de la lista CLAUDE.md §12):
 Decisión por defecto: **NO** activar skills nuevas en H10. Mantener scope acotado
 a docs MVP + gates. Activación de model_card/data_card/ai-act-assessment se
 mueve a H17 (cierre académico) salvo decisión explícita posterior.
+
+---
+
+## H11 — Observabilidad (LangFuse) + redteam reliability (cerrado 2026-05-16, squash `<squash-sha>`, tag `v0.1.1-h11`)
+
+Primer hito de la pista avanzada. Bundle de 3 piezas: instrumentación LangFuse
+(observability-layer), timeout per-attack en el redteam runner, y el full
+50-attack run diferido de H9. Branch `feat/h11-observability`. ADR 0012.
+
+### Decisiones de brainstorming (6 Qs + enfoque A)
+
+- **Q1 — Scope:** bundle todo en H11 (timeout es prerequisito del full run; el
+  run es el primer consumidor del score `block_rate` → separar acoplaría hitos
+  artificialmente).
+- **Q2 — Hosting:** LangFuse Cloud free tier. Self-host rechazado (overhead sin
+  valor académico a esta escala).
+- **Q3 — Redacción:** metadata-only. Trazas → tercero (LangFuse Cloud) → solo
+  hashes (`hash12()`=sha256[:12]), contadores (`n_*`), verdicts categóricos,
+  latencia/coste numéricos. Guard runtime `_assert_safe_keys` (allowlist) en el
+  borde de egress: clave no-allowlisted → raise antes de llamar al SDK.
+- **Q4 — Instrumentación:** wrapper en orchestration layer (módulo nuevo
+  `observability/langfuse_client.py`); `graph.run()` + `document_graph.run_document()`
+  envueltos; agentes H3-H5 intactos. Decorators per-agente rechazados (violarían
+  backend-read-only).
+- **Q5 — Timeout redteam:** per-attack budget (chat 300 s / doc 900 s); en
+  expiry → outcome sintético `timeout` (`blocked=False`, dirección segura). **Ver
+  Amendment 1 — desviación del mecanismo aprobado.**
+- **Q6 — Dashboard:** LangFuse nativo + `docs/runbook.md`. **Ver Amendment 3 —
+  langfuse-mcp diferido.**
+- **Enfoque A (aprobado):** sin `LANGFUSE_*` → no-op total (SDK ni se importa,
+  cero overhead, test regression-zero). Con keys → cliente cacheado a nivel
+  módulo, `flush()` per-turn (drena cola async sin bloquear), toda excepción
+  LangFuse tragada con WARNING. Enfoque B (síncrono/bloqueante) rechazado.
+
+### Amendments durante implementación (registro honesto, CLAUDE.md §22.1)
+
+**Amendment 1 — Q5 `ThreadPoolExecutor` era un defecto Critical del plan → daemon-thread.**
+El diseño aprobado y el plan especificaban `ThreadPoolExecutor + future.result(timeout)`.
+El code-review en dos fases (subagent-driven) detectó un **Critical**: el
+`with ThreadPoolExecutor(...)` llama `shutdown(wait=True)` en `__exit__`, que
+bloquea el retorno del timeout hasta que el worker termina; además
+`concurrent.futures` registra un `atexit` join sobre workers no-daemon → ante un
+hang silencioso real de la API el runner **se colgaría igualmente para siempre**
+(exactamente el fallo de H9 que esta tarea existe para prevenir). El test
+original pasaba por coincidencia (su fn lenta dormía 2 s acotados). Corregido a
+**daemon `threading.Thread` + `join(timeout)`** (el daemon no bloquea el exit;
+`join(timeout)` retorna puntual; excepciones del worker marshalladas y
+re-lanzadas para paridad con `fut.result()`). Añadido test de prontitud
+wall-clock. El snippet Task 6 del plan se corrigió para no re-introducir el bug.
+Lección: el review de 2 fases capturó un defecto que **originó en el plan**, no
+en el implementer. Commits `3e31ecf`→`7d7ab1e`→`97c4584`.
+
+**Amendment 2 — gitleaks en CI (out-of-plan, user opt A).** Se descubrió que el
+hook `gitleaks` de `.pre-commit-config.yaml` no puede correr en el dev box
+Windows (golang, sin toolchain Go) **y tampoco estaba en CI** → gate §16.2 #6 sin
+enforcement automático real. Usuario eligió añadir un step gitleaks pinneado
+(`v8.21.2`) al job `Security` de `ci.yml` (Linux, instala limpio). Commits
+locales Windows saltan **solo** ese hook vía `SKIP=gitleaks` (resto de hooks
+corren; nunca `--no-verify`). Arreglo deliberado y aprobado. Commit `8250ba6`.
+
+**Amendment 3 — langfuse-mcp (Q6) diferido por decisión del usuario.** No existía
+`.mcp.json` (habría que crearlo + dependencia MCP comunitaria). Identificado como
+el ítem de menor valor de H11 (conveniencia para el asistente, no entregable de
+producto/TFM; cero impacto en cierre o gates). **Diferido** (no hecho) por
+decisión explícita del usuario (2026-05-16); se puede añadir en cualquier sesión
+futura. CLAUDE.md §13 respetado (no se tocó/creó `.mcp.json`).
+
+**Amendment 4 — observación: Analyst emite Answer malformado (sin `findings`).**
+Durante la verificación de trazas en vivo, una query chat no-injection falló:
+`RuntimeError: Analyst emitted malformed Answer after retry` — el LLM (Sonnet)
+devolvió prosa en `text` sin el campo requerido `findings` (no-adherencia de
+esquema), y el retry repitió el fallo. **No es defecto de H11** (H11 solo
+instrumenta `run()`; no toca lógica del Analyst H4). Es una faceta de robustez
+del mismo gap de calibración Analyst/Auditor ya documentado en §H10 y diferido a
+H15 — refuerza el caso de H15 (añadir a las palancas: schema-adherence del
+Analyst, no solo over-citation). Registrado como observación honesta para la
+memoria.
+
+**Amendment 5 — full redteam contaminado por degradación de API.** Cross-ref
+§H9 amendment 6. Full run (commit `602c2da`, 1.99 €): block_rate raw **0.28**
+(14/50); 21/50 hicieron **timeout** (19 chat @300 s + 2 doc @900 s) por API
+Anthropic degradada — el timeout de T6 los cortó (resolvió el modo de fallo de
+H9; coste acotado vs hang infinito). Esos 21 cuentan como no-bloqueados por
+prudencia → hunden el block_rate. Entre los 26 que completaron veredicto:
+**0.54**. 12 escapes genuinos = señal calibración H15 (consistente con §H10
+precision 0.17 / verdict 0.28). **No re-abre H9, no falla el gate**: §16.2 #4
+descansa en smoke 0.92 (determinista, sin LLM → inmune a timeouts API; reframe
+§H10). Decisión usuario 2026-05-16: opción "aceptar + documentar con
+transparencia", sin re-run (re-correr por un número más bonito sería menos
+honesto y el gate no depende de ello). Capas deterministas (sanitizer 3 +
+injection 9, ms/0 €) operaron normales.
+
+### Verificación de trazas en vivo (criterio "done" de H11)
+
+Demo end-to-end contra el backend real de LangFuse Cloud (no solo unit-mocked):
+1 turno chat por la ruta injection-blocked (determinista, $0, sin Analyst) →
+traza `chat_turn` (id `cc3d2aa0-7dc9-42d9-8bdd-71ab30266b26`) **aterrizó en
+LangFuse Cloud**, recuperada vía API REST. **Prueba de redacción contra el
+servidor real:** un canary token (`ZQXCANARY747`) inyectado en la query y la
+frase cruda **ausentes** del JSON server-side; solo metadata allowlisted
+presente (`query_sha256_12`, `verdict=blocked_injection`, `n_*`, `case_id`,
+`corpus`, `language`, `latency_ms_total`, `errors`). El contrato de privacidad
+metadata-only queda probado end-to-end, no solo en tests — evidencia fuerte
+Módulo 4 (seguridad).
+
+### Métricas de cierre
+
+| Ítem | Valor |
+|---|---|
+| Instrumentación | `graph.run()` (chat) + `document_graph.run_document()` (doc); backend H1-H5 intacto |
+| No-op sin keys | SDK no importado; test regression-zero ✅ |
+| Redacción | allowlist guard runtime + probado end-to-end vs LangFuse real ✅ |
+| Timeout redteam | daemon-thread; `REGULAITOR_REDTEAM_TIMEOUT_CHAT`=300 s / `_DOC`=900 s |
+| Full redteam block_rate (raw / completados) | 0.28 / 0.54 (contaminado, ver Amendment 5) |
+| Coste full redteam (medido) | **1.99 €** |
+| Trace en LangFuse Cloud | ✅ verificado vía API (`chat_turn`) |
+| langfuse-mcp | diferido (Amendment 3) |
+| Gate §16.2 #4 | smoke 0.92 ✅ (base del gate); full = señal H15 |
+| Gate §16.2 #6 (secrets) | ahora enforced en CI (Amendment 2) |
+
+### Reconciliación de costes
+
+Números **medidos** (autoritativos): full redteam H11 = **1.99 €**; re-eval H10 =
+**$2.51**. Los comentarios del `Makefile` (`redteam ~$2.35`, `eval ~$7`) son
+estimaciones previas no-autoritativas y divergen de lo medido — los informes
+(`redteam/reports/latest.md`, `evals/reports/latest.md`) y este log son la
+fuente de verdad. Limpieza de los comentarios del Makefile → follow-up menor
+(no bloqueante; no se tocó el Makefile en H11 para mantener scope).
+
+### Artefactos entregados
+
+`observability/langfuse_client.py` (+ tests), instrumentación `graph.py` /
+`document_graph.py` (+ tests tracing/regression-zero), `redteam/runner.py`
+(timeout daemon-thread + score `block_rate` + tests), `ci.yml` (step gitleaks),
+`docs/runbook.md`, `docs/adr/0012-observability-architecture.md`,
+`redteam/reports/latest.md` (full run), §H9 amendment 6, este §H11,
+`evidence_matrix.md`, `CLAUDE.md §27`. Plan Task 6 snippet corregido.
+
+### Skill activada
+
+**Ninguna.** `cost-accounting` (CLAUDE.md §12.4) sigue en H17 — H11 no requiere
+contabilidad de coste formal (los números medidos viven en informes + este log).
+Scope acotado mantenido.
+
+### Cierre
+
+H11 cerrado 2026-05-16. Squash `<squash-sha>`, tag `v0.1.1-h11` (post-merge).
+Próximo: **H12** — Router multi-LLM real + análisis de coste + modos
+coste/calidad.

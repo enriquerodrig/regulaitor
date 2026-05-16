@@ -11,7 +11,6 @@ Decisions log 2026-05-05 entries: "Auditor lean en H4" (injection check) +
 from __future__ import annotations
 
 import functools
-import hashlib
 import json
 import logging
 import time
@@ -23,6 +22,7 @@ from regulaitor.agents.analyst import AnalystAgent
 from regulaitor.agents.auditor import AuditorAgent
 from regulaitor.agents.retriever import RetrieverAgent
 from regulaitor.corpus.schemas import Language, Norma
+from regulaitor.observability.langfuse_client import hash12, trace_turn
 from regulaitor.orchestration.state import ChatState
 from regulaitor.security import injection
 
@@ -108,22 +108,17 @@ def _compiled_graph() -> Any:
     return build_graph()
 
 
-def _log_turn(state: ChatState, latency_ms_total: int) -> None:
-    """Emit a single structured JSON log line summarising the chat turn.
-
-    Per CLAUDE.md §10.5 + §11 (PII discipline): never log the raw query —
-    only a short SHA256 prefix for grouping/dedup. The record is small and
-    flat so log handlers can index it directly.
-    """
-    query_hash = hashlib.sha256(state.query.encode("utf-8")).hexdigest()[:12]
-
+def _trace_record(state: ChatState, latency_ms_total: int) -> dict[str, object]:
+    """Metadata-only summary of a chat turn. NO raw query — only a
+    sha256[:12] prefix (CLAUDE.md §10.5/§18.8). Shared by the JSON log
+    line and the LangFuse trace."""
+    query_hash = hash12(state.query)
     verdict: str
     n_findings = 0
     n_citations = 0
     n_validated = 0
     n_blocked = 0
     reason_code: str | None = None
-
     if state.injection_blocked:
         verdict = "blocked_injection"
         reason_code = state.injection_reason
@@ -137,8 +132,7 @@ def _log_turn(state: ChatState, latency_ms_total: int) -> None:
         reason_code = None if audited.reason is None else audited.reason.split(":", 1)[0]
     else:
         verdict = "no_answer"
-
-    record = {
+    return {
         "case_id": state.case_id,
         "query_hash": query_hash,
         "corpus": state.corpus,
@@ -152,20 +146,40 @@ def _log_turn(state: ChatState, latency_ms_total: int) -> None:
         "reason_code": reason_code,
         "errors": list(state.errors),
     }
+
+
+def _log_turn(state: ChatState, latency_ms_total: int) -> dict[str, object]:
+    """Emit the structured JSON log line and return the record. Single
+    source of truth for both the log line and the LangFuse trace."""
+    record = _trace_record(state, latency_ms_total)
     logger.info("chat_turn: %s", json.dumps(record, ensure_ascii=False))
+    return record
 
 
 def run(*, query: str, corpus: str, language: str, case_id: str) -> ChatState:
     """Run the cached compiled graph; return the final ChatState."""
-    initial = ChatState(
-        case_id=case_id,
-        query=query,
-        corpus=cast(Norma, corpus),
-        language=cast(Language, language),
-    )
-    t0 = time.monotonic()
-    final_dict = _compiled_graph().invoke(initial)
-    latency_ms_total = int((time.monotonic() - t0) * 1000)
-    state = ChatState.model_validate(final_dict)
-    _log_turn(state, latency_ms_total)
-    return state
+    with trace_turn(kind="chat", case_id=case_id, corpus=corpus, language=language) as tt:
+        initial = ChatState(
+            case_id=case_id,
+            query=query,
+            corpus=cast(Norma, corpus),
+            language=cast(Language, language),
+        )
+        t0 = time.monotonic()
+        final_dict = _compiled_graph().invoke(initial)
+        latency_ms_total = int((time.monotonic() - t0) * 1000)
+        state = ChatState.model_validate(final_dict)
+        record = _log_turn(state, latency_ms_total)
+        tt.set_root(
+            verdict=record["verdict"],
+            query_sha256_12=record["query_hash"],
+            n_findings=record["n_findings"],
+            n_citations=record["n_citations"],
+            n_validated=record["n_validated"],
+            n_blocked=record["n_blocked"],
+            latency_ms_total=record["latency_ms_total"],
+            # errors: pipeline error CATEGORY strings only (no user text);
+            # see langfuse_client redaction allowlist.
+            errors=record["errors"],
+        )
+        return state
