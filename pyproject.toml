@@ -50,6 +50,8 @@ dev = [
     "langchain-anthropic>=0.3,<1.0",
     "langchain-huggingface>=1.0,<2.0",
     "langfuse>=2,<3",
+    "openai>=1.40,<2.0",
+    "groq>=0.11,<1.0",
 ]
 
 [build-system]
@@ -112,6 +114,22 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "anthropic.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "openai"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "openai.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "groq"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "groq.*"
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]

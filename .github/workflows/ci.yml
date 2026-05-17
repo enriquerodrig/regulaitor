@@ -217,4 +217,12 @@ jobs:
         # --ignore-vuln CVE-2026-6587: ragas SSRF in multi_modal_faithfulness module — code
         #   path not exercised by our text-only metric set (faithfulness, answer_relevancy,
         #   context_precision, context_recall). Re-evaluate when ragas releases a fix.
-        run: uv run pip-audit --skip-editable --ignore-vuln CVE-2026-1839 --ignore-vuln CVE-2025-69872 --ignore-vuln CVE-2026-6587
+        # --ignore-vuln CVE-2026-41488: langchain-openai TOCTOU/DNS-rebinding SSRF in
+        #   _url_to_size() (image token counting). Affected only when openai<2.0 is pinned:
+        #   langchain-openai>=1.2 requires openai>=2.26, but our multi-provider router pins
+        #   openai>=1.40,<2.0 for groq/openai parity. The vulnerable code path (image URL
+        #   fetch for token counting) is never exercised by RegulAItor's text-only eval harness.
+        #   No patched 1.1.x release exists on PyPI (fix version 1.1.14 is not published yet).
+        #   Re-evaluate when langchain-openai 1.1.14+ appears on PyPI or when openai pin is
+        #   relaxed to >=2.0. See docs/technical_decisions_log.md §H12.
+        run: uv run pip-audit --skip-editable --ignore-vuln CVE-2026-1839 --ignore-vuln CVE-2025-69872 --ignore-vuln CVE-2026-6587 --ignore-vuln CVE-2026-41488

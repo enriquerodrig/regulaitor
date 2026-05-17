@@ -16,7 +16,7 @@ labelled advanced milestone.
 
 | Requirement | Artefact | Status |
 |---|---|---|
-| Router multi-LLM | [`src/regulaitor/models/router.py`](../src/regulaitor/models/router.py) | ✅ active (Sonnet 4.6 default; H12 expands to GPT-4o + Llama + fallback) |
+| Router multi-LLM | [`src/regulaitor/models/router.py`](../src/regulaitor/models/router.py); [ADR 0013](adr/0013-router-multi-llm.md) | ✅ **H12** — 3 providers (Anthropic/OpenAI/Groq), 5 modes, transport-only one-hop fallback; `REGULAITOR_ROUTER_MODE` eval override; backend H1-H5 untouched (regression-zero) |
 | Model config (temperature, max_tokens, pricing) | [`src/regulaitor/models/config.py`](../src/regulaitor/models/config.py) | ✅ active |
 | Prompts versionados (Analyst) | [`src/regulaitor/agents/prompts/analyst/system.v1.0.md`](../src/regulaitor/agents/prompts/analyst/system.v1.0.md) | ✅ v1.0 |
 | Prompts versionados (Auditor) | [`src/regulaitor/agents/prompts/auditor/`](../src/regulaitor/agents/prompts/auditor/) | ✅ Lenient-strict in code; no system prompt (deterministic) |
@@ -24,7 +24,7 @@ labelled advanced milestone.
 | Prompts versionados (Document Analyst) | [`src/regulaitor/agents/prompts/document_analyst/`](../src/regulaitor/agents/prompts/document_analyst/) | ✅ active (H5) |
 | Prompt versioning skill | [`.claude/skills/prompt-versioning/SKILL.md`](../.claude/skills/prompt-versioning/SKILL.md) | ✅ active from H4 |
 | LLM cost tracking | per-case `cost_eur` in `evals/reports/latest.md` + redteam reports | ✅ active |
-| Cost analysis document | `docs/cost_analysis.md` | **deferred H17** |
+| Cost analysis document | [`docs/cost_analysis.md`](cost_analysis.md) | ✅ **H12** — real 3-way quality (Sonnet frozen/GPT-4o/Llama) + list-price cost; ⚠️ cost NOT per-run-measured (harness Sonnet-heuristic — pipeline gap → H15) & Llama arm ~19/40 contaminated (Groq free-tier cap; I-2 empirical). Documented honestly per §22.22 |
 | Model card | `docs/model_card.md` | **deferred H17** |
 | Tool-use call structure | `analyst.py:analyze` (forced tool_use with `emit_answer` schema) | ✅ active (with retry-once on findings-missing) |
 | Sonnet 4.6 reliability decision | ADR 0006 + decisions log §H4 + amendment H8 commit `0d0409a` | ✅ documented |
@@ -74,7 +74,7 @@ labelled advanced milestone.
 | Metric thresholds | `CLAUDE.md` §17 (objectives) + §16.2 (gates) | ✅ documented |
 | Ragas integration | `evals/metrics.py` Ragas adapter (faithfulness + answer_relevancy + context_precision + context_recall) | ✅ H8 |
 | Tests suite | `tests/` (538+ unit + integration + contract) | ✅ active |
-| Coverage on gated subsystems | 92.61% on citation/agents/rag (per `pyproject.toml` cov config) | ✅ gate §16.2 #2 |
+| Coverage on gated subsystems | 92.97% on citation/agents/rag (H12 measured; ≥92.6% across H10–H12, per `pyproject.toml` cov config) | ✅ gate §16.2 #2 |
 | CI/CD pipeline | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (5 jobs: Lint, Test, Document E2E, Security, Red Team Smoke) | ✅ H7 + H8 + H9 cleanup |
 | Reproducibility commands | `Makefile` (`setup`, `lint`, `test`, `ingest`, `rag-build`, `eval`, `eval-from-cache`, `redteam`, `redteam-smoke`, `serve`, `serve-api`) | ✅ H0.1 + extended |
 | Observability (structured logging) | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py) | ✅ H4 (case_id, cost, latency, token_hash) |
@@ -123,7 +123,7 @@ labelled advanced milestone.
 | **P1 — Planteamiento** | [`CLAUDE.md`](../CLAUDE.md) (charter completo) + [`docs/adr/0001-project-scope.md`](adr/0001-project-scope.md) | ✅ H0 + H0.1 |
 | **P2 — Activos y recursos** | Repository structure (este documento §"Repository layout" en [`docs/architecture.md`](architecture.md)) | ✅ continuous |
 | **P3 — Preparación del contexto** | [`src/regulaitor/corpus/`](../src/regulaitor/corpus/), [`src/regulaitor/rag/`](../src/regulaitor/rag/), [`corpus/processed/`](../corpus/processed/) + ADRs 0003/0004 | ✅ H1 + H2 |
-| **P4 — Modelos y prompts** | [`src/regulaitor/models/`](../src/regulaitor/models/), [`src/regulaitor/agents/prompts/`](../src/regulaitor/agents/prompts/) | ✅ H4 + H5 + H8 |
+| **P4 — Modelos y prompts** | [`src/regulaitor/models/`](../src/regulaitor/models/) (multi-LLM router H12, [ADR 0013](adr/0013-router-multi-llm.md)), [`src/regulaitor/agents/prompts/`](../src/regulaitor/agents/prompts/), [`docs/cost_analysis.md`](cost_analysis.md) | ✅ H4 + H5 + H8 + **H12** (router 3-prov/5-modos + cost/quality A/B) |
 | **P5 — Evaluaciones y seguridad** | [`evals/`](../evals/), [`redteam/`](../redteam/), [`docs/security_report.md`](security_report.md) | ✅ H8 + H9 |
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
@@ -163,7 +163,7 @@ Each closed milestone has its own §HX section in
 | # | Gate | Evidence | Status |
 |---|---|---|---|
 | 1 | `make setup && make ingest && make eval && make redteam && make serve` clean clone | H10 reproducibility verification (pending) | ⏳ |
-| 2 | Coverage ≥80% citation/agents/rag | `pyproject.toml` cov gate + 92.61% measured | ✅ |
+| 2 | Coverage ≥80% citation/agents/rag | `pyproject.toml` cov gate + 92.97% measured (H12) | ✅ |
 | 3 | `evals/reports/latest.md` with real metrics | H8 report + H10 re-eval | ✅ |
 | 4 | Auditor block_rate ≥0.90 on adversarial set | smoke 0.92 ✅ (gate basis, deterministic/API-immune); full H11 0.28 raw / 0.54 completed — timeout-contaminated, H15 signal not gate (§H9 amend. 6) | ✅ smoke |
 | 5 | citation_recall ≥0.40 (reframed from precision ≥0.85) | measured 0.44 ✅; precision 0.17 documented, ≥0.85 → H15 | ✅ |
@@ -187,15 +187,19 @@ section.
 | Severity match rate to 0.80 | H8 (measured 0.19) | H15 | Auditor severity assignment drift; A/B threshold tuning. |
 | LangFuse observability | from H4 design | ✅ **done H11** | Orchestration-layer traces (chat + doc), metadata-only, no-op without keys; verified live (trace in LangFuse Cloud + redaction proven end-to-end). [ADR 0012](adr/0012-observability-architecture.md). |
 | langfuse-mcp (assistant trace querying) | H11 Q6 | **deferred (user, 2026-05-16)** | Lowest-value H11 item; no product/TFM impact; can add any session (needs new `.mcp.json` + community MCP). |
-| Latency optimization (per-query SLA ≤12 s) | H11 runbook §3 (real ~15–60 s > target) | H12/H15 | Streaming, max_tokens, parallel retriever, fast-model router. Measured cleanly via LangFuse per-span (H11). |
+| Latency optimization (per-query SLA ≤12 s) | H11 runbook §3 (real ~15–60 s > target) | H15 | Streaming, max_tokens, parallel retriever, fast-model router. Not done in H12 (router scope only). Measured cleanly via LangFuse per-span (H11). |
 | Analyst schema-adherence (`findings` sometimes missing) | H11 (live-trace demo) | H15 | Analyst occasionally emits prose without structured `findings` even after retry; add to H15 Auditor/Analyst calibration levers. |
-| Multi-LLM router (GPT-4o + Llama) | from H4 router decision | H12 | Real comparison run for `cost_analysis.md`. |
+| Multi-LLM router (GPT-4o + Llama) | from H4 router decision | ✅ **done H12** | Router 3-providers/5-modes ([ADR 0013](adr/0013-router-multi-llm.md)); A/B run (~$5) → `cost_analysis.md` real 3-way quality. ⚠️ cost list-price not per-run-measured (pipeline gap → H15) & Llama arm contaminated (Groq free-tier; I-2 empirical). Honest per §22.22/§H12. |
+| Per-call measured-cost capture | H12 T10 (harness Sonnet-heuristic; nothing aggregates `CompletionResult.cost_eur`) | H15 | Add cost-aggregation hook or parse router structured logs; needed for a clean calibrated re-eval. |
+| Fallback cost untracked (I-2) | H12 T7 review (empirical T10) | H15 | On a fallback hop only the successful call's cost reaches the trace; failed-primary cost lost. |
+| `_translate` test-debt (M4/M5) | H12 T4 review | low-risk | Cover `text`-block / multi-block-loop / `tool_calls=[]` branches (unreachable by current Analyst producer). |
+| Clean A/B re-run (measured cost) | H12 T10 (contaminated) | post-H15 | Needs paid Groq tier + independent per-arm OpenAI budget + the measured-cost hook. |
 | Council of Judges | H4 + H13 | H13 | High-severity case voting. |
 | NIS2 + DORA corpus | H1 deferred | H14 | Parser per norma; reuse pipeline. |
 | Public deploy (HF Spaces) | from charter | H16 | Docker + deploy workflow. |
 | Model card + data card | H8 deferred | H17 | Activate skills + populate. |
 | AI Act self-assessment | charter §24 | H17 | Activate skill + populate. |
-| Cost analysis (per-query, per-doc, scale curves) | H8 | H17 | Concrete numbers after H12 router live. |
+| Cost analysis (per-query, per-doc, scale curves) | H8 | H12 list-price ✅ / H15 measured | `cost_analysis.md` delivered H12 with list-price + real quality; per-run-MEASURED €/scale curves blocked on the H15 measured-cost hook. |
 | LoRA severity classifier | charter §15.3 | HX1 | Optional; only if H15 needs more discrimination than threshold tuning. |
 | Next.js frontend | charter §10 + §15.3 | HX2 | Optional. |
 | MCP server external (separate process) | charter §9 | HX4 | Optional; current in-process MCP is sufficient. |

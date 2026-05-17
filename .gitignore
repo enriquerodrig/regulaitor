@@ -68,6 +68,10 @@ corpus/indexes/
 *.lance
 evals/reports/*
 !evals/reports/latest.md
+# H12 A/B arm reports — tracked as TFM evidence (contaminated/partial; see
+# docs/cost_analysis.md caveats). Mirrors the !latest.md exception.
+!evals/reports/latest.evaluation.md
+!evals/reports/latest.cost.md
 evals/cache/
 evals/reports/archive/
 redteam/reports/*

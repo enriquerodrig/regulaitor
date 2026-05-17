@@ -2137,3 +2137,150 @@ Scope acotado mantenido.
 H11 cerrado 2026-05-16. Squash `8378015`, tag `v0.1.1-h11` (post-merge).
 Próximo: **H12** — Router multi-LLM real + análisis de coste + modos
 coste/calidad.
+
+---
+
+## H12 — Router multi-LLM + cost analysis (cerrado 2026-05-17, squash `<squash-sha>`, tag `v0.1.2-h12`)
+
+Router de 1 backend → multi-proveedor (Anthropic/OpenAI/Groq, 5 modos, fallback
+controlado) + estudio coste-vs-calidad. Branch `feat/h12-router-multi-llm`. ADR
+0013. Spec `docs/superpowers/specs/2026-05-16-h12-router-cost-design.md`, plan
+`docs/superpowers/plans/2026-05-16-h12-router-multi-llm.md`. Ejecutado vía
+subagent-driven-development (implementer + spec-review + code-quality-review por
+tarea); el review en 2 fases capturó 2 defectos consecuentes (T7 I-1, T8 #5).
+
+### Decisiones de brainstorming (D1–D4, user-aprobadas 2026-05-16)
+
+- **D1 — Alcance A/B:** reusar baseline Sonnet congelado (H10/H11, NO re-correr);
+  correr solo GPT-4o + Llama-3.3-70b(Groq) sobre los 40 casos con el mismo juez
+  Haiku → tabla 3-vías comparable.
+- **D2 — Lineup 5 modos:** default/quality=Sonnet 4.6 · cost=Llama-3.3-70b(Groq)
+  · evaluation=GPT-4o · fallback=GPT-4o-mini. Keys OPENAI/GROQ en `.env` único
+  (user; nunca `.env.example`).
+- **D3 — Build + run gated dentro de H12** (patrón T7): construir router + wrapper
+  A/B y ejecutar el run de pago con OK explícito; cost_analysis.md cierra con
+  ese run.
+- **D4 — Arquitectura: env-override en el router (Approach 1).** `complete()`
+  resuelve `REGULAITOR_ROUTER_MODE` → `_MODE_MAP` → dispatch per-proveedor
+  (`_call_anthropic` bespoke; `_call_openai`/`_call_groq` comparten
+  `_call_openai_compatible`, retry tenacity propio por SDK); helpers puros
+  `_translate` Anthropic↔OpenAI (incl. bloques tool_use/tool_result del retry
+  H8); fallback one-hop a GPT-4o-mini SOLO en errores transport. Rechazado:
+  pasar model_choice por graph.run() (rompe backend-read-only); SDK unificado
+  litellm (dependencia + debilita el router como artefacto Módulo 1).
+
+### Amendments durante implementación (registro honesto, CLAUDE.md §22.1)
+
+- **T1** — `CVE-2026-41488` (langchain-openai 1.1.9 SSRF, transitivo de ragas
+  vía el pin `openai<2.0`; ruta `_url_to_size` no alcanzable, dev-only): ignore
+  documentado en `ci.yml` + local siguiendo el patrón CVE-2026-1839. Único CVE
+  nuevo.
+- **T2 review** — `_VALID_MODES = frozenset(get_args(ModelChoice))` (single
+  source) + `_MODE_MAP` valores `ProviderModel` NamedTuple (`.provider`/
+  `.model_id`, no posicional) — aplicado para no osificar indexado posicional
+  en T3-7.
+- **T3 review** — `test_complete_unsupported_provider_raises` quedó acoplado a
+  "cost→groq no cableado" (transitorio gestionado; eliminado en T7 cuando
+  complete() despacha todo).
+- **T4 review (la unidad crux)** — `_translate` puro, $0-tested incl. round-trip
+  H8. **I1/I2** (json.loads puede dar no-dict / JSONDecodeError — el path
+  Anthropic `dict(block.input)` no puede) → llevados como guardas obligatorias
+  al consumidor en T5/T6 (RuntimeError terminal claro, no en el retry tenacity).
+  **M3** hardening: `_translate` lanza ante bloque desconocido (no silencioso).
+  **M4/M5 deferred test-debt**: ramas `text`-block / multi-block-loop /
+  `tool_calls=[]` sin test (inalcanzables por el productor actual Analyst) —
+  follow-up de test menor.
+- **T5 review** — receta DRY: NO clonar `_call_openai` en T6; extraer
+  `_call_openai_compatible` compartido (I1/I2 una sola vez).
+- **T6 review** — constantes `PROVIDER_ANTHROPIC/OPENAI/GROQ` (single source,
+  pre-empt del fan-out de dispatch de T7) + comentario WHY de la asimetría
+  Anthropic (no va por el helper compartido: SDK distinto, I1/I2 N/A) + stub de
+  test único. **Part C** (verificar id Groq vivo) diferido a T10 (sin key).
+- **T7 review I-1 (consecuente):** el `except Exception` ancho del fallback
+  habría re-enrutado errores deterministas (BadRequest, RuntimeError I1/I2) a
+  GPT-4o-mini en silencio → **habría corrompido la medición A/B** (spec §9
+  predice structured-output débil de Llama → se enmascararía). Estrechado a
+  `_FALLBACKABLE_ERRORS` (12 tipos transport; runtime-verificado excluye
+  BadRequest/RuntimeError). **I-2 diferido:** en un hop de fallback el coste del
+  intento primario fallido no se traza (→ H15).
+- **T8 review Concern #5:** los unit tests "mockeados $0" ejecutaban un
+  `git checkout HEAD -- evals/reports/latest.md` REAL sobre el working tree
+  (probado: descartaba ediciones sin commitear). Extraído `_isolate_report`
+  inyectable (tests lo mockean); **I1**: `_REPORT_PATH` importado de
+  `evals.harness` (single source — re-declararlo divergiría en silencio →
+  reports vacíos en el run de pago).
+
+### T10 — A/B de pago: resultado COMPROMETIDO (registro honesto, sin re-run)
+
+Pre-flight OK: 3 keys presentes; **Part C verificado** — catálogo Groq vivo =
+`['llama-3.3-70b-versatile']`, coincide con `config.GROQ_LLAMA_70B` (sin cambio).
+Baseline respaldado (`/tmp/eval_baseline_pre_h12.md`). Run bg `bwn7004ha`,
+2026-05-16T23:13 (GPT-4o) → 02:43 (Llama), exit 0, ~$5 gastado (OpenAI GPT-4o
+~$2-3 + Groq free + juez Haiku ~$0.5 del crédito Anthropic). **El run salió
+comprometido en 2 frentes; user eligió "documentar honesto, $0" (opción A,
+patrón H11) — NO re-run:**
+
+1. **Coste NO medido (gap de pipeline).** El harness H8 (read-only, reusado)
+   reporta coste con `_PRODUCTION_MODEL=claude-sonnet-4-6` hardcodeado +
+   heurística fija 3000/800 tok → los 3 reports imprimen idéntico
+   `Total cost 2.51 €`. `scripts/ab_eval.py` (T8) es wrapper fino del harness;
+   nada agrega el `CompletionResult.cost_eur` real (el router lo emite per-call
+   pero no se recoge; los logs INFO ni se capturan al output). La intención
+   "coste medido" del spec §3 queda **incumplida por el pipeline implementado**
+   (los reviews de T8 no lo cazaron — se centraron en env-handling + el defecto
+   de test destructivo). `cost_analysis.md` usa coste **list-price analítico**
+   (`config.cost_eur` con perfil de tokens fijo, snapshot 2026-05-16),
+   etiquetado explícitamente como NO per-run-medido. **Follow-up → H15:** hook
+   de agregación de coste real (o parsear logs del router).
+2. **Arm Llama-Groq contaminado (~19/40 errados).** Groq free-tier = 100k
+   tokens/día; agotado a mitad → 19× `fallback_triggered primary_mode=cost`,
+   **0× `fallback_used`** (el GPT-4o-mini fallback también falló: el arm GPT-4o
+   corrió primero y agotó los ~$5 OpenAI; al correr Llama a las 02:43 y caer a
+   GPT-4o-mini, OpenAI sin crédito). Esos 19 casos erraron → la columna Llama es
+   medición degradada/parcial. **Es la materialización empírica del riesgo I-2
+   que el review de T7 predijo.**
+
+**Hallazgo clave (valioso, honesto):** calidad uniformemente baja en los 3
+modelos (faithfulness 0.54/0.73/0.67; verdict_match 0.28/0.17/0.20;
+severity_match 0.23/0.04/0.04). GPT-4o/Llama NO rescatan verdict/severity (peores
+que Sonnet en verdict_match). **El techo de calidad es system-level (retriever +
+calibración Auditor), NO la elección de modelo** → refuerza directamente el plan
+H15 (la palanca es calibración, no un LLM mayor/barato). Coste list-price: Llama
+~9× más barato que Sonnet, GPT-4o ~26% más barato — deltas reales, pero sin
+ventaja de calidad en el estado no-calibrado actual.
+
+### Métricas de cierre
+
+| Ítem | Valor |
+|---|---|
+| Router | 3 proveedores, 5 modos, fallback transport-only one-hop; backend H1-H5 intacto |
+| Tests | unit $0 SDKs mockeados; regression-zero (42 agents/orch); cov 92.97% |
+| Part C (Groq id) | verificado vivo `llama-3.3-70b-versatile` (sin cambio) |
+| A/B calidad (real) | Sonnet0.54 / GPT-4o0.73 / Llama0.67 faith; verdict 0.28/0.17/0.20 |
+| A/B coste | list-price analítico (NO per-run-medido — gap documentado → H15) |
+| Arm Llama | ~19/40 errado (Groq free-tier cap + OpenAI agotado → I-2 empírico) |
+| Gasto T10 | ~$5 (OpenAI ~$2-3 + Groq free + Haiku ~$0.5) |
+| cost_analysis.md | entregado, honesto/caveated; arm reports trackeados como evidencia |
+
+### Follow-ups diferidos (registrados aquí + evidence_matrix)
+
+- **Per-call measured-cost capture** (agregación `CompletionResult.cost_eur` o
+  parse de logs router) → **H15** (lo necesita la re-eval calibrada).
+- **I-2** coste del primario fallido en un hop de fallback no trazado → H15.
+- **T4 M4/M5** test-debt: cubrir ramas `text`-block / multi-block / `tool_calls=[]`
+  de `_translate` (inalcanzables por el productor actual; bajo riesgo).
+- **Re-run A/B limpio** (post-H15): requiere Groq tier de pago + presupuesto
+  OpenAI per-arm independiente + el hook de coste real.
+
+### Skill activada
+
+**Ninguna.** `cost-accounting` (CLAUDE.md §12.4) sigue en H17 — H12 no la
+requiere (el coste vive en cost_analysis.md + este log; la contabilidad formal
+es H17). Scope acotado mantenido.
+
+### Cierre
+
+H12 cerrado 2026-05-17. Squash `<squash-sha>`, tag `v0.1.2-h12` (post-merge).
+D1-D4 cumplidas; D2 sin desviación (3-vías intentado; Llama contaminado, NO
+desviación de spec sino resultado honesto). Próximo: **H13** — Council of
+Judges (3 jueces para severidad alta).

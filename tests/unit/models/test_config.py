@@ -34,3 +34,38 @@ def test_cost_eur_calculation() -> None:
     cost = cost_eur(model_id=ANTHROPIC_SONNET_4_6, input_tokens=1000, output_tokens=500)
     expected = (1000 / 1_000_000 * 3.0 + 500 / 1_000_000 * 15.0) * USD_TO_EUR
     assert abs(cost - expected) < 1e-9
+
+
+# --- H12 multi-provider pricing tests ---
+
+
+def test_pricing_snapshot_date_present() -> None:
+    from regulaitor.models import config
+
+    assert isinstance(config.PRICING_SNAPSHOT_DATE, str)
+    assert config.PRICING_SNAPSHOT_DATE  # non-empty
+
+
+def test_cost_eur_known_for_all_h12_models() -> None:
+    from regulaitor.models import config
+
+    for mid in (
+        config.ANTHROPIC_SONNET_4_6,
+        config.OPENAI_GPT_4O,
+        config.OPENAI_GPT_4O_MINI,
+        config.GROQ_LLAMA_70B,
+    ):
+        c = config.cost_eur(model_id=mid, input_tokens=1000, output_tokens=500)
+        assert c > 0.0
+
+
+def test_cost_eur_gpt_4o_value() -> None:
+    from regulaitor.models import config
+
+    # 1M in @2.50 + 1M out @10.00 = 12.50 USD * 0.93 = 11.625 EUR
+    c = config.cost_eur(
+        model_id=config.OPENAI_GPT_4O,
+        input_tokens=1_000_000,
+        output_tokens=1_000_000,
+    )
+    assert abs(c - 11.625) < 1e-6
