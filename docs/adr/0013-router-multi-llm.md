@@ -1,7 +1,7 @@
 # ADR 0013 — Router multi-LLM + cost analysis (H12)
 
 - **Status:** Accepted
-- **Date:** 2026-05-16 (decision); 2026-05-17 (implemented; squash `<squash-sha>`, tag `v0.1.2-h12` — finalized post-merge)
+- **Date:** 2026-05-16 (decision); 2026-05-17 (implemented; squash `d59a33f`, tag `v0.1.2-h12`)
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0001 (project scope), 0006 (chat graph — sole router caller),
   0010 (evaluation harness — reused read-only), 0012 (observability — env-gating idiom precedent).

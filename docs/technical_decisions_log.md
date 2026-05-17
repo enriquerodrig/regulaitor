@@ -2140,7 +2140,7 @@ coste/calidad.
 
 ---
 
-## H12 — Router multi-LLM + cost analysis (cerrado 2026-05-17, squash `<squash-sha>`, tag `v0.1.2-h12`)
+## H12 — Router multi-LLM + cost analysis (cerrado 2026-05-17, squash `d59a33f`, tag `v0.1.2-h12`)
 
 Router de 1 backend → multi-proveedor (Anthropic/OpenAI/Groq, 5 modos, fallback
 controlado) + estudio coste-vs-calidad. Branch `feat/h12-router-multi-llm`. ADR
@@ -2280,7 +2280,7 @@ es H17). Scope acotado mantenido.
 
 ### Cierre
 
-H12 cerrado 2026-05-17. Squash `<squash-sha>`, tag `v0.1.2-h12` (post-merge).
+H12 cerrado 2026-05-17. Squash `d59a33f`, tag `v0.1.2-h12`.
 D1-D4 cumplidas; D2 sin desviación (3-vías intentado; Llama contaminado, NO
 desviación de spec sino resultado honesto). Próximo: **H13** — Council of
 Judges (3 jueces para severidad alta).
