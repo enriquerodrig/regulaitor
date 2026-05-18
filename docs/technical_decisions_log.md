@@ -2287,7 +2287,7 @@ Judges (3 jueces para severidad alta).
 
 ---
 
-## H13 — Council of Judges (cerrado 2026-05-18, squash `<squash-sha>`, tag `v0.1.3-h13`)
+## H13 — Council of Judges (cerrado 2026-05-18, squash `db991dc`, tag `v0.1.3-h13`)
 
 Capa de Council Advisory de 3 jueces LLM independientes para el flujo chat,
 activada en hallazgos de severidad alta y casos ambiguos. Branch
@@ -2482,5 +2482,5 @@ Scope acotado mantenido.
 
 ### Cierre
 
-H13 cerrado 2026-05-18. Squash `<squash-sha>`, tag `v0.1.3-h13` (post-merge).
+H13 cerrado 2026-05-18. Squash `db991dc`, tag `v0.1.3-h13` (post-merge).
 Próximo: **H14** — Ampliación corpus NIS2 + DORA.

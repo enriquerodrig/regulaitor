@@ -1,7 +1,7 @@
 # ADR 0014 — Council of Judges (H13)
 
 - **Status:** Accepted
-- **Date:** 2026-05-17 (decision); 2026-05-18 (implemented; squash `<squash-sha>`, tag `v0.1.3-h13`)
+- **Date:** 2026-05-17 (decision); 2026-05-18 (implemented; squash `db991dc`, tag `v0.1.3-h13`)
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0006 (chat graph — sole orchestration modified), 0012 (observability
   — LangFuse egress pattern followed), 0013 (router — `judge` mode added here).
