@@ -22,7 +22,7 @@ from regulaitor.ui_streamlit import _render
 
 logger = logging.getLogger("regulaitor.ui_streamlit.tab_analyze")
 
-_CORPUS_CHOICES = ["ai_act", "gdpr"]
+_CORPUS_CHOICES = ["ai_act", "gdpr", "nis2", "dora"]
 _LANGUAGE_CHOICES = ["es", "en"]
 
 

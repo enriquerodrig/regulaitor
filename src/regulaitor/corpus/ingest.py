@@ -55,11 +55,15 @@ PROCESSED_DIR = CORPUS_ROOT / "processed"
 CELEX: dict[Norma, str] = {
     "ai_act": "32024R1689",
     "gdpr": "02016R0679-20160504",
+    "nis2": "32022L2555",
+    "dora": "32022R2554",  # Regulation (EU) 2022/2554, OJ L 333, 27.12.2022 (base act, H14)
 }
 
 VERSION: dict[Norma, str] = {
     "ai_act": "2024-07-12",
     "gdpr": "2016-05-04",
+    "nis2": "2022-12-27",
+    "dora": "2022-12-27",  # OJ L 333 publication date (base act, H14)
 }
 
 

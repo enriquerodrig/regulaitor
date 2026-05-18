@@ -64,7 +64,7 @@ async def analyze(
 
     if language not in ("es", "en"):
         raise UnsupportedMediaType(reason=f"unsupported language: {language}")
-    if not all(c in ("ai_act", "gdpr") for c in corpus):
+    if not all(c in ("ai_act", "gdpr", "nis2", "dora") for c in corpus):
         raise UnsupportedMediaType(reason="unsupported corpus member")
 
     t0 = time.monotonic()

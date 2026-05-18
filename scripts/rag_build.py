@@ -19,7 +19,7 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="regulaitor.rag_build",
         description="Build RAG index: chunk + embed + upsert LanceDB + extend manifest.",
     )
-    p.add_argument("--corpus", choices=["ai_act", "gdpr", "all"], default="all")
+    p.add_argument("--corpus", choices=["ai_act", "gdpr", "nis2", "dora", "all"], default="all")
     p.add_argument("--lang", choices=["es", "en", "all"], default="all")
     p.add_argument(
         "--force-rebuild",

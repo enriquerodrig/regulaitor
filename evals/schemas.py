@@ -25,7 +25,7 @@ class GoldCaseChat(BaseModel):
     id: str = Field(min_length=1)
     tipo: Literal["chat"]
     entrada: str = Field(min_length=1, max_length=2000)
-    corpus_esperado: Literal["ai_act", "gdpr"]
+    corpus_esperado: Literal["ai_act", "gdpr", "nis2", "dora"]
     articulos_esperados: list[str]  # empty list valid for block cases (no citation expected)
     severidad_esperada: Literal["info", "low", "medium", "high"] | None
     criterios_evaluacion: list[str] = Field(min_length=1)
@@ -41,7 +41,7 @@ class GoldCaseDoc(BaseModel):
     id: str = Field(min_length=1)
     tipo: Literal["document"]
     pdf_path: str = Field(min_length=1)
-    corpus_esperado: list[Literal["ai_act", "gdpr"]] = Field(min_length=1)
+    corpus_esperado: list[Literal["ai_act", "gdpr", "nis2", "dora"]] = Field(min_length=1)
     expected_findings_articulos: list[str]
     expected_document_verdict: Literal["pass", "block", "requires_human_review"]
     expected_n_segments: int = Field(ge=1)

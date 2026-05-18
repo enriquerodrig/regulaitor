@@ -54,7 +54,7 @@ def test_gold_case_chat_rejects_oversize_entrada() -> None:
 
 
 def test_gold_case_chat_rejects_unknown_corpus() -> None:
-    payload = _chat_payload() | {"corpus_esperado": "nis2"}
+    payload = _chat_payload() | {"corpus_esperado": "unknown_norma"}
     with pytest.raises(ValidationError):
         GoldCaseChat.model_validate(payload)
 

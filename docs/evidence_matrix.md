@@ -5,9 +5,9 @@ Mapping of RegulAItor artefacts to the five Máster IA Generativa modules
 so the TFM defense can trace any claim to its underlying evidence.
 
 State: Advanced track in progress. MVP closed `v0.1.0-mvp` (H10). H11 closed
-`v0.1.1-h11`; H12 closed `v0.1.2-h12`; H13 closed `v0.1.3-h13` (pending
-post-merge tag). Cells marked **deferred** are out of current scope; planned for
-the labelled milestone.
+`v0.1.1-h11`; H12 closed `v0.1.2-h12`; H13 closed `v0.1.3-h13`; H14 closed
+`v0.1.4-h14` (pending post-merge tag `<squash-sha>`). Cells marked **deferred**
+are out of current scope; planned for the labelled milestone.
 
 ---
 
@@ -68,21 +68,21 @@ the labelled milestone.
 | Corpus parser | [`src/regulaitor/corpus/parse.py`](../src/regulaitor/corpus/parse.py) | ✅ H1 |
 | Corpus AI Act | `corpus/raw/ai_act/` + `corpus/processed/ai_act_es.json` + `_en.json` | ✅ H1 (113 articles ES + EN) |
 | Corpus GDPR | `corpus/raw/rgpd/` + `corpus/processed/rgpd_es.json` + `_en.json` | ✅ H1 (99 articles ES + EN) |
-| Corpus NIS2 + DORA | `corpus/raw/nis2/`, `corpus/raw/dora/` | **deferred H14** |
-| Gold set | [`evals/gold_set.jsonl`](../evals/gold_set.jsonl) (30 chat) + [`evals/document_cases/*.expected.json`](../evals/document_cases/) (10 docs) | ✅ H8 |
+| Corpus NIS2 + DORA | `corpus/raw/nis2_{es,en}.pdf` + `corpus/raw/dora_{es,en}.pdf` (Git-LFS); `corpus/processed/nis2_{es,en}.json` + `corpus/processed/dora_{es,en}.json`; `corpus/manifests/nis2.json` + `corpus/manifests/dora.json` | ✅ **H14** — NIS2 46 arts ES+EN (CELEX 32022L2555, VERSION 2022-12-27); DORA 64 arts ES+EN (CELEX 32022R2554, VERSION 2022-12-27). LanceDB: nis2 244 + dora 314 chunks (total 1569, ai_act 687 + gdpr 324 unchanged). WAF-bypass via Playwright in-browser fetch (legitimate public-doc access; curl blocked by CloudFront WAF). Base-act CELEX used (legally equivalent for un-amended 2022 instruments). [ADR 0015](adr/0015-nis2-dora-corpus.md) |
+| Gold set | [`evals/gold_set.jsonl`](../evals/gold_set.jsonl) (44 chat) + [`evals/document_cases/*.expected.json`](../evals/document_cases/) (10 docs) | ✅ H8 (30 chat + 10 docs); **H14** — expanded to **44 chat** (+14: nis2-001…006, dora-001…006, xcorpus-001…002; verdicts pass:30/RHR:8/block:6; 2 hallucination-attack block cases nis2-006/dora-006 added beyond plan minimum; 3 corpus-ground errors caught+fixed by Task-6 review: nis2-005/dora-003/xcorpus-001) |
 | Eval harness | [`evals/harness.py`](../evals/harness.py) + `evals/metrics.py` + `evals/judge.py` + `evals/report.py` | ✅ H8 |
 | Eval report | [`evals/reports/latest.md`](../evals/reports/latest.md) | ✅ H8 (re-run H10 in progress) |
 | LLM-as-judge | Haiku 4.5 with versioned prompt (faithfulness.v1.0) | ✅ H8 |
 | Metric thresholds | `CLAUDE.md` §17 (objectives) + §16.2 (gates) | ✅ documented |
 | Ragas integration | `evals/metrics.py` Ragas adapter (faithfulness + answer_relevancy + context_precision + context_recall) | ✅ H8 |
 | Tests suite | `tests/` (538+ unit + integration + contract) | ✅ active |
-| Coverage on gated subsystems | 93.40% (H13 measured, full `python -m pytest -q` exit 0; ≥92.6% across H10–H13, per `pyproject.toml` cov config) | ✅ gate §16.2 #2 |
+| Coverage on gated subsystems | 93.40% (H13 measured; **H14 re-measured: 93.40%** `uv run pytest -m "not slow"`, 703 passed / 0 failed, exit 0; ≥92.6% across H10–H14) | ✅ gate §16.2 #2 |
 | CI/CD pipeline | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (5 jobs: Lint, Test, Document E2E, Security, Red Team Smoke) | ✅ H7 + H8 + H9 cleanup |
 | Reproducibility commands | `Makefile` (`setup`, `lint`, `test`, `ingest`, `rag-build`, `eval`, `eval-from-cache`, `redteam`, `redteam-smoke`, `serve`, `serve-api`) | ✅ H0.1 + extended |
 | Observability (structured logging) | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py) | ✅ H4 (case_id, cost, latency, token_hash) |
 | LangFuse traces | [`src/regulaitor/observability/langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [ADR 0012](adr/0012-observability-architecture.md) | ✅ H11 (metadata-only, no-op without keys; redaction proven end-to-end vs live backend) |
 | Public deploy (Docker / HF Spaces) | `docker-compose.yml` + `.github/workflows/deploy.yml` | **deferred H16** |
-| ADRs | [`docs/adr/0003-corpus-pipeline.md`](adr/0003-corpus-pipeline.md), [`0004-rag-architecture.md`](adr/0004-rag-architecture.md), [`0010-evaluation-harness.md`](adr/0010-evaluation-harness.md) | ✅ committed |
+| ADRs | [`docs/adr/0003-corpus-pipeline.md`](adr/0003-corpus-pipeline.md), [`0004-rag-architecture.md`](adr/0004-rag-architecture.md), [`0010-evaluation-harness.md`](adr/0010-evaluation-harness.md), [`0015-nis2-dora-corpus.md`](adr/0015-nis2-dora-corpus.md) | ✅ committed |
 
 **Skills active in this module**: [`rag-ingest`](../.claude/skills/rag-ingest/SKILL.md), [`document-analysis`](../.claude/skills/document-analysis/SKILL.md), [`evals-runner`](../.claude/skills/evals-runner/SKILL.md), [`citation-validator`](../.claude/skills/citation-validator/SKILL.md).
 
@@ -130,7 +130,7 @@ the labelled milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (2400+ lines as of H13 closure; every approved technical decision from H0 to H13).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (2693 lines as of H14 closure; every approved technical decision from H0 to H14).
 
 ---
 
@@ -159,7 +159,8 @@ Each closed milestone has its own §HX section in
 | **H10** | `v0.1.0-mvp` | — (consolidation only) | — | (this matrix is the consolidation) | `b8dbf10` |
 | H11 | `v0.1.1-h11` | — | [plan](superpowers/plans/2026-05-16-h11-observability.md) | [0012](adr/0012-observability-architecture.md) | `8378015` |
 | H12 | `v0.1.2-h12` | [spec](superpowers/specs/2026-05-16-h12-router-cost-design.md) | [plan](superpowers/plans/2026-05-16-h12-router-multi-llm.md) | [0013](adr/0013-router-multi-llm.md) | `d59a33f` |
-| **H13** | `v0.1.3-h13` | [spec](superpowers/specs/2026-05-17-h13-council-of-judges-design.md) | — | [0014](adr/0014-council-of-judges.md) | `<squash-sha>` |
+| **H13** | `v0.1.3-h13` | [spec](superpowers/specs/2026-05-17-h13-council-of-judges-design.md) | — | [0014](adr/0014-council-of-judges.md) | `db991dc` |
+| **H14** | `v0.1.4-h14` | [spec](superpowers/specs/2026-05-18-h14-nis2-dora-corpus-design.md) | [plan](superpowers/plans/2026-05-18-h14-nis2-dora-corpus.md) | [0015](adr/0015-nis2-dora-corpus.md) | `<squash-sha>` |
 
 ---
 
@@ -168,14 +169,14 @@ Each closed milestone has its own §HX section in
 | # | Gate | Evidence | Status |
 |---|---|---|---|
 | 1 | `make setup && make ingest && make eval && make redteam && make serve` clean clone | H10 reproducibility verification (pending) | ⏳ |
-| 2 | Coverage ≥80% citation/agents/rag | `pyproject.toml` cov gate + 92.97% measured (H12) | ✅ |
+| 2 | Coverage ≥80% citation/agents/rag | `pyproject.toml` cov gate + 93.40% measured (H14) | ✅ |
 | 3 | `evals/reports/latest.md` with real metrics | H8 report + H10 re-eval | ✅ |
 | 4 | Auditor block_rate ≥0.90 on adversarial set | smoke 0.92 ✅ (gate basis, deterministic/API-immune); full H11 0.28 raw / 0.54 completed — timeout-contaminated, H15 signal not gate (§H9 amend. 6) | ✅ smoke |
 | 5 | citation_recall ≥0.40 (reframed from precision ≥0.85) | measured 0.44 ✅; precision 0.17 documented, ≥0.85 → H15 | ✅ |
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0014 (14 ADRs) | ✅ |
+| 9 | ADRs current | 0001-0015 (15 ADRs) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---
@@ -204,7 +205,12 @@ section.
 | Document-mode Council | H13 (out of scope per D4) | future (post-H15) | Requires `document_graph.py` changes + multi-segment aggregation logic. |
 | Analyst schema-adherence (30% Council skip) | H11 Amendment 4, H13 T14 | H15 | ~30% of gold cases emitted `findings=[]`; Council skip root cause confirmed. Already a H15 palanca per §H10. |
 | Paid Groq tier (eliminate I-2 contamination) | H12 + H13 (both contaminated) | post-H15 | Requires explicit user spend decision; needed for a clean 3-independent-provider Council run. |
-| NIS2 + DORA corpus | H1 deferred | H14 | Parser per norma; reuse pipeline. |
+| NIS2 + DORA corpus | H1 deferred | ✅ **done H14** | NIS2 46 arts + DORA 64 arts landed; 1569 LanceDB rows (ai_act 687 + gdpr 324 + nis2 244 + dora 314). WAF bypass via Playwright; base-act CELEX 2022-12-27. [ADR 0015](adr/0015-nis2-dora-corpus.md). ⚠️ `source_url` absolute paths (pre-existing) + `rag-ingest` SKILL.md staleness + LLM-judge eval deferred to H15. |
+| `source_url` absolute paths in manifests (pre-existing) | H14 observation | future | `corpus/manifests/*.json` store `file:///C:/Users/enriq/...` paths; pre-existing in ai_act/gdpr; normalize to repo-relative paths touching shared local-load path (§22.18 risk) → deferred. |
+| `CORPORA_WITH_MANIFESTS` vs `ALL_NORMAS` (runtime derivation) | H14 observation | future | Derive loaded corpora from `corpus/manifests/*.json` on disk at runtime (honest-partial gate stays working when a corpus is missing); currently two deliberate constants; not aliased per D2 seam intent. |
+| `rag-ingest` SKILL.md Formex-centric vs PDF reality (ADR 0003) | H14 observation | future | Update SKILL.md to reflect actual PDF acquisition path (Playwright WAF bypass + local PDF); stale steps reference Formex/httpx. |
+| LLM-judge eval + §17 thresholds on expanded gold set (44 chat) | H14 D3 explicit deferral | H15 | Run full LLM-judge eval after H15 calibration cycle; system is documented-uncalibrated, running before calibration wastes budget for un-actionable numbers (H10/H13 precedent). |
+| EUR-Lex WAF: re-acquisition requires browser session | H14 observation | future | Any future corpus re-acquisition via EUR-Lex requires Playwright or equivalent (curl/httpx structurally blocked by CloudFront WAF). Documented as honest acquisition method. |
 | Public deploy (HF Spaces) | from charter | H16 | Docker + deploy workflow. |
 | Model card + data card | H8 deferred | H17 | Activate skills + populate. |
 | AI Act self-assessment | charter §24 | H17 | Activate skill + populate. |

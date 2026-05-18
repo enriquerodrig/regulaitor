@@ -125,10 +125,12 @@ def test_analyze_invalid_language_returns_415(client, auth_headers) -> None:
 
 
 def test_analyze_invalid_corpus_returns_415(client, auth_headers) -> None:
+    # "nis2" was the invalid corpus sentinel before H14 widened the literals to 4-value Norma.
+    # H14 made nis2/dora valid; use a genuinely invalid corpus value for this gate.
     response = client.post(
         "/analyze",
         headers=auth_headers,
-        files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "nis2", "es"),
+        files=_multipart("policy.pdf", _MINIMAL_PDF_BYTES, "invalid_corpus", "es"),
     )
     assert response.status_code == 415
 

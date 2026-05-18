@@ -1,0 +1,1561 @@
+{
+  "corpus": "nis2",
+  "celex": "32022L2555",
+  "version": "2022-12-27",
+  "source_format": "pdf",
+  "fetched_at": "2026-05-18T08:14:27.181750Z",
+  "languages": [
+    "es",
+    "en"
+  ],
+  "http_cache": {
+    "es": {
+      "etag": null,
+      "last_modified": null
+    },
+    "en": {
+      "etag": null,
+      "last_modified": null
+    }
+  },
+  "stats": {
+    "articles_total": 46,
+    "chunks_total": 244,
+    "embedded_total": 92,
+    "raw_size_bytes": 2708274
+  },
+  "articles": [
+    {
+      "article_id": "nis2.1",
+      "articulo": "1",
+      "title_es": "Objeto",
+      "title_en": "Subject matter",
+      "languages": {
+        "es": {
+          "hash": "sha256:a2d4ac822ecb371e1297641dd89ae7d5bb0e0a6745d7fcda39f0f9263eb08a45",
+          "tokens": 224,
+          "chunks": [
+            "nis2.1.es"
+          ],
+          "embedded_at": "2026-05-18T09:16:28.097448Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:891e0232f0fcdef20e0b2ead44235ec5515849f87c3514225afc1fc3750bb106",
+          "tokens": 184,
+          "chunks": [
+            "nis2.1.en"
+          ],
+          "embedded_at": "2026-05-18T09:16:34.749897Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.2",
+      "articulo": "2",
+      "title_es": "Ámbito de aplicación",
+      "title_en": "Scope",
+      "languages": {
+        "es": {
+          "hash": "sha256:71ac422bc52e5e82ee1564be5d5ed6c7534796e8e5220a98aaca35f4d2aa95d7",
+          "tokens": 1476,
+          "chunks": [
+            "nis2.2.1.es",
+            "nis2.2.2.es",
+            "nis2.2.3.es",
+            "nis2.2.4.es",
+            "nis2.2.5.es",
+            "nis2.2.6.es",
+            "nis2.2.7.es",
+            "nis2.2.8.es",
+            "nis2.2.9.es",
+            "nis2.2.10.es",
+            "nis2.2.11.es",
+            "nis2.2.12.es",
+            "nis2.2.13.es",
+            "nis2.2.14.es"
+          ],
+          "embedded_at": "2026-05-18T09:18:22.060315Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:dae96ad2edf0bd4b6f99ea8fdb10626523109e5af4feff2c9246e20452bfc53b",
+          "tokens": 1323,
+          "chunks": [
+            "nis2.2.1.en",
+            "nis2.2.2.en",
+            "nis2.2.3.en",
+            "nis2.2.4.en",
+            "nis2.2.5.en",
+            "nis2.2.6.en",
+            "nis2.2.7.en",
+            "nis2.2.8.en",
+            "nis2.2.9.en",
+            "nis2.2.10.en",
+            "nis2.2.11.en",
+            "nis2.2.12.en",
+            "nis2.2.13.en",
+            "nis2.2.14.en"
+          ],
+          "embedded_at": "2026-05-18T09:20:11.702636Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.3",
+      "articulo": "3",
+      "title_es": "Entidades esenciales e importantes",
+      "title_en": "Essential and important entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:cb81b20b7783161d12ed778062c9a387efae6a8abb6aa11b4d344907b9f30bce",
+          "tokens": 951,
+          "chunks": [
+            "nis2.3.es"
+          ],
+          "embedded_at": "2026-05-18T09:20:28.177480Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:ff297c901ddcb5449d306f89f1f27a93349777e75cd1fda28a653ddfaf90de13",
+          "tokens": 872,
+          "chunks": [
+            "nis2.3.en"
+          ],
+          "embedded_at": "2026-05-18T09:20:42.091447Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.4",
+      "articulo": "4",
+      "title_es": "Actos jurídicos sectoriales de la Unión",
+      "title_en": "Sector-specific Union legal acts",
+      "languages": {
+        "es": {
+          "hash": "sha256:f44d36340b14ee4c193da08dda28ecfcf14cd9cdf9679d8c9167355120b8afe1",
+          "tokens": 408,
+          "chunks": [
+            "nis2.4.es"
+          ],
+          "embedded_at": "2026-05-18T09:20:52.628031Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:37327b03956637e6820258a396c5deda5408d1ee2b6b8783946cbd92e296dc47",
+          "tokens": 340,
+          "chunks": [
+            "nis2.4.en"
+          ],
+          "embedded_at": "2026-05-18T09:20:59.695565Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.5",
+      "articulo": "5",
+      "title_es": "Armonización mínima",
+      "title_en": "Minimum harmonisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:95aecd85456bb810191a73ea62c8bf5b4ee022d77a1735edb0a9298e0a25674d",
+          "tokens": 55,
+          "chunks": [
+            "nis2.5.es"
+          ],
+          "embedded_at": "2026-05-18T09:21:01.540860Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:56f4248b7e9c09de681f7cfb50264861dccf8bc97f6d1f2b3e0948558b9ad0b9",
+          "tokens": 48,
+          "chunks": [
+            "nis2.5.en"
+          ],
+          "embedded_at": "2026-05-18T09:21:03.371308Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.6",
+      "articulo": "6",
+      "title_es": "Definiciones",
+      "title_en": "Definitions",
+      "languages": {
+        "es": {
+          "hash": "sha256:701eb74d0b75d8c0ab1e760657b4f8f03dd5ddbca5f55df9b155ea7d43ff1ca3",
+          "tokens": 2997,
+          "chunks": [
+            "nis2.6.1.es"
+          ],
+          "embedded_at": "2026-05-18T09:21:10.574913Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:393b2cceebd7743e5c50ef56e1a66b2d387ecea332c7e4fbcaf556da229a37ce",
+          "tokens": 2709,
+          "chunks": [
+            "nis2.6.1.en"
+          ],
+          "embedded_at": "2026-05-18T09:21:18.792667Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.7",
+      "articulo": "7",
+      "title_es": "Estrategia nacional de ciberseguridad",
+      "title_en": "National cybersecurity strategy",
+      "languages": {
+        "es": {
+          "hash": "sha256:0f62a595a7000a90c1c10a6e5f1840caf93cbc70ff828148847b14dda45e7e00",
+          "tokens": 1073,
+          "chunks": [
+            "nis2.7.1.es",
+            "nis2.7.2.es",
+            "nis2.7.3.es",
+            "nis2.7.4.es"
+          ],
+          "embedded_at": "2026-05-18T09:21:44.184338Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:3ff0bd1df85517f73b0212acb533bef9453eea279aa3d407235864ed667189ca",
+          "tokens": 932,
+          "chunks": [
+            "nis2.7.en"
+          ],
+          "embedded_at": "2026-05-18T09:21:53.000767Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.8",
+      "articulo": "8",
+      "title_es": "Autoridades competentes y puntos de contacto únicos",
+      "title_en": "Competent authorities and single points of contact",
+      "languages": {
+        "es": {
+          "hash": "sha256:812bdcc522a22ff683bae4c291a6df7182d11e9a4f2cc8a2eb7148fc508d7d32",
+          "tokens": 326,
+          "chunks": [
+            "nis2.8.es"
+          ],
+          "embedded_at": "2026-05-18T09:21:57.624386Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:169e94b10dc4a4d65f67760aaf0570bb60ecc032aaffda32f8cbc1ff4f5c7086",
+          "tokens": 322,
+          "chunks": [
+            "nis2.8.en"
+          ],
+          "embedded_at": "2026-05-18T09:22:02.431405Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.9",
+      "articulo": "9",
+      "title_es": "Marcos nacionales de gestión de crisis de ciberseguridad",
+      "title_en": "National cyber crisis management frameworks",
+      "languages": {
+        "es": {
+          "hash": "sha256:88c52eabe8a27a45dac9194354542675fa7ea9268a14803d0091f0ced8d9a9ec",
+          "tokens": 615,
+          "chunks": [
+            "nis2.9.es"
+          ],
+          "embedded_at": "2026-05-18T09:22:10.547419Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:0c291533ecdd80bd1bc7fae9c2b8a14e16921f2f7c89646ce7606961c9c4cd62",
+          "tokens": 512,
+          "chunks": [
+            "nis2.9.en"
+          ],
+          "embedded_at": "2026-05-18T09:22:17.550450Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.10",
+      "articulo": "10",
+      "title_es": "Equipos de respuesta a incidentes de seguridad informática (CSIRT)",
+      "title_en": "Computer security incident response teams (CSIRTs)",
+      "languages": {
+        "es": {
+          "hash": "sha256:aea1935127e357554301c72ce3e9466f342fb55e13a567833dd5a3740f07c3e2",
+          "tokens": 609,
+          "chunks": [
+            "nis2.10.es"
+          ],
+          "embedded_at": "2026-05-18T09:22:25.061681Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:3a047f4048cc7e2d4561a83919f48c0dccca1efba8d039e728c4c3ea1e400c56",
+          "tokens": 530,
+          "chunks": [
+            "nis2.10.en"
+          ],
+          "embedded_at": "2026-05-18T09:22:32.997568Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.11",
+      "articulo": "11",
+      "title_es": "Obligaciones, capacidades técnicas y cometidos de los CSIRT",
+      "title_en": "Requirements, technical capabilities and tasks of CSIRTs",
+      "languages": {
+        "es": {
+          "hash": "sha256:56b749b20b942af85e8ee12fd6c4b654fa1693a3bafbad7f227881d341a6cc15",
+          "tokens": 927,
+          "chunks": [
+            "nis2.11.es"
+          ],
+          "embedded_at": "2026-05-18T09:22:40.895252Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:7c450577d531ca2c559fd456c3a94b6b6b94eaa5d32b1c39d82733ea577751b7",
+          "tokens": 878,
+          "chunks": [
+            "nis2.11.en"
+          ],
+          "embedded_at": "2026-05-18T09:22:48.647590Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.12",
+      "articulo": "12",
+      "title_es": "Divulgación coordinada de las vulnerabilidades y una base de datos europea de vulnerabilidades",
+      "title_en": "Coordinated vulnerability disclosure and a European vulnerability database",
+      "languages": {
+        "es": {
+          "hash": "sha256:220fb9f848d1a29e48eb4d21026d9daafa0f97a3037aab244c5bb56ca24f1d8c",
+          "tokens": 621,
+          "chunks": [
+            "nis2.12.es"
+          ],
+          "embedded_at": "2026-05-18T09:22:56.515619Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:f7703c3c028abcd35b4c8342a7da4042cb3dc0cb3023199edb9f72b700789ae9",
+          "tokens": 577,
+          "chunks": [
+            "nis2.12.en"
+          ],
+          "embedded_at": "2026-05-18T09:23:05.707622Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.13",
+      "articulo": "13",
+      "title_es": "Cooperación a escala nacional",
+      "title_en": "Cooperation at national level",
+      "languages": {
+        "es": {
+          "hash": "sha256:066f821e49a8381d4e1be2f460c389e23706cc67f43402d1d1f37dbc43df9ba4",
+          "tokens": 646,
+          "chunks": [
+            "nis2.13.es"
+          ],
+          "embedded_at": "2026-05-18T09:23:12.845964Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:f988f83f7fefb842b9f874d8719706215006dcb1ab38d9a11fde299040120faa",
+          "tokens": 546,
+          "chunks": [
+            "nis2.13.en"
+          ],
+          "embedded_at": "2026-05-18T09:23:21.112606Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.14",
+      "articulo": "14",
+      "title_es": "Grupo de Cooperación",
+      "title_en": "Cooperation Group",
+      "languages": {
+        "es": {
+          "hash": "sha256:104334dac6f5447e4845122ea6f95d2b84ba6b3324ab83cde55525dc2239a891",
+          "tokens": 1330,
+          "chunks": [
+            "nis2.14.1.es",
+            "nis2.14.2.es",
+            "nis2.14.3.es",
+            "nis2.14.4.es",
+            "nis2.14.5.es",
+            "nis2.14.6.es",
+            "nis2.14.7.es",
+            "nis2.14.8.es",
+            "nis2.14.9.es"
+          ],
+          "embedded_at": "2026-05-18T09:24:20.482131Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:59b0bfa0330206fd1f28b77e2dd0035ab0f65fc60781ec69856a1ae565300d5c",
+          "tokens": 1212,
+          "chunks": [
+            "nis2.14.1.en",
+            "nis2.14.2.en",
+            "nis2.14.3.en",
+            "nis2.14.4.en",
+            "nis2.14.5.en",
+            "nis2.14.6.en",
+            "nis2.14.7.en",
+            "nis2.14.8.en",
+            "nis2.14.9.en"
+          ],
+          "embedded_at": "2026-05-18T09:25:18.935159Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.15",
+      "articulo": "15",
+      "title_es": "Red de CSIRT",
+      "title_en": "CSIRTs network",
+      "languages": {
+        "es": {
+          "hash": "sha256:6911101a593ba51df0d421c9e02095b58a92d18c304471a65bf5bad06d47ce40",
+          "tokens": 1006,
+          "chunks": [
+            "nis2.15.1.es",
+            "nis2.15.2.es",
+            "nis2.15.3.es",
+            "nis2.15.4.es",
+            "nis2.15.5.es",
+            "nis2.15.6.es"
+          ],
+          "embedded_at": "2026-05-18T09:25:58.137839Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:f82bdb700eeb2e6caea0840be521146af1160ac6d6869559b7457933a5bcd838",
+          "tokens": 923,
+          "chunks": [
+            "nis2.15.en"
+          ],
+          "embedded_at": "2026-05-18T09:26:06.098302Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.16",
+      "articulo": "16",
+      "title_es": "Red europea de organizaciones de enlace para las crisis de ciberseguridad (EU-CyCLONe)",
+      "title_en": "European cyber crisis liaison organisation network (EU-CyCLONe)",
+      "languages": {
+        "es": {
+          "hash": "sha256:728fc56885b93f86872815694ace316feb88b796f454f08d18c54d052dfef3ba",
+          "tokens": 590,
+          "chunks": [
+            "nis2.16.es"
+          ],
+          "embedded_at": "2026-05-18T09:26:15.477481Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:387f96168e9a02d08b4d05b1554f21a7b521f2287068ba209cc16118e9e28d61",
+          "tokens": 532,
+          "chunks": [
+            "nis2.16.en"
+          ],
+          "embedded_at": "2026-05-18T09:26:23.734721Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.17",
+      "articulo": "17",
+      "title_es": "Cooperación internacional",
+      "title_en": "International cooperation",
+      "languages": {
+        "es": {
+          "hash": "sha256:bd2609c50d86572264cddd0916ecfa6aaef813742dc4e876827c6f56ccb98d0f",
+          "tokens": 99,
+          "chunks": [
+            "nis2.17.es"
+          ],
+          "embedded_at": "2026-05-18T09:26:25.608936Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:5229f6c750efc8c27d114be55b96c8d1f77e01d7ba3ba0110d109a1514fbd437",
+          "tokens": 85,
+          "chunks": [
+            "nis2.17.en"
+          ],
+          "embedded_at": "2026-05-18T09:26:28.905511Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.18",
+      "articulo": "18",
+      "title_es": "Informe sobre la situación de la ciberseguridad en la Unión",
+      "title_en": "Report on the state of cybersecurity in the Union",
+      "languages": {
+        "es": {
+          "hash": "sha256:33736351cece7532d623982c59aaa590ab7d4e7c92c7e8c150a10aa38def0adb",
+          "tokens": 421,
+          "chunks": [
+            "nis2.18.es"
+          ],
+          "embedded_at": "2026-05-18T09:26:35.099504Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:ecfa334dd6d17437bc25affafd59ecfe63aa1fd6d9d3c9ea744ab7013bfc7895",
+          "tokens": 357,
+          "chunks": [
+            "nis2.18.en"
+          ],
+          "embedded_at": "2026-05-18T09:26:40.320377Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.19",
+      "articulo": "19",
+      "title_es": "Revisiones interpares",
+      "title_en": "Peer reviews",
+      "languages": {
+        "es": {
+          "hash": "sha256:9cb452774c3527c351be0efea656bc00fb95acaa76e8930c7411c57fb0e010e0",
+          "tokens": 1133,
+          "chunks": [
+            "nis2.19.1.es",
+            "nis2.19.2.es",
+            "nis2.19.3.es",
+            "nis2.19.4.es",
+            "nis2.19.5.es",
+            "nis2.19.6.es",
+            "nis2.19.7.es",
+            "nis2.19.8.es",
+            "nis2.19.9.es"
+          ],
+          "embedded_at": "2026-05-18T09:27:20.528707Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:a087489560d32ee5ff26bc54fe9815c61732119b40b9fb4dc9955908d5325d5e",
+          "tokens": 1009,
+          "chunks": [
+            "nis2.19.1.en",
+            "nis2.19.2.en",
+            "nis2.19.3.en",
+            "nis2.19.4.en",
+            "nis2.19.5.en",
+            "nis2.19.6.en",
+            "nis2.19.7.en",
+            "nis2.19.8.en",
+            "nis2.19.9.en"
+          ],
+          "embedded_at": "2026-05-18T09:27:53.141674Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.20",
+      "articulo": "20",
+      "title_es": "Gobernanza",
+      "title_en": "Governance",
+      "languages": {
+        "es": {
+          "hash": "sha256:4571887e5e5dff0225e4006b10974af039045a9d587f1425a71cf7f6936a8c17",
+          "tokens": 228,
+          "chunks": [
+            "nis2.20.es"
+          ],
+          "embedded_at": "2026-05-18T09:27:56.570873Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:7cf0aa0d7dd5508509e9b774cc97230446f6099608d1947cbb9f5e4a2b07cb10",
+          "tokens": 206,
+          "chunks": [
+            "nis2.20.en"
+          ],
+          "embedded_at": "2026-05-18T09:28:00.350965Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.21",
+      "articulo": "21",
+      "title_es": "Medidas para la gestión de riesgos de ciberseguridad",
+      "title_en": "Cybersecurity risk-management measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:ba1fa054de3294d8555890ce95f45144d0b15840e625043d6f1110510ac86c62",
+          "tokens": 1098,
+          "chunks": [
+            "nis2.21.1.es",
+            "nis2.21.2.es",
+            "nis2.21.3.es",
+            "nis2.21.4.es",
+            "nis2.21.5.es"
+          ],
+          "embedded_at": "2026-05-18T09:28:23.267676Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:be35b9c811c1b3b3edd465b7950764dc56c39c0301bc651d59095977608dd0ff",
+          "tokens": 914,
+          "chunks": [
+            "nis2.21.en"
+          ],
+          "embedded_at": "2026-05-18T09:28:30.833118Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.22",
+      "articulo": "22",
+      "title_es": "Evaluaciones coordinadas de los riesgos de seguridad de las cadenas de suministro críticas a escala de la Unión",
+      "title_en": "Union level coordinated security risk assessments of critical supply chains",
+      "languages": {
+        "es": {
+          "hash": "sha256:d7057da116bac9aa3bc33afa4e1c8f56076bc4f47618f6fe793f90e30728a378",
+          "tokens": 132,
+          "chunks": [
+            "nis2.22.es"
+          ],
+          "embedded_at": "2026-05-18T09:28:33.953310Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:ac5181b5a7dacda6107a9c98320be8d11b332b99c3cea1c2ef88e6a704e57cf3",
+          "tokens": 111,
+          "chunks": [
+            "nis2.22.en"
+          ],
+          "embedded_at": "2026-05-18T09:28:38.219333Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.23",
+      "articulo": "23",
+      "title_es": "Obligaciones de notificación",
+      "title_en": "Reporting obligations",
+      "languages": {
+        "es": {
+          "hash": "sha256:cabf20fca295c9962b7ba9e285cddd178170ad402bd0121e52253c3008f6c3bd",
+          "tokens": 2002,
+          "chunks": [
+            "nis2.23.1.es",
+            "nis2.23.2.es",
+            "nis2.23.3.es",
+            "nis2.23.4.es",
+            "nis2.23.5.es",
+            "nis2.23.6.es",
+            "nis2.23.7.es",
+            "nis2.23.8.es",
+            "nis2.23.9.es",
+            "nis2.23.10.es",
+            "nis2.23.11.es"
+          ],
+          "embedded_at": "2026-05-18T09:29:50.873849Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:d27413e04c2fb9b07dad9cd641fc0e9012c1806d887ee982a75883e3dc5f0c33",
+          "tokens": 1746,
+          "chunks": [
+            "nis2.23.1.en",
+            "nis2.23.2.en",
+            "nis2.23.3.en",
+            "nis2.23.4.en",
+            "nis2.23.5.en",
+            "nis2.23.6.en",
+            "nis2.23.7.en",
+            "nis2.23.8.en",
+            "nis2.23.9.en",
+            "nis2.23.10.en",
+            "nis2.23.11.en"
+          ],
+          "embedded_at": "2026-05-18T09:30:49.849080Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.24",
+      "articulo": "24",
+      "title_es": "Utilización de esquemas europeos de certificación de la ciberseguridad",
+      "title_en": "Use of European cybersecurity certification schemes",
+      "languages": {
+        "es": {
+          "hash": "sha256:819811a5bdaada7f5850e302dabea659e8634705426967a13c7cd7004ede3e3d",
+          "tokens": 379,
+          "chunks": [
+            "nis2.24.es"
+          ],
+          "embedded_at": "2026-05-18T09:30:56.882802Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:46e883b2d6b7a9b844407e97ebbdfa43142332c4be94eac0e042396a28c6ab75",
+          "tokens": 328,
+          "chunks": [
+            "nis2.24.en"
+          ],
+          "embedded_at": "2026-05-18T09:31:02.424932Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.25",
+      "articulo": "25",
+      "title_es": "Normalización",
+      "title_en": "Standardisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:71f8e77a2f938bc24ff1e4a180eb9b0e29eb99f31cc4c08641c932ca7d90f585",
+          "tokens": 158,
+          "chunks": [
+            "nis2.25.es"
+          ],
+          "embedded_at": "2026-05-18T09:31:05.059524Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:cd0321820c4915825583b053fd84f7b1cfb3713b125d4db93678fbd9463b0586",
+          "tokens": 141,
+          "chunks": [
+            "nis2.25.en"
+          ],
+          "embedded_at": "2026-05-18T09:31:08.116336Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.26",
+      "articulo": "26",
+      "title_es": "Jurisdicción y territorialidad",
+      "title_en": "Jurisdiction and territoriality",
+      "languages": {
+        "es": {
+          "hash": "sha256:7d37974e7618f6801b6323bf35988222f728261f3513d778ec4d016ad7a99b99",
+          "tokens": 685,
+          "chunks": [
+            "nis2.26.es"
+          ],
+          "embedded_at": "2026-05-18T09:31:15.187564Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:c70aaf0b7e594a644dcf7bb529235c466857f770cd33491dc6937e76d28c8f22",
+          "tokens": 620,
+          "chunks": [
+            "nis2.26.en"
+          ],
+          "embedded_at": "2026-05-18T09:31:22.852383Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.27",
+      "articulo": "27",
+      "title_es": "Registro de entidades",
+      "title_en": "Registry of entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:a070dccc1259b91867cfe79c8f46cce22e10f08114c70ddf345bc8b3e2a64eec",
+          "tokens": 532,
+          "chunks": [
+            "nis2.27.es"
+          ],
+          "embedded_at": "2026-05-18T09:31:30.514272Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:f67d1c7d45c8b68af17917cca3b707d2f7da53ab0af07a2ba08d8ba051d454b9",
+          "tokens": 456,
+          "chunks": [
+            "nis2.27.en"
+          ],
+          "embedded_at": "2026-05-18T09:31:39.500116Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.28",
+      "articulo": "28",
+      "title_es": "Base de datos sobre el registro de nombres de dominio",
+      "title_en": "Database of domain name registration data",
+      "languages": {
+        "es": {
+          "hash": "sha256:bfb7417fba87a764b671d8c4e8655d70a8ca3c1fd185dcdf02e7a8af2535ace4",
+          "tokens": 674,
+          "chunks": [
+            "nis2.28.es"
+          ],
+          "embedded_at": "2026-05-18T09:31:47.118723Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:034cf5c18a26d1169ee2cd86a88762248557cc773bfa046d1d0186972f4ee49c",
+          "tokens": 522,
+          "chunks": [
+            "nis2.28.en"
+          ],
+          "embedded_at": "2026-05-18T09:31:54.261755Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.29",
+      "articulo": "29",
+      "title_es": "Mecanismos de intercambio de información sobre ciberseguridad",
+      "title_en": "Cybersecurity information-sharing arrangements",
+      "languages": {
+        "es": {
+          "hash": "sha256:beeca451fcce332bfcfe83e6cd3ad44bd0cfa049e0a642d7dffbdf1293b4e4c7",
+          "tokens": 610,
+          "chunks": [
+            "nis2.29.es"
+          ],
+          "embedded_at": "2026-05-18T09:32:02.152338Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:082e65ecc9eb43b9f315dd0e529c09642d8b76dd8b03f102c3b1cd04379f0123",
+          "tokens": 546,
+          "chunks": [
+            "nis2.29.en"
+          ],
+          "embedded_at": "2026-05-18T09:32:10.207596Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.30",
+      "articulo": "30",
+      "title_es": "Notificación voluntaria de información pertinente",
+      "title_en": "Voluntary notification of relevant information",
+      "languages": {
+        "es": {
+          "hash": "sha256:5875518d8aece4854b08f887fdd4527cfede43ba774955b2a365ee5b9e6613fb",
+          "tokens": 325,
+          "chunks": [
+            "nis2.30.es"
+          ],
+          "embedded_at": "2026-05-18T09:32:14.878388Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:4fe3fd11765470af03a413b25bf5d4609bd52571d688b604898df58969d899fb",
+          "tokens": 291,
+          "chunks": [
+            "nis2.30.en"
+          ],
+          "embedded_at": "2026-05-18T09:32:19.363262Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.31",
+      "articulo": "31",
+      "title_es": "Aspectos generales relativos a la supervisión y la ejecución",
+      "title_en": "General aspects concerning supervision and enforcement",
+      "languages": {
+        "es": {
+          "hash": "sha256:570dec0099324aa8f7a79770cd9423ca80a4197468d75d3c2a7465e25e2857d7",
+          "tokens": 344,
+          "chunks": [
+            "nis2.31.es"
+          ],
+          "embedded_at": "2026-05-18T09:32:23.954517Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:b2e75ffa30237e537640a68e99d678b8707d05f5197b03a2b5a379b9730d95bd",
+          "tokens": 311,
+          "chunks": [
+            "nis2.31.en"
+          ],
+          "embedded_at": "2026-05-18T09:32:28.727835Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.32",
+      "articulo": "32",
+      "title_es": "Medidas de supervisión y ejecución relativas a entidades esenciales",
+      "title_en": "Supervisory and enforcement measures in relation to essential entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:d7b2e8483c6714a74c8f1cda795bc3fc408e49b489baca0bafae88c7ce840423",
+          "tokens": 2316,
+          "chunks": [
+            "nis2.32.1.es",
+            "nis2.32.2.es",
+            "nis2.32.3.es",
+            "nis2.32.4.es",
+            "nis2.32.5.es",
+            "nis2.32.6.es",
+            "nis2.32.7.es",
+            "nis2.32.8.es",
+            "nis2.32.9.es",
+            "nis2.32.10.es"
+          ],
+          "embedded_at": "2026-05-18T09:33:30.991324Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:a5be43809fc23993df6e45860cade74a1ee68a712183e042ca19cba364d64f65",
+          "tokens": 2152,
+          "chunks": [
+            "nis2.32.1.en",
+            "nis2.32.2.en",
+            "nis2.32.3.en",
+            "nis2.32.4.en",
+            "nis2.32.5.en",
+            "nis2.32.6.en",
+            "nis2.32.7.en",
+            "nis2.32.8.en",
+            "nis2.32.9.en",
+            "nis2.32.10.en"
+          ],
+          "embedded_at": "2026-05-18T09:34:30.118593Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.33",
+      "articulo": "33",
+      "title_es": "edidas de supervisión y ejecución en relación con entidades importantes",
+      "title_en": "Supervisory and enforcement measures in relation to important entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:a65afa05faee52005712b840ace853ca60b574f27b28d4c13eac032874586bb9",
+          "tokens": 1123,
+          "chunks": [
+            "nis2.33.1.es",
+            "nis2.33.2.es",
+            "nis2.33.3.es",
+            "nis2.33.4.es",
+            "nis2.33.5.es",
+            "nis2.33.6.es"
+          ],
+          "embedded_at": "2026-05-18T09:34:59.537094Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:5e93a6798934f7a2806669bdb4d70ec51e0cbfc8680337a6703cf01c8dc65cf9",
+          "tokens": 1026,
+          "chunks": [
+            "nis2.33.1.en",
+            "nis2.33.2.en",
+            "nis2.33.3.en",
+            "nis2.33.4.en",
+            "nis2.33.5.en",
+            "nis2.33.6.en"
+          ],
+          "embedded_at": "2026-05-18T09:35:28.357648Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.34",
+      "articulo": "34",
+      "title_es": "Condiciones generales para la imposición de multas administrativas a entidades esenciales e importantes",
+      "title_en": "General conditions for imposing administrative fines on essential and important entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:3b01f38da9f0104822bb8778a203022a77abc7a152b156d6c5c47fc81038badf",
+          "tokens": 652,
+          "chunks": [
+            "nis2.34.es"
+          ],
+          "embedded_at": "2026-05-18T09:35:36.452746Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:149fc6f817db246a6a91b2c27b176f44cf3f988b5a6a3981614e6249102c4329",
+          "tokens": 569,
+          "chunks": [
+            "nis2.34.en"
+          ],
+          "embedded_at": "2026-05-18T09:35:44.777112Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.35",
+      "articulo": "35",
+      "title_es": "Incumplimientos que conllevan una violación de la seguridad de los datos personales",
+      "title_en": "Infringements entailing a personal data breach",
+      "languages": {
+        "es": {
+          "hash": "sha256:c6b5ddd593175f2a6c162b626678d4b5488bb561485bf811515383c52e2f7f4e",
+          "tokens": 382,
+          "chunks": [
+            "nis2.35.es"
+          ],
+          "embedded_at": "2026-05-18T09:35:50.412459Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:c6c439722b286cc4524a9d4c7ef187a5ece2998e77d5d0a2db947a42f9df4998",
+          "tokens": 354,
+          "chunks": [
+            "nis2.35.en"
+          ],
+          "embedded_at": "2026-05-18T09:35:55.480508Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.36",
+      "articulo": "36",
+      "title_es": "Sanciones",
+      "title_en": "Penalties",
+      "languages": {
+        "es": {
+          "hash": "sha256:b5b513875e4047142da4d05ce784e551ac782ca411e23df5d66d476170d1a5a8",
+          "tokens": 98,
+          "chunks": [
+            "nis2.36.es"
+          ],
+          "embedded_at": "2026-05-18T09:35:57.578312Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:4a371d4d923fc4beaf4aa3de73ac6626261496fcd6fda7d0984b2fcc5d651bdb",
+          "tokens": 99,
+          "chunks": [
+            "nis2.36.en"
+          ],
+          "embedded_at": "2026-05-18T09:35:59.475558Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.37",
+      "articulo": "37",
+      "title_es": "Asistencia mutua",
+      "title_en": "Mutual assistance",
+      "languages": {
+        "es": {
+          "hash": "sha256:06981f0a7f19809e0551ada7014371ad949f718ea8787968653aa6523dbe4917",
+          "tokens": 468,
+          "chunks": [
+            "nis2.37.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:06.271288Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:327cd9213c031138633dda7da4509794cb62f82adfc73d45de0a30e10c373a0b",
+          "tokens": 461,
+          "chunks": [
+            "nis2.37.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:15.736165Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.38",
+      "articulo": "38",
+      "title_es": "Ejercicio de la delegación",
+      "title_en": "Exercise of the delegation",
+      "languages": {
+        "es": {
+          "hash": "sha256:a83e33c7c24009bab585203c016f300daf180118a3d20eaa38b5e75f41d1bbce",
+          "tokens": 346,
+          "chunks": [
+            "nis2.38.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:21.180723Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:7d10271fdbb4a7f938dcd0c3b64b5ba9f565960bebe35a4ca89855ed64e29d1c",
+          "tokens": 343,
+          "chunks": [
+            "nis2.38.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:26.315115Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.39",
+      "articulo": "39",
+      "title_es": "Procedimiento de comité",
+      "title_en": "Committee procedure",
+      "languages": {
+        "es": {
+          "hash": "sha256:a5bb8d68ad41f8f37e5c54703a44736eb4f0f3484dd1abb15bd3156beeb91e8e",
+          "tokens": 125,
+          "chunks": [
+            "nis2.39.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:28.686300Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:32103c4006da4d8416c42fc33f817615ad8d32467045cab5ed481bd1068952a2",
+          "tokens": 114,
+          "chunks": [
+            "nis2.39.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:31.034069Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.40",
+      "articulo": "40",
+      "title_es": "Revisión",
+      "title_en": "Review",
+      "languages": {
+        "es": {
+          "hash": "sha256:30ce652ef80eb44a0ca595c9025839aa1296e69d5ac3c4d2c1c84c3916a12f93",
+          "tokens": 175,
+          "chunks": [
+            "nis2.40.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:34.151714Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:f85074319aa9e28d8cadb387cff4d5e45042898325e0ebd45de56b9ba8ef5e16",
+          "tokens": 176,
+          "chunks": [
+            "nis2.40.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:36.942834Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.41",
+      "articulo": "41",
+      "title_es": "Transposición",
+      "title_en": "Transposition",
+      "languages": {
+        "es": {
+          "hash": "sha256:bdfe5bedc1e7a8b2fb0e2b831eba2d2977d3ec9eedfafc9b4902f41a10229b71",
+          "tokens": 118,
+          "chunks": [
+            "nis2.41.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:39.293713Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:a24794c6f82fb6363decf65e2a601b90cc5da7d52dfb9620685d589749101863",
+          "tokens": 102,
+          "chunks": [
+            "nis2.41.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:41.596240Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.42",
+      "articulo": "42",
+      "title_es": "Modificación del Reglamento (UE) n.o 910/2014",
+      "title_en": "Amendment of Regulation (EU) No 910/2014",
+      "languages": {
+        "es": {
+          "hash": "sha256:39b040c52d5a24f7ff9247b8a07929b129d543459858c4529f53efebdf41799e",
+          "tokens": 29,
+          "chunks": [
+            "nis2.42.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:43.177482Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:0aec411bf37eb38ab17ab36c3fd724d934c379aa0357f3a7c5dcca2b46ed5413",
+          "tokens": 23,
+          "chunks": [
+            "nis2.42.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:45.658477Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.43",
+      "articulo": "43",
+      "title_es": "Modificación de la Directiva (UE) 2018/1972",
+      "title_en": "Amendment of Directive (EU) 2018/1972",
+      "languages": {
+        "es": {
+          "hash": "sha256:718edc3fd9621a870a82fb6b5f0ce2ec188a3ec03fa8f765fea68b25139578c8",
+          "tokens": 25,
+          "chunks": [
+            "nis2.43.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:46.863632Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:44bc1c87b31d4a4dd8f5c6a325ab82803f22795e839c5b090065a99aea4ae714",
+          "tokens": 24,
+          "chunks": [
+            "nis2.43.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:48.375510Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.44",
+      "articulo": "44",
+      "title_es": "Derogación",
+      "title_en": "Repeal",
+      "languages": {
+        "es": {
+          "hash": "sha256:bab2cfac653241066a1c94e017a275070dc8c0a1111d0ccd715ee10b9bc275a8",
+          "tokens": 58,
+          "chunks": [
+            "nis2.44.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:50.428343Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:edbde13ac1342c9d1e09f21bdf9ea4226efa3b4e55f0ef0484a78121c2dcc8dd",
+          "tokens": 57,
+          "chunks": [
+            "nis2.44.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:52.610375Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.45",
+      "articulo": "45",
+      "title_es": "Entrada en vigor",
+      "title_en": "Entry into force",
+      "languages": {
+        "es": {
+          "hash": "sha256:c1029967c89e8706dc238f50ca82216940164527344021bf932641b429745387",
+          "tokens": 24,
+          "chunks": [
+            "nis2.45.es"
+          ],
+          "embedded_at": "2026-05-18T09:36:53.953922Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:5bf5e6b0a4b0d01b3430a7815cbfa0074d21a5857a303fc1dd5c3caaab0c1ba5",
+          "tokens": 27,
+          "chunks": [
+            "nis2.45.en"
+          ],
+          "embedded_at": "2026-05-18T09:36:55.123374Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    },
+    {
+      "article_id": "nis2.46",
+      "articulo": "46",
+      "title_es": "Destinatarios",
+      "title_en": "Addressees",
+      "languages": {
+        "es": {
+          "hash": "sha256:50717c40c9584f146ef7491928afa377cac143e17d1d3b39d798d1f3a86a6335",
+          "tokens": 5789,
+          "chunks": [
+            "nis2.46.1.es",
+            "nis2.46.2.es",
+            "nis2.46.3.es",
+            "nis2.46.4.es",
+            "nis2.46.5.es",
+            "nis2.46.6.es",
+            "nis2.46.7.es",
+            "nis2.46.8.es",
+            "nis2.46.9.es",
+            "nis2.46.10.es",
+            "nis2.46.11.es",
+            "nis2.46.1.es",
+            "nis2.46.2.es",
+            "nis2.46.3.es",
+            "nis2.46.4.es",
+            "nis2.46.5.es",
+            "nis2.46.6.es",
+            "nis2.46.7.es"
+          ],
+          "embedded_at": "2026-05-18T09:38:39.902899Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
+        },
+        "en": {
+          "hash": "sha256:2c2e35393eda64ec3aa89f8d691677459fa3c53c848bc32eb701b5ab203b259d",
+          "tokens": 4917,
+          "chunks": [
+            "nis2.46.1.en",
+            "nis2.46.2.en",
+            "nis2.46.3.en",
+            "nis2.46.4.en",
+            "nis2.46.5.en",
+            "nis2.46.6.en",
+            "nis2.46.7.en",
+            "nis2.46.8.en",
+            "nis2.46.9.en",
+            "nis2.46.10.en",
+            "nis2.46.11.en",
+            "nis2.46.1.en",
+            "nis2.46.2.en",
+            "nis2.46.3.en",
+            "nis2.46.4.en",
+            "nis2.46.5.en",
+            "nis2.46.6.en",
+            "nis2.46.7.en"
+          ],
+          "embedded_at": "2026-05-18T09:40:24.154810Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-05-18T08:14:27.181750Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
+        }
+      }
+    }
+  ]
+}

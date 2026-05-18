@@ -93,7 +93,7 @@ def test_ask_request_rejects_unknown_corpus() -> None:
     from pydantic import ValidationError
 
     with pytest.raises(ValidationError):
-        AskRequest(query="hi", corpus="nis2", language="es")  # type: ignore[arg-type]
+        AskRequest(query="hi", corpus="unknown_norma", language="es")  # type: ignore[arg-type]
 
 
 def test_ask_request_rejects_unknown_language() -> None:

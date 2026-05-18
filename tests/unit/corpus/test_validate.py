@@ -17,6 +17,8 @@ def _art(num: str, text: str = "x") -> ParsedArticle:
 def test_expected_counts_constants() -> None:
     assert EXPECTED_ARTICLE_COUNTS["ai_act"] == 113
     assert EXPECTED_ARTICLE_COUNTS["gdpr"] == 99
+    assert EXPECTED_ARTICLE_COUNTS["nis2"] == 46
+    assert EXPECTED_ARTICLE_COUNTS["dora"] == 64
 
 
 def test_validate_full_coverage_returns_ok_report() -> None:

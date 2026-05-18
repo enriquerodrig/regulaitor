@@ -10,7 +10,8 @@ from regulaitor.corpus.schemas import Norma
 EXPECTED_ARTICLE_COUNTS: dict[Norma, int] = {
     "ai_act": 113,
     "gdpr": 99,
-    # nis2 and dora pinned in H14
+    "nis2": 46,  # pinned from real manifest: corpus/manifests/nis2.json (H14)
+    "dora": 64,  # pinned from real manifest: corpus/manifests/dora.json (H14)
 }
 
 

@@ -125,3 +125,36 @@ def test_parse_byte_path_via_extract_text(monkeypatch: pytest.MonkeyPatch) -> No
     assert captured["called"]
     assert len(arts) == 1
     assert arts[0].articulo == "1"
+
+
+def test_parses_nis2_directive_structure_es() -> None:
+    text = (
+        "Artículo 1\n"
+        "Objeto\n"
+        "1. La presente Directiva establece medidas destinadas a garantizar "
+        "un elevado nivel común de ciberseguridad en la Unión.\n"
+        "Artículo 2\n"
+        "Ámbito de aplicación\n"
+        "1. La presente Directiva se aplicará a las entidades esenciales e "
+        "importantes a que se refiere el anexo.\n"
+    )
+    arts = _parse(text)
+    assert [a.articulo for a in arts] == ["1", "2"]
+    assert arts[0].title == "Objeto"
+    assert "elevado nivel común de ciberseguridad" in arts[0].paragraphs[0].text
+
+
+def test_parses_dora_regulation_structure_en() -> None:
+    text = (
+        "Article 1\n"
+        "Subject matter\n"
+        "1. This Regulation lays down uniform requirements concerning the "
+        "security of network and information systems.\n"
+        "Article 2\n"
+        "Scope\n"
+        "1. This Regulation applies to financial entities as defined herein.\n"
+    )
+    arts = _parse(text)
+    assert [a.articulo for a in arts] == ["1", "2"]
+    assert arts[0].title == "Subject matter"
+    assert "uniform requirements" in arts[0].paragraphs[0].text
