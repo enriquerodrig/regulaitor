@@ -1,7 +1,7 @@
-"""Model identifiers and pricing for the router (H4+H12).
+"""Model identifiers and pricing for the router (H4+H12+H13).
 
 H4 wires Anthropic Sonnet 4.6. H12 extends with OpenAI GPT-4o / GPT-4o-mini and
-Groq Llama-3.3-70B for cost/quality/fallback modes.
+Groq Llama-3.3-70B for cost/quality/fallback modes. H13 adds Haiku 4.5 (judge mode).
 """
 
 from __future__ import annotations
@@ -16,6 +16,7 @@ class ModelPricing(NamedTuple):
 
 # Model IDs
 ANTHROPIC_SONNET_4_6 = "claude-sonnet-4-6"
+ANTHROPIC_HAIKU_4_5 = "claude-haiku-4-5-20251001"
 OPENAI_GPT_4O = "gpt-4o"
 OPENAI_GPT_4O_MINI = "gpt-4o-mini"
 # Groq's exact 70B id is verified against the live catalog in a later task
@@ -28,6 +29,7 @@ GROQ_LLAMA_70B = "llama-3.3-70b-versatile"
 # verified value.
 PRICING: dict[str, ModelPricing] = {
     ANTHROPIC_SONNET_4_6: ModelPricing(input_per_million=3.0, output_per_million=15.0),
+    ANTHROPIC_HAIKU_4_5: ModelPricing(input_per_million=1.0, output_per_million=5.0),
     OPENAI_GPT_4O: ModelPricing(input_per_million=2.50, output_per_million=10.0),
     OPENAI_GPT_4O_MINI: ModelPricing(input_per_million=0.15, output_per_million=0.60),
     GROQ_LLAMA_70B: ModelPricing(input_per_million=0.59, output_per_million=0.79),

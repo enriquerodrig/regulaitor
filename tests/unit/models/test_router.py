@@ -705,3 +705,27 @@ def test_fallback_triggered_on_transport_error(monkeypatch) -> None:
     )
     assert openai_calls == ["called"], "fallback MUST fire on a transport GroqRateErr"
     assert out.model_id == OPENAI_GPT_4O_MINI
+
+
+# ---------------------------------------------------------------------------
+# H13 judge mode
+# ---------------------------------------------------------------------------
+
+
+def test_judge_mode_resolves_to_haiku() -> None:
+    from regulaitor.models import config, router
+
+    assert "judge" in router._VALID_MODES
+    pm = router._MODE_MAP["judge"]
+    assert pm.provider == router.PROVIDER_ANTHROPIC
+    assert pm.model_id == config.ANTHROPIC_HAIKU_4_5
+
+
+def test_five_existing_modes_unchanged() -> None:
+    from regulaitor.models import config, router
+
+    assert router._MODE_MAP["default"].model_id == config.ANTHROPIC_SONNET_4_6
+    assert router._MODE_MAP["quality"].model_id == config.ANTHROPIC_SONNET_4_6
+    assert router._MODE_MAP["evaluation"].model_id == config.OPENAI_GPT_4O
+    assert router._MODE_MAP["cost"].model_id == config.GROQ_LLAMA_70B
+    assert router._MODE_MAP["fallback"].model_id == config.OPENAI_GPT_4O_MINI

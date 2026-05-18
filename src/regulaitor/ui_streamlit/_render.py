@@ -13,9 +13,11 @@ from __future__ import annotations
 
 import streamlit as st
 
+from regulaitor.api.schemas import _council_notice
 from regulaitor.citation.schemas import (
     AuditedAnswer,
     AuditVerdict,
+    CouncilReview,
     DocumentReport,
     Finding,
     SanitizerEvent,
@@ -28,6 +30,25 @@ _SEVERITY_LABEL_COLOR = {
     "medium": "orange",
     "high": "red",
 }
+
+
+def _council_judge_rows(cr: CouncilReview) -> list[dict[str, object]]:
+    """Per-judge projection shown in the Council expander. Redacted subset of
+    CouncilReview/JudgeVote: judge `reason` is retained as auditable Council
+    evidence (consistent with the T11 JudgeVoteDTO SSDLC decision — judge
+    rationale over corpus text, not user PII, truncated upstream). NO raw
+    user/ChatState text is exposed (only the explicit JudgeVote fields)."""
+    return [
+        {
+            "model_id": j.model_id,
+            "provider": j.provider,
+            "vote": j.vote.value,
+            "ok": j.ok,
+            "error_category": j.error_category,
+            "reason": j.reason,
+        }
+        for j in cr.judges
+    ]
 
 
 def verdict_badge(verdict: AuditVerdict, reason: str | None = None) -> None:
@@ -120,6 +141,15 @@ def chat_state(state: ChatState) -> None:
         return
 
     verdict_badge(audited.verdict, reason=audited.reason)
+
+    # Advisory Council notice (H13): show prominently if diverges from Auditor
+    notice = _council_notice(state.council_review)
+    cr = state.council_review
+    if notice and cr is not None:
+        st.warning(notice)
+        with st.expander("Council (evidencia) — votos de los jueces"):
+            st.json(_council_judge_rows(cr))
+
     st.markdown(audited.answer.text)
     for f in audited.answer.findings:
         finding(f)

@@ -72,6 +72,7 @@ evals/reports/*
 # docs/cost_analysis.md caveats). Mirrors the !latest.md exception.
 !evals/reports/latest.evaluation.md
 !evals/reports/latest.cost.md
+!evals/reports/latest.council.md
 evals/cache/
 evals/reports/archive/
 redteam/reports/*

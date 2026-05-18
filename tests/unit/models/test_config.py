@@ -51,6 +51,7 @@ def test_cost_eur_known_for_all_h12_models() -> None:
 
     for mid in (
         config.ANTHROPIC_SONNET_4_6,
+        config.ANTHROPIC_HAIKU_4_5,
         config.OPENAI_GPT_4O,
         config.OPENAI_GPT_4O_MINI,
         config.GROQ_LLAMA_70B,
@@ -69,3 +70,22 @@ def test_cost_eur_gpt_4o_value() -> None:
         output_tokens=1_000_000,
     )
     assert abs(c - 11.625) < 1e-6
+
+
+# --- H13 judge mode pricing ---
+
+
+def test_haiku_45_pricing_present() -> None:
+    from regulaitor.models import config
+
+    assert config.ANTHROPIC_HAIKU_4_5 == "claude-haiku-4-5-20251001"
+    assert config.ANTHROPIC_HAIKU_4_5 in config.PRICING
+    pricing = config.PRICING[config.ANTHROPIC_HAIKU_4_5]
+    in_usd, out_usd = pricing.input_per_million, pricing.output_per_million
+    assert in_usd > 0 and out_usd > 0
+    # Haiku is cheaper than Sonnet on both legs (sanity, not exact).
+    s_in, s_out = (
+        config.PRICING[config.ANTHROPIC_SONNET_4_6].input_per_million,
+        config.PRICING[config.ANTHROPIC_SONNET_4_6].output_per_million,
+    )
+    assert in_usd < s_in and out_usd < s_out

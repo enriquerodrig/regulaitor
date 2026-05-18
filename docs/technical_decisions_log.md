@@ -2284,3 +2284,203 @@ H12 cerrado 2026-05-17. Squash `d59a33f`, tag `v0.1.2-h12`.
 D1-D4 cumplidas; D2 sin desviación (3-vías intentado; Llama contaminado, NO
 desviación de spec sino resultado honesto). Próximo: **H13** — Council of
 Judges (3 jueces para severidad alta).
+
+---
+
+## H13 — Council of Judges (cerrado 2026-05-18, squash `<squash-sha>`, tag `v0.1.3-h13`)
+
+Capa de Council Advisory de 3 jueces LLM independientes para el flujo chat,
+activada en hallazgos de severidad alta y casos ambiguos. Branch
+`feat/h13-council-of-judges`. ADR 0014. Spec
+`docs/superpowers/specs/2026-05-17-h13-council-of-judges-design.md`. Ejecutado
+vía subagent-driven-development (implementer + spec-review + code-quality-review
+por tarea); el review en 2 fases capturó 4 defectos consecuentes (T7/T10/T12/T14b).
+El run de pago gated (T14) añadió 3 defectos de la ruta `# pragma: no cover` antes
+de producir los resultados reales.
+
+### Decisiones de brainstorming (D1–D7, user-aprobadas 2026-05-17)
+
+- **D1 — Autoridad: advisory + aviso visible + seam de promoción.** El veredicto
+  del Auditor mecánico **nunca se muta** (determinista, reproducible; invariante
+  §6 "no citation, no answer" al 100%). `council_review` es evidencia advisory
+  explícitamente no-determinista. Se muestra un `council_notice` visible (API +
+  Streamlit) cuando el Council diverge del Auditor. `AggregationPolicy` es
+  intercambiable; `AdvisoryMajorityPolicy` (por defecto) registra el resultado
+  advisory sin tocar el veredicto. `MonotonicEscalatePolicy` está implementada y
+  con test unitario, pero cableada OFF mediante `_COUNCIL_BINDING = False` — el
+  seam de promoción de H15.
+- **D2 — Trigger: híbrido (auto + override API).** Auto: `audited.verdict ==
+  REQUIRES_HUMAN_REVIEW` OR cualquier `finding.severity == "high"`. Override API:
+  campo `council: bool | None` en el cuerpo de la request. Skip si está
+  injection-blocked o no hay `audited_answer`. Intención de diseño documentada
+  por el reviewer: `AuditVerdict.BLOCK` es intencionalmente NO trigger automático
+  — es el veredicto determinista más estricto; el Council advisory nunca relaja un
+  BLOCK.
+- **D3 — Jueces: 3 proveedores distintos vía el router.** Modo `judge` → Haiku
+  4.5 (nuevo modo de router añadido en T1); modo `evaluation` → GPT-4o; modo
+  `cost` → Llama-3.3-70b-Groq. Fallo por-juez degrada a `ok=False` (el run
+  continúa); todas las excepciones tragadas en la capa Council (invariante
+  advisory: nunca rompe el turno de chat).
+- **D4 — Alcance: solo grafo chat.** Pipeline documental intacto (read-only).
+  Council para modo documento = follow-up futuro explícito.
+- **D5 — Éxito: estudio de divergencia honesto (no una claim de mejora).** Por
+  construcción, una capa advisory que nunca muta el veredicto del Auditor no puede
+  "mejorar faithfulness" ni "block rate" en agregado. El entregable es un estudio
+  de divergencia sobre el subconjunto triggereado. Reframe explícito y honesto del
+  lenguaje "Done when" de §16.3, siguiendo el patrón del reframe H10.
+- **D6 — Arquitectura: nuevo nodo `council` en LangGraph + edge condicional.** Se
+  añade un nodo `council` después del nodo `auditor` en el grafo chat, conectado
+  vía un edge condicional `_route_after_audit`. `CouncilAgent.review()` es el
+  punto de entrada; `GraphState` gana `council_review: CouncilReview | None`.
+  Backend H1–H3/Analyst/Auditor-mecánico read-only/regression-zero.
+  `api/routes_ask.py`, `api/schemas.py` y `ui_streamlit/_render.py` reciben el
+  campo `council_review`.
+- **D7 — Extensión modo `judge` del router.** Nuevo modo `judge` → Haiku 4.5
+  (Anthropic) añadido a `models/router.py` y `models/config.py`. Es el sexto modo;
+  los 5 modos existentes son regression-zero. El invariante "todo LLM pasa por el
+  router" (CLAUDE.md §13) se preserva. Justificado como ADR-worthy: única
+  constante de producción nueva añadida al router en H13.
+
+### Amendments durante implementación — defectos capturados por review en 2 fases (CLAUDE.md §22.1)
+
+**T7 — Invariante `triggered/trigger_reason` de `CouncilReview` podía romper el turno.**
+`CouncilAgent.review` podía lanzar excepción vía la validación del `Literal`
+`trigger_reason` cuando se le pasaba `"not_triggered"`, violando el invariante
+paramount "el Council advisory nunca rompe el turno de chat". Corregido estrechando
+el `Literal` (el controller también capturó un defecto relacionado de mypy
+`Context|None`). Lección: el invariante advisory debe validarse explícitamente en
+los paths de "no trigger", no solo en los paths de "trigger".
+
+**T10 — Resumen del Council llegaba al log JSON pero NO al trace LangFuse.**
+`tt.set_root` no se extendía con las claves del council → la allowlist de redacción
+era inerte para esas claves. Defecto de egress: la spec §3/§5 requería AMBOS (log
+estructurado + LangFuse). Corregido extendiendo `set_root` con el resumen
+council-safe. Lección: un test de egress que verifique las claves específicas de
+cada nodo nuevo, no solo la estructura global.
+
+**T12 — `_render.py` reimplementó `_council_notice` verbatim en lugar de reusar la
+canónica de `api.schemas`.** Violación de single-source-of-truth: si la lógica de
+aviso cambia en el schema, la UI silenciosamente divergiría. Corregido reutilizando
+`api.schemas._council_notice` directamente desde la capa UI. La desviación del plan
+(el plan preveía `tab_ask.council_banner_text(dict)` como helper intermedio; la
+implementación mejorada usa la función canónica directamente sin el dict intermedio)
+se registró per §22.1. El helper huérfano fue eliminado.
+
+**T14b — `council_analysis.md` inicialmente sobreestimó un sub-patrón de divergencia
+como "~9" en vez del real 7.** Capturado por la revisión de honestidad (§22.22
+disciplina de número exacto), corregido antes del commit de cierre.
+
+### T13 defectos de ruta de pago (capturados por el run gated T14)
+
+La ruta `scripts/council_eval.py._run_gold` es `# pragma: no cover` (ruta de pago)
+por lo que el review en 2 fases estructuralmente NO podía ejecutarla. El run gated
+T14 los afloró uno a uno, cada uno con crash fail-fast ANTES de llamadas de pago
+(~$0.04 gastados en el tercero; presupuesto protegido):
+
+1. **`corpus_loader.warmup()` ausente.** El script no inicializaba el loader antes
+   del bucle de casos → error en el primer caso. Corregido añadiendo `warmup()` al
+   setup del script, espejando `evals/harness.py`.
+2. **Invocación incorrecta.** `python -m scripts.council_eval` (bare) no carga
+   `.env` → claves de API ausentes → fallo inmediato. La invocación correcta es:
+   `uv run --env-file .env python -m scripts.council_eval`. Lección: toda la suite
+   de scripts del proyecto debe documentar esta forma de invocación.
+3. **Sin `try/except` por caso.** Un caso de Analyst flakey abortó el run completo
+   al lanzar excepción no capturada. Corregido añadiendo `try/except` por caso con
+   log de skip + continuación, espejando `evals/harness.py`. Una sonda `--limit 3`
+   validó el harness corregido tres veces antes del gasto completo.
+
+### Resultados del run gated T14 (honesto, sin re-run — §22.22)
+
+Run: 30 casos chat del gold set sobre el pipeline completo con Council forzado vía
+override (`council=True`). Harness: `scripts/council_eval.py`. Informe raw:
+`evals/reports/latest.council.md`. Análisis autorizado: `docs/council_analysis.md`.
+
+| Ítem | Valor |
+|---|---|
+| Casos seleccionados | 30 (chat gold set completo) |
+| Casos resumidos | **21** |
+| Casos skipped | **9 (30%)** — chat-003/006/008/009/019/022/024/025/028 |
+| Causa real del skip | Analyst emitió `findings=[]` (flakiness de adherencia de esquema documentada en §H10/§H11 Amendment 4) |
+| Label en informe raw | "(injection-blocked or council-unavailable)" — genérico del harness; atribución precisa en `docs/council_analysis.md` |
+| Council diverge del Auditor | **12/21 ≈ 57%** |
+| Patrón dominante (7/12) | Auditor=REQUIRES_HUMAN_REVIEW → Council=valid (panel LLM sistemáticamente más leniente en ambiguos) |
+| Escalación semántica (1/12) | chat-11: Auditor=pass → Council=requires\_human\_review (el caso que el Council estaba diseñado para detectar) |
+| n\_auto\_triggered | **0** (todos forzados vía override; solo 1 caso habría auto-triggereado en la muestra) |
+| Contaminación Groq I-2 | ~6 panels con Haiku+GPT-4o+GPT-4o-mini (2 proveedores OpenAI, no 3 independientes) por cap 429 free-tier Groq |
+| Coste | **~$1.2–1.5** (aproximación honesta; NOT per-run-medido — mismo gap de pipeline que H12) |
+| Errores de crédito/auth | 0 (cero Anthropic/OpenAI) |
+
+**Contaminación Groq I-2 (recurrencia H12, §22.22):** el cap free-tier 100k-TPD de
+Groq 429'd ~6 veces → fallback controlado H12 sustituyó GPT-4o-mini en el slot Llama
+→ ~6 panels no tuvieron 3 proveedores independientes. Documentado, NO re-corrido por
+números más bonitos.
+
+**Falsa alarma de cobertura T13 (clarificación):** durante el review de calidad T13,
+una invocación parcial de pytest reportó "79%". La invocación autoritativa completa
+(`python -m pytest -q`, ejecutada dos veces sin override, desde la raíz del repo)
+reportó **93.40% ≥ 90%, exit 0** — gate §16.2 #2 verde. El 79% era un artefacto de
+scope incompleto; no propagar ese número.
+
+### Hallazgo clave H13 (refuerza H15)
+
+El 57% de divergencia y el patrón 7/12 (Auditor=RHR → Council=valid) confirman que
+el Auditor mecánico sobre-dispara REQUIRES_HUMAN_REVIEW en casos ambiguos — la misma
+señal de calibración que §H10/§H12 identificaron. El Council surfaceó el problema con
+mayor claridad que las métricas de eval raw. Esto refuerza las palancas H15:
+calibración del Auditor (umbral de RHR), schema-adherence del Analyst (elimina el 30%
+de skip), y el seam de promoción `_COUNCIL_BINDING`/`MonotonicEscalatePolicy` una vez
+que la calibración esté validada.
+
+### Follow-ups diferidos H13 (registrados en evidence_matrix)
+
+- **Promoción binding del Council** (`_COUNCIL_BINDING = True` /
+  `MonotonicEscalatePolicy`): requiere calibración Auditor y Analyst validadas → H15.
+- **Council para modo documento**: requiere cambios en `document_graph.py` y
+  agregación multi-segmento → follow-up futuro (post-H15).
+- **Analyst schema-adherence** (~30% de skip): calibración de prompt + forzado de
+  `findings` → H15 (palanca ya documentada en §H10/§H11 Amendment 4).
+- **Groq tier de pago** para eliminar el I-2 en futuros runs: requiere decisión de
+  gasto explícita del usuario.
+- **Per-call measured-cost capture**: hook de agregación `CompletionResult.cost_eur`
+  → H15 (ítem heredado de H12, pendiente en este hito también).
+- **`_council_notice` en capa API-schema**: revisitar si aparece un consumidor no-UI.
+- **Script `council_eval.py` sin progress meter**: mejora menor de harness; no
+  bloqueante.
+
+### Deuda técnica menor
+
+- `_council_notice` Spanish string en `api/schemas.py` (spec-approved, sole consumer
+  Streamlit ES) — no rompe nada; promover a módulo shared si hay 2º consumidor.
+- Import cross-layer `ui_streamlit/_render.py` → `api.schemas` (plan-endorsed,
+  single-source-of-truth); promover si hay 2º consumidor.
+- `scripts/council_eval.py` sin progress meter (solo logs skips + summary final).
+
+### Skill activada
+
+**Ninguna nueva.** `prompt-versioning` aplicada al prompt `council/judge.v1.0.md`
+(skill ya activa desde H4). `cost-accounting` (CLAUDE.md §12.4) sigue en H17.
+Scope acotado mantenido.
+
+### Métricas de cierre
+
+| Ítem | Valor |
+|---|---|
+| Nodo `council` | ✅ en grafo chat; `_route_after_audit` condicional; backend H1-H5 intacto |
+| `AdvisoryMajorityPolicy` | ✅ default, nunca muta veredicto |
+| `MonotonicEscalatePolicy` | ✅ implementada + testeada, `_COUNCIL_BINDING=False` (H15 seam) |
+| Trigger híbrido (auto + override) | ✅ |
+| `council_notice` (API + Streamlit) | ✅ en divergencia |
+| Prompt versionado | ✅ `council/judge.v1.0.md` |
+| Modo `judge` en router | ✅ Haiku 4.5 (6º modo; 5 existentes regression-zero) |
+| Cobertura (gate autoritativo) | **93.40%** ✅ (full pytest, exit 0) |
+| Casos resumidos / skipped | 21 / 9 (30% skip — Analyst flakiness) |
+| Divergencia Council vs Auditor | 12/21 ≈ 57% |
+| Escalación semántica | chat-11 (Auditor=pass → Council=RHR) |
+| Groq I-2 recurrencia | ~6 panels (free-tier cap; documentado, no re-corrido) |
+| Coste T14 | ~$1.2–1.5 (aproximación; NOT medido) |
+| ADR | 0014 ✅ |
+
+### Cierre
+
+H13 cerrado 2026-05-18. Squash `<squash-sha>`, tag `v0.1.3-h13` (post-merge).
+Próximo: **H14** — Ampliación corpus NIS2 + DORA.

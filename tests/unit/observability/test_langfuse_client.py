@@ -269,3 +269,35 @@ def test_allowlist_accepts_all_task4_and_task5_keys() -> None:
 
     # If we reach here without ValueError, the allowlist is correct.
     assert True
+
+
+def test_assert_safe_keys_accepts_h13_council_keys() -> None:
+    """SSDLC egress-survival test: all four H13 council summary keys must pass
+    the redaction boundary (_assert_safe_keys) without raising ValueError.
+    This guards against a future council-key rename silently dropping from
+    LangFuse (spec §3/§5 — council summary required in JSON log AND LangFuse
+    trace)."""
+    tt = lc.TurnTrace(kind="chat", case_id="c", corpus="ai_act", language="es")
+
+    # Exercise the same egress boundary that tt.set_root() enforces,
+    # passing exactly the four H13 keys forwarded by run() via tt.set_root().
+    tt.set_root(
+        verdict="requires_human_review",
+        query_sha256_12="abc123def456",
+        n_findings=1,
+        n_citations=2,
+        n_validated=1,
+        n_blocked=1,
+        council_triggered=True,
+        council_verdict="block",
+        council_diverges=False,
+        n_judges_ok=2,
+        latency_ms_total=500,
+        errors=[],
+    )
+
+    # All four council keys must survive without ValueError.
+    assert tt._root_meta["council_triggered"] is True
+    assert tt._root_meta["council_verdict"] == "block"
+    assert tt._root_meta["council_diverges"] is False
+    assert tt._root_meta["n_judges_ok"] == 2

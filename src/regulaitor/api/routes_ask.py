@@ -43,6 +43,7 @@ async def ask(
         corpus=payload.corpus,
         language=payload.language,
         case_id=case_id,
+        council_override=payload.council,
     )
     response_time_ms = int((time.monotonic() - t0) * 1000)
     if state.injection_blocked:

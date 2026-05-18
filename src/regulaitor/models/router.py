@@ -1,6 +1,7 @@
 """Single LLM entry point. H4 routes 'default'/'quality' to Anthropic Sonnet 4.6.
 
 H12 extends to 'cost' (Llama Groq), 'evaluation' (GPT-4o), 'fallback' (GPT-4o-mini).
+H13 adds 'judge' (Haiku 4.5).
 Per-tool error semantics + cost tracking + retries via tenacity.
 Decisions log 2026-05-05 entry "models/router.py arquitectura: thin router con un backend en H4".
 """
@@ -35,6 +36,7 @@ from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_ex
 
 from regulaitor.models import _translate
 from regulaitor.models.config import (
+    ANTHROPIC_HAIKU_4_5,
     ANTHROPIC_SONNET_4_6,
     GROQ_LLAMA_70B,
     OPENAI_GPT_4O,
@@ -44,7 +46,7 @@ from regulaitor.models.config import (
 
 logger = logging.getLogger("regulaitor.models.router")
 
-ModelChoice = Literal["default", "quality", "cost", "evaluation", "fallback"]
+ModelChoice = Literal["default", "quality", "cost", "evaluation", "fallback", "judge"]
 # Single source of truth: derived from the Literal (no duplicated string set).
 _VALID_MODES: frozenset[str] = frozenset(get_args(ModelChoice))
 
@@ -93,6 +95,7 @@ _MODE_MAP: dict[str, ProviderModel] = {
     "cost": ProviderModel(PROVIDER_GROQ, GROQ_LLAMA_70B),
     "evaluation": ProviderModel(PROVIDER_OPENAI, OPENAI_GPT_4O),
     "fallback": ProviderModel(PROVIDER_OPENAI, OPENAI_GPT_4O_MINI),
+    "judge": ProviderModel(PROVIDER_ANTHROPIC, ANTHROPIC_HAIKU_4_5),
 }
 
 

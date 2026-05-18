@@ -10,13 +10,14 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
 
 from regulaitor.citation.schemas import (
     Answer,
     AuditedAnswer,
     AuditResult,
     Citation,
+    CouncilReview,
     DocumentReport,
     Finding,
     SanitizerEvent,
@@ -41,6 +42,7 @@ class AskRequest(BaseModel):
     query: str = Field(min_length=1, max_length=2000)
     corpus: Literal["ai_act", "gdpr"]
     language: Literal["es", "en"]
+    council: StrictBool | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -82,6 +84,27 @@ class AnswerDTO(BaseModel):
     findings: list[FindingDTO]
 
 
+class JudgeVoteDTO(BaseModel):
+    model_config = ConfigDict(frozen=True, extra="forbid")
+    model_id: str
+    provider: str
+    vote: Literal["pass", "block", "requires_human_review"]
+    reason: str
+    ok: bool
+    error_category: str | None
+
+
+class CouncilReviewDTO(BaseModel):
+    model_config = ConfigDict(frozen=True, extra="forbid")
+    triggered: bool
+    trigger_reason: Literal["auditor_rhr", "high_severity", "api_override", "not_triggered"]
+    judges: list[JudgeVoteDTO]
+    council_verdict: Literal["pass", "block", "requires_human_review"]
+    agreement: Literal["unanimous", "majority", "split", "degraded"]
+    diverges_from_auditor: bool
+    reason: str
+
+
 class AskResponse(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
     case_id: str
@@ -90,6 +113,8 @@ class AskResponse(BaseModel):
     audit_results: list[AuditResultDTO]
     reason: str | None
     response_time_ms: int = Field(ge=0)
+    council_notice: str | None = None
+    council: CouncilReviewDTO | None = None
 
 
 SanitizerCategory = Literal[
@@ -252,6 +277,44 @@ def _segment_result_to_dto(seg_result: SegmentResult) -> SegmentResultDTO:
     )
 
 
+# SSDLC: JudgeVote.reason and CouncilReview.reason are intentionally exposed as
+# auditable Council evidence — this is the H13 advisory record (authenticated
+# Bearer API, 500-char truncated upstream in T7, consistent with AuditResult.reason
+# and AuditedAnswer.reason already exposed). These strings are LLM-judge rationale
+# over corpus text, NOT user PII. If a non-UI / third-party API consumer is ever
+# added, revisit whether redaction is appropriate.
+def _council_review_to_dto(cr: CouncilReview) -> CouncilReviewDTO:
+    return CouncilReviewDTO(
+        triggered=cr.triggered,
+        trigger_reason=cr.trigger_reason,
+        judges=[
+            JudgeVoteDTO(
+                model_id=j.model_id,
+                provider=j.provider,
+                vote=j.vote.value,
+                reason=j.reason,
+                ok=j.ok,
+                error_category=j.error_category,
+            )
+            for j in cr.judges
+        ],
+        council_verdict=cr.council_verdict.value,
+        agreement=cr.agreement,
+        diverges_from_auditor=cr.diverges_from_auditor,
+        reason=cr.reason,
+    )
+
+
+def _council_notice(cr: CouncilReview | None) -> str | None:
+    if cr is None or not cr.diverges_from_auditor:
+        return None
+    return (
+        "Hallazgo marcado por revisión colegiada (Council): los jueces "
+        "independientes discreparon de la validación automática. El veredicto "
+        "no cambia; se recomienda revisión humana."
+    )
+
+
 def to_ask_response(state: ChatState, response_time_ms: int) -> AskResponse:
     """Translate ChatState (with audited_answer set) to public AskResponse.
 
@@ -268,6 +331,12 @@ def to_ask_response(state: ChatState, response_time_ms: int) -> AskResponse:
         audit_results=[_to_audit_result_dto(r) for r in audited.audit_results],
         reason=audited.reason,
         response_time_ms=response_time_ms,
+        council_notice=_council_notice(state.council_review),
+        council=(
+            _council_review_to_dto(state.council_review)
+            if state.council_review is not None
+            else None
+        ),
     )
 
 

@@ -34,3 +34,16 @@ def test_chat_state_serializable() -> None:
     json_str = state.model_dump_json()
     parsed = ChatState.model_validate_json(json_str)
     assert parsed == state
+
+
+def test_chatstate_council_fields_default_none() -> None:
+    state = ChatState(case_id="c1", query="q", corpus="ai_act", language="es")
+    assert state.council_override is None
+    assert state.council_review is None
+
+
+def test_chatstate_accepts_council_override_bool() -> None:
+    state = ChatState(
+        case_id="c1", query="q", corpus="ai_act", language="es", council_override=True
+    )
+    assert state.council_override is True

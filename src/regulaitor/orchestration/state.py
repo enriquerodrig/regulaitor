@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from regulaitor.citation.schemas import Answer, AuditedAnswer, Context
+from regulaitor.citation.schemas import Answer, AuditedAnswer, Context, CouncilReview
 from regulaitor.corpus.schemas import Language, Norma
 
 
@@ -30,5 +30,8 @@ class ChatState(BaseModel):
 
     injection_blocked: bool = False
     injection_reason: str | None = None
+
+    council_override: bool | None = None
+    council_review: CouncilReview | None = None
 
     errors: list[str] = Field(default_factory=list)

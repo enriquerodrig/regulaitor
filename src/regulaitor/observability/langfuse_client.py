@@ -39,6 +39,11 @@ _SAFE_META_KEYS = frozenset(
         "pattern_name",
         "hit",
         "retry_triggered",
+        # H13 Council summary keys — categorical metadata, no user text
+        "council_triggered",
+        "council_verdict",
+        "council_diverges",
+        "n_judges_ok",
     }
 )
 # Keys whose *suffix* (or whole name) makes them safe (numeric / hash-derived).

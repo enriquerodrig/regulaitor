@@ -9,7 +9,7 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from regulaitor.corpus.schemas import Language, Norma
 
@@ -124,6 +124,39 @@ class AuditedAnswer(BaseModel):
     verdict: AuditVerdict
     audit_results: list[AuditResult]
     reason: str | None
+
+
+class JudgeVote(BaseModel):
+    """One Council judge's vote (H13). Frozen; immutable evidence."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    model_id: str = Field(min_length=1)
+    provider: str = Field(min_length=1)
+    vote: AuditVerdict
+    reason: str
+    ok: bool
+    error_category: str | None
+
+
+class CouncilReview(BaseModel):
+    """Aggregated Council outcome (H13). Advisory: never mutates the verdict."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    triggered: bool
+    trigger_reason: Literal["auditor_rhr", "high_severity", "api_override", "not_triggered"]
+    judges: list[JudgeVote]
+    council_verdict: AuditVerdict
+    agreement: Literal["unanimous", "majority", "split", "degraded"]
+    diverges_from_auditor: bool
+    reason: str
+
+    @model_validator(mode="after")
+    def _triggered_matches_reason(self) -> CouncilReview:
+        if self.triggered != (self.trigger_reason != "not_triggered"):
+            raise ValueError("triggered must equal (trigger_reason != 'not_triggered')")
+        return self
 
 
 # ---------------------------------------------------------------------------

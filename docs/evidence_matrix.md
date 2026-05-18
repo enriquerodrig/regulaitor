@@ -4,9 +4,10 @@ Mapping of RegulAItor artefacts to the five Máster IA Generativa modules
 (per `CLAUDE.md` §24). Each row points at concrete files / commits / reports
 so the TFM defense can trace any claim to its underlying evidence.
 
-State: MVP closure (`v0.1.0-mvp` pending H10 tag). H0-H9 complete; H10 in
-progress. Cells marked **deferred** are out of MVP scope; planned for the
-labelled advanced milestone.
+State: Advanced track in progress. MVP closed `v0.1.0-mvp` (H10). H11 closed
+`v0.1.1-h11`; H12 closed `v0.1.2-h12`; H13 closed `v0.1.3-h13` (pending
+post-merge tag). Cells marked **deferred** are out of current scope; planned for
+the labelled milestone.
 
 ---
 
@@ -16,11 +17,12 @@ labelled advanced milestone.
 
 | Requirement | Artefact | Status |
 |---|---|---|
-| Router multi-LLM | [`src/regulaitor/models/router.py`](../src/regulaitor/models/router.py); [ADR 0013](adr/0013-router-multi-llm.md) | ✅ **H12** — 3 providers (Anthropic/OpenAI/Groq), 5 modes, transport-only one-hop fallback; `REGULAITOR_ROUTER_MODE` eval override; backend H1-H5 untouched (regression-zero) |
+| Router multi-LLM | [`src/regulaitor/models/router.py`](../src/regulaitor/models/router.py); [ADR 0013](adr/0013-router-multi-llm.md); [ADR 0014](adr/0014-council-of-judges.md) (D7) | ✅ **H12** — 3 providers (Anthropic/OpenAI/Groq), 5 modes, transport-only one-hop fallback; **H13** — 6th mode `judge`→Haiku 4.5 added (existing 5 modes regression-zero); `REGULAITOR_ROUTER_MODE` eval override; backend H1-H5 untouched |
 | Model config (temperature, max_tokens, pricing) | [`src/regulaitor/models/config.py`](../src/regulaitor/models/config.py) | ✅ active |
 | Prompts versionados (Analyst) | [`src/regulaitor/agents/prompts/analyst/system.v1.0.md`](../src/regulaitor/agents/prompts/analyst/system.v1.0.md) | ✅ v1.0 |
 | Prompts versionados (Auditor) | [`src/regulaitor/agents/prompts/auditor/`](../src/regulaitor/agents/prompts/auditor/) | ✅ Lenient-strict in code; no system prompt (deterministic) |
 | Prompts versionados (Judge eval) | [`src/regulaitor/agents/prompts/judge/faithfulness.v1.0.md`](../src/regulaitor/agents/prompts/judge/faithfulness.v1.0.md) | ✅ v1.0 (H8) |
+| Prompts versionados (Council judge) | [`src/regulaitor/agents/prompts/council/judge.v1.0.md`](../src/regulaitor/agents/prompts/council/judge.v1.0.md) | ✅ v1.0 (H13) |
 | Prompts versionados (Document Analyst) | [`src/regulaitor/agents/prompts/document_analyst/`](../src/regulaitor/agents/prompts/document_analyst/) | ✅ active (H5) |
 | Prompt versioning skill | [`.claude/skills/prompt-versioning/SKILL.md`](../.claude/skills/prompt-versioning/SKILL.md) | ✅ active from H4 |
 | LLM cost tracking | per-case `cost_eur` in `evals/reports/latest.md` + redteam reports | ✅ active |
@@ -40,14 +42,14 @@ labelled advanced milestone.
 | RetrieverAgent | [`src/regulaitor/agents/retriever.py`](../src/regulaitor/agents/retriever.py) | ✅ H3 |
 | AnalystAgent | [`src/regulaitor/agents/analyst.py`](../src/regulaitor/agents/analyst.py) | ✅ H4 |
 | AuditorAgent (Lenient-strict) | [`src/regulaitor/agents/auditor.py`](../src/regulaitor/agents/auditor.py) | ✅ H4 |
-| Council of Judges | [`src/regulaitor/agents/council.py`](../src/regulaitor/agents/council.py) | **deferred H13** |
+| Council of Judges | [`src/regulaitor/agents/council.py`](../src/regulaitor/agents/council.py); [`src/regulaitor/orchestration/graph.py`](../src/regulaitor/orchestration/graph.py) (`council` node + `_route_after_audit` edge); [`src/regulaitor/agents/prompts/council/judge.v1.0.md`](../src/regulaitor/agents/prompts/council/judge.v1.0.md); [ADR 0014](adr/0014-council-of-judges.md) | ✅ **H13** — advisory 3-judge panel (Haiku 4.5/GPT-4o/Llama-3.3-70b via router); `AdvisoryMajorityPolicy` (default, never mutates verdict); `MonotonicEscalatePolicy` implemented+tested, wired OFF (`_COUNCIL_BINDING=False`) = H15 seam; `council_notice` surfaced in API + Streamlit on divergence. ⚠️ advisory by construction (Auditor verdict deterministic/unchanged); 30% skip rate in paid run (Analyst `findings`-omission flakiness → H15); 57% divergence on 21/30 triggered cases; Groq I-2 recurred (~6 panels); cost ~$1.2–1.5 not per-run-measured. Documented honestly per §22.22 |
 | Chat orchestration | [`src/regulaitor/orchestration/graph.py`](../src/regulaitor/orchestration/graph.py) (LangGraph) | ✅ H4 |
 | Document orchestration | [`src/regulaitor/orchestration/document_graph.py`](../src/regulaitor/orchestration/document_graph.py) | ✅ H5 |
 | Citation validator (3 checks) | [`src/regulaitor/citation/validator.py`](../src/regulaitor/citation/validator.py) | ✅ H3 |
 | Anti-injection regex | [`src/regulaitor/security/injection.py`](../src/regulaitor/security/injection.py) (25+ patterns, expanded H9) | ✅ H4 + H5 + H9 |
 | MCP server | [`src/regulaitor/mcp_server/`](../src/regulaitor/mcp_server/) | ✅ H3 (5 tools) |
 | Architecture diagrams (L1+L2+L3) | [`docs/architecture.md`](architecture.md) | ✅ H10 |
-| ADR per agent decision | [`docs/adr/0006-chat-e2e-architecture.md`](adr/0006-chat-e2e-architecture.md), [`0007-document-pipeline-architecture.md`](adr/0007-document-pipeline-architecture.md) | ✅ committed |
+| ADR per agent decision | [`docs/adr/0006-chat-e2e-architecture.md`](adr/0006-chat-e2e-architecture.md), [`0007-document-pipeline-architecture.md`](adr/0007-document-pipeline-architecture.md), [`0014-council-of-judges.md`](adr/0014-council-of-judges.md) | ✅ committed |
 
 **Decisions log evidence**: §H3, §H4, §H5 in [`docs/technical_decisions_log.md`](technical_decisions_log.md).
 
@@ -74,7 +76,7 @@ labelled advanced milestone.
 | Metric thresholds | `CLAUDE.md` §17 (objectives) + §16.2 (gates) | ✅ documented |
 | Ragas integration | `evals/metrics.py` Ragas adapter (faithfulness + answer_relevancy + context_precision + context_recall) | ✅ H8 |
 | Tests suite | `tests/` (538+ unit + integration + contract) | ✅ active |
-| Coverage on gated subsystems | 92.97% on citation/agents/rag (H12 measured; ≥92.6% across H10–H12, per `pyproject.toml` cov config) | ✅ gate §16.2 #2 |
+| Coverage on gated subsystems | 93.40% (H13 measured, full `python -m pytest -q` exit 0; ≥92.6% across H10–H13, per `pyproject.toml` cov config) | ✅ gate §16.2 #2 |
 | CI/CD pipeline | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (5 jobs: Lint, Test, Document E2E, Security, Red Team Smoke) | ✅ H7 + H8 + H9 cleanup |
 | Reproducibility commands | `Makefile` (`setup`, `lint`, `test`, `ingest`, `rag-build`, `eval`, `eval-from-cache`, `redteam`, `redteam-smoke`, `serve`, `serve-api`) | ✅ H0.1 + extended |
 | Observability (structured logging) | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py) | ✅ H4 (case_id, cost, latency, token_hash) |
@@ -128,7 +130,7 @@ labelled advanced milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (1798+ lines as of MVP closure; every approved technical decision from H0 to H9 plus H10 in progress).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (2400+ lines as of H13 closure; every approved technical decision from H0 to H13).
 
 ---
 
@@ -154,7 +156,10 @@ Each closed milestone has its own §HX section in
 | H7 | `v0.0.8-h7` | [spec](superpowers/specs/2026-05-08-h7-fastapi-design.md) | [plan](superpowers/plans/2026-05-08-h7-fastapi-mvp.md) | [0009](adr/0009-fastapi-architecture.md) | `5b1f664` |
 | H8 | `v0.0.9-h8` | [spec](superpowers/specs/2026-05-10-h8-evaluation-harness-design.md) | [plan](superpowers/plans/2026-05-10-h8-evaluation-harness.md) | [0010](adr/0010-evaluation-harness.md) | `fe7b2e5` |
 | H9 | `v0.0.10-h9` | [spec](superpowers/specs/2026-05-12-h9-redteam-design.md) | [plan](superpowers/plans/2026-05-12-h9-redteam.md) | [0011](adr/0011-redteam-runner.md) | `c1e7de6` |
-| **H10** | `v0.1.0-mvp` | — (consolidation only) | — | (this matrix is the consolidation) | `<sha>` (pending) |
+| **H10** | `v0.1.0-mvp` | — (consolidation only) | — | (this matrix is the consolidation) | `b8dbf10` |
+| H11 | `v0.1.1-h11` | — | [plan](superpowers/plans/2026-05-16-h11-observability.md) | [0012](adr/0012-observability-architecture.md) | `8378015` |
+| H12 | `v0.1.2-h12` | [spec](superpowers/specs/2026-05-16-h12-router-cost-design.md) | [plan](superpowers/plans/2026-05-16-h12-router-multi-llm.md) | [0013](adr/0013-router-multi-llm.md) | `d59a33f` |
+| **H13** | `v0.1.3-h13` | [spec](superpowers/specs/2026-05-17-h13-council-of-judges-design.md) | — | [0014](adr/0014-council-of-judges.md) | `<squash-sha>` |
 
 ---
 
@@ -170,7 +175,7 @@ Each closed milestone has its own §HX section in
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0011 (11 ADRs) | ✅ |
+| 9 | ADRs current | 0001-0014 (14 ADRs) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---
@@ -190,11 +195,15 @@ section.
 | Latency optimization (per-query SLA ≤12 s) | H11 runbook §3 (real ~15–60 s > target) | H15 | Streaming, max_tokens, parallel retriever, fast-model router. Not done in H12 (router scope only). Measured cleanly via LangFuse per-span (H11). |
 | Analyst schema-adherence (`findings` sometimes missing) | H11 (live-trace demo) | H15 | Analyst occasionally emits prose without structured `findings` even after retry; add to H15 Auditor/Analyst calibration levers. |
 | Multi-LLM router (GPT-4o + Llama) | from H4 router decision | ✅ **done H12** | Router 3-providers/5-modes ([ADR 0013](adr/0013-router-multi-llm.md)); A/B run (~$5) → `cost_analysis.md` real 3-way quality. ⚠️ cost list-price not per-run-measured (pipeline gap → H15) & Llama arm contaminated (Groq free-tier; I-2 empirical). Honest per §22.22/§H12. |
-| Per-call measured-cost capture | H12 T10 (harness Sonnet-heuristic; nothing aggregates `CompletionResult.cost_eur`) | H15 | Add cost-aggregation hook or parse router structured logs; needed for a clean calibrated re-eval. |
+| Per-call measured-cost capture | H12 T10 (harness Sonnet-heuristic; nothing aggregates `CompletionResult.cost_eur`); recurred H13 T14 (~$1.2–1.5 approximated) | H15 | Add cost-aggregation hook or parse router structured logs; needed for a clean calibrated re-eval. |
 | Fallback cost untracked (I-2) | H12 T7 review (empirical T10) | H15 | On a fallback hop only the successful call's cost reaches the trace; failed-primary cost lost. |
 | `_translate` test-debt (M4/M5) | H12 T4 review | low-risk | Cover `text`-block / multi-block-loop / `tool_calls=[]` branches (unreachable by current Analyst producer). |
 | Clean A/B re-run (measured cost) | H12 T10 (contaminated) | post-H15 | Needs paid Groq tier + independent per-arm OpenAI budget + the measured-cost hook. |
-| Council of Judges | H4 + H13 | H13 | High-severity case voting. |
+| Council of Judges | H4 + H13 | ✅ **done H13** | Advisory 3-judge panel live on chat path ([ADR 0014](adr/0014-council-of-judges.md)). 30% skip (Analyst flakiness); 57% divergence on 21/30; chat-11 escalation. Binding promotion → H15. |
+| Council binding promotion (`MonotonicEscalatePolicy`) | H13 (`_COUNCIL_BINDING=False` seam) | H15 | Requires Auditor calibration + Analyst schema-adherence validated first. |
+| Document-mode Council | H13 (out of scope per D4) | future (post-H15) | Requires `document_graph.py` changes + multi-segment aggregation logic. |
+| Analyst schema-adherence (30% Council skip) | H11 Amendment 4, H13 T14 | H15 | ~30% of gold cases emitted `findings=[]`; Council skip root cause confirmed. Already a H15 palanca per §H10. |
+| Paid Groq tier (eliminate I-2 contamination) | H12 + H13 (both contaminated) | post-H15 | Requires explicit user spend decision; needed for a clean 3-independent-provider Council run. |
 | NIS2 + DORA corpus | H1 deferred | H14 | Parser per norma; reuse pipeline. |
 | Public deploy (HF Spaces) | from charter | H16 | Docker + deploy workflow. |
 | Model card + data card | H8 deferred | H17 | Activate skills + populate. |
