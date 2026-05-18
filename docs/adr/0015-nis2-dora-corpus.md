@@ -1,7 +1,7 @@
 # ADR 0015 — NIS2 + DORA Corpus Expansion (H14)
 
 - **Status:** Accepted
-- **Date:** 2026-05-18 (decision); 2026-05-18 (implemented; squash `<squash-sha>`, tag `v0.1.4-h14`)
+- **Date:** 2026-05-18 (decision); 2026-05-18 (implemented; squash `d2f2a75`, tag `v0.1.4-h14`)
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0003 (corpus pipeline — live-fetch→local-PDF pivot lineage this directly continues),
   0004 (RAG architecture — corpus-agnostic chunking/embedding; reused unchanged), 0014 (Council of

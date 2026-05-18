@@ -2487,7 +2487,7 @@ Próximo: **H14** — Ampliación corpus NIS2 + DORA.
 
 ---
 
-## H14 — NIS2 + DORA corpus expansion (cerrado 2026-05-18, squash `<squash-sha>`, tag `v0.1.4-h14`)
+## H14 — NIS2 + DORA corpus expansion (cerrado 2026-05-18, squash `d2f2a75`, tag `v0.1.4-h14`)
 
 Expansión del corpus normativo a las dos directivas/reglamentos avanzados: NIS2 (Directiva (UE)
 2022/2555) y DORA (Reglamento (UE) 2022/2554). Branch `feat/h14-nis2-dora-corpus`. ADR 0015.
@@ -2687,7 +2687,7 @@ per §22.22 (honestidad total sobre el proceso, no solo sobre el código).
 
 ### Cierre
 
-H14 cerrado 2026-05-18. Squash `<squash-sha>`, tag `v0.1.4-h14` (post-merge).
+H14 cerrado 2026-05-18. Squash `d2f2a75`, tag `v0.1.4-h14` (post-merge).
 D1-D4 cumplidas. Ambos corpora aterrizados (D2 partial-path no activado). Verificación
 $0 determinista completa (D3). Backend H1-H5 intacto, regression-zero. Gold set 44 casos.
 Próximo: **H15** — Calibración Auditor + A/B testing.
