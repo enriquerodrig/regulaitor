@@ -2960,3 +2960,54 @@ mantenido.
 ### Cierre
 
 H15 cerrado 2026-05-19. Squash `76fc6e7`, tag `v0.1.5-h15` (post-merge).
+
+## H15.1 — Optimización system-level (planificado 2026-05-19; en diseño)
+
+> Esta sección registra la **decisión de roadmap aprobada** (§11.b); el contenido
+> técnico del hito se diseña vía brainstorming→spec→writing-plans y la sección se
+> ampliará al cierre. **No es un hito cerrado** (§22.22 — no presentar no-hecho
+> como hecho).
+
+### Decisión de roadmap (aprobada por el user 2026-05-19)
+
+- **Pregunta:** la fase de optimización pedida por el user (subir la calidad real
+  del sistema, no metric-gaming) — ¿hito nuevo entero con renumeración, o decimal?
+- **Decisión:** **hito decimal `H15.1`, sin renumerar** (precedente directo:
+  **H0.1**, que fue un hito de pleno derecho con gates/tag propios `v0.0.1-h0.1`
+  insertado como decimal). `H16` (Despliegue público HF Spaces) y `H17` (cierre
+  académico) **se mantienen intactos**.
+- **Razón:** las referencias "H16 = deploy" / "H17 = cierre" ya están en el
+  **registro permanente cerrado** (decisions §H10/§H15, ADRs, memoria,
+  evidence_matrix). Renumerar dejaría esos punteros históricos stale/erróneos —
+  mala honestidad documental (§22.22). El decimal da estatus de hito de pleno
+  derecho (gates/ADR nuevo/tag `v0.1.6-h15.1` previstos) **sin** tocar nada
+  cerrado, y señala con honestidad que H15.1 es **consecuente** de los hallazgos
+  de H15 + petición explícita del user, no parte del §16.3 original.
+- **Descartado:** (a) renumerar (deploy→H17, cierre→H18) — churn + punteros
+  históricos stale; (b) plegar en H16 — mezcla calidad-de-sistema con
+  infraestructura de deploy, viola la disciplina de aislamiento de hitos.
+
+### Alcance candidato (de ADR-0016 / §H15 follow-ups; a refinar en brainstorming)
+
+| Palanca | Categoría | Prioridad |
+|---|---|---|
+| Retriever lever-C re-tuning (context_precision ~0.60<0.80; medición-solo en H15 por D2/D5) | system-optimization | **alta** |
+| Segmentador documental (1-doc probe → 0 segmentos; doc-mode A/B incomputable) | system-optimization | **alta** |
+| No-Answer residual robustez (2/14 holdout empty-answer; spec D2 = robustez separada, no retry in-H15) | system-optimization | media |
+| Auditor RHR-aggregation semantics + seam `MonotonicEscalatePolicy`/`_COUNCIL_BINDING` (sigue OFF; H13 57% divergencia + 4 holdout misses) | system-optimization | media |
+| Confound granularidad métrica citación (gold H8 apartado vs H14 article) | **eval-instrument, NO system** | baja (requiere re-baseline A/B completo si se cambia) |
+
+### Boundary contract heredado
+
+Backend H1-H3 read-only **salvo** lo que el diseño justifique y registre en un
+**ADR nuevo** (los toques de retriever/segmenter son backend real — a diferencia
+de H15 que sólo tocó 2 seams; el alcance exacto se fija en brainstorming/spec).
+4 corpora estables (§22.18). Disciplina A/B **baseline-congelada** = la baseline
+del control es `v0.1.5-h15` (`76fc6e7`); ningún número se presenta sin medir
+(§22.22). Patrón de trabajo: brainstorming → spec → writing-plans →
+subagent-driven-development (Opus en subagentes complejos, preferencia del user).
+Presupuesto: H15.1 necesitará runs de pago (eval A/B del retriever/segmenter) —
+avisar + tally + OK explícito antes de cualquier gasto.
+
+*(Sección a ampliar al cierre de H15.1 con D1..Dn, números medidos, defectos
+capturados por el review en 2 fases, gate, y línea de cierre.)*
