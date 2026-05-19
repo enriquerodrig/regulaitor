@@ -42,6 +42,8 @@ def _cache_path(key: str) -> Path:
     return _CACHE_DIR / f"{key}.json"
 
 
+# Still live: used by cache_call for judge-layer cost
+# (H15 removed only the harness production-cost use).
 def estimate_cost_eur(*, model: str, tokens_in: int, tokens_out: int) -> float:
     """Approximate cost in EUR using static price table. Unknown model -> 0.0."""
     rates = _PRICE_EUR_PER_M_TOKENS.get(model)

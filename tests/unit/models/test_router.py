@@ -87,6 +87,32 @@ def test_complete_with_tool_use_returns_tool_input(
     assert result.latency_ms >= 0
 
 
+def test_complete_anthropic_records_cost_into_accumulator(
+    monkeypatch: pytest.MonkeyPatch, mock_anthropic_response: MagicMock
+) -> None:
+    """H15 cost-honesty contract: _call_anthropic call site wired to _record_cost_eur.
+
+    Guards the H15 cost-honesty contract — fails if the `_record_cost_eur`
+    call site in `_call_anthropic` is removed/moved (cf. Task-3 no-op-test
+    lesson). Mirrors test_complete_with_tool_use_returns_tool_input stub pattern.
+    """
+    router.reset_cost_accumulator()
+    client_mock = MagicMock()
+    client_mock.messages.create.return_value = mock_anthropic_response
+    monkeypatch.setattr(router, "_anthropic_client", lambda: client_mock)
+
+    router.complete(
+        messages=[{"role": "user", "content": "hi"}],
+        system="you are helpful",
+        tools=[{"name": "emit_answer", "input_schema": {"type": "object"}}],
+        tool_choice={"type": "tool", "name": "emit_answer"},
+    )
+
+    # mock_anthropic_response carries input_tokens=1000, output_tokens=500 so
+    # cost_eur > 0; if _record_cost_eur were removed the accumulator stays 0.0.
+    assert router.get_accumulated_cost_eur() > 0.0
+
+
 def test_complete_with_text_response(
     monkeypatch: pytest.MonkeyPatch, mock_anthropic_text_response: MagicMock
 ) -> None:
@@ -298,6 +324,54 @@ def test_call_openai_returns_completion_result(monkeypatch) -> None:
     assert out.usage.input_tokens == 10
     assert out.usage.output_tokens == 4
     assert out.cost_eur > 0.0
+
+
+def test_openai_compatible_records_cost_into_accumulator(monkeypatch) -> None:
+    """H15 cost-honesty contract: _call_openai_compatible call site wired to _record_cost_eur.
+
+    Guards that the shared `_call_openai_compatible` call site stays wired
+    (covers both openai+groq). Mirrors test_call_openai_returns_completion_result
+    stub pattern. Would fail if _record_cost_eur is removed from
+    _call_openai_compatible (the accumulator stays 0.0 post-complete).
+    """
+
+    class _Fn:
+        name = "emit_answer"
+        arguments = '{"findings": []}'
+
+    class _TC:
+        id = "t1"
+        function = _Fn()
+
+    class _Msg:
+        content = None
+        tool_calls = [_TC()]
+
+    class _Choice:
+        message = _Msg()
+
+    class _Usage:
+        prompt_tokens = 10
+        completion_tokens = 4
+
+    class _Resp:
+        choices = [_Choice()]
+        usage = _Usage()
+
+    router.reset_cost_accumulator()
+    monkeypatch.setattr(router, "_openai_client", lambda: _client_returning(_Resp()))
+    router._call_openai(
+        model_id=OPENAI_GPT_4O,
+        messages=[{"role": "user", "content": "q"}],
+        system="s",
+        tools=[{"name": "emit_answer", "description": "d", "input_schema": {"type": "object"}}],
+        tool_choice={"type": "tool", "name": "emit_answer"},
+        max_tokens=100,
+    )
+
+    # prompt_tokens=10, completion_tokens=4 with GPT-4o pricing => cost_eur > 0;
+    # if _record_cost_eur were removed from _call_openai_compatible the accumulator stays 0.0.
+    assert router.get_accumulated_cost_eur() > 0.0
 
 
 def test_openai_client_missing_key_fails_fast(monkeypatch) -> None:

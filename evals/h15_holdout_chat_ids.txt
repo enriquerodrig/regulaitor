@@ -1,0 +1,25 @@
+# H15 Auditor-calibration study — CHAT-ONLY HOLDOUT set (14 H14 chat cases).
+# Measured ONCE at the end on the frozen v1.2 prompt, NEVER iterated on
+# (overfitting guard, spec D3). Lines starting with # and blank lines are
+# ignored by the --cases-file loader.
+#
+# The 10 doc-* holdout cases (in evals/h15_holdout_ids.txt) are EXCLUDED here
+# and DEFERRED: the 1-doc paid probe surfaced an H5 document-segmenter confound
+# (0 segments emitted) that would corrupt any doc-mode A/B signal. Re-measuring
+# docs is deferred to the post-H15 retriever+segmenter optimization phase
+# (recorded as a named follow-up at H15 closure). Chat-only holdout still gives
+# a clean single-measurement generalization read for the prompt A/B.
+nis2-001
+nis2-002
+nis2-003
+nis2-004
+nis2-005
+nis2-006
+dora-001
+dora-002
+dora-003
+dora-004
+dora-005
+dora-006
+xcorpus-001
+xcorpus-002

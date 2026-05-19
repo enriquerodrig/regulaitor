@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import threading
 import time
 from typing import Any, Literal, NamedTuple, get_args
 
@@ -134,6 +135,43 @@ class CompletionResult(BaseModel):
     model_id: str
     latency_ms: int
     cost_eur: float
+
+
+# H15 / ADR 0016 — process-level real-cost accumulator.
+# Every router.complete() provider branch already computes the real per-call
+# cost_eur from real token usage; previously only the CompletionResult carried
+# it and the eval harness discarded it (the H12/H13 "cost estimated, not
+# measured" gap). This accumulator lets the harness reset-before / read-after
+# each case so spend becomes MEASURED. Localized observability side-effect:
+# complete()'s return value & contract are byte-identical (§22.18).
+_cost_lock = threading.Lock()
+_accumulated_cost_eur: float = 0.0
+
+
+def _record_cost_eur(cost: float) -> None:
+    """Accumulate real per-call cost. Called by complete() in every provider branch."""
+    global _accumulated_cost_eur
+    with _cost_lock:
+        _accumulated_cost_eur += cost
+
+
+def reset_cost_accumulator() -> None:
+    """Zero the accumulator. The eval harness calls this before each case.
+
+    NOTE: correct only when cases run sequentially in one process/thread. If the
+    harness is ever parallelized (ThreadPoolExecutor, multiprocessing,
+    pytest-xdist), this process-global pattern must be replaced with a per-case
+    context or per-thread accumulator (the lock guards the +=, not run isolation).
+    """
+    global _accumulated_cost_eur
+    with _cost_lock:
+        _accumulated_cost_eur = 0.0
+
+
+def get_accumulated_cost_eur() -> float:
+    """Real EUR spent via router.complete() since the last reset."""
+    with _cost_lock:
+        return _accumulated_cost_eur
 
 
 def _anthropic_client() -> Anthropic:
@@ -294,6 +332,7 @@ def _call_anthropic(
         input_tokens=usage.input_tokens,
         output_tokens=usage.output_tokens,
     )
+    _record_cost_eur(cost)
 
     logger.info(
         "anthropic completion: model=%s tokens=%d/%d cost_eur=%.4f latency_ms=%d",
@@ -397,6 +436,7 @@ def _call_openai_compatible(
         input_tokens=usage.input_tokens,
         output_tokens=usage.output_tokens,
     )
+    _record_cost_eur(cost)
     logger.info(
         "%s completion: model=%s tokens=%d/%d cost_eur=%.4f latency_ms=%d",
         provider_label,

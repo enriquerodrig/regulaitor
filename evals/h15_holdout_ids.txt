@@ -1,0 +1,27 @@
+# H15 Auditor-calibration study — HOLDOUT set (14 H14 chat + 10 doc cases).
+# Measured ONCE at the end, NEVER iterated on (overfitting guard, spec D3).
+# Lines starting with # and blank lines are ignored by the --cases-file loader.
+nis2-001
+nis2-002
+nis2-003
+nis2-004
+nis2-005
+nis2-006
+dora-001
+dora-002
+dora-003
+dora-004
+dora-005
+dora-006
+xcorpus-001
+xcorpus-002
+doc-001
+doc-002
+doc-003
+doc-004
+doc-005
+doc-006
+doc-007
+doc-008
+doc-009
+doc-010

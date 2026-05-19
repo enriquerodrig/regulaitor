@@ -1,0 +1,33 @@
+# H15 Auditor-calibration study — CALIBRATION set (the 30 original chat cases).
+# The Analyst prompt v1.x is iterated/A/B-measured ONLY on these (baseline-frozen).
+# Lines starting with # and blank lines are ignored by the --cases-file loader.
+chat-001
+chat-002
+chat-003
+chat-004
+chat-005
+chat-006
+chat-007
+chat-008
+chat-009
+chat-010
+chat-011
+chat-012
+chat-013
+chat-014
+chat-015
+chat-016
+chat-017
+chat-018
+chat-019
+chat-020
+chat-021
+chat-022
+chat-023
+chat-024
+chat-025
+chat-026
+chat-027
+chat-028
+chat-029
+chat-030

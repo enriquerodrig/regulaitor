@@ -6,8 +6,9 @@ so the TFM defense can trace any claim to its underlying evidence.
 
 State: Advanced track in progress. MVP closed `v0.1.0-mvp` (H10). H11 closed
 `v0.1.1-h11`; H12 closed `v0.1.2-h12`; H13 closed `v0.1.3-h13`; H14 closed
-`v0.1.4-h14` (pending post-merge tag `<squash-sha>`). Cells marked **deferred**
-are out of current scope; planned for the labelled milestone.
+`v0.1.4-h14`; H15 closed `v0.1.5-h15` (pending post-merge tag `<squash-sha>`).
+Cells marked **deferred** are out of current scope; planned for the labelled
+milestone.
 
 ---
 
@@ -71,18 +72,19 @@ are out of current scope; planned for the labelled milestone.
 | Corpus NIS2 + DORA | `corpus/raw/nis2_{es,en}.pdf` + `corpus/raw/dora_{es,en}.pdf` (Git-LFS); `corpus/processed/nis2_{es,en}.json` + `corpus/processed/dora_{es,en}.json`; `corpus/manifests/nis2.json` + `corpus/manifests/dora.json` | ✅ **H14** — NIS2 46 arts ES+EN (CELEX 32022L2555, VERSION 2022-12-27); DORA 64 arts ES+EN (CELEX 32022R2554, VERSION 2022-12-27). LanceDB: nis2 244 + dora 314 chunks (total 1569, ai_act 687 + gdpr 324 unchanged). WAF-bypass via Playwright in-browser fetch (legitimate public-doc access; curl blocked by CloudFront WAF). Base-act CELEX used (legally equivalent for un-amended 2022 instruments). [ADR 0015](adr/0015-nis2-dora-corpus.md) |
 | Gold set | [`evals/gold_set.jsonl`](../evals/gold_set.jsonl) (44 chat) + [`evals/document_cases/*.expected.json`](../evals/document_cases/) (10 docs) | ✅ H8 (30 chat + 10 docs); **H14** — expanded to **44 chat** (+14: nis2-001…006, dora-001…006, xcorpus-001…002; verdicts pass:30/RHR:8/block:6; 2 hallucination-attack block cases nis2-006/dora-006 added beyond plan minimum; 3 corpus-ground errors caught+fixed by Task-6 review: nis2-005/dora-003/xcorpus-001) |
 | Eval harness | [`evals/harness.py`](../evals/harness.py) + `evals/metrics.py` + `evals/judge.py` + `evals/report.py` | ✅ H8 |
-| Eval report | [`evals/reports/latest.md`](../evals/reports/latest.md) | ✅ H8 (re-run H10 in progress) |
+| Eval report | [`evals/reports/latest.md`](../evals/reports/latest.md) | ✅ H8; H10 re-eval frozen ($2.51, run-commit `0cc9534`) — the §H15 diagnostic baseline |
 | LLM-as-judge | Haiku 4.5 with versioned prompt (faithfulness.v1.0) | ✅ H8 |
 | Metric thresholds | `CLAUDE.md` §17 (objectives) + §16.2 (gates) | ✅ documented |
+| Auditor calibration study | [`docs/auditor_calibration.md`](auditor_calibration.md); [ADR 0016](adr/0016-auditor-calibration.md); `scripts/diagnose_baseline.py` + `scripts/h15_ab_compare.py`; `evals/reports/h15/{baseline-v1.0,candidate-v1.2,holdout-v1.2-chat}.md` | ✅ **H15** — honest §16.3 reframe (Auditor has no numeric thresholds → system-level study). Diagnostic 77% (corroborated 83%) Analyst-attributable. Single-variable Analyst-prompt A/B v1.0→v1.2: **verdict_match 0.17→0.27 (+0.10)**, **faithfulness 0.54→0.75 (+0.21)**, **citation_recall 0.46→0.71 (§16.2#5 floor 0.40 PASS)**; real but modest, system-level ceiling persists. Holdout (14 H14 cross-corpus, measured once) no-collapse (faithfulness 0.66/verdict_match 0.43; citation 0.00 = instrument-granularity confound, NOT a v1.2 failure). HARD safety guard: mechanical `safety_ok=False` BUT content-backstop **6/6 content-safe** + redteam-smoke **0.92** → v1.2 NOT reverted. Real cost **measured ≈€5.05** (router accumulator closes the H12/H13 estimate gap). Two backend seams (`REGULAITOR_ANALYST_PROMPT_VERSION` + router cost accumulator; ADR-0013 precedent). C1 plan-level Critical caught before any paid spend. Documented honestly per §22.22 |
 | Ragas integration | `evals/metrics.py` Ragas adapter (faithfulness + answer_relevancy + context_precision + context_recall) | ✅ H8 |
 | Tests suite | `tests/` (538+ unit + integration + contract) | ✅ active |
-| Coverage on gated subsystems | 93.40% (H13 measured; **H14 re-measured: 93.40%** `uv run pytest -m "not slow"`, 703 passed / 0 failed, exit 0; ≥92.6% across H10–H14) | ✅ gate §16.2 #2 |
+| Coverage on gated subsystems | 93.40% (H13/H14 measured); **H15 re-measured: 93.46%** `uv run pytest -m "not slow"`, 746 passed / 0 failed, 1 expected-skip, exit 0; ≥92.6% across H10–H15 | ✅ gate §16.2 #2 |
 | CI/CD pipeline | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (5 jobs: Lint, Test, Document E2E, Security, Red Team Smoke) | ✅ H7 + H8 + H9 cleanup |
 | Reproducibility commands | `Makefile` (`setup`, `lint`, `test`, `ingest`, `rag-build`, `eval`, `eval-from-cache`, `redteam`, `redteam-smoke`, `serve`, `serve-api`) | ✅ H0.1 + extended |
 | Observability (structured logging) | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py) | ✅ H4 (case_id, cost, latency, token_hash) |
 | LangFuse traces | [`src/regulaitor/observability/langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [ADR 0012](adr/0012-observability-architecture.md) | ✅ H11 (metadata-only, no-op without keys; redaction proven end-to-end vs live backend) |
 | Public deploy (Docker / HF Spaces) | `docker-compose.yml` + `.github/workflows/deploy.yml` | **deferred H16** |
-| ADRs | [`docs/adr/0003-corpus-pipeline.md`](adr/0003-corpus-pipeline.md), [`0004-rag-architecture.md`](adr/0004-rag-architecture.md), [`0010-evaluation-harness.md`](adr/0010-evaluation-harness.md), [`0015-nis2-dora-corpus.md`](adr/0015-nis2-dora-corpus.md) | ✅ committed |
+| ADRs | [`docs/adr/0003-corpus-pipeline.md`](adr/0003-corpus-pipeline.md), [`0004-rag-architecture.md`](adr/0004-rag-architecture.md), [`0010-evaluation-harness.md`](adr/0010-evaluation-harness.md), [`0015-nis2-dora-corpus.md`](adr/0015-nis2-dora-corpus.md), [`0016-auditor-calibration.md`](adr/0016-auditor-calibration.md) | ✅ committed |
 
 **Skills active in this module**: [`rag-ingest`](../.claude/skills/rag-ingest/SKILL.md), [`document-analysis`](../.claude/skills/document-analysis/SKILL.md), [`evals-runner`](../.claude/skills/evals-runner/SKILL.md), [`citation-validator`](../.claude/skills/citation-validator/SKILL.md).
 
@@ -130,7 +132,7 @@ are out of current scope; planned for the labelled milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (2693 lines as of H14 closure; every approved technical decision from H0 to H14).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (2962 lines as of H15 closure; every approved technical decision from H0 to H15).
 
 ---
 
@@ -160,7 +162,8 @@ Each closed milestone has its own §HX section in
 | H11 | `v0.1.1-h11` | — | [plan](superpowers/plans/2026-05-16-h11-observability.md) | [0012](adr/0012-observability-architecture.md) | `8378015` |
 | H12 | `v0.1.2-h12` | [spec](superpowers/specs/2026-05-16-h12-router-cost-design.md) | [plan](superpowers/plans/2026-05-16-h12-router-multi-llm.md) | [0013](adr/0013-router-multi-llm.md) | `d59a33f` |
 | **H13** | `v0.1.3-h13` | [spec](superpowers/specs/2026-05-17-h13-council-of-judges-design.md) | — | [0014](adr/0014-council-of-judges.md) | `db991dc` |
-| **H14** | `v0.1.4-h14` | [spec](superpowers/specs/2026-05-18-h14-nis2-dora-corpus-design.md) | [plan](superpowers/plans/2026-05-18-h14-nis2-dora-corpus.md) | [0015](adr/0015-nis2-dora-corpus.md) | `<squash-sha>` |
+| **H14** | `v0.1.4-h14` | [spec](superpowers/specs/2026-05-18-h14-nis2-dora-corpus-design.md) | [plan](superpowers/plans/2026-05-18-h14-nis2-dora-corpus.md) | [0015](adr/0015-nis2-dora-corpus.md) | `d2f2a75` |
+| **H15** | `v0.1.5-h15` | [spec](superpowers/specs/2026-05-18-h15-auditor-calibration-design.md) | [plan](superpowers/plans/2026-05-18-h15-auditor-calibration.md) | [0016](adr/0016-auditor-calibration.md) | `<squash-sha>` |
 
 ---
 
@@ -176,7 +179,7 @@ Each closed milestone has its own §HX section in
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0015 (15 ADRs) | ✅ |
+| 9 | ADRs current | 0001-0016 (16 ADRs) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---
@@ -189,8 +192,9 @@ section.
 | Item | Originally surfaced | Target hito | Notes |
 |---|---|---|---|
 | Full red team run on 50 attacks | H9 (silent API hang) | ✅ **done H11** | Daemon-thread per-attack timeout added; full run 1.99 € (commit `602c2da`); block_rate 0.28 raw / 0.54 completed — 21/50 API timeouts, gate stays on smoke 0.92 (§H9 amend. 6). |
-| Citation precision to 0.85 | H8 (measured 0.16) → H10 (revised threshold) | H15 | Auditor calibration + Council voting reduces over-citation. |
+| Citation precision to 0.85 | H8 (measured 0.16) → H10 (revised threshold) | H15 | Auditor calibration + Council voting reduces over-citation. → studied H15: 0.18→0.30, system-level ceiling, NOT attained (see H15-outcome row below). |
 | Severity match rate to 0.80 | H8 (measured 0.19) | H15 | Auditor severity assignment drift; A/B threshold tuning. |
+| Severity match rate to 0.80 (H15 outcome) | H8 → H15 | ⚠️ **studied H15** (system-level ceiling) | A/B v1.0→v1.2 severity_match 0.31→0.42 (+0.11); real but modest, far from 0.80; same system-level-ceiling read as citation/faithfulness. [ADR 0016](adr/0016-auditor-calibration.md). |
 | LangFuse observability | from H4 design | ✅ **done H11** | Orchestration-layer traces (chat + doc), metadata-only, no-op without keys; verified live (trace in LangFuse Cloud + redaction proven end-to-end). [ADR 0012](adr/0012-observability-architecture.md). |
 | langfuse-mcp (assistant trace querying) | H11 Q6 | **deferred (user, 2026-05-16)** | Lowest-value H11 item; no product/TFM impact; can add any session (needs new `.mcp.json` + community MCP). |
 | Latency optimization (per-query SLA ≤12 s) | H11 runbook §3 (real ~15–60 s > target) | H15 | Streaming, max_tokens, parallel retriever, fast-model router. Not done in H12 (router scope only). Measured cleanly via LangFuse per-span (H11). |
@@ -211,6 +215,15 @@ section.
 | `rag-ingest` SKILL.md Formex-centric vs PDF reality (ADR 0003) | H14 observation | future | Update SKILL.md to reflect actual PDF acquisition path (Playwright WAF bypass + local PDF); stale steps reference Formex/httpx. |
 | LLM-judge eval + §17 thresholds on expanded gold set (44 chat) | H14 D3 explicit deferral | H15 | Run full LLM-judge eval after H15 calibration cycle; system is documented-uncalibrated, running before calibration wastes budget for un-actionable numbers (H10/H13 precedent). |
 | EUR-Lex WAF: re-acquisition requires browser session | H14 observation | future | Any future corpus re-acquisition via EUR-Lex requires Playwright or equivalent (curl/httpx structurally blocked by CloudFront WAF). Documented as honest acquisition method. |
+| Citation precision to 0.85 (H15 outcome) | H8 → H10 → H15 | ✅ **studied H15** (system-level ceiling) | A/B v1.0→v1.2: citation_precision 0.18→0.30 (+0.12), citation_recall 0.46→0.71 (§16.2#5 floor 0.40 PASS). Real but modest; the ≥0.85 advanced target is documented as a system-level ceiling — the dominant remaining lever is retriever C re-tuning + segmenter (post-H15). [ADR 0016](adr/0016-auditor-calibration.md). |
+| Per-call measured-cost capture (H15 outcome) | H12 T10 → H13 T14 | ✅ **done H15** | Router process-level cost accumulator (`_record_cost_eur`/`reset_cost_accumulator`/`get_accumulated_cost_eur`, commit `1726ad0`). H15 total measured ≈€5.05 (itemized in §H15). Closes the H12/H13 estimate-not-measured gap. |
+| LLM-judge eval on expanded gold set (H15 outcome) | H14 D3 → H15 | ✅ **done H15** | A/B + holdout run on the expanded chat set ([`evals/reports/h15/`](../evals/reports/h15/)); §17 absolute thresholds remain documented system-level ceiling (honest reframe; same H10/H13/H14 logic). [ADR 0016](adr/0016-auditor-calibration.md). |
+| Retriever lever C re-tuning | H15 D2/D5 (diagnostic-measured-only) | post-H15 (optimization phase) | The dominant remaining system-level lever; diagnostic-measured in H15 but re-tuning deferred (single-variable discipline). Named as the next quality lever. |
+| Document segmenter (doc-mode A/B) | H15 (1-doc probe → 0 segments) | post-H15 (optimization phase) | Doc-mode A/B uncomputable in H15; the 10 doc holdout cases deferred. Segmenter is the doc-mode quality lever. |
+| No-Answer-residual robustness | H15 D2 (not-prompt-caused residual) | post-H15 | Separate robustness effort, NOT an in-H15 retry (single-variable discipline). Intervention B reduced no-Answer but a residual persists. |
+| Auditor RHR-aggregation + Council binding (`_COUNCIL_BINDING` OFF) | H13 → H15 D2 (Council-binding OUT) | post-H15 | RHR-aggregation-semantics calibration + `MonotonicEscalatePolicy` promotion; requires Analyst schema-adherence + retriever validated first. Seam stays OFF. |
+| Citation-metric granularity confound (eval-instrument) | H15 holdout (0.00 confound) | post-H15 (eval-instrument, not system) | H8 apartado-level vs H14 article-level `expected_articles` + exact-match. **Eval-instrument quality, NOT system optimization**; lower priority than retriever/segmenter; changing the convention needs a full A/B re-baseline (so untouched in H15). |
+| §17 thresholds + LLM-judge same-provider-family limit | H8 (ADR-0010 caveat) → H15 | post-H15 / H17 | §17 advanced thresholds documented system-level ceiling; Haiku-judge vs Sonnet-prod same-family caveat carried (ADR-0010). |
 | Public deploy (HF Spaces) | from charter | H16 | Docker + deploy workflow. |
 | Model card + data card | H8 deferred | H17 | Activate skills + populate. |
 | AI Act self-assessment | charter §24 | H17 | Activate skill + populate. |

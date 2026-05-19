@@ -13,7 +13,7 @@ from datetime import UTC, datetime
 from functools import partial
 from pathlib import Path
 
-from evals.cache import cache_call, estimate_cost_eur
+from evals.cache import cache_call
 from evals.judge import score_criteria
 from evals.metrics import aggregate, compute_chat_metrics, compute_doc_metrics
 from evals.report import render_report
@@ -26,6 +26,7 @@ from evals.schemas import (
 )
 from regulaitor.citation.schemas import DocumentReport
 from regulaitor.corpus import loader as corpus_loader
+from regulaitor.models import router as _router
 from regulaitor.orchestration.document_graph import run_document
 from regulaitor.orchestration.graph import run as run_chat
 from regulaitor.orchestration.state import ChatState
@@ -33,6 +34,7 @@ from regulaitor.orchestration.state import ChatState
 _GOLD_PATH = Path("evals/gold_set.jsonl")
 _DOC_DIR = Path("evals/document_cases")
 _REPORT_PATH = Path("evals/reports/latest.md")
+# report metadata label only; actual model is set by the router mode
 _PRODUCTION_MODEL = "claude-sonnet-4-6"
 _JUDGE_MODEL = "claude-haiku-4-5-20251001"
 
@@ -49,9 +51,16 @@ def _git_sha_short() -> str:
 
 
 def load_gold_set(
-    *, gold_path: Path = _GOLD_PATH, doc_dir: Path = _DOC_DIR
+    *,
+    gold_path: Path = _GOLD_PATH,
+    doc_dir: Path = _DOC_DIR,
+    case_ids: set[str] | None = None,
 ) -> tuple[list[GoldCaseChat], list[GoldCaseDoc]]:
-    """Load chat cases from gold_set.jsonl + doc cases from document_cases/*.expected.json."""
+    """Load chat cases from gold_set.jsonl + doc cases from document_cases/*.expected.json.
+
+    When case_ids is given, only cases whose .id is in the set are returned
+    (applied to BOTH chat and doc cases). None = all (unchanged behavior).
+    """
     chat_cases: list[GoldCaseChat] = []
     if gold_path.exists():
         with gold_path.open(encoding="utf-8") as f:
@@ -59,32 +68,86 @@ def load_gold_set(
                 stripped = line.strip()
                 if not stripped:
                     continue
-                chat_cases.append(GoldCaseChat.model_validate_json(stripped))
+                gc = GoldCaseChat.model_validate_json(stripped)
+                if case_ids is None or gc.id in case_ids:
+                    chat_cases.append(gc)
 
     doc_cases: list[GoldCaseDoc] = []
     if doc_dir.exists():
         for manifest in sorted(doc_dir.glob("*.expected.json")):
-            doc_cases.append(GoldCaseDoc.model_validate_json(manifest.read_text(encoding="utf-8")))
+            dc = GoldCaseDoc.model_validate_json(manifest.read_text(encoding="utf-8"))
+            if case_ids is None or dc.id in case_ids:
+                doc_cases.append(dc)
 
     return chat_cases, doc_cases
+
+
+def _anthropic_client_factory() -> object:
+    """Return a live anthropic.Anthropic() client.
+
+    Defined as a module-level function so tests can monkeypatch it
+    (``monkeypatch.setattr(harness, "_anthropic_client_factory", ...)``)
+    without needing a real ANTHROPIC_API_KEY at import time.
+    The lazy ``import anthropic`` keeps the module importable without the SDK
+    installed or the key set (mirrors the existing lazy-import intent).
+    """
+    import anthropic
+
+    return anthropic.Anthropic()
 
 
 def _real_anthropic_invoke(
     *, model: str, system: str, user: str, temperature: float, max_tokens: int
 ) -> tuple[str, int, int]:
-    """Live Anthropic invocation. Imports lazily so unit tests don't require API key."""
-    import anthropic
+    """Live Anthropic invocation with bounded tenacity retry on transient errors.
 
-    client = anthropic.Anthropic()
-    response = client.messages.create(
-        model=model,
-        system=system,
-        messages=[{"role": "user", "content": user}],
-        temperature=temperature,
-        max_tokens=max_tokens,
+    Imports lazily so unit tests don't require API key at import time.
+    Retries on OverloadedError (529), RateLimitError, APITimeoutError,
+    APIConnectionError, and InternalServerError — mirroring the router.py
+    tenacity config (stop_after_attempt(3), wait_exponential(multiplier=1,
+    min=1, max=10)) and adding OverloadedError which was the specific 529
+    that crashed the H15 holdout run. Bounded: re-raises after exhausting
+    attempts so sustained Anthropic degradation surfaces cleanly.
+    H9/H11/H15 resilience lesson — mirrors router tenacity, adds OverloadedError.
+    """
+    # Lazy imports: keep ``import evals.harness`` API-key-safe and avoid
+    # pulling in tenacity / anthropic exceptions at module load time.
+    from anthropic._exceptions import (
+        APIConnectionError,
+        APITimeoutError,
+        InternalServerError,
+        OverloadedError,
+        RateLimitError,
     )
-    text = "".join(b.text for b in response.content if b.type == "text")
-    return text, response.usage.input_tokens, response.usage.output_tokens
+    from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
+
+    _transient = (
+        OverloadedError,
+        RateLimitError,
+        APITimeoutError,
+        APIConnectionError,
+        InternalServerError,
+    )
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=1, max=10),
+        retry=retry_if_exception_type(_transient),
+        reraise=True,
+    )
+    def _invoke() -> tuple[str, int, int]:
+        client = _anthropic_client_factory()
+        response = client.messages.create(
+            model=model,
+            system=system,
+            messages=[{"role": "user", "content": user}],
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        text = "".join(b.text for b in response.content if b.type == "text")
+        return text, response.usage.input_tokens, response.usage.output_tokens
+
+    return _invoke()
 
 
 def _error_doc_report(case_id: str, error_msg: str, corpus: list[str]) -> DocumentReport:
@@ -140,6 +203,7 @@ def run_chat_case(
     Spec §6.4 documents this.
     """
     case_id = f"eval-{case.id}"
+    _router.reset_cost_accumulator()
     t0 = time.monotonic()
     try:
         state = run_chat(
@@ -152,11 +216,12 @@ def run_chat_case(
         state = _error_chat_state(case_id, f"{type(exc).__name__}: {exc}")
     latency_ms = int((time.monotonic() - t0) * 1000)
 
-    # Cost estimation: extract tokens from state if available; fallback to heuristic.
-    # H4's _log_turn doesn't surface tokens; ~3000 input + 800 output per chat case
-    # on Sonnet is the tested approximation.
-    estimated_cost_eur = estimate_cost_eur(model=_PRODUCTION_MODEL, tokens_in=3000, tokens_out=800)
-    return state, latency_ms, estimated_cost_eur, False
+    # H15 / ADR 0016 — real measured spend from router.complete() (closes the
+    # H12/H13 estimate gap; the old fixed heuristic is removed).
+    # 0.0 here means no complete() call occurred (e.g. backend raised pre-LLM);
+    # that is a correct measured "no spend", not a missing measurement.
+    measured_cost_eur = _router.get_accumulated_cost_eur()
+    return state, latency_ms, measured_cost_eur, False
 
 
 def run_doc_case(
@@ -171,6 +236,7 @@ def run_doc_case(
     pdf_path = _DOC_DIR / case.pdf_path
     file_bytes = pdf_path.read_bytes()
     case_id = f"eval-{case.id}"
+    _router.reset_cost_accumulator()
     t0 = time.monotonic()
     try:
         report = run_document(
@@ -185,11 +251,12 @@ def run_doc_case(
             case_id, f"{type(exc).__name__}: {exc}", list(case.corpus_esperado)
         )
     latency_ms_total = int((time.monotonic() - t0) * 1000)
-    # Estimate ~30k input + 8k output per doc on Sonnet
-    estimated_cost_eur = estimate_cost_eur(
-        model=_PRODUCTION_MODEL, tokens_in=30_000, tokens_out=8_000
-    )
-    return report, latency_ms_total, estimated_cost_eur, False
+    # H15 / ADR 0016 — real measured spend from router.complete() (closes the
+    # H12/H13 estimate gap; the old fixed heuristic is removed).
+    # 0.0 here means no complete() call occurred (e.g. backend raised pre-LLM);
+    # that is a correct measured "no spend", not a missing measurement.
+    measured_cost_eur = _router.get_accumulated_cost_eur()
+    return report, latency_ms_total, measured_cost_eur, False
 
 
 def main(
@@ -197,6 +264,7 @@ def main(
     gold_set_path: Path = _GOLD_PATH,
     subset: int | None = None,
     cache_only: bool = False,
+    case_ids: set[str] | None = None,
 ) -> None:
     """Entry point. Loads gold, runs all cases, writes the report."""
     # Corpus loader must be populated before the retriever calls get_manifest_meta.
@@ -204,7 +272,7 @@ def main(
     # at startup; for the eval harness we do it here.
     corpus_loader.warmup()
 
-    chat_cases, doc_cases = load_gold_set(gold_path=gold_set_path)
+    chat_cases, doc_cases = load_gold_set(gold_path=gold_set_path, case_ids=case_ids)
 
     if subset is not None:
         chat_cases = chat_cases[: max(0, subset)]

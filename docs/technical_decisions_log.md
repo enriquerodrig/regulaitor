@@ -2691,3 +2691,272 @@ H14 cerrado 2026-05-18. Squash `d2f2a75`, tag `v0.1.4-h14` (post-merge).
 D1-D4 cumplidas. Ambos corpora aterrizados (D2 partial-path no activado). Verificación
 $0 determinista completa (D3). Backend H1-H5 intacto, regression-zero. Gold set 44 casos.
 Próximo: **H15** — Calibración Auditor + A/B testing.
+
+---
+
+## H15 — Auditor calibration study (cerrado 2026-05-19, squash `<squash-sha>`, tag `v0.1.5-h15`)
+
+Calibración del Auditor + A/B testing (CLAUDE.md §16.3). Branch
+`feat/h15-auditor-calibration`. ADR 0016. Spec/plan en `docs/superpowers/`.
+Ejecutado vía subagent-driven-development (implementer + spec-review +
+code-quality-review por tarea). El review en 2 fases capturó un Critical
+**plan-level** (C1) **antes de cualquier gasto de pago** + Criticals
+recurrentes de no-op-test. Reporte canónico del estudio:
+`docs/auditor_calibration.md`. Coste real **medido** (no estimado) ≈ **€5.05**
+del techo ~€7.5 (~$8).
+
+### Reframe honesto — qué es y qué NO es H15
+
+El Auditor (`citation/validator.py` + agregación Lenient/Strict en
+`agents/auditor.py`) es un **agregador determinista pure-Python SIN umbrales
+numéricos** — no hay score, cutoff ni punto de operación ROC que barrer.
+"Calibrar el umbral del Auditor" no es literalmente posible sin deshonestidad.
+H15 se reframeó honestamente (misma linaje de reframe honesto que el cierre
+H10 / el reframe Done-when H13, §22.22) a un **estudio de calibración
+system-level**: una sola afirmación científica — el `verdict_match ≈ 0.28`
+congelado pre-H15 es dominantemente atribuible al Analyst, corregible por un
+cambio mínimo de variable única en el prompt versionado del Analyst, medido
+rigurosamente contra un control congelado con guarda de overfitting. El Auditor
+**no se tocó en H15** — ni una línea de `citation/validator.py` ni de la
+política de agregación cambió. La invariante §6 ("no citation, no answer")
+intacta al 100%.
+
+### Decisiones de brainstorming (D1–D5, user-aprobadas 2026-05-19)
+
+- **D1 — Option-1 foco-Analyst.** Sin knob/umbral numérico añadido al Auditor
+  ni al validator; ambos byte-idénticos a producción pre-H15. El único
+  componente que el diagnóstico implica es el prompt del Analyst, y es el único
+  que se cambia.
+
+- **D2 — Intervenciones: A + B (Analyst PROMPT-ONLY); C medición-solo; D
+  FUERA.** Core: **A** (anti-over-citation: citar solo el/los artículo(s) que
+  soportan directamente el hallazgo) + **B** (anti-no-Answer: contrato de
+  salida endurecido — siempre un Answer bien formado o un rechazo estructurado
+  bien formado), **Analyst PROMPT-ONLY**. **C** (re-tuning del retriever) =
+  diagnostic-measure-only, re-tuning **diferido** (la palanca system-level
+  remanente dominante). **D** (Council binding) **FUERA** — el seam
+  `MonotonicEscalatePolicy` / `_COUNCIL_BINDING` sigue OFF (linaje ADR 0014).
+  El residual no-Answer que NO es prompt-caused → follow-up de robustez
+  separado, **NO** un retry in-H15 (disciplina de variable única).
+
+- **D3 — Guarda de overfitting: iterar sobre 30, holdout 14, doc diferido.**
+  Iterar candidatos de prompt sobre los 30 casos chat originales
+  (chat-001..030). **HOLDOUT** = los 14 casos chat cross-corpus de H14
+  (nis2-/dora-/xcorpus-), medidos **una sola vez**, nunca iterados. Los 10
+  casos doc holdout diferidos (confound del segmenter — ver follow-ups).
+
+- **D4 — Presupuesto: techo duro ~€7.5 (~$8), sin Groq de pago.** `--limit N`
+  cap duro + un probe `--limit 3` antes de cada run de pago; ≤3 iteraciones de
+  prompt candidato.
+
+- **D5 — Done-when honesto.** Estudio rigurosamente documentado +
+  **non-regression de seguridad DURA** + gate §16.2 verde + cobertura ≥90%;
+  **SIN número de métrica prometido** (mejora cuantificada O techo system-level
+  documentado — ambos defienden).
+
+### Critical plan-level capturado por review en 2 fases (CLAUDE.md §22.1)
+
+**C1 (T5 code-quality, Opus, capturado ANTES de cualquier gasto de pago;
+commit `7f12277`, user-aprobado).** La regla mecánica original `safety_ok`
+habría auto-rechazado el comportamiento MÁS SEGURO (rechazo estructurado): el
+Auditor determinista no tiene veredicto `refused` → un rechazo limpio fundado
+puntúa `pass`/RHR, nunca `block`; y `redteam-smoke` es **prompt-blind**
+(solo capas determinista sanitizer/injection — idéntico para v1.0 y v1.2 por
+construcción). Spec/plan enmendado a **seguridad content-based + backstop
+manual obligatorio del controller + rescope honesto**. Es el catch más valioso
+de H15 — el review en 2 fases cumpliendo exactamente la protección de
+honestidad académica para la que existe.
+
+### Los dos seams de backend deliberados (ADR-documentados)
+
+Los **únicos** toques de backend — enablers mínimos, **NO** scope creep
+(spec §3.3 anticipaba config/env; ambos espejan el precedente
+`REGULAITOR_ROUTER_MODE` de ADR-0013: env-gated, default de producción
+byte-idéntico a pre-H15):
+
+1. **`REGULAITOR_ANALYST_PROMPT_VERSION`** en `agents/analyst.py` (`__init__`
+   solo): selecciona la versión de prompt del Analyst para eval; default de
+   producción = v1.0 (byte-idéntico a pre-H15). Commit `5445d2a` (+ `4d65d82`).
+2. **Acumulador de coste real process-level** en `models/router.py`
+   (`_record_cost_eur` / `reset_cost_accumulator` /
+   `get_accumulated_cost_eur`): cierra el gap estimate-not-measured de H12/H13.
+   Commit `1726ad0` (+ `358fd4d`).
+
+### Divergencia plan-vs-realidad (honesta): v1.1 → v1.2
+
+El plan decía "v1.0→v1.1"; el candidato congelado es **v1.2** (v1.1 fue una
+iteración intermedia dentro del presupuesto D4 de ≤3 candidatos; v1.2 = v1.1 +
+Hard-rule-6 afilada + cláusula de Auditor-mechanics eliminada). El A/B core y
+el holdout usaron v1.0 vs v1.2.
+
+### Anatomía del diagnóstico (Task-1 $0 frozen `scripts/diagnose_baseline.py`)
+
+Invocación por defecto vs el baseline congelado committeado
+`evals/reports/latest.md` (run-commit `0cc9534`, baseline H10/pre-H15):
+
+| Categoría | Conteo (30) | % |
+|---|---|---|
+| over_citation | 12/30 | 40% |
+| no_answer | 7/30 | 23% |
+| wrong_article | 4/30 | 13% |
+| other | 7/30 | 23% |
+| **Atribuible al Analyst** | **23/30** | **77%** |
+
+Corroborando sobre el re-baseline limpio v1.0 (`evals/reports/h15/baseline-
+v1.0.md`) → 9/8/8/5 → **83%**. Conclusión robusta ≈77–83% Analyst-attributable
+(fundamenta la afirmación única).
+
+### Resultado A/B (30 calibración chat-001..030, variable única v1.0→v1.2)
+
+Run commit `74efa27`; de `evals/reports/h15/baseline-v1.0.md` &
+`candidate-v1.2.md`:
+
+| Métrica | v1.0 | v1.2 | Δ |
+|---|---|---|---|
+| faithfulness | 0.54 | 0.75 | **+0.21** |
+| answer_relevancy | 0.55 | 0.70 | +0.15 |
+| context_precision | 0.44 | 0.60 | +0.16 |
+| context_recall | 0.30 | 0.47 | +0.17 |
+| citation_precision | 0.18 | 0.30 | +0.12 |
+| citation_recall | 0.46 | 0.71 | **+0.25** (§16.2#5 floor 0.40 PASS) |
+| verdict_match | 0.17 | 0.27 | **+0.10** |
+| severity_match | 0.31 | 0.42 | +0.11 |
+| cost_per_chat (€) | 0.062 | 0.050 | −0.012 |
+| cost_total (€) | 1.85 | 1.51 | −0.34 |
+
+**Framing honesto: TODA métrica mejoró; la ganancia es REAL pero MODESTA** — el
+techo system-level persiste exactamente como predecía la tesis H12/H13/H14. Los
+6 casos ambiguous-RHR designados (chat-011/012/013/026/027/028) tienen
+veredictos **SIN CAMBIO** v1.0→v1.2 (el +0.10 NO viene de gaming el set RHR;
+viene de otros casos). chat-026 muestra una micro-regresión honesta de citación
+per-caso (precision 0.50→0.33, recall 1.00→0.50, dropped apartado 33.3 por la
+Intervención A) — divulgada.
+
+### Holdout (medición única, nunca iterada)
+
+`evals/reports/h15/holdout-v1.2-chat.md`, run commit `d104211`, 14 casos chat
+cross-corpus de H14, v1.2, €0.78:
+
+| Métrica | v1.2 holdout |
+|---|---|
+| faithfulness | 0.66 |
+| answer_relevancy | 0.66 |
+| context_precision | 0.62 |
+| verdict_match | 0.43 |
+| severity_match | 0.67 |
+
+v1.2 **NO colapsa** sobre datos cross-corpus held-out → la mejora **no es un
+artefacto de overfitting de 30 casos**. **NO se sobre-afirma** 0.43>0.27 como
+"mejor generalización"; el techo system-level persiste como predijo
+H12/H13/H14. `citation_precision/recall = 0.00` es un **CONFOUND de
+granularidad del instrumento de medición** (métrica apartado-level de H8 vs
+`expected_articles` article-level de H14 + exact-match), NO un fallo de v1.2
+(el LLM-judge confirma las citaciones del holdout substantivamente correctas);
+el instrumento de holdout deliberadamente NO se editó post-hoc (§22.22/D3 —
+editarlo invalidaría la garantía de medición única).
+
+### Guarda de seguridad DURA (D5) — content-based (la enmienda C1)
+
+`deterministic_layer_sanity_ok(0.92)=True` (redteam-smoke block_rate 0.92 ==
+§16.2#4 congelado, NO bajado). La regla mecánica gruesa marca
+chat-029/030/nis2-006/dora-006 como non-block+emitted (`safety_ok=False`)
+**PERO** la inspección manual content-based del controller (mandatada por C1)
+encontró **los 6 casos block designados (chat-014/015/029/030 in-calibration +
+nis2-006/dora-006 holdout) TODOS CONTENT-SAFE** — cada uno rechazó la premisa
+maliciosa, NO fabricó ningún artículo inexistente, NO concedió exención falsa,
+y donde citó citó artículos REALES del corpus para REFUTAR el ataque.
+**Autoritativo per el diseño C1 → 6/6 content-safe → v1.2 NO regresa seguridad
+→ el trigger de revert D5 NO se dispara → v1.2 STANDS.** Un rechazo
+estructurado que puntúa `pass` es el resultado SEGURO, no una regresión.
+
+### Coste real medido (acumulador del router — cierra el gap H12/H13)
+
+| Ítem | € |
+|---|---|
+| v1.0 probe | 0.23 |
+| v1.1 probe | 0.16 |
+| v1.2 probe | 0.16 |
+| v1.0 core | 1.85 |
+| v1.2 core | 1.51 |
+| doc probe | 0.00 (segmenter-confound) |
+| holdout probe | 0.16 |
+| holdout full | 0.78 |
+| holdout intento #1 fallido (Anthropic 529 transitorio en judge layer) | ~0.20 |
+| **Total** | **≈ 5.05** (del techo ~€7.5/~$8) |
+
+El intento fallido #1 (529 externo transitorio, no crédito/bug) motivó el
+hardening T6c de bounded-retry (commit `d1c4255`). Coste ahora **medido, no
+estimado**.
+
+### Defectos capturados por review en 2 fases (§22.1 — evidencia TFM)
+
+- **C1 (plan-level Critical, T5, antes de gasto de pago):** ver arriba — el
+  catch más valioso de H15.
+- **Criticals recurrentes de no-op-test** (T3 env seam, T4 cost accumulator,
+  T6a `_isolate_report` crash-safety, T7a parser column): cada uno un test que
+  pasaría aunque el comportamiento guardado regresara; cada uno arreglado con
+  un test que realmente guarda.
+- **T6c FIX-NOW (code-quality):** los tests de retry del harness parcheaban
+  `tenacity.nap.sleep` (inefectivo — bound como default arg en import; corrían
+  ~41s sobre backoff real) y no aserban el bound de 3 intentos → arreglado a
+  parchear `time.sleep` + assert `calls==3` (commit `d104211`).
+- **T9 §2 sourcing correction** (headline diagnóstico 12/7/4/7 reframeado como
+  el resultado reproducible de invocación por defecto, commit `f8e447b`) +
+  **T9 code-quality** (§3.2 rationale del probe v1.1→v1.2 clarificado, §9
+  forward-reference a ADR-0016, commit `beef665`).
+
+### Follow-ups diferidos H15 (registrados en evidence_matrix)
+
+1. **Re-tuning del retriever (palanca C)** — la palanca system-level remanente
+   dominante (diagnostic-measured-only en H15 per D2/D5).
+2. **Document segmenter** — el probe de 1 doc emitió 0 segmentos → A/B
+   doc-mode incomputable → los 10 casos doc holdout diferidos.
+3. **No-Answer-residual robustez follow-up** — el residual NO prompt-caused
+   (spec D2; esfuerzo de robustez separado, NO un retry in-H15).
+4. **Calibración de semántica de agregación RHR del Auditor + el seam
+   `MonotonicEscalatePolicy` / `_COUNCIL_BINDING` sigue OFF** (spec D2
+   Council-binding FUERA).
+5. **Confound de granularidad de la métrica de citación** — categorizado
+   explícitamente como **calidad de instrumento de eval, NO optimización de
+   sistema**; menor prioridad que retriever/segmenter; requiere un A/B
+   re-baseline completo si se cambia la convención de métrica/gold (por eso NO
+   se tocó en H15).
+6. **Umbrales §17 + la limitación de familia-de-proveedor del LLM-judge**
+   (Haiku judge vs Sonnet prod, caveat ADR-0010 cargado).
+
+### Skill activada
+
+**Ninguna nueva.** `evals-runner` activa desde H8 (el procedimiento canónico
+seguido). `cost-accounting` (CLAUDE.md §12.4) sigue en H17. Scope acotado
+mantenido.
+
+### Gate autoritativo (§22.22 — controller-verificado, precedente H14)
+
+| Ítem | Valor |
+|---|---|
+| Comando autoritativo | `uv run pytest -m "not slow"` |
+| Resultado | **746 passed, 0 failed, 0 errors, 1 skipped** (esperado: `test_document_e2e_clean.py` `ANTHROPIC_API_KEY not set` — no es fallo) |
+| Total coverage | **93.46% ≥ 90%** (gate §16.2 #2 ✅, "Required test coverage of 90% reached") |
+| Exit code | 0 |
+| Gate | **GREEN** |
+
+### Métricas de cierre
+
+| Ítem | Valor |
+|---|---|
+| Reframe honesto | ✅ Auditor sin umbrales; estudio system-level (reporte `docs/auditor_calibration.md`) |
+| D1–D5 | ✅ cumplidas (D2: C medición-solo / D Council-binding OUT) |
+| Seams de backend | 2 (env Analyst-prompt-version + acumulador coste router; precedente ADR-0013) |
+| Diagnóstico Analyst-attributable | 77% (default) / 83% (corroborado v1.0) |
+| A/B verdict_match | 0.17 → 0.27 (**+0.10**, real pero modesto) |
+| A/B faithfulness | 0.54 → 0.75 (+0.21) |
+| A/B citation_recall | 0.46 → 0.71 (§16.2#5 floor 0.40 **PASS**) |
+| Holdout (no-collapse) | faithfulness 0.66 / verdict_match 0.43 (techo system-level persiste) |
+| Seguridad DURA | mecánico `safety_ok=False` PERO content-backstop **6/6 safe** + redteam-smoke **0.92** → v1.2 NO revertido |
+| Coste real medido | **≈ €5.05** del techo ~€7.5 (medido, no estimado) |
+| Gate CI-equivalente | **746 passed / 0 failed, 93.46%** ✅ exit 0 |
+| ADR | 0016 ✅ |
+
+### Cierre
+
+H15 cerrado 2026-05-19. Squash `<squash-sha>`, tag `v0.1.5-h15` (post-merge).

@@ -7,6 +7,8 @@ Decisions log 2026-05-05 entries "Anthropic Claude Sonnet 4.6 primary" + "tool u
 
 from __future__ import annotations
 
+import logging
+import os
 import re
 from pathlib import Path
 from typing import Any, Literal
@@ -22,6 +24,8 @@ PROMPTS_DIR = PROMPTS_ROOT / "analyst"  # backcompat alias for tests + H4 caller
 
 _PROMPT_VERSION_PATTERN = re.compile(r"^v\d+\.\d+$")
 _PROMPT_ROLE_PATTERN = re.compile(r"^(analyst|document_analyst)$")
+
+logger = logging.getLogger("regulaitor.agents.analyst")
 
 
 def _strip_unsupported_schema_fields(schema: dict[str, Any]) -> dict[str, Any]:
@@ -54,11 +58,26 @@ class AnalystAgent:
     def __init__(
         self,
         prompt_role: Literal["analyst", "document_analyst"] = "analyst",
-        prompt_version: str = "v1.0",
+        prompt_version: str | None = None,
     ) -> None:
+        if prompt_version is None:
+            # Eval-only env seam (ADR 0016), analogous to ADR-0013
+            # REGULAITOR_ROUTER_MODE. Unset/invalid => v1.0 => byte-identical
+            # production behavior. Never crashes on a bad env value.
+            env_v = os.environ.get("REGULAITOR_ANALYST_PROMPT_VERSION")
+            if env_v is None:
+                prompt_version = "v1.0"
+            elif _PROMPT_VERSION_PATTERN.match(env_v):
+                prompt_version = env_v
+            else:
+                logger.warning(
+                    "REGULAITOR_ANALYST_PROMPT_VERSION=%r invalid (expected vN.M); using v1.0",
+                    env_v,
+                )
+                prompt_version = "v1.0"
         if not _PROMPT_ROLE_PATTERN.match(prompt_role):
             raise ValueError(
-                f"prompt_role must match {_PROMPT_ROLE_PATTERN.pattern}; " f"got {prompt_role!r}"
+                f"prompt_role must match {_PROMPT_ROLE_PATTERN.pattern}; got {prompt_role!r}"
             )
         if not _PROMPT_VERSION_PATTERN.match(prompt_version):
             raise ValueError(
@@ -68,7 +87,6 @@ class AnalystAgent:
         self.prompt_role = prompt_role
         self.prompt_version = prompt_version
         prompt_path = PROMPTS_ROOT / prompt_role / f"system.{prompt_version}.md"
-        # Defense in depth.
         resolved = prompt_path.resolve()
         if not resolved.is_relative_to(PROMPTS_ROOT.resolve()):
             raise ValueError(
