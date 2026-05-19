@@ -2694,7 +2694,7 @@ Próximo: **H15** — Calibración Auditor + A/B testing.
 
 ---
 
-## H15 — Auditor calibration study (cerrado 2026-05-19, squash `<squash-sha>`, tag `v0.1.5-h15`)
+## H15 — Auditor calibration study (cerrado 2026-05-19, squash `76fc6e7`, tag `v0.1.5-h15`)
 
 Calibración del Auditor + A/B testing (CLAUDE.md §16.3). Branch
 `feat/h15-auditor-calibration`. ADR 0016. Spec/plan en `docs/superpowers/`.
@@ -2959,4 +2959,4 @@ mantenido.
 
 ### Cierre
 
-H15 cerrado 2026-05-19. Squash `<squash-sha>`, tag `v0.1.5-h15` (post-merge).
+H15 cerrado 2026-05-19. Squash `76fc6e7`, tag `v0.1.5-h15` (post-merge).

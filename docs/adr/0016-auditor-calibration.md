@@ -1,6 +1,6 @@
 # ADR 0016 — Auditor Calibration Study (H15)
 
-- **Status:** Accepted — 2026-05-19 — squash `<squash-sha>`, tag `v0.1.5-h15`
+- **Status:** Accepted — 2026-05-19 — squash `76fc6e7`, tag `v0.1.5-h15`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0010 (evaluation harness — the H8 Ragas + LLM-judge
   harness reused unchanged for the A/B; its same-provider-family judge caveat
