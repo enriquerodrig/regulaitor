@@ -3345,7 +3345,7 @@ Scope acotado mantenido.
 
 H15.1 cerrado 2026-05-20. Squash `e283412`, tag `v0.1.6-h15.1` (post-merge).
 
-## H15.2 — Eval rede-design (cerrado 2026-05-20, squash `<squash-sha>`, tag `v0.1.7-h15.2`)
+## H15.2 — Eval rede-design (cerrado 2026-05-20, squash `0bf8081`, tag `v0.1.7-h15.2`)
 
 > Cierre con **outcome parcial honesto** (§22.22): wiring fix shipped (T1-T5)
 > + design-defect §22.22 de H15.1 cerrado; A/B paid crasheó mid-flight con
@@ -3402,7 +3402,7 @@ H15.2 necesitará runs de pago si la rede-design alcanza A/B con
 gold-set extendido — avisar + tally + OK explícito antes de cualquier
 gasto.
 
-### Cierre H15.2 (2026-05-20, post-merge squash `<squash-sha>`)
+### Cierre H15.2 (2026-05-20, post-merge squash `0bf8081`)
 
 **Outcome global (§22.22 honest, headline TFM-defensible):**
 

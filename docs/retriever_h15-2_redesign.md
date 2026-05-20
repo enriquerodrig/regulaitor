@@ -1,7 +1,7 @@
 # H15.2 — Retriever Eval Rede-design Study Report
 
 **Milestone:** H15.2 (decimal, sibling of H15.1 — precedent H0.1 + H15.1; H16/H17 unchanged in roadmap).
-**Branch:** `feat/h15-2-eval-redesign` → squash-merged to `main` → tag `v0.1.7-h15.2` on squash commit `<squash-sha>`.
+**Branch:** `feat/h15-2-eval-redesign` → squash-merged to `main` → tag `v0.1.7-h15.2` on squash commit `0bf8081`.
 **Status:** Closed 2026-05-20 with **partial outcome** honestly documented per §22.22.
 
 ---

@@ -1,6 +1,6 @@
 # ADR 0018 — Retriever `RetrievalConfig` wired into explicit-corpus `run()` path (H15.2)
 
-- **Status:** Accepted — 2026-05-20 — squash `<squash-sha>`, tag `v0.1.7-h15.2`
+- **Status:** Accepted — 2026-05-20 — squash `0bf8081`, tag `v0.1.7-h15.2`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0017 (H15.1 — the milestone whose §22.22 design-defect this
   ADR closes), 0016 (H15 — the calibration study + C1 content-based safety
