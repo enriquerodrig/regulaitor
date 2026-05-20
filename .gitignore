@@ -75,6 +75,9 @@ evals/reports/*
 !evals/reports/latest.council.md
 evals/cache/
 evals/reports/archive/
+# v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports
+# by run_id but not tracked).
+evals/checkpoints/
 redteam/reports/*
 !redteam/reports/latest.md
 notebooks/outputs/

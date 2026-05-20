@@ -147,9 +147,11 @@ def test_smoke_subset_with_canned_state(
         encoding="utf-8",
     )
 
-    # Patch report path to tmp
+    # Patch report path AND checkpoint root to tmp (v0.1.8 — keep production
+    # `evals/checkpoints/` clean from test runs).
     report_path = tmp_path / "latest.md"
     monkeypatch.setattr(harness, "_REPORT_PATH", report_path)
+    monkeypatch.setattr(harness, "_CHECKPOINT_ROOT", tmp_path / "checkpoints")
 
     # Run cache-only mode — should succeed because we populated the judge cache
     harness.main(gold_set_path=gold_path, subset=1, cache_only=True)

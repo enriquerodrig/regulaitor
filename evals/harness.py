@@ -13,12 +13,14 @@ from datetime import UTC, datetime
 from functools import partial
 from pathlib import Path
 
+from evals import checkpoint
 from evals.cache import cache_call
 from evals.judge import score_criteria
 from evals.metrics import aggregate, compute_chat_metrics, compute_doc_metrics
 from evals.report import render_report
 from evals.schemas import (
     ChatCaseResult,
+    CitationMetrics,
     DocCaseResult,
     EvalRunMeta,
     GoldCaseChat,
@@ -34,6 +36,8 @@ from regulaitor.orchestration.state import ChatState
 _GOLD_PATH = Path("evals/gold_set.jsonl")
 _DOC_DIR = Path("evals/document_cases")
 _REPORT_PATH = Path("evals/reports/latest.md")
+# v0.1.8 — per-case checkpoint root (the H15.2 T6 disaster fix).
+_CHECKPOINT_ROOT = Path("evals/checkpoints")
 # report metadata label only; actual model is set by the router mode
 _PRODUCTION_MODEL = "claude-sonnet-4-6"
 _JUDGE_MODEL = "claude-haiku-4-5-20251001"
@@ -259,6 +263,39 @@ def run_doc_case(
     return report, latency_ms_total, measured_cost_eur, False
 
 
+def _error_chat_result(
+    case: GoldCaseChat, exc: BaseException, latency_ms: int, cost_eur: float
+) -> ChatCaseResult:
+    """Placeholder for cases where compute_chat_metrics raised (e.g. judge 429).
+
+    The case is preserved in the report (verdict=requires_human_review, all
+    LLM-metric fields = 0.0) so the aggregate count is accurate; the reason is
+    recorded as a single CriteriaScore entry so the appendix shows what failed.
+    Prefer this over silently dropping the case (would skew counts) or letting
+    the exception kill the whole loop (the H15.2 T6 disaster).
+    """
+    return ChatCaseResult(
+        case_id=case.id,
+        expected_verdict=case.expected_verdict,
+        actual_verdict="requires_human_review",
+        verdict_match=(case.expected_verdict == "requires_human_review"),
+        expected_severity=case.severidad_esperada,
+        actual_severity=None,
+        severity_match=None if case.severidad_esperada is None else False,
+        citations=CitationMetrics(
+            emitted=[], expected=list(case.articulos_esperados), precision=0.0, recall=0.0
+        ),
+        faithfulness=0.0,
+        answer_relevancy=0.0,
+        context_precision=0.0,
+        context_recall=0.0,
+        criteria_scores=[],
+        latency_ms=latency_ms,
+        cost_eur=cost_eur,
+        cache_hit=False,
+    )
+
+
 def main(
     *,
     gold_set_path: Path = _GOLD_PATH,
@@ -266,7 +303,17 @@ def main(
     cache_only: bool = False,
     case_ids: set[str] | None = None,
 ) -> None:
-    """Entry point. Loads gold, runs all cases, writes the report."""
+    """Entry point. Loads gold, runs all cases, writes the report.
+
+    v0.1.8: each case is persisted to ``_CHECKPOINT_ROOT/<run_id>.jsonl`` AS IT
+    COMPLETES (not at end), and per-case exceptions in ``compute_chat_metrics``
+    are caught + recorded as error placeholders so the loop survives. Resolves
+    the H15.2 T6 disaster (see ``docs/retriever_h15-2_redesign.md`` §4.3).
+    """
+    # run_id is the checkpoint identity; same shape as the report header so the
+    # checkpoint file is easy to correlate with the final markdown report.
+    run_id = f"{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}-{_git_sha_short()}"
+
     # Corpus loader must be populated before the retriever calls get_manifest_meta.
     # H4 chat graph and H5 document graph both depend on this. mcp_server does it
     # at startup; for the eval harness we do it here.
@@ -285,16 +332,23 @@ def main(
     chat_results: list[ChatCaseResult] = []
     for case in chat_cases:
         state, latency_ms, cost_eur, cache_hit = run_chat_case(case, cache_only=cache_only)
-        result = compute_chat_metrics(
-            case,
-            state,
-            judge_call=judge_call,
-            judge_score_fn=judge_score_fn,
-            latency_ms=latency_ms,
-            cost_eur=cost_eur,
-            cache_hit=cache_hit,
-        )
+        try:
+            result: ChatCaseResult = compute_chat_metrics(
+                case,
+                state,
+                judge_call=judge_call,
+                judge_score_fn=judge_score_fn,
+                latency_ms=latency_ms,
+                cost_eur=cost_eur,
+                cache_hit=cache_hit,
+            )
+        except (
+            Exception
+        ) as exc:  # noqa: BLE001 — per-case judge/ragas errors must not kill the loop
+            result = _error_chat_result(case, exc, latency_ms, cost_eur)
         chat_results.append(result)
+        # Persist BEFORE the next case starts — survives even SystemExit / hard kill.
+        checkpoint.append_case(run_id, result, root=_CHECKPOINT_ROOT)
 
     doc_results: list[DocCaseResult] = []
     for doc_case in doc_cases:
@@ -309,6 +363,7 @@ def main(
             cache_hit=cache_hit,
         )
         doc_results.append(doc_result)
+        checkpoint.append_case(run_id, doc_result, root=_CHECKPOINT_ROOT)
 
     agg = aggregate(chat_results, doc_results)
     meta = EvalRunMeta(
