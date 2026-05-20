@@ -178,28 +178,46 @@ def run(
     query: str,
     corpus: Norma,
     language: Language,
-    top_k: int = 5,
+    top_k: int | None = None,
+    pre_rerank: int | None = None,
 ) -> list[RetrievedChunk]:
-    """Explicit-corpus retrieval. BYTE-IDENTICAL behaviour to v0.1.5-h15
-    (single-`norma` where-clause; no purity gate). `corpus` is one of the four
-    norms — never "auto" (the graph routes "auto" to run_auto).
+    """Explicit-corpus retrieval. Production-byte-identical to v0.1.6-h15.1 when
+    `REGULAITOR_RETRIEVAL_CONFIG` is unset (the env default). `corpus` is one of
+    the four norms — never "auto" (the graph routes "auto" to run_auto).
 
-    Internal pre-rerank candidate count is fixed at PRE_RERANK=50 (decisions
-    log 2026-05-05 entry "Top-k en retrieval"). top_k is post-rerank.
+    Resolution of `top_k` / `pre_rerank` (H15.2, ADR-0018 — closes the §22.22
+    design-defect disclosed POST-SPEND in H15.1-T10/T11):
+      - `top_k=None` -> `DEFAULT_CONFIG.top_k` (default 5) resolved AT CALL TIME.
+      - `pre_rerank=None` -> `DEFAULT_CONFIG.pre_rerank` (default 50) resolved
+         AT CALL TIME.
+      - Explicit non-None values win (per-call override, backward-compatible).
+
+    Call-time resolution (NOT function-definition-time capture) lets the eval
+    harness rebind `DEFAULT_CONFIG` via `REGULAITOR_RETRIEVAL_CONFIG` env at
+    process start and have the explicit-corpus path consume those values — this
+    is exactly what H15.1's 30-calibration A/B was structurally unable to
+    measure (the §22.22 defect this milestone closes).
 
     The `where` clause interpolates `corpus` and `language` directly. Both are
     closed `Literal` enums (`Norma`, `Language`) typed at the function
     boundary, so the values are not user-controlled strings -- no SQL
-    injection vector. Pyright/mypy enforce the constraint upstream.
+    injection vector. Pyright/mypy enforce the constraint upstream. The
+    construction is byte-identical character-for-character to v0.1.6-h15.1
+    under any env state — the no-leakage-critical §22.18/H14 invariant
+    (asserted by T6 `tests/unit/test_explicit_path_unchanged.py` for env-unset
+    and by `tests/unit/test_explicit_config_wired.py` for env-set).
     """
+    effective_top_k = top_k if top_k is not None else DEFAULT_CONFIG.top_k
+    effective_pre_rerank = pre_rerank if pre_rerank is not None else DEFAULT_CONFIG.pre_rerank
+
     [query_vec] = embeddings.embed([query])
 
     table = store.connect(INDEX_PATH)
     where_clause = f"norma = '{corpus}' AND language = '{language}'"
-    candidates = table.search(query_vec).where(where_clause).limit(PRE_RERANK).to_list()
+    candidates = table.search(query_vec).where(where_clause).limit(effective_pre_rerank).to_list()
 
     passages = [c["text"] for c in candidates]
-    reranked = reranker.rerank(query, passages, top_n=top_k)
+    reranked = reranker.rerank(query, passages, top_n=effective_top_k)
 
     if not reranked:
         return []

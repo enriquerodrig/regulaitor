@@ -124,11 +124,19 @@ def test_run_returns_chunks_with_meta(
     assert result[1].score == 0.7
 
 
-def test_run_top_k_default_is_5(_patch_dependencies: dict[str, MagicMock]) -> None:
+def test_run_top_k_default_resolves_to_5_via_default_config(
+    _patch_dependencies: dict[str, MagicMock],
+) -> None:
+    """H15.2: top_k default is None (pass-through); run() resolves None ->
+    DEFAULT_CONFIG.top_k at call time (= 5 under env-unset). The invariant
+    moved from the function signature into DEFAULT_CONFIG where the env-override
+    can reach it (ADR-0018). Production-byte-identical to v0.1.6-h15.1 when
+    REGULAITOR_RETRIEVAL_CONFIG is unset; see test_explicit_config_wired.py
+    for the keystone proof under both env states."""
     _patch_dependencies["connect"].return_value = _make_chain([])
     _patch_dependencies["rerank"].return_value = []
 
-    retrieval.run("q", "ai_act", "es")  # no top_k
+    retrieval.run("q", "ai_act", "es")  # no top_k → None → DEFAULT_CONFIG.top_k = 5
 
     rerank_kwargs = _patch_dependencies["rerank"].call_args.kwargs
     assert rerank_kwargs["top_n"] == 5

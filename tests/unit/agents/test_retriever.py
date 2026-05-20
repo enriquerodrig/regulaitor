@@ -65,9 +65,14 @@ def test_retriever_agent_delegates_with_correct_args(
     run_mock.assert_called_once_with("q", "gdpr", "en", top_k=10)
 
 
-def test_retriever_agent_default_top_k_is_5(
+def test_retriever_agent_default_top_k_passes_none_through(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """H15.2: the RetrieverAgent's default `top_k` is `None` (pass-through);
+    `rag_retrieval.run()` resolves None -> DEFAULT_CONFIG.top_k at call time
+    (= 5 when REGULAITOR_RETRIEVAL_CONFIG is unset, production-byte-identical).
+    The wrapper no longer hardcodes 5 — that invariant moved into DEFAULT_CONFIG
+    where the env-override can reach it (ADR-0018, closes §22.22 design-defect)."""
     run_mock = MagicMock(return_value=[])
 
     from regulaitor.agents import retriever
@@ -80,7 +85,7 @@ def test_retriever_agent_default_top_k_is_5(
     agent = RetrieverAgent()
     agent.retrieve("q", "ai_act", "es")
 
-    run_mock.assert_called_once_with("q", "ai_act", "es", top_k=5)
+    run_mock.assert_called_once_with("q", "ai_act", "es", top_k=None)
 
 
 def test_retrieved_at_is_close_to_now(monkeypatch: pytest.MonkeyPatch) -> None:

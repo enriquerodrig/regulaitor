@@ -31,13 +31,19 @@ def search_articles(
     query: str,
     corpus: CorpusSelector,
     language: Language,
-    top_k: int = 5,
+    top_k: int | None = None,
 ) -> list[RetrievedChunk]:
     """Retrieve top-k chunks for `query` filtered by corpus + language.
+
+    `top_k=None` (the default) lets `rag_retrieval.run()` resolve from
+    `DEFAULT_CONFIG.top_k` at call time (H15.2, ADR-0018) — production
+    byte-identical to v0.1.6-h15.1 under env-unset.
 
     When corpus="auto", triggers cross-corpus retrieval (multi-corpus rerank +
     post-rerank purity gate via ADR-0017), returning chunks that may span
     multiple norms; the resolved norma list is discarded at this boundary.
+    On the auto path `top_k` is IGNORED — `DEFAULT_CONFIG.top_k` governs via
+    `run_auto` regardless of the value passed.
     """
     if corpus == "auto":
         return rag_retrieval.run_auto(query, language, rag_retrieval.DEFAULT_CONFIG)[0]

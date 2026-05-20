@@ -27,7 +27,7 @@ class RetrieverAgent:
         query: str,
         corpus: CorpusSelector,
         language: Language,
-        top_k: int = 5,
+        top_k: int | None = None,
     ) -> Context:
         if corpus == "auto":
             chunks, resolved = rag_retrieval.run_auto(query, language, rag_retrieval.DEFAULT_CONFIG)

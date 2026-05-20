@@ -20,7 +20,7 @@ def test_search_articles_signature() -> None:
     sig = inspect.signature(tools.search_articles)
     params = sig.parameters
     assert list(params.keys()) == ["query", "corpus", "language", "top_k"]
-    assert params["top_k"].default == 5
+    assert params["top_k"].default is None
     assert tools.search_articles.__doc__ is not None
 
 

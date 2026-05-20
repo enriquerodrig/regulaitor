@@ -3345,12 +3345,12 @@ Scope acotado mantenido.
 
 H15.1 cerrado 2026-05-20. Squash `e283412`, tag `v0.1.6-h15.1` (post-merge).
 
-## H15.2 — Eval rede-design para measurability del tuning lever (planificado 2026-05-20; en diseño)
+## H15.2 — Eval rede-design (cerrado 2026-05-20, squash `<squash-sha>`, tag `v0.1.7-h15.2`)
 
-> Esta sección registra la **decisión de roadmap aprobada** (§11.b); el
-> contenido técnico del hito se diseña vía
-> brainstorming→spec→writing-plans y la sección se ampliará al cierre.
-> **No es un hito cerrado** (§22.22 — no presentar no-hecho como hecho).
+> Cierre con **outcome parcial honesto** (§22.22): wiring fix shipped (T1-T5)
+> + design-defect §22.22 de H15.1 cerrado; A/B paid crasheó mid-flight con
+> credit exhaustion → solo probe n=3 persisted. Spec §6 explicitamente cubrió
+> esto: *"the measurement-design fix IS the H15.2 contribution"*.
 
 ### Decisión de roadmap (aprobada por el user POST-SPEND 2026-05-20)
 
@@ -3402,5 +3402,89 @@ H15.2 necesitará runs de pago si la rede-design alcanza A/B con
 gold-set extendido — avisar + tally + OK explícito antes de cualquier
 gasto.
 
-*(Sección a ampliar al cierre de H15.2 con D1..Dn, números medidos, defectos
-capturados por el review en 2 fases, gate, y línea de cierre.)*
+### Cierre H15.2 (2026-05-20, post-merge squash `<squash-sha>`)
+
+**Outcome global (§22.22 honest, headline TFM-defensible):**
+
+H15.2 **shipped su primary contribution**: la wiring fix surgical que cierra el design-defect §22.22 disclosed POST-SPEND en H15.1-T10/T11. El A/B re-experiment intended para T6-T8 **no completó su scope planeado** — probe n=3 cleanly ejecutada (faith +0.23, verdict_match +0.40 vs control H15, NO defendible como "improvement" por n=3); full 30-case crasheó en case ~24/30 con `anthropic.BadRequestError: credit_balance_too_low`; harness sin per-case checkpoint → in-memory data perdida. Spec §6 cubrió explícitamente este escenario.
+
+**D1-D5 outcomes (vs decisión de roadmap original):**
+
+- **D1 (scope = surgical reinterpretation only)** ✅ **CUMPLIDA**. Implementación shipped (T1-T5). Microhitos diferidos (xcorpus-002, segmenter, no-Answer, Auditor-RHR, granularity, judge) registered como **microhitos post-H15.2 plan maximalista** (user-confirmed 2026-05-20).
+- **D2 (constraint reinterpretation = the keystone, ADR-0018)** ✅ **CUMPLIDA**. T6 invariant scope clarificado: WHERE-CLAUSE + empty short-circuit ONLY, NO config-insensitivity. H15.1 §4.3 "mutually exclusive as designed" framing re-interpretado como conservative implementation interpretation. ADR-0018 records the architectural correction.
+- **D3 (default-None implementation; production-byte-identical)** ✅ **CUMPLIDA**. `run(top_k=None, pre_rerank=None)` con per-call attribute resolution. WHERE-CLAUSE byte-identical verified vs `git show v0.1.6-h15.1` durante code review. T6 stays green unchanged. Keystone test asserts both env-unset + env-set states.
+- **D4 (A/B re-experiment ≤2 candidates, frozen control, USER-GATED)** ⚠️ **PARCIAL**: cand-1 probe (n=3) MEASURED €0.19 cleanly; cand-1 full crasheó (€2.24 consumido antes de credit-out, 0 disk artifact). cand-2 (T7) y holdout (T8) **CANCELLED por budget exhausted**. Frozen control (`evals/reports/h15/candidate-v1.2.md`) sigue siendo control válido para futuros runs gracias a la production-byte-identical-under-env-unset garantía.
+- **D5 (honest done-when, NO promised metric number, revert any safety regression)** ✅ **CUMPLIDA**. Wiring fix shipped sin promises de mejora medida; HARD-revert NONE fires (T6 green, citation_recall floor n/a porque no se ejecutó full → carry-forward intacto, redteam-smoke 0.92, §6 Auditor byte-unchanged); outcome documented honestly como "measurement-design fix IS the contribution".
+
+**HARD-revert check (D5):**
+
+| Check | Estado | Notas |
+|---|---|---|
+| WHERE-CLAUSE byte-identical bajo env-unset AND env-set (T6 + new keystone test) | ✅ PASS | T6 unchanged + `test_explicit_config_wired.py` 4/4 PASS |
+| §6 Auditor + citation/validator byte-unchanged | ✅ PASS | `git diff main..HEAD -- src/regulaitor/agents/auditor.py src/regulaitor/citation/validator.py` empty |
+| H15 30-calib citation_recall ≥0.71 floor (carry-forward) | N/A | No se ejecutó full → carry-forward del H15 baseline intacto, no medido bajo cand-1 full |
+| redteam-smoke ≥0.92 (prompt-blind) | ✅ PASS (0.92) | T4 verificado pre-paid |
+| 6 H15 designated block cases content-safe | N/A | No se ejecutó full ni holdout → C1 manual backstop sigue válido desde H15 |
+
+**Defectos capturados por review en 2 fases:**
+
+- T1 spec-review ✅ + code-review found 1 Important (unused `# type: ignore[no-untyped-def]` × 4 — would trip `warn_unused_ignores=true`) + 2 Minor (readability comments); fix amended commit `a371f4a`.
+- T2 spec-review ✅ + code-review APPROVED (Opus reviewer verified WHERE-CLAUSE byte-identical contra `v0.1.6-h15.1` tag via `git show`; the default-None pattern correctly handles `0` valid int by using `is not None` not truthy check); only Minors marked "keep as-is".
+- T3 spec-review ✅ + code-review found 1 **Critical** (stale contract test `test_mcp_tool_schemas.py:23` asserting `params["top_k"].default == 5` — would FAIL in CI after the signature change) + 1 Important (docstring silent about `auto` path ignoring `top_k`); fix amended commit `1c4b29c`.
+- T5 spec-review ✅ + code-review found 2 Important (Decision section needed architectural invariant restatement for stand-alone readability + References path-abbreviation cleanup); fix amended commit `ee75033`.
+
+**El review T3-Critical (contract test stale) es el catch más valioso** — habría roto CI silenciosamente; pre-paid gate T4 lo habría detectado pero el review lo capturó pre-T4. Linaje continuo de C1 H15 / T8.1 H15.1 / T3 H15.2 — la disciplina de 2-stage review consistentemente captura defectos consequentes que el implementer naturalmente miss.
+
+**Gate autoritativo (T4, pre-paid, controller-run):**
+
+- `uv run pytest -m "not slow"` → **782 passed / 0 failed / 1 skipped esperado / 93.51% cobertura** ≥90% exit 0 (junit-xml `C:\tmp\h15-2-t4-pytest.xml`).
+- `uv run mypy src` → **Success: no issues found in 71 source files** exit 0 (T4 cross-milestone gate-hygiene from H15.1 carried).
+- `uv run python -m scripts.redteam --smoke` → **block_rate 0.92** (≥0.92 H15 frozen carry, ≥0.90 §16.2#4) prompt-blind unaffected by retriever change.
+- Caller grep: 2 production callers (`graph.py:99`, `document_graph.py:153`) pass NO `top_k` → `None` propagates → resolves to `DEFAULT_CONFIG.top_k=5` env-unset → **byte-identical to v0.1.6-h15.1 verified**.
+
+**Coste real medido (router accumulator H15 carry):**
+
+| Item | Estimated | Measured | Δ |
+|---|---|---|---|
+| T1-T5 implementación + T4 verificación | $0 | $0 | — |
+| T6 probe (cand-1 n=3) | €0.15 | **€0.19** | +27% |
+| T6 full (cand-1 n=30, CRASHED) | €1.86 | **€2.24** consumido antes credit-out | +20% per-case rate / 0% completion |
+| T7 (cand-2 probe + full) — CANCELLED | €1.65 | €0 | budget exhausted |
+| T8 (holdout if winner) — CANCELLED | €0.85 | €0 | idem |
+| **Total H15.2 paid spend** | €4.51 envelope | **€2.43 actual** (entire pre-existing balance) | balance hit |
+| **Persisted data on disk** | 30-case + 14-holdout reports | **3-case probe report only** | 10.8× worse €/persisted-case |
+
+**§22.22 disclosure crítica (the H15.2 milestone-consequential failure, headline TFM-defense honesty payload):**
+
+H15.2 cierra el design-defect §22.22 de H15.1, AND **H15.2 mismo replica un patrón análogo de cross-task gap** — esta vez en cost-estimation methodology:
+
+1. **Bad probe→full linear extrapolation**. Probe n=3 demasiado pequeña; `latency_p95 = 391s` ya señalaba alta varianza per-case y se ignoró. Extrapolación €0.19 / 3 × 30 = €1.90 = mecánica e ignorando varianza.
+2. **No upper-bound communication a user before authorization**. El user dijo "$2.62 lets go" basándose en mi estimación €1.86. El upper-bound (€1.86 × 1.5 = €2.79) excedía el balance disponible — debería haber recomendado SKIP en vez de animar.
+3. **Harness sin per-case checkpoint** + `compute_chat_metrics._ragas_metrics_chat` sin try/except → cuando Haiku judge 429-credits, exception propaga through ragas tenacity → mata main loop → 0 disk artifact for ~24 cases completed in RAM.
+
+**Cross-milestone lesson** (consistente con H15.1's): per-task reviews validan per-task correctness; NO validan cross-task design coherence (H15.1) ni cost-estimation discipline (H15.2). Both must be reviewed separately and explicitly. Disciplina nueva registrada para futuros paid runs (effective desde `v0.1.8`):
+
+- Probe minimum N = **5** (NO 3).
+- Cost estimates ALWAYS as ranges (low / expected / high = expected × 1.5).
+- If user budget < high-estimate → **DO NOT recommend "proceed"**, recommend SKIP or smaller scope.
+- **No paid run authorized hasta harness checkpoint per-case shipped** (microhito `v0.1.8` MANDATORY antes de próximo paid run).
+
+**Follow-ups H15.2 → microhito plan maximalista (user-confirmed 2026-05-20):**
+
+Plan acordado: 8 microhitos decimales + 1 paid validation final + retorno a H16/H17. Sequencing prioriza safety + non-baseline-invalidating first:
+
+| # | Microhito | Tag | Baseline impact | Estim. días $0 |
+|---|---|---|---|---|
+| 1 | **Harness checkpoint per-case** | `v0.1.8` | None | 0.5 — **MANDATORY first, prevents H15.2 disaster repeat** |
+| 2 | xcorpus-002 investigation + retriever local re-tuning | `v0.1.9` | None (auto path only) | 1 |
+| 3 | Gold-set extension auto-path | `v0.1.10` | None (additive) | 1 |
+| 4 | §17 thresholds + LLM-judge same-provider-family | `v0.1.11` | INVALIDATES H15 baseline | 1 |
+| 5 | No-Answer-residual robustness | `v0.1.12` | INVALIDATES if Analyst v1.2 changes | 1 |
+| 6 | Document segmenter overhaul | `v0.1.13` | None (doc-mode only) | 1.5-2 |
+| 7 | Citation granularity confound | `v0.1.14` | INVALIDATES H15 baseline (manual re-annotation) | 1-2 |
+| 8 | Auditor RHR-aggregation + Council binding | `v0.1.15` | INVALIDATES + touches §6 (full ceremony brainstorming-spec-plan) | 2-3 |
+| 9 | **Single paid validation A/B** | `v0.1.16` | — | when budget recharges; bundle-level attribution |
+
+Tras `v0.1.16` → retorno a **H16** (Despliegue HF Spaces) y **H17** (cierre académico TFM) per CLAUDE.md §16.3.
+
+**Sin skills nuevas** (`evals-runner` activa desde H8; `cost-accounting` sigue H17). Ver `docs/retriever_h15-2_redesign.md` para el study report canónico.
