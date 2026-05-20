@@ -1,6 +1,6 @@
 # ADR 0017 — Retriever cross-corpus auto path + post-rerank purity gate (H15.1)
 
-- **Status:** Accepted — 2026-05-19 — squash `<squash-sha>`, tag `v0.1.6-h15.1`
+- **Status:** Accepted — 2026-05-19 — squash `e283412`, tag `v0.1.6-h15.1`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0004 (RAG architecture — the retrieval pipeline this directly
   extends), 0016 (H15 Auditor calibration study — the system-level ceiling this

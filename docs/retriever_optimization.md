@@ -37,7 +37,7 @@ H15.1 carries **two separable intended contributions**, framed honestly per
 Sources: spec
 `docs/superpowers/specs/2026-05-19-h15-1-retriever-optimization-design.md`,
 companion ADR 0017 (`docs/adr/0017-retriever-cross-corpus-auto.md`,
-squash `<squash-sha>`, tag `v0.1.6-h15.1`), decisions log `§H15.1`.
+squash `e283412`, tag `v0.1.6-h15.1`), decisions log `§H15.1`.
 
 This report describes what was **measured**, not what was designed. Where
 the measurement diverged from the spec's intent it is disclosed plainly (§4 —

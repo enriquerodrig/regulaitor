@@ -2961,7 +2961,7 @@ mantenido.
 
 H15 cerrado 2026-05-19. Squash `76fc6e7`, tag `v0.1.5-h15` (post-merge).
 
-## H15.1 — Optimización system-level (cerrado 2026-05-20, squash `<squash-sha>`, tag `v0.1.6-h15.1`)
+## H15.1 — Optimización system-level (cerrado 2026-05-20, squash `e283412`, tag `v0.1.6-h15.1`)
 
 > Esta sección documenta el cierre del hito decimal H15.1 (precedente H0.1).
 > El **design context** (decisión de roadmap, alcance candidato, boundary
@@ -3343,7 +3343,7 @@ Scope acotado mantenido.
 
 ### Cierre
 
-H15.1 cerrado 2026-05-20. Squash `<squash-sha>`, tag `v0.1.6-h15.1` (post-merge).
+H15.1 cerrado 2026-05-20. Squash `e283412`, tag `v0.1.6-h15.1` (post-merge).
 
 ## H15.2 — Eval rede-design para measurability del tuning lever (planificado 2026-05-20; en diseño)
 
@@ -3395,7 +3395,7 @@ mutuamente excluyentes; la rede-design tiene que resolver esa tensión
 sin sacrificar no-leakage. Backend H1-H3 read-only **salvo** lo que el
 diseño justifique y registre en un **ADR nuevo**. 4 corpora estables
 (§22.18). Disciplina A/B **baseline-congelada** = la baseline del
-control será `v0.1.6-h15.1` (`<squash-sha>` post-merge); ningún
+control será `v0.1.6-h15.1` (`e283412` post-merge); ningún
 número se presenta sin medir (§22.22). Patrón de trabajo: brainstorming
 → spec → writing-plans → subagent-driven-development. Presupuesto:
 H15.2 necesitará runs de pago si la rede-design alcanza A/B con

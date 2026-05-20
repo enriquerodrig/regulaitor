@@ -7,8 +7,8 @@ so the TFM defense can trace any claim to its underlying evidence.
 State: Advanced track in progress. MVP closed `v0.1.0-mvp` (H10). H11 closed
 `v0.1.1-h11`; H12 closed `v0.1.2-h12`; H13 closed `v0.1.3-h13`; H14 closed
 `v0.1.4-h14`; H15 closed `v0.1.5-h15` (squash `76fc6e7`); H15.1 closed
-`v0.1.6-h15.1` (squash `<squash-sha>` post-merge — decimal optimization
-milestone, precedent H0.1).
+`v0.1.6-h15.1` (squash `e283412` — decimal optimization milestone,
+precedent H0.1).
 Cells marked **deferred** are out of current scope; planned for the labelled
 milestone.
 
@@ -167,7 +167,7 @@ Each closed milestone has its own §HX section in
 | **H13** | `v0.1.3-h13` | [spec](superpowers/specs/2026-05-17-h13-council-of-judges-design.md) | — | [0014](adr/0014-council-of-judges.md) | `db991dc` |
 | **H14** | `v0.1.4-h14` | [spec](superpowers/specs/2026-05-18-h14-nis2-dora-corpus-design.md) | [plan](superpowers/plans/2026-05-18-h14-nis2-dora-corpus.md) | [0015](adr/0015-nis2-dora-corpus.md) | `d2f2a75` |
 | **H15** | `v0.1.5-h15` | [spec](superpowers/specs/2026-05-18-h15-auditor-calibration-design.md) | [plan](superpowers/plans/2026-05-18-h15-auditor-calibration.md) | [0016](adr/0016-auditor-calibration.md) | `76fc6e7` |
-| **H15.1** | `v0.1.6-h15.1` | [spec](superpowers/specs/2026-05-19-h15-1-retriever-optimization-design.md) | [plan](superpowers/plans/2026-05-19-h15-1-retriever-optimization.md) | [0017](adr/0017-retriever-cross-corpus-auto.md) | `<squash-sha>` |
+| **H15.1** | `v0.1.6-h15.1` | [spec](superpowers/specs/2026-05-19-h15-1-retriever-optimization-design.md) | [plan](superpowers/plans/2026-05-19-h15-1-retriever-optimization.md) | [0017](adr/0017-retriever-cross-corpus-auto.md) | `e283412` |
 
 ---
 
