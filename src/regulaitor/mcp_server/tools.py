@@ -20,7 +20,7 @@ from regulaitor.citation.schemas import (
     Segment,
 )
 from regulaitor.corpus import loader
-from regulaitor.corpus.schemas import Language, Norma
+from regulaitor.corpus.schemas import CorpusSelector, Language, Norma
 from regulaitor.document import extractor as _extractor
 from regulaitor.document import segmenter as _segmenter
 from regulaitor.mcp_server.errors import NotFoundError
@@ -29,11 +29,18 @@ from regulaitor.rag import retrieval as rag_retrieval
 
 def search_articles(
     query: str,
-    corpus: Norma,
+    corpus: CorpusSelector,
     language: Language,
     top_k: int = 5,
 ) -> list[RetrievedChunk]:
-    """Retrieve top-k chunks for `query` filtered by corpus + language."""
+    """Retrieve top-k chunks for `query` filtered by corpus + language.
+
+    When corpus="auto", triggers cross-corpus retrieval (multi-corpus rerank +
+    post-rerank purity gate via ADR-0017), returning chunks that may span
+    multiple norms; the resolved norma list is discarded at this boundary.
+    """
+    if corpus == "auto":
+        return rag_retrieval.run_auto(query, language, rag_retrieval.DEFAULT_CONFIG)[0]
     return rag_retrieval.run(query, corpus, language, top_k=top_k)
 
 

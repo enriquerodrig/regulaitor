@@ -12,6 +12,11 @@ from typing import Literal
 from pydantic import BaseModel, Field, field_validator
 
 Norma = Literal["ai_act", "gdpr", "nis2", "dora"]
+# H15.1: opt-in cross-corpus retrieval selector. `Norma` itself is unchanged
+# (H1-stable). "auto" triggers the multi-corpus retrieve + post-rerank purity
+# gate (ADR-0017). Any of the four norms keeps the byte-identical single-corpus
+# path (no-leakage by construction, §22.18 / H14).
+CorpusSelector = Literal["ai_act", "gdpr", "nis2", "dora", "auto"]
 Language = Literal["es", "en"]
 SourceFormat = Literal["formex4", "html", "pdf"]
 

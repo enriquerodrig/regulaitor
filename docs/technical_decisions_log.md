@@ -2961,12 +2961,15 @@ mantenido.
 
 H15 cerrado 2026-05-19. Squash `76fc6e7`, tag `v0.1.5-h15` (post-merge).
 
-## H15.1 — Optimización system-level (planificado 2026-05-19; en diseño)
+## H15.1 — Optimización system-level (cerrado 2026-05-20, squash `<squash-sha>`, tag `v0.1.6-h15.1`)
 
-> Esta sección registra la **decisión de roadmap aprobada** (§11.b); el contenido
-> técnico del hito se diseña vía brainstorming→spec→writing-plans y la sección se
-> ampliará al cierre. **No es un hito cerrado** (§22.22 — no presentar no-hecho
-> como hecho).
+> Esta sección documenta el cierre del hito decimal H15.1 (precedente H0.1).
+> El **design context** (decisión de roadmap, alcance candidato, boundary
+> contract) heredado del registro de planificación inicial se conserva como
+> los párrafos siguientes; el **closed record** (D1-D5 medidos, arquitectura
+> entregada, defectos capturados por el review en 2 fases, divulgación
+> §22.22 del defecto de medición, HARD-revert, follow-ups, gate, cierre)
+> ocupa el resto de la sección.
 
 ### Decisión de roadmap (aprobada por el user 2026-05-19)
 
@@ -3009,5 +3012,395 @@ subagent-driven-development (Opus en subagentes complejos, preferencia del user)
 Presupuesto: H15.1 necesitará runs de pago (eval A/B del retriever/segmenter) —
 avisar + tally + OK explícito antes de cualquier gasto.
 
-*(Sección a ampliar al cierre de H15.1 con D1..Dn, números medidos, defectos
+### Decisiones D1-D5 — resultado medido
+
+Cinco decisiones de brainstorming (cerradas 2026-05-19, refinadas durante
+implementación post-spend), todas cumplidas según el done-when honesto de D5:
+
+- **D1 — Scope: retriever-only, chat-only A/B.** Cumplida. Único componente
+  cambiado = capa `rag/retrieval.py` (cambio lógico) + type-widening
+  pass-through en `citation/schemas.py`, `api/schemas.py`, `routes_ask.py`,
+  `graph.py`, `agents/retriever.py`, `mcp_server/tools.py` + wiring eval
+  (`evals/harness.py`, `evals/gold_set.jsonl`). **Out of scope** confirmado: el
+  segmentador / no-Answer-residual robustez / Auditor-RHR-aggregation /
+  promoción `MonotonicEscalatePolicy` (`_COUNCIL_BINDING` sigue OFF, linaje
+  ADR-0014). Auditor y citation validator **byte-idénticos** a producción
+  pre-H15.1.
+
+- **D2 — Contained levers only; query construction stays deterministic.**
+  Cumplida. En scope: nuevo path `corpus="auto"` + dataclass `RetrievalConfig`
+  (`pre_rerank`, `top_k`, `purity_threshold`, `query_normalize`). **Sin**
+  re-ingest de LanceDB (4-corpus index intacto, §22.18), sin cambio de
+  embedding/reranker, sin LLM en query expansion. El principio "el retriever
+  no llama LLM" del docstring de `RetrieverAgent` se preservó por construcción
+  (purity gate = puro determinista pure-Python).
+
+- **D3 — Post-rerank purity gate; explicit-corpus path byte-identical.**
+  Cumplida — **asserted** por `tests/unit/test_explicit_path_unchanged.py`
+  (T6, commit `0b2af8e` + docstring honesty fix `f47234f`). Path explícito (los 4 literales de
+  norma) usa where-clause single-`norma`, `PRE_RERANK=50`, `top_k=5`, sin
+  purity gate — comportamiento previo entero conservado por construcción
+  (no-leakage §22.18 / H14-verified intacto). Path `corpus="auto"` opt-in:
+  retrieve `pre_rerank` candidatos cross-corpus → mismo
+  `bge-reranker-v2-m3` → `_apply_purity_gate(share(norma)=count-in-top-top_k
+  /top_k ≥ threshold → collapse-else-multi)`. `top_k≥1` invariante en
+  `__post_init__`. `Context.resolved_normas: list[Norma]` provee
+  retrieval-transparency a los callers.
+
+- **D4 — Budget & A/B discipline (carried from H15 D4).** Cumplida. El
+  control congelado son los reportes **ya committeados**
+  `evals/reports/h15/candidate-v1.2.md` (30 calibración) +
+  `evals/reports/h15/holdout-v1.2-chat.md` (14 holdout) — **sin
+  re-baseline de pago** (ahorro ≈€1.85). Variable única = retriever
+  (Analyst H15-frozen v1.2; Auditor / judge / gold intacto excepto los 2
+  gold rows xcorpus-001/002 → `"auto"` en T5). ≤3 iteraciones de
+  candidato, `--limit 3` probe + `--limit N` cap por run de pago,
+  cost-tally + OK explícito user antes de cualquier gasto, controller
+  corre los runs de pago como procesos background persistentes (lección
+  H14). Coste real medido = router accumulator H15
+  (`models/router.py` `_record_cost_eur` / `get_accumulated_cost_eur`,
+  sin instrumento nuevo).
+
+- **D5 — Done-when honesto (§22.22).** Cumplida. **Sin métrica
+  prometida**; el outcome defendido es: (a) **measured per-case
+  improvement** = xcorpus-001 partial win (verdict pass→RHR ✅ FIXED,
+  context_precision 0.00→1.00, judge-criteria 1/4→2/4 ✅); (b)
+  **documented deeper system-level ceiling** = el §22.22 disclosure de
+  §4 abajo + el techo system-level persistente (faithfulness < 0.85,
+  verdict_match lejos de 0.85 — refuerza la tesis H12/H13/H14/H15);
+  **ambos defienden por igual** per spec D5. HARD-revert checks → NONE
+  fires (ver §HARD-revert abajo). Tag publicado.
+
+### Arquitectura entregada
+
+Pipeline de retrieval con dos paths después de H15.1:
+
+- **Path explícito** (todos los callers actuales pasando
+  `Literal["ai_act","gdpr","nis2","dora"]`): **byte-identical** a
+  `v0.1.5-h15` — single-`norma` where-clause, `PRE_RERANK=50` fijo,
+  `top_k=5` default, sin purity gate. §22.18 / H14 no-leakage preservado
+  *por construcción* + **adicionalmente pineado por test de regresión
+  asertado** (T6).
+- **Path auto** (`corpus="auto"`, opt-in, additive): retrieve
+  `pre_rerank` cross-corpus (4 normas, language-filtered, sin `norma`
+  filter) → mismo `bge-reranker-v2-m3` → `_apply_purity_gate`
+  determinista:
+  - `share(norma)` = count-in-top-`top_k` / `top_k`.
+  - Si `max_share ≥ threshold` → collapse a esa norma dentro de
+    `top_k` (no-leakage restaurado incluso en path auto).
+  - Else → genuine cross-corpus top-`top_k` (cada `RetrievedChunk`
+    lleva `.norma` para validación per-citation downstream del
+    Auditor).
+
+`RetrievalConfig` se consume **solo** en el path auto (esta es la base
+del §22.22 disclosure de §4). Eval-only override via
+`REGULAITOR_RETRIEVAL_CONFIG` (precedente ADR-0013
+`REGULAITOR_ROUTER_MODE` / ADR-0016
+`REGULAITOR_ANALYST_PROMPT_VERSION`). Default de producción
+byte-identical a v0.1.5-h15.
+
+La invariante §6 *"no citation, no answer"* (Auditor +
+`citation/validator.py`) **byte-unchanged** en H15.1 → 100% intacta.
+Multi-corpus retrieval solo amplía qué *puede* groundear el Analyst;
+cada cita emitida sigue pasando por la cadena completa de validación
+per-chunk.
+
+### Implementación T1-T11 — defectos capturados por el review en 2 fases (§22.1 — evidencia TFM)
+
+- **T1 (sonnet):** backward-compat test gap (cambios pasaban tests, pero
+  los callers existentes no estaban asertados regression-zero) → fixed
+  (commit `170aaf7`).
+- **T2 (Opus):** `RetrievalConfig.__post_init__` carecía de invariante
+  `top_k≥1` + 3 tests de hardening (boundary, ties, empty rerank) →
+  fixed (commit `94faadb`).
+- **T3 (Opus):** correctness per-norma-meta del path no-collapse de
+  `run_auto` no estaba aserta en ningún lado + contrato de tuple
+  empty-rerank → fixed (commit `6e67408`).
+- **T4 (sonnet):** mypy crítico `[arg-type]` de `run_auto` `list[str]`
+  vs `Context.resolved_normas: list[Norma]` + test de simetría
+  `search_articles` auto-dispatch missing → fixed annotation-only
+  (commit `a485576`). **Cross-milestone honest finding surfaced:** el
+  strict `mypy src` gate estaba silenciosamente rojo en `main` desde
+  H13 (`db991dc`, deuda de anotación en `council.py` —
+  invisible porque H13/H14/H15 "gate green" usaba `pytest -m "not
+  slow"`, que NO corre mypy); H15.1-T4 es el primero en surface+fix
+  (annotation-only en `_JUDGE_MODES` / `_one_judge`; zero runtime
+  behaviour change; invariante §6 Council intacta).
+- **T6 (sonnet):** el docstring sobre-afirmaba "byte-identical" más allá
+  de lo que el test pinea → ajustado (commit `f47234f`).
+- **T7 (sonnet):** 2 brechas de defensibilidad Important en ADR-0017
+  (citación del test T6 omitida; spend envelope ausente) + 5 polish →
+  fixed (commit `acbf0de`).
+- **T8.1 (sonnet) — el headline pre-spend safety catch del hito:** el
+  contrato "never-crash" del env override de `RetrievalConfig` era más
+  débil de lo declarado (los dataclasses de Python no enforzan tipos
+  de campo; un typo como `{"purity_threshold":"0.7"}` en el env
+  override habría crasheado un run de pago a mitad de gasto). Fix
+  annotation-only extendiendo los type guards de
+  `src/regulaitor/rag/retrieval.py` `RetrievalConfig.__post_init__`
+  (TypeError ya capturado → WARNING+fallback) — commit `1e5d82f`.
+  **El review previno un mid-spend crash de run de pago antes de
+  gastar nada.**
+- **T10 (Opus):** 1 brecha Critical de defensibilidad (cand-2
+  `citation_recall_mean = 0.81 ✅` silenciosamente omitido pese a
+  cruzar el §17 ≥0.80 advanced target — un examinador leyendo la
+  evidencia citada habría leído el silencio como descuido o
+  divulgación selectiva) + 5 Important polish + 4 Minor → fixed
+  (commit `954165a`); el fix del Critical añade §4.6 nombrando el
+  0.81, aplicando el mismo framing same-mechanism del §4 (misma
+  non-determinismo LLM-provider sobre el path explícito
+  byte-identical), y clasificándolo explícitamente como noise NO
+  attainment — pre-empta la objeción del examinador y demuestra la
+  consistencia predictiva interna del disclosure §4.
+
+### Coste real medido (router accumulator — cierra el gap H12/H13)
+
+Real per-run measured spend, leído de cada cabecera de reporte
+`Total cost:` vía el router accumulator H15:
+
+| Run | n | Config | Coste (€) | Reporte fuente |
+|---|---|---|---|---|
+| T8.2 probe | 3 | cand-1 (`pre_rerank=80, top_k=8`) | 0.16 | `evals/reports/h15/h15_1-cand1-probe.md` |
+| T8.3 cand-1 full | 30 | cand-1 (`pre_rerank=80, top_k=8`) | 1.48 | `evals/reports/h15/h15_1-cand1.md` |
+| T8.4 cand-2 full | 30 | cand-2 (`pre_rerank=80, top_k=3` — hipótesis opuesta) | 1.53 | `evals/reports/h15/h15_1-cand2.md` |
+| T9 holdout | 14 | DEFAULT (env unset) | 0.75 | `evals/reports/h15/h15_1-holdout.md` |
+| **Total** | — | — | **≈ 3.92** | del techo ~€7.5 (~$8) |
+
+Más pequeño que los ≈€5.05 de H15 porque **no hubo re-baseline de
+pago** en H15.1 (el evidence H15 committeado es directamente el
+control frozen — ahorro ≈€1.85). Todas las cifras son real per-run
+measured spend, no estimadas. §4 abajo clasifica honestamente los
+€3.01 de cand-1 + cand-2 como medición de non-determinismo
+LLM-provider sobre el path explícito, NO como medición de tuning
+lever.
+
+### Cross-corpus correctness per-case (la medición real de H15.1)
+
+Los 2 casos xcorpus (n=2) son los **únicos** casos que ejercitan el
+path auto. Reportados **per-case, NO folded into the aggregate** (misma
+disciplina H15 de los 6-RHR-designated-cases). Fuente:
+`evals/reports/h15/h15_1-holdout.md` (commit `a8c36f6`) per-case
+appendix vs `evals/reports/h15/holdout-v1.2-chat.md` baseline per-case
+appendix.
+
+- **xcorpus-001 — partial WIN.** Verdict `pass` (esperado RHR) ❌
+  baseline → **`requires_human_review` ✅ FIXED — matches expected**
+  H15.1. Citas `['19.1','19.2']` (DORA incident-notif — wrong) →
+  `['4.1','4.2','4.3']` (NIS2 art 4, la lex-specialis mechanism —
+  *marco legal correcto*, no los específicos DORA 1/47 que esperaba
+  el gold). `context_precision` 0.00 → **1.00**. `faithfulness` 0.67
+  → 0.70. LLM-judge criteria (4 total) 1/4 ✅ → **2/4 ✅** (la
+  criteria "remits to human review" ahora ✅ por el fix de verdict;
+  las dos criteria de citación específica siguen ❌). Win parcial,
+  real y modesto.
+- **xcorpus-002 — mixed, with verdict REGRESSION.** Verdict
+  **`requires_human_review` ✅ baseline → `block` ❌ REGRESSED**
+  (gold esperaba RHR; pass y block son ambos misses, pero baseline
+  estaba bien aquí). Citas `['23.1','23.4']` → `['23.1','23.4']`
+  (mismas — auto NO superficó NIS2 art 35 ni GDPR art 33).
+  `context_precision` 0.00 → 0.00. `faithfulness` 0.43 → 0.62
+  (sube, pero sobre el mismo set de citas defectuoso). LLM-judge
+  criteria (3 total) 1/3 ✅ → 1/3 ✅ (unchanged). Sin correctness
+  win; el reranker no superficó los artículos del segundo corpus en
+  esta pregunta específica; verdict regresó RHR → block. Open
+  question alongside H15.2.
+
+**Honest aggregate read: 1/2 partial win, 1/2 mixed-with-verdict-regression.**
+Defendido-por-correctness-per-case, NO por aggregate (disciplina
+H15-style "defended by correctness, not aggregate" del 6-RHR set).
+
+### El §22.22 design-defect disclosure post-spend (headline TFM-defense honesty point)
+
+**Esta es la sección por la que el hito se defiende post-spend. No
+suavizarla sería una violación §22.22.**
+
+**Evidencia grep definitiva (HEAD del hito):** `DEFAULT_CONFIG` (y por
+tanto cualquier override `REGULAITOR_RETRIEVAL_CONFIG` de él) se
+consume en **exactamente 2 sitios**, ambos **auto-path-only**:
+`src/regulaitor/agents/retriever.py:33` (dentro de la rama
+`corpus == "auto"`) + `src/regulaitor/mcp_server/tools.py:43` (dentro
+de `search_articles(corpus="auto")`). El path explícito
+(`src/regulaitor/agents/retriever.py:35`) llama
+`rag_retrieval.run(query, corpus, language, top_k=top_k)` con
+`top_k=5` default; `rag_retrieval.run()` usa la constante de módulo
+`PRE_RERANK=50`. **Ninguno consulta `DEFAULT_CONFIG`** — exactamente
+lo que el test T6 asertado pinea como garantía §22.18 / H14
+byte-identical. Los 30 casos de calibración
+(`evals/h15_calibration_ids.txt`, chat-001..030) son **todos
+explicit-corpus** (no hay entries `"auto"`); xcorpus-001/002 viven en
+el holdout de 14 (`evals/h15_holdout_chat_ids.txt`).
+
+**La consecuencia:** el env override `REGULAITOR_RETRIEVAL_CONFIG`
+tiene **cero mecanismo** para afectar la medición de calibración de 30
+casos. Los runs de cand-1 y cand-2 30-case ambos ejercitaron el path
+explícito byte-identical en cada caso. Los deltas entre cand-1 /
+cand-2 y el control H15 frozen son por tanto **non-determinismo
+LLM-provider a través de runs Sonnet multi-hora, NO un tuning-lever
+signal real.** €3.01 de noise medido sobre el path explícito (€1.48
+cand-1 + €1.53 cand-2).
+
+**Mutual exclusivity surfaced:** la garantía no-leakage byte-identical
+(T6, §22.18) y el intent de spec §4 ("A/B-measure `RetrievalConfig` on
+the calibration set") son **mutuamente excluyentes by design**: si el
+path explícito es byte-identical, entonces cualquier calibration set
+construido con casos explicit-corpus es estructuralmente incapaz de
+ejercitar la palanca. El measurement plan de la spec es **incoherente**
+con la garantía no-leakage que (correctamente) requiere. Los reviews
+per-task en 2 fases validaron correctness per-task (todos correctos,
+incluyendo el fix safety-critical del eval seam T8.1) pero **no**
+chequearon cross-task design coherence: "¿la A/B planeada de 30 casos
+ejercita la palanca que dice medir?" Ese gap es el milestone-consequential
+process finding. **El H15.2 future milestone (NEW, user-approved
+POST-SPEND, decimal sibling de H15.1, NO renumber)** scoped para la
+eval redesign — extender gold con auto-path cases a N significant, OR
+introducir methodology que mida explicit-path behavior sin violar la
+no-leakage byte-identical guarantee (research question para H15.2).
+Esto es la lineage C1 / H14-gold-corpus-ground de disclosure honesto
+post-spend — el TFM-defense más fuerte del hito.
+
+### HARD-revert checks (D5) — NONE fires
+
+- **citation_recall floor (§16.2#5):** H15 holdout `citation_recall_mean
+  = 0.00` (H14 article-level gold-granularity confound, documentado
+  desde ADR-0016); H15.1 holdout también 0.00 → carry-forward, NO
+  regression. (El floor §16.2#5 ≥0.40 MVP aplica a la 30-calibración
+  original y queda 0.71 — **PASS**.)
+- **Explicit-path byte-identical (§22.18 / H14):** T6 asserted test
+  pinea el where-clause exacto; los 12 casos non-xcorpus holdout usan
+  el mismo code path que H15 → regression-zero **by construction**.
+- **redteam-smoke `block_rate` (§16.2#4):** prompt-blind (sanitizer /
+  injection layers only — no LLM, no retriever); H15-frozen **0.92**
+  stands, T6 re-confirmó en esta branch (== §16.2#4 frozen).
+- **Los 6 H15-designated block cases:** chat-014/015/029/030
+  (in-calibration) + nis2-006/dora-006 (in-holdout): mismo code path
+  (explicit, byte-identical); content-safe per C1 backstop H15 carried
+  forward por code-path equivalence; **NO regression**.
+
+Verdict: ninguno de los 4 HARD reverts dispara. v0.1.5-h15 + el path
+auto + el nuevo seam `RetrievalConfig` stay.
+
+### Follow-ups diferidos H15.1 (registrados en evidence_matrix)
+
+1. **H15.2 (NEW, the milestone's clean deferral)** — eval redesign para
+   measurability del tuning lever; user-approved POST-SPEND una vez
+   surfacó §4 (NO un pre-existing scope split). Decimal sibling de
+   H15.1 (sin renumerar, precedente H0.1 + el propio H15.1). Scope =
+   extender gold-set con auto-path cases a N significant OR introducir
+   methodology que mida explicit-path behavior sin violar la no-leakage
+   byte-identical guarantee (research question para H15.2).
+2. **Citation-metric granularity confound** (carried from ADR-0016 /
+   H15 study report): exact-match article-vs-apartado vs H14
+   article-level gold `expected_articles`; persiste en xcorpus (0.00s);
+   documented-not-fixed; eval-instrument work; requiere full A/B
+   re-baseline si se cambia.
+3. **xcorpus-002 verdict regression** (open question alongside H15.2):
+   el comportamiento del purity gate threshold default + reranker
+   passage-level sobre este NIS2+GDPR caso específico; merits
+   investigation.
+4. **mypy-gate-since-H13** (surfaced + fixed in T4): cleanup
+   cross-milestone gate-hygiene cleared; el patrón "use `uv run mypy
+   src` as a gate, not just `pytest -m 'not slow'`" debería
+   documentarse para futuros hitos.
+5. **LLM-judge same-provider-family** (Haiku 4.5 judge vs Sonnet 4.6
+   prod): caveat ADR-0010 carried; deferred a un future
+   router-multi-LLM-judge milestone.
+
+### Skill activada
+
+**Ninguna nueva.** `evals-runner` activa desde H8; el procedimiento
+canónico seguido. `cost-accounting` (CLAUDE.md §12.4) sigue en H17.
+Scope acotado mantenido.
+
+### Gate autoritativo (§22.22 — controller-verificado, precedente H14/H15)
+
+| Ítem | Valor |
+|---|---|
+| Comando autoritativo | `uv run pytest -m "not slow"` |
+| Resultado | **777 passed, 0 failed, 0 errors, 1 skipped** (esperado: `tests/integration/test_document_e2e_clean.py` `ANTHROPIC_API_KEY not set` — no es fallo) |
+| Total coverage | **93.50% ≥ 90%** (gate §16.2 #2 ✅) |
+| Strict mypy (cross-milestone gate-hygiene cleared) | `uv run mypy src` Success / 71 files / exit 0 (T4 cleanup) |
+| Exit code | 0 |
+| ADRs | 0001–0017 (17 ADRs; +0017 retriever cross-corpus auto + purity gate) |
+| Decisions log line count post-edits | 3407 lines (post-§H15.1 expansion + §H15.2 stub) |
+| Gate | **GREEN** |
+
+### Métricas de cierre
+
+| Ítem | Valor |
+|---|---|
+| Scope (D1) | retriever-only + chat-only A/B ✅; segmentador/no-Answer/Auditor-RHR fuera (carry-forward H15) |
+| Contained levers (D2) | `RetrievalConfig` (`pre_rerank`/`top_k`/`purity_threshold`/`query_normalize`) ✅; sin re-ingest LanceDB; query determinista (no LLM) |
+| Auto path + purity gate (D3) | implementado + unit-tested + T6 explicit-path-unchanged asserted ✅ |
+| Frozen control (D4) | `evals/reports/h15/candidate-v1.2.md` + `holdout-v1.2-chat.md` — sin re-baseline pagada (ahorro ≈€1.85) ✅ |
+| Done-when honesto (D5) | per-case xcorpus-001 partial win + design-defect §22.22 disclosed + HARD-revert NONE fires ✅ |
+| Real measured cost | **≈ €3.92** del techo ~€7.5 (probe 0.16 + cand-1 1.48 + cand-2 1.53 + holdout 0.75) |
+| xcorpus-001 | partial WIN: verdict pass→RHR ✅ FIXED, context_precision 0.00→1.00, judge 1/4→2/4 ✅ |
+| xcorpus-002 | mixed-with-verdict-regression: RHR ✅→block ❌; citas unchanged; faithfulness 0.43→0.62 sobre set defectuoso |
+| §22.22 design-defect disclosure | post-spend, headline TFM-defense; lineage C1 / H14-gold-corpus-ground; H15.2 scoped |
+| HARD-revert checks | 4/4 NOT fired (citation_recall floor / explicit byte-identical T6 / redteam-smoke 0.92 / 6 designated block cases) |
+| 3 review-discipline catches | T8.1 pre-spend paid-run-crash-hole + T4 cross-milestone mypy-since-H13 cleanup + §22.22 post-spend design-defect (review en 2 fases en su modalidad ofensiva y defensiva) |
+| ADR | 0017 ✅ |
+
+### Cierre
+
+H15.1 cerrado 2026-05-20. Squash `<squash-sha>`, tag `v0.1.6-h15.1` (post-merge).
+
+## H15.2 — Eval rede-design para measurability del tuning lever (planificado 2026-05-20; en diseño)
+
+> Esta sección registra la **decisión de roadmap aprobada** (§11.b); el
+> contenido técnico del hito se diseña vía
+> brainstorming→spec→writing-plans y la sección se ampliará al cierre.
+> **No es un hito cerrado** (§22.22 — no presentar no-hecho como hecho).
+
+### Decisión de roadmap (aprobada por el user POST-SPEND 2026-05-20)
+
+- **Pregunta:** el §22.22 design-defect disclosed en T10/T11 de H15.1 —
+  el A/B 30-calibración era estructuralmente invariante al tuning lever
+  porque `DEFAULT_CONFIG` se consume solo en los 2 sitios auto-path y
+  los 30 casos son todos explicit-corpus (byte-identical T6) — ¿se
+  resuelve dentro de H16 (deploy), se pliega en un H15.1-redux, o se
+  trata como un hito decimal nuevo?
+- **Decisión:** **hito decimal `H15.2`, sin renumerar** (precedente
+  directo: **H0.1** y el propio **H15.1**). `H16` (Despliegue público
+  HF Spaces) y `H17` (cierre académico) **se mantienen intactos**.
+- **Razón:** la decisión llegó **POST-SPEND** una vez surfacó §4 en
+  T10/T11 de H15.1 — NO es un pre-existing scope split; el design
+  defect se documentó y owned en el cierre H15.1, y el H15.2 es la
+  deferral limpia de la eval rede-design que H15.1 no podía
+  consistentemente ejecutar. El decimal da estatus de hito de pleno
+  derecho (gates/ADR nuevo/tag previsto `v0.1.7-h15.2`) **sin** tocar
+  nada cerrado, y señala con honestidad que H15.2 es **consecuente**
+  del §22.22 disclosure de H15.1, no parte del §16.3 original.
+- **Descartado:** (a) renumerar (deploy→H17, cierre→H18) — churn +
+  punteros históricos stale; (b) plegar en H16 — mezcla
+  eval-instrument quality con infraestructura de deploy, viola
+  disciplina de aislamiento de hitos; (c) plegar en un H15.1-redux —
+  H15.1 está cerrado y tagged, la rede-design es un esfuerzo separado.
+
+### Alcance candidato (a refinar en brainstorming)
+
+| Palanca | Categoría | Prioridad |
+|---|---|---|
+| Extender el gold-set con auto-path cases a N significant (>= ~10 para que el A/B mida la palanca) | eval-instrument | **alta** |
+| Introducir methodology que mida explicit-path behavior sin violar la no-leakage byte-identical guarantee (research question para H15.2) | eval-methodology | **alta** |
+| xcorpus-002 verdict regression (open question heredado de H15.1) — investigar purity-gate threshold + reranker passage-level en NIS2+GDPR | system-investigation | media |
+| Citation-metric granularity confound (carried from ADR-0016) — eval-instrument work si la rede-design la requiere | eval-instrument | baja (requiere full A/B re-baseline si se cambia) |
+
+### Boundary contract heredado
+
+**La no-leakage byte-identical guarantee del path explícito (T6,
+§22.18, H14) DEBE preservarse** — el §22.22 disclosure de H15.1 mostró
+que esta garantía y el A/B sobre explicit-corpus calibration set son
+mutuamente excluyentes; la rede-design tiene que resolver esa tensión
+sin sacrificar no-leakage. Backend H1-H3 read-only **salvo** lo que el
+diseño justifique y registre en un **ADR nuevo**. 4 corpora estables
+(§22.18). Disciplina A/B **baseline-congelada** = la baseline del
+control será `v0.1.6-h15.1` (`<squash-sha>` post-merge); ningún
+número se presenta sin medir (§22.22). Patrón de trabajo: brainstorming
+→ spec → writing-plans → subagent-driven-development. Presupuesto:
+H15.2 necesitará runs de pago si la rede-design alcanza A/B con
+gold-set extendido — avisar + tally + OK explícito antes de cualquier
+gasto.
+
+*(Sección a ampliar al cierre de H15.2 con D1..Dn, números medidos, defectos
 capturados por el review en 2 fases, gate, y línea de cierre.)*

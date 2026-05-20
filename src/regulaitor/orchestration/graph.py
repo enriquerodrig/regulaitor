@@ -25,7 +25,7 @@ from regulaitor.agents.auditor import AuditorAgent
 from regulaitor.agents.council import CouncilAgent
 from regulaitor.agents.retriever import RetrieverAgent
 from regulaitor.citation.schemas import AuditVerdict
-from regulaitor.corpus.schemas import Language, Norma
+from regulaitor.corpus.schemas import CorpusSelector, Language
 from regulaitor.observability.langfuse_client import hash12, trace_turn
 from regulaitor.orchestration.state import ChatState
 from regulaitor.security import injection
@@ -247,7 +247,7 @@ def run(
         initial = ChatState(
             case_id=case_id,
             query=query,
-            corpus=cast(Norma, corpus),
+            corpus=cast(CorpusSelector, corpus),
             language=cast(Language, language),
             council_override=council_override,
         )

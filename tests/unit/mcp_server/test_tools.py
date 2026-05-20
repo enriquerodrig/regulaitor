@@ -53,6 +53,23 @@ def test_search_articles_returns_empty_on_no_results(
     assert result == []
 
 
+def test_search_articles_auto_calls_run_auto_not_run(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """corpus='auto' must dispatch to run_auto (not run) and return its chunks."""
+    chunk = _make_chunk()
+    run_auto_mock = MagicMock(return_value=([chunk], ["nis2", "dora"]))
+    run_mock = MagicMock()
+    monkeypatch.setattr(tools.rag_retrieval, "run_auto", run_auto_mock)
+    monkeypatch.setattr(tools.rag_retrieval, "run", run_mock)
+
+    result = tools.search_articles(query="q", corpus="auto", language="es")
+
+    run_auto_mock.assert_called_once()
+    run_mock.assert_not_called()
+    assert result == [chunk]
+
+
 def test_fetch_article_with_apartado(monkeypatch: pytest.MonkeyPatch) -> None:
     paragraph_mock = MagicMock(return_value="apartado text")
     meta_mock = MagicMock(

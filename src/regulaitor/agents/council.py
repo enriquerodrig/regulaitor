@@ -93,7 +93,11 @@ class MonotonicEscalatePolicy:
 logger = logging.getLogger("regulaitor.agents.council")
 
 _PROMPT_PATH = Path(__file__).parent / "prompts" / "council" / "judge.v1.0.md"
-_JUDGE_MODES: tuple[str, str, str] = ("judge", "evaluation", "cost")
+_JUDGE_MODES: tuple[router.ModelChoice, router.ModelChoice, router.ModelChoice] = (
+    "judge",
+    "evaluation",
+    "cost",
+)
 
 _VOTE_TOOL = {
     "name": "cast_vote",
@@ -176,7 +180,7 @@ class CouncilAgent:
             ensure_ascii=False,
         )
 
-    def _one_judge(self, mode: str, payload: str) -> JudgeVote:
+    def _one_judge(self, mode: router.ModelChoice, payload: str) -> JudgeVote:
         target = router._MODE_MAP[mode]
         try:
             result = router.complete(

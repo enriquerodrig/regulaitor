@@ -11,7 +11,7 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field
 
 from regulaitor.citation.schemas import Answer, AuditedAnswer, Context, CouncilReview
-from regulaitor.corpus.schemas import Language, Norma
+from regulaitor.corpus.schemas import CorpusSelector, Language
 
 
 class ChatState(BaseModel):
@@ -21,7 +21,7 @@ class ChatState(BaseModel):
 
     case_id: str = Field(min_length=1)
     query: str = Field(min_length=1)
-    corpus: Norma
+    corpus: CorpusSelector
     language: Language
 
     context: Context | None = None

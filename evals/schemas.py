@@ -13,6 +13,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from regulaitor.corpus.schemas import CorpusSelector
+
 # ---------------------------------------------------------------------------
 # Gold set entries
 # ---------------------------------------------------------------------------
@@ -25,7 +27,7 @@ class GoldCaseChat(BaseModel):
     id: str = Field(min_length=1)
     tipo: Literal["chat"]
     entrada: str = Field(min_length=1, max_length=2000)
-    corpus_esperado: Literal["ai_act", "gdpr", "nis2", "dora"]
+    corpus_esperado: CorpusSelector
     articulos_esperados: list[str]  # empty list valid for block cases (no citation expected)
     severidad_esperada: Literal["info", "low", "medium", "high"] | None
     criterios_evaluacion: list[str] = Field(min_length=1)

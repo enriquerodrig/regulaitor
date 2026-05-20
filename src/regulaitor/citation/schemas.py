@@ -11,7 +11,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from regulaitor.corpus.schemas import Language, Norma
+from regulaitor.corpus.schemas import CorpusSelector, Language, Norma
 
 
 class Citation(BaseModel):
@@ -57,11 +57,12 @@ class Context(BaseModel):
     """Wrapper produced by RetrieverAgent for downstream H4 LangGraph state."""
 
     query: str
-    corpus: Norma
+    corpus: CorpusSelector
     language: Language
     chunks: list[RetrievedChunk]
     retrieved_at: datetime
     embedding_model: str
+    resolved_normas: list[Norma] = Field(default_factory=list)
 
 
 class FetchedArticle(BaseModel):

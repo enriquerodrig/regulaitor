@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 from regulaitor.citation.schemas import Context
-from regulaitor.corpus.schemas import Language, Norma
+from regulaitor.corpus.schemas import CorpusSelector, Language
 from regulaitor.rag import embeddings
 from regulaitor.rag import retrieval as rag_retrieval
 
@@ -25,11 +25,15 @@ class RetrieverAgent:
     def retrieve(
         self,
         query: str,
-        corpus: Norma,
+        corpus: CorpusSelector,
         language: Language,
         top_k: int = 5,
     ) -> Context:
-        chunks = rag_retrieval.run(query, corpus, language, top_k=top_k)
+        if corpus == "auto":
+            chunks, resolved = rag_retrieval.run_auto(query, language, rag_retrieval.DEFAULT_CONFIG)
+        else:
+            chunks = rag_retrieval.run(query, corpus, language, top_k=top_k)
+            resolved = [corpus]
         return Context(
             query=query,
             corpus=corpus,
@@ -37,4 +41,5 @@ class RetrieverAgent:
             chunks=chunks,
             retrieved_at=datetime.now(tz=UTC),
             embedding_model=embeddings.model_identifier(),
+            resolved_normas=resolved,
         )
