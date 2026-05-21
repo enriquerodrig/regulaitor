@@ -1,6 +1,6 @@
 # ADR 0019 — Segmenter heading regex extension for numbered-section detection (v0.1.14)
 
-- **Status:** Accepted — 2026-05-21 — squash `<squash-sha>`, tag `v0.1.14`
+- **Status:** Accepted — 2026-05-21 — squash `1ebe17d`, tag `v0.1.14`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0007 (H5 document pipeline — the segmenter design this extends), 0016 (H15 Auditor calibration — surfaced the "1 giant segment" failure mode on the doc-mode probe).
 
