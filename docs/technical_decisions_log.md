@@ -3769,3 +3769,43 @@ El downstream filter `not stripped.endswith(".")` en `_detect_heading_lines` con
 ### Gate autoritativo
 
 `uv run pytest -m "not slow"` → **837 passed / 0 failed / 1 skipped esperado / coverage exit 0** + strict `mypy src` Success 71 files exit 0 (+5 segmenter tests vs v0.1.13). §6 invariant intact (Auditor + citation validator byte-unchanged). $0 entire milestone.
+
+## v0.1.15 — Chat gap-analysis mode via Analyst prompt v1.3 (cerrado 2026-05-21, squash `<squash-sha>`, tag `v0.1.15-gap-analysis-chat`)
+
+### Decision
+
+User-approved insertion at v0.1.14 close (2026-05-21) to ship a chat gap-analysis surface for the TFM dual-target (LinkedIn publish + AI industry presencial session). Brainstorming session resolved 5 design questions (committed spec `a899b15`): NL auto-detect inside prompt (no API surface change); reuse existing Finding schema (zero schema change, §6 preserved by construction); 1 Q&A + 2 gap few-shots in prompt v1.3; 10 gold cases (5 precise industry-g* + 5 vague-real industry-gv*); production default stays v1.0, v1.3 opt-in via env override per boundary contract. Empirical measurement deferred to v0.1.20 paid bundle.
+
+### Implementation
+
+- **NEW** `src/regulaitor/agents/prompts/analyst/system.v1.3.md` (200 lines): copy of v1.2 + Hard Rule 8 (NL gap-analysis detection: requires BOTH state declaration + gap-seeking question; ambiguous → Q&A default) + "Output contract — gap-analysis branch" subsection (severity scale high/medium/low/info, Finding semantics for gaps, declared state = INPUT) + Example 2 (precise gap-analysis) + Example 3 (vague-real gap-analysis). Hard rules 1-7 + Output format + Output contract + Example 1 (Q&A) BYTE-IDENTICAL to v1.2 (verified by `test_analyst_v1_3_loads.py::test_v1_3_preserves_v1_2_example_1_q_and_a_verbatim` extracting the Example 1 block — 816 chars — from both files and asserting string equality).
+- **NEW** `tests/unit/test_analyst_v1_3_loads.py` (7 tests $0): file loads + frontmatter version 1.3 + Rule 8 anchor + gap-output contract anchor + Example 1 byte-identical to v1.2 + Hard rules 1-7 anchors preserved + all 4 prompt versions coexist on disk.
+- **APPEND** 10 new chat cases to `evals/gold_set.jsonl` (54 → 64): industry-g{1..5} precise + industry-gv{1..5} vague-real, all `corpus_esperado="auto"`, all `expected_verdict="pass"`, all with ≥3 criterios_evaluacion enforcing per-gap coverage + NOT-emitted constraints for declared controls.
+- **NEW** `tests/unit/evals/test_industry_gap_cases_load.py` (7 tests $0): 10 cases load + 5/5 split + auto corpus + pass verdict + non-empty articulos_esperados + ≥3 criterios + vague cases without article numbers.
+- **NEW** `docs/adr/0020-chat-gap-analysis-mode.md` (ADR count 19 → 20): context + decision + consequences + 4 rejected alternatives (mode parameter, /gap-analysis endpoint, GapFinding subtype, production-default flip in v0.1.15).
+- **NEW** `docs/gap_analysis_chat_mode.md` (109 lines): memoria-ready WHAT/WHY/HOW/IMPACT per `feedback_optimization_narrative_doc.md` + §6 invariant interpretation callout.
+- **NO** code change to Auditor, citation/validator, schemas, API routes, retrieval, document pipeline, orchestration, Streamlit (verified by 4 git-diff checks at T7: `git diff main...HEAD -- src/regulaitor/agents/auditor.py src/regulaitor/citation/validator.py` empty + `git diff main...HEAD -- src/regulaitor/citation/schemas.py src/regulaitor/api/schemas.py` empty + `git diff main...HEAD --stat -- src/regulaitor/rag/ src/regulaitor/document/ src/regulaitor/api/ src/regulaitor/orchestration/` empty + `git diff main...HEAD -- src/regulaitor/agents/prompts/analyst/system.v1.{0,1,2}.md` empty).
+
+### IMPACT
+
+- **Production-UX gap closed for TFM industry session**: users can ask "tengo X, ¿qué me falta?" and get a structured gap list. Capability available via one .env line (`REGULAITOR_ANALYST_PROMPT_VERSION=v1.3`); no code redeploy needed.
+- **§6 invariant trivially preserved**: gap-analysis Findings reuse the standard `Finding{text, citations[], severity}` schema; Auditor + citation-validator BYTE-UNCHANGED.
+- **Backward-compat by construction**: production default v1.0 unchanged → env-unset behavior byte-identical to v0.1.14 (no regression possible on existing 54 chat cases). v1.3 ALSO preserves the v1.2 Q&A example verbatim (regression-zero anchor when v1.3 IS loaded).
+- **Empirical measurement deferred to v0.1.20 paid bundle**: §22.22 capability-shipped + measurement-deferred pattern (carried from H15/H15.1/v0.1.10–v0.1.14). The contribution of v0.1.15 IS the capability + the gold extension + the schema-zero-change design.
+- **$0 milestone**: no paid LLM call in v0.1.15.
+- **Follow-ups carried (from T2 code-review, tracked for v0.1.20 measurement / possible v1.4)**:
+  - **I-1**: no Example in v1.3 prompt demonstrates the positive-coverage (`info`-only) Finding path; the contract describes it but no worked few-shot teaches it. Add an Example 4 in a future v1.4 if v0.1.20 measurement shows the model misses the all-covered branch.
+  - **I-2**: Rule 8 keyword list is closed; semantic paraphrases of the trigger intent ("nuestro sistema usa...", "¿estoy en regla?", etc.) will likely Q&A-default. Consider softening with "illustrative, not exhaustive" qualifier in v1.4 if v0.1.20 evidence shows under-trigger on the 10 industry-g/gv cases.
+  - **I-3**: severity-scale e.g. ("missing fundamental rights impact") differs from Example 2's use of `high` (art 9 risk management system). One-word fix in a future v1.4: change scale e.g. to "(e.g. missing risk management system or fundamental rights impact for high-risk AI)" to align with Example 2's `high` calibration.
+  - **M-1**: v1.3 system prompt adds ~1.5k input tokens/call vs v1.2 (~$0.0045 incremental at Sonnet pricing). Material at production scale; document in H17 cost_analysis.md.
+  - **M-2**: gap-output contract bullet repetition could be trimmed (3 bullets restating "prior rules still apply" could be 1). Defer to v1.4.
+  - **M-3**: bilingual handling clean but no English few-shot example. Defer to v1.4 if v0.1.20 includes English industry cases.
+  - **M-4**: prompt frontmatter `created:` field stays 2026-05-18 (prompt series origin); v1.3 changelog dated 2026-05-21. Convention is defensible (single prompt series, versioned revisions); non-blocking.
+
+### Gate
+
+- `uv run pytest -m "not slow"` → **850 passed / 0 failed / 1 skipped** (836 baseline + 7 from T1 + 7 from T3 turning green), **92.46%** coverage ≥90% exit 0.
+- `uv run mypy src` → Success: no issues found in 71 source files, exit 0.
+- `uv run python -m scripts.redteam --smoke` → block_rate **0.92** ≥0.90 ✅ (= v0.1.14 frozen carry; prompt-blind so unaffected by prompt change).
+- 4 git-diff HARD invariant checks per spec §5 all EMPTY (§6 Auditor/validator + schemas + backend H1-H5/H7 + prior prompt files v1.0/v1.1/v1.2).
+- Cost: **$0** total (no paid LLM run in v0.1.15).
