@@ -30,12 +30,20 @@ class RetrievalConfig:
     """H15.1 tuning levers. Frozen defaults == v0.1.5-h15 behaviour so the
     explicit-corpus path is provably unchanged; the `auto` path and any tuned
     value are the A/B variable (ADR-0017). `query_normalize` stays deterministic
-    (no LLM — preserves the LLM-free-retriever principle)."""
+    (no LLM — preserves the LLM-free-retriever principle).
+
+    v0.1.10 (xcorpus-002 follow-up, motivated by single-article dominance):
+    ``max_chunks_per_article`` caps the number of chunks per (norma, article)
+    key in the reranked list BEFORE the purity gate fires. Default `None` =
+    no cap = backward-compat with v0.1.9. Opt-in via env override or explicit
+    config; see ``docs/xcorpus_002_investigation.md``.
+    """
 
     pre_rerank: int = PRE_RERANK  # 50
     top_k: int = 5
     purity_threshold: float = 0.6  # auto path only; >= is inclusive
     query_normalize: bool = False  # default identity == current behaviour
+    max_chunks_per_article: int | None = None  # v0.1.10; None == no cap == v0.1.9 behaviour
 
     def __post_init__(self) -> None:
         if not isinstance(self.pre_rerank, int) or isinstance(self.pre_rerank, bool):
@@ -54,6 +62,19 @@ class RetrievalConfig:
             raise TypeError(
                 f"query_normalize must be bool, got {type(self.query_normalize).__name__}"
             )
+        # v0.1.10 — max_chunks_per_article validation: None OR positive int.
+        if self.max_chunks_per_article is not None:
+            if not isinstance(self.max_chunks_per_article, int) or isinstance(
+                self.max_chunks_per_article, bool
+            ):
+                raise TypeError(
+                    "max_chunks_per_article must be int or None, "
+                    f"got {type(self.max_chunks_per_article).__name__}"
+                )
+            if self.max_chunks_per_article < 1:
+                raise ValueError(
+                    f"max_chunks_per_article must be >= 1, got {self.max_chunks_per_article}"
+                )
 
 
 _KNOWN_FIELDS = frozenset(RetrievalConfig.__dataclass_fields__)
@@ -122,6 +143,33 @@ def _config_from_env() -> RetrievalConfig:
 DEFAULT_CONFIG: RetrievalConfig = _config_from_env()
 
 _T = TypeVar("_T")
+
+
+def _apply_per_article_dedup(
+    ranked: list[tuple[str, str, _T]], max_per_article: int
+) -> list[tuple[str, _T]]:
+    """v0.1.10 — cap chunks per (norma, article) key in best-first order.
+
+    Pure helper. Input is `(norma, article, payload)` triples best-first
+    (as the reranker emits them); output is `(norma, payload)` pairs ready to
+    be passed to `_apply_purity_gate`. Preserves order; drops chunks beyond the
+    cap for any given (norma, article) key.
+
+    Motivated by the v0.1.9 xcorpus-002 diagnostic: standard bge-reranker-v2-m3
+    can emit several paragraphs of the same article at the top of its ranking
+    (the "single-article dominance" failure mode), starving cross-corpus
+    queries of articles from other corpora the user actually needs cited. The
+    cap is the surgical, deterministic, $0 corrective step. See
+    `docs/xcorpus_002_investigation.md`.
+    """
+    seen: Counter[tuple[str, str]] = Counter()
+    out: list[tuple[str, _T]] = []
+    for norma, article, payload in ranked:
+        key = (norma, article)
+        if seen[key] < max_per_article:
+            seen[key] += 1
+            out.append((norma, payload))
+    return out
 
 
 def _apply_purity_gate(
@@ -229,7 +277,14 @@ def run_auto(
     query: str, language: Language, cfg: RetrievalConfig
 ) -> tuple[list[RetrievedChunk], list[Norma]]:
     """H15.1 cross-corpus path (ADR-0017): multi-corpus retrieve -> rerank ->
-    post-rerank purity gate. Returns (chunks, resolved_normas)."""
+    (v0.1.10 optional per-article dedup) -> post-rerank purity gate.
+    Returns (chunks, resolved_normas).
+
+    v0.1.10 (xcorpus-002 follow-up): when `cfg.max_chunks_per_article` is set,
+    the reranked list is deduplicated to at most N chunks per (norma, article)
+    key BEFORE the purity gate fires. Backward-compat default `None` skips this
+    step entirely (v0.1.9 behaviour). See `docs/xcorpus_002_investigation.md`.
+    """
     [query_vec] = embeddings.embed([query])
 
     table = store.connect(INDEX_PATH)
@@ -242,7 +297,19 @@ def run_auto(
     if not reranked:
         return [], []
 
-    ranked_pairs = [(candidates[idx]["norma"], (idx, score)) for idx, score in reranked]
+    # v0.1.10 — optional per-article dedup BEFORE the purity gate. When
+    # `cfg.max_chunks_per_article is None` (the backward-compat default), the
+    # dedup is skipped entirely and the construction below collapses to the
+    # exact v0.1.9 expression.
+    if cfg.max_chunks_per_article is not None:
+        ranked_triples = [
+            (candidates[idx]["norma"], candidates[idx]["articulo"], (idx, score))
+            for idx, score in reranked
+        ]
+        ranked_pairs = _apply_per_article_dedup(ranked_triples, cfg.max_chunks_per_article)
+    else:
+        ranked_pairs = [(candidates[idx]["norma"], (idx, score)) for idx, score in reranked]
+
     kept, resolved = _apply_purity_gate(ranked_pairs, cfg)
     enriched = _enrich(candidates, [p for _, p in kept])
     return enriched, resolved

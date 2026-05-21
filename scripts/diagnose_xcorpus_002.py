@@ -86,9 +86,33 @@ def main() -> None:
     print(f"      expected present: {sorted(present2)} ({len(present2)}/3)")
 
     # ---------------------------------------------------------------------
+    # Call 4: v0.1.10 — auto-path with max_chunks_per_article=2 (cap alone)
+    # ---------------------------------------------------------------------
+    print("\n[4/5] auto-path with max_chunks_per_article=2 (cap alone, v0.1.10)")
+    cfg_cap = retrieval.RetrievalConfig(max_chunks_per_article=2)
+    chunks4, resolved4 = retrieval.run_auto(QUERY, LANGUAGE, cfg_cap)
+    emitted4 = _emitted_keys(chunks4)
+    present4 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks4])
+    print(f"      resolved_normas: {resolved4}")
+    print(f"      emitted: {emitted4}")
+    print(f"      expected present: {sorted(present4)} ({len(present4)}/3)")
+
+    # ---------------------------------------------------------------------
+    # Call 5: v0.1.10 — auto-path with cap=2 + lower threshold combo
+    # ---------------------------------------------------------------------
+    print("\n[5/5] auto-path with cap=2 + purity_threshold=0.5 (v0.1.10 combo probe)")
+    cfg_combo = retrieval.RetrievalConfig(max_chunks_per_article=2, purity_threshold=0.5)
+    chunks5, resolved5 = retrieval.run_auto(QUERY, LANGUAGE, cfg_combo)
+    emitted5 = _emitted_keys(chunks5)
+    present5 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks5])
+    print(f"      resolved_normas: {resolved5}")
+    print(f"      emitted: {emitted5}")
+    print(f"      expected present: {sorted(present5)} ({len(present5)}/3)")
+
+    # ---------------------------------------------------------------------
     # Call 3: dense-only at pre_rerank=200 (no rerank, no purity gate)
     # ---------------------------------------------------------------------
-    print("\n[3/3] dense-only pool at pre_rerank=200 (no rerank, no purity gate)")
+    print("\n[3/5] dense-only pool at pre_rerank=200 (no rerank, no purity gate)")
     [qvec] = embeddings.embed([QUERY])
     table = store.connect(INDEX_PATH)
     where_clause = f"language = '{LANGUAGE}'"
@@ -103,7 +127,20 @@ def main() -> None:
     # Write findings to markdown
     # ---------------------------------------------------------------------
     markdown = _render_markdown(
-        emitted1, resolved1, present1, emitted2, resolved2, present2, per_norma, present3
+        emitted1,
+        resolved1,
+        present1,
+        emitted2,
+        resolved2,
+        present2,
+        per_norma,
+        present3,
+        emitted4,
+        resolved4,
+        present4,
+        emitted5,
+        resolved5,
+        present5,
     )
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(markdown, encoding="utf-8")
@@ -121,6 +158,12 @@ def _render_markdown(
     present2: set[tuple[str, str]],
     per_norma3: Counter,
     present3: set[tuple[str, str]],
+    emitted4: list[str] | None = None,
+    resolved4: list[Any] | None = None,
+    present4: set[tuple[str, str]] | None = None,
+    emitted5: list[str] | None = None,
+    resolved5: list[Any] | None = None,
+    present5: set[tuple[str, str]] | None = None,
 ) -> str:
     expected_str = ", ".join(f"`{n}.{a}`" for (n, a) in EXPECTED)
     missing3 = sorted(set(EXPECTED) - present3)
@@ -150,6 +193,22 @@ def _render_markdown(
         f"{', '.join(f'`{k}`' for k in emitted2)} | {'+'.join(str(r) for r in resolved2)} | "
         f"{len(present2)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(present2)) or '—'}) |"
     )
+    # v0.1.10 — cap-alone + cap+threshold-combo rows (added when present).
+    if present4 is not None and emitted4 is not None and resolved4 is not None:
+        lines.append(
+            f"| 4 (v0.1.10 cap=2) | purity=0.6, top_k=5, pre_rerank=50, max_chunks_per_article=2 | "
+            f"{', '.join(f'`{k}`' for k in emitted4)} | "
+            f"{'+'.join(str(r) for r in resolved4)} | "
+            f"{len(present4)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(present4)) or '—'}) |"
+        )
+    if present5 is not None and emitted5 is not None and resolved5 is not None:
+        lines.append(
+            f"| 5 (v0.1.10 cap=2 + purity=0.5) | "
+            f"purity=0.5, top_k=5, pre_rerank=50, max_chunks_per_article=2 | "
+            f"{', '.join(f'`{k}`' for k in emitted5)} | "
+            f"{'+'.join(str(r) for r in resolved5)} | "
+            f"{len(present5)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(present5)) or '—'}) |"
+        )
     lines.append("")
 
     lines.append("### Call 3: dense-only pool diagnostic (the root-cause discriminator)\n")

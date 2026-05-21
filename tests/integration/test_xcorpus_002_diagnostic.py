@@ -107,6 +107,66 @@ def test_call2_lower_purity_threshold_does_not_change_emitted_set() -> None:
     )
 
 
+def test_call4_v0_1_10_cap2_diversifies_within_nis2_but_does_not_fix_xcorpus_002() -> None:
+    """v0.1.10 Call 4: with `max_chunks_per_article=2` and otherwise defaults,
+    the emitted set MUST diversify within NIS2 (no longer 5×nis2.23) but MUST
+    STILL miss NIS2 art 35 and GDPR art 33 (purity gate still collapses to NIS2
+    because the deduped top-5 is still 5/5 NIS2 in distinct articles).
+
+    This pins the v0.1.10 honest finding: per-article cap works algorithmically
+    but does not fix xcorpus-002 alone; the reranker bias is at NORMA level,
+    not just ARTICLE level. If this fails (cap now surfaces NIS2 35 or GDPR 33),
+    the v0.1.10 conclusion needs revisiting and the next-step candidates (per-norma
+    cap, raise top_k, different reranker) may not all be needed."""
+    cfg = retrieval.RetrievalConfig(max_chunks_per_article=2)
+    chunks, resolved = retrieval.run_auto(QUERY, "es", cfg)
+    emitted = _emitted_pairs(chunks)
+
+    # Algorithm-level success: cap recovers article diversity within NIS2.
+    distinct_nis2_articles = {a for (n, a) in emitted if n == "nis2"}
+    assert len(distinct_nis2_articles) >= 2, (
+        f"cap=2 should have produced at least 2 distinct NIS2 articles in top-5, "
+        f"but got distinct={distinct_nis2_articles} from emitted={emitted}. "
+        "Either the dedup helper regressed, or the reranker output changed."
+    )
+
+    # System-level failure preservation: cap alone does NOT recover NIS2 35 / GDPR 33.
+    assert list(resolved) == ["nis2"], (
+        f"purity gate did not collapse to NIS2 alone with cap=2 (got resolved={resolved}). "
+        "v0.1.10 baseline was still NIS2-only collapse — narrative needs re-check."
+    )
+    assert ("nis2", "35") not in emitted, (
+        "NIS2 art 35 unexpectedly surfaced with cap=2 alone. The v0.1.10 honest "
+        "finding was that cap=2 algorithm-works but does NOT fix xcorpus-002 — "
+        "reranker bias is at norma level, not article level. Re-investigate."
+    )
+    assert ("gdpr", "33") not in emitted, (
+        "GDPR art 33 unexpectedly surfaced with cap=2 alone. Same as above — "
+        "v0.1.10 honest finding was that cap=2 does NOT fix xcorpus-002."
+    )
+
+
+def test_call5_v0_1_10_cap2_plus_lower_threshold_produces_identical_set_to_call4() -> None:
+    """v0.1.10 Call 5: cap=2 + purity_threshold=0.5 produces the SAME emitted
+    set as cap=2 alone (Call 4) — because top-5 deduped is still 5/5 NIS2 in
+    distinct articles, so `dominant_norma_share = 1.0 ≥ 0.5` and the gate
+    collapses regardless of whether the threshold is 0.6 or 0.5.
+
+    If this fails: lowering the threshold WITH the cap now changes the output,
+    which would be unexpected and would re-open the question of whether
+    combining cap + lower threshold could fix xcorpus-002 after all."""
+    cfg_cap_only = retrieval.RetrievalConfig(max_chunks_per_article=2)
+    cfg_combo = retrieval.RetrievalConfig(max_chunks_per_article=2, purity_threshold=0.5)
+    chunks_cap_only, _ = retrieval.run_auto(QUERY, "es", cfg_cap_only)
+    chunks_combo, _ = retrieval.run_auto(QUERY, "es", cfg_combo)
+
+    assert _emitted_pairs(chunks_cap_only) == _emitted_pairs(chunks_combo), (
+        "cap=2 + purity=0.5 changed the emitted set vs cap=2 alone — "
+        "v0.1.10 baseline showed identical output because dominant-norma share "
+        "was 1.0 in both. The combo now matters; re-investigate fix candidates."
+    )
+
+
 def test_call3_dense_pool_contains_all_three_expected_articles() -> None:
     """v0.1.9 Call 3: at pre_rerank=200, the raw dense pool (no rerank, no
     gate) contains ALL 3 expected articles: NIS2 23, NIS2 35, GDPR 33.
