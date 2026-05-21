@@ -1,6 +1,6 @@
 # ADR 0020 — Chat gap-analysis mode via Analyst prompt v1.3 (NL auto-detect) (v0.1.15)
 
-- **Status:** Accepted — 2026-05-21 — squash `<squash-sha>`, tag `v0.1.15-gap-analysis-chat`
+- **Status:** Accepted — 2026-05-21 — squash `4ea2d9e`, tag `v0.1.15-gap-analysis-chat`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0006 (H4 chat E2E — the Analyst chain this extends), 0016 (H15 Auditor calibration — the prompt-versioning seam `REGULAITOR_ANALYST_PROMPT_VERSION` reused here), 0019 (v0.1.14 segmenter heading regex — sibling decimal-milestone discipline pattern).
 

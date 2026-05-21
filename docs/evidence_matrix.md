@@ -176,7 +176,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.12** | `v0.1.12` | — | mini-plan in commit body | — | `64c6eac` |
 | **v0.1.13** | `v0.1.13` | — | mini-plan in commit body | — | `3ee42d9` |
 | **v0.1.14** | `v0.1.14` | — | mini-plan in commit body | [0019](adr/0019-segmenter-numbered-section-heading-detection.md) | `1ebe17d` |
-| **v0.1.15** | `v0.1.15-gap-analysis-chat` | [spec](superpowers/specs/2026-05-21-v0.1.15-gap-analysis-chat-mode-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.15-gap-analysis-chat-mode.md) | [0020](adr/0020-chat-gap-analysis-mode.md) | `<squash-sha>` |
+| **v0.1.15** | `v0.1.15-gap-analysis-chat` | [spec](superpowers/specs/2026-05-21-v0.1.15-gap-analysis-chat-mode-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.15-gap-analysis-chat-mode.md) | [0020](adr/0020-chat-gap-analysis-mode.md) | `4ea2d9e` |
 
 ---
 

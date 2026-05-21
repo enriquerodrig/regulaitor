@@ -3770,7 +3770,7 @@ El downstream filter `not stripped.endswith(".")` en `_detect_heading_lines` con
 
 `uv run pytest -m "not slow"` → **837 passed / 0 failed / 1 skipped esperado / coverage exit 0** + strict `mypy src` Success 71 files exit 0 (+5 segmenter tests vs v0.1.13). §6 invariant intact (Auditor + citation validator byte-unchanged). $0 entire milestone.
 
-## v0.1.15 — Chat gap-analysis mode via Analyst prompt v1.3 (cerrado 2026-05-21, squash `<squash-sha>`, tag `v0.1.15-gap-analysis-chat`)
+## v0.1.15 — Chat gap-analysis mode via Analyst prompt v1.3 (cerrado 2026-05-21, squash `4ea2d9e`, tag `v0.1.15-gap-analysis-chat`)
 
 ### Decision
 
