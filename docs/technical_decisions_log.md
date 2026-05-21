@@ -3810,7 +3810,7 @@ User-approved insertion at v0.1.14 close (2026-05-21) to ship a chat gap-analysi
 - 4 git-diff HARD invariant checks per spec §5 all EMPTY (§6 Auditor/validator + schemas + backend H1-H5/H7 + prior prompt files v1.0/v1.1/v1.2).
 - Cost: **$0** total (no paid LLM run in v0.1.15).
 
-## v0.1.16 — Dual-layer §17 thresholds + judge family stays Haiku 4.5 (cerrado 2026-05-21, squash `<squash-sha>`, tag `v0.1.16-section17-thresholds`)
+## v0.1.16 — Dual-layer §17 thresholds + judge family stays Haiku 4.5 (cerrado 2026-05-21, squash `bc7b349`, tag `v0.1.16-section17-thresholds`)
 
 ### Decision
 

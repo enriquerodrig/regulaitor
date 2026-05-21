@@ -177,7 +177,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.13** | `v0.1.13` | — | mini-plan in commit body | — | `3ee42d9` |
 | **v0.1.14** | `v0.1.14` | — | mini-plan in commit body | [0019](adr/0019-segmenter-numbered-section-heading-detection.md) | `1ebe17d` |
 | **v0.1.15** | `v0.1.15-gap-analysis-chat` | [spec](superpowers/specs/2026-05-21-v0.1.15-gap-analysis-chat-mode-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.15-gap-analysis-chat-mode.md) | [0020](adr/0020-chat-gap-analysis-mode.md) | `4ea2d9e` |
-| **v0.1.16** | `v0.1.16-section17-thresholds` | [spec](superpowers/specs/2026-05-21-v0.1.16-section17-thresholds-judge-family-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.16-section17-thresholds-judge-family.md) | [0021](adr/0021-v0120-bar-thresholds.md) | `<squash-sha>` |
+| **v0.1.16** | `v0.1.16-section17-thresholds` | [spec](superpowers/specs/2026-05-21-v0.1.16-section17-thresholds-judge-family-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.16-section17-thresholds-judge-family.md) | [0021](adr/0021-v0120-bar-thresholds.md) | `bc7b349` |
 
 ---
 

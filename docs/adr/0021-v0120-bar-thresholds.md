@@ -1,6 +1,6 @@
 # ADR 0021 — Dual-layer §17 thresholds + LLM-judge family stays Haiku 4.5 (v0.1.16)
 
-- **Status:** Accepted — 2026-05-21 — squash `<squash-sha>`, tag `v0.1.16-section17-thresholds`
+- **Status:** Accepted — 2026-05-21 — squash `bc7b349`, tag `v0.1.16-section17-thresholds`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0010 (H8 evaluation harness — judge family lineage carried; D1 caveat resolved here), 0013 (H12 router multi-LLM — cross-vendor capability available but migration deferred), 0016 (H15 Auditor calibration — measurement precedent for the bar derivation), 0018 (H15.2 wiring fix — measurement-architecture milestone lineage), 0020 (v0.1.15 chat gap-analysis — capability-shipped + measurement-deferred §22.22 pattern carried).
 

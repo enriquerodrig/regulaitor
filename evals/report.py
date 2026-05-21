@@ -106,7 +106,7 @@ def _render_caveats_block() -> str:
     )
     parts.append(
         "4. **Latency p95** number remains contaminated by batch+rate-limit+tenacity "
-        "backoff per H8 amendment §H8 + §17 note; v0.1.16 does NOT fix this. H17 LangFuse "
+        "backoff per H8 amendment + §17 note; v0.1.16 does NOT fix this. H17 LangFuse "
         "refactor is the proper instrument; until then `latency_p95_ms` is informational "
         "despite being formally gated in the report."
     )
