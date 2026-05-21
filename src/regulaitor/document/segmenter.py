@@ -20,7 +20,23 @@ from regulaitor.citation.schemas import OutlineEntry, SanitizedDocument, Segment
 
 logger = logging.getLogger("regulaitor.document.segmenter")
 
-_HEADING_LIKE = re.compile(r"^(?:[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ \-]{2,80}|#{1,6}\s+\S.{0,80})$")
+# Heading-detection regex. Three alternatives:
+#   1. ALL-CAPS heading (Spanish accents allowed): "INTRODUCCIÓN", "POLÍTICA"
+#   2. Markdown heading: "# Título", "## Subtítulo"
+#   3. (v0.1.14) Numbered section, Spanish compliance-doc style: "1. Introducción",
+#      "2.1 Subsección", "3.1.1 Detalle". One or more dot-separated digit groups,
+#      followed by optional trailing dot, whitespace, then ≥3 chars of title text.
+# The downstream filter `not stripped.endswith(".")` in `_detect_heading_lines`
+# excludes ordinary sentences (which end in '.') even when they start with a
+# number — so "1. Esta es una frase normal." is NOT a heading; "1. Introducción"
+# IS (no trailing period after the title text).
+_HEADING_LIKE = re.compile(
+    r"^(?:"
+    r"[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ \-]{2,80}"  # ALL CAPS heading
+    r"|#{1,6}\s+\S.{0,80}"  # Markdown heading
+    r"|\d+(?:\.\d+)*\.?\s+\S.{2,100}"  # Numbered: "1. Intro", "2.1 Sub", "3.1.1 Detail"
+    r")$"
+)
 
 
 def _count_tokens(text: str) -> int:
