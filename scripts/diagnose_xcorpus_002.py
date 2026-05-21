@@ -150,9 +150,72 @@ def main() -> None:
     print(f"      expected present: {sorted(present8)} ({len(present8)}/3)")
 
     # ---------------------------------------------------------------------
+    # Call 9: v0.1.12 — top_k_auto=12 alone (no cap)
+    # ---------------------------------------------------------------------
+    # If reranker bias persists, top-12 likely still NIS2-heavy → gate
+    # collapses. Baseline measurement of pure top_k_auto without any cap.
+    print("\n[9/12] auto-path with top_k_auto=12 (no cap, v0.1.12)")
+    cfg_topk = retrieval.RetrievalConfig(top_k_auto=12)
+    chunks9, resolved9 = retrieval.run_auto(QUERY, LANGUAGE, cfg_topk)
+    emitted9 = _emitted_keys(chunks9)
+    present9 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks9])
+    print(f"      resolved_normas: {resolved9}")
+    print(f"      emitted: {emitted9}")
+    print(f"      expected present: {sorted(present9)} ({len(present9)}/3)")
+
+    # ---------------------------------------------------------------------
+    # Call 10: v0.1.12 — top_k_auto=12 + cap_per_norma=2 (combo)
+    # ---------------------------------------------------------------------
+    # With cap=2 + top_k=12: max-share = 2/12 = 0.17 << 0.6 → multi-corpus
+    # output. But cap=2 also LIMITS NIS2 to 2 chunks regardless of top_k →
+    # NIS2 art 35 still needs to be one of top-2 NIS2 in reranked → unlikely.
+    print("\n[10/12] auto-path with top_k_auto=12 + cap_per_norma=2 (v0.1.12 combo)")
+    cfg_topk_cap2 = retrieval.RetrievalConfig(top_k_auto=12, max_chunks_per_norma=2)
+    chunks10, resolved10 = retrieval.run_auto(QUERY, LANGUAGE, cfg_topk_cap2)
+    emitted10 = _emitted_keys(chunks10)
+    present10 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks10])
+    print(f"      resolved_normas: {resolved10}")
+    print(f"      emitted: {emitted10}")
+    print(f"      expected present: {sorted(present10)} ({len(present10)}/3)")
+
+    # ---------------------------------------------------------------------
+    # Call 11: v0.1.12 — top_k_auto=12 + cap_per_norma=3 (relaxed cap)
+    # ---------------------------------------------------------------------
+    # With cap=3 + top_k=12: max-share = 3/12 = 0.25 < 0.6 → multi-corpus.
+    # cap=3 allows up to 3 NIS2 chunks → NIS2 art 35 has chance to fit IF
+    # the reranker scores it in the top 3 NIS2 (per-article would help here).
+    print("\n[11/12] auto-path with top_k_auto=12 + cap_per_norma=3 (v0.1.12 relaxed)")
+    cfg_topk_cap3 = retrieval.RetrievalConfig(top_k_auto=12, max_chunks_per_norma=3)
+    chunks11, resolved11 = retrieval.run_auto(QUERY, LANGUAGE, cfg_topk_cap3)
+    emitted11 = _emitted_keys(chunks11)
+    present11 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks11])
+    print(f"      resolved_normas: {resolved11}")
+    print(f"      emitted: {emitted11}")
+    print(f"      expected present: {sorted(present11)} ({len(present11)}/3)")
+
+    # ---------------------------------------------------------------------
+    # Call 12: v0.1.12 — triple combo top_k_auto=12 + art_cap=2 + norma_cap=3
+    # ---------------------------------------------------------------------
+    # Per-article cap=2 forces NIS2 art-diversification first (so NIS2 chunks
+    # are art 23, 30, 13, 10, 35... from per-article cap=2 view in Call 4).
+    # Per-norma cap=3 limits to top-3 NIS2 after per-article → likely
+    # nis2.23, nis2.30, nis2.13 (positions 1,3,4 of NIS2 from Call 4). Still
+    # no NIS2 35 unless reranker put it before art 13/10.
+    print("\n[12/12] auto-path triple combo art=2 + norma=3 + top_k_auto=12 (v0.1.12)")
+    cfg_triple = retrieval.RetrievalConfig(
+        top_k_auto=12, max_chunks_per_article=2, max_chunks_per_norma=3
+    )
+    chunks12, resolved12 = retrieval.run_auto(QUERY, LANGUAGE, cfg_triple)
+    emitted12 = _emitted_keys(chunks12)
+    present12 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks12])
+    print(f"      resolved_normas: {resolved12}")
+    print(f"      emitted: {emitted12}")
+    print(f"      expected present: {sorted(present12)} ({len(present12)}/3)")
+
+    # ---------------------------------------------------------------------
     # Call 3: dense-only at pre_rerank=200 (no rerank, no purity gate)
     # ---------------------------------------------------------------------
-    print("\n[3/8] dense-only pool at pre_rerank=200 (no rerank, no purity gate)")
+    print("\n[3/12] dense-only pool at pre_rerank=200 (no rerank, no purity gate)")
     [qvec] = embeddings.embed([QUERY])
     table = store.connect(INDEX_PATH)
     where_clause = f"language = '{LANGUAGE}'"
@@ -190,6 +253,18 @@ def main() -> None:
         emitted8,
         resolved8,
         present8,
+        emitted9,
+        resolved9,
+        present9,
+        emitted10,
+        resolved10,
+        present10,
+        emitted11,
+        resolved11,
+        present11,
+        emitted12,
+        resolved12,
+        present12,
     )
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(markdown, encoding="utf-8")
@@ -222,6 +297,18 @@ def _render_markdown(
     emitted8: list[str] | None = None,
     resolved8: list[Any] | None = None,
     present8: set[tuple[str, str]] | None = None,
+    emitted9: list[str] | None = None,
+    resolved9: list[Any] | None = None,
+    present9: set[tuple[str, str]] | None = None,
+    emitted10: list[str] | None = None,
+    resolved10: list[Any] | None = None,
+    present10: set[tuple[str, str]] | None = None,
+    emitted11: list[str] | None = None,
+    resolved11: list[Any] | None = None,
+    present11: set[tuple[str, str]] | None = None,
+    emitted12: list[str] | None = None,
+    resolved12: list[Any] | None = None,
+    present12: set[tuple[str, str]] | None = None,
 ) -> str:
     expected_str = ", ".join(f"`{n}.{a}`" for (n, a) in EXPECTED)
     missing3 = sorted(set(EXPECTED) - present3)
@@ -292,6 +379,40 @@ def _render_markdown(
             f"{'+'.join(str(r) for r in resolved8)} | "
             f"{len(present8)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(present8)) or '—'}) |"
         )
+    # v0.1.12 rows
+    for label, em, res, pr, extra in [
+        ("9 (v0.1.12 top_k_auto=12 alone)", emitted9, resolved9, present9, "top_k_auto=12"),
+        (
+            "10 (v0.1.12 top_k_auto=12 + norma_cap=2)",
+            emitted10,
+            resolved10,
+            present10,
+            "top_k_auto=12, max_chunks_per_norma=2",
+        ),
+        (
+            "11 (v0.1.12 top_k_auto=12 + norma_cap=3)",
+            emitted11,
+            resolved11,
+            present11,
+            "top_k_auto=12, max_chunks_per_norma=3",
+        ),
+        (
+            "12 (v0.1.12 triple combo top_k_auto=12 + art_cap=2 + norma_cap=3)",
+            emitted12,
+            resolved12,
+            present12,
+            "top_k_auto=12, max_chunks_per_article=2, max_chunks_per_norma=3",
+        ),
+    ]:
+        if pr is not None and em is not None and res is not None:
+            cells = ", ".join(f"`{k}`" for k in em[:12])
+            if len(em) > 12:
+                cells += ", …"
+            lines.append(
+                f"| {label} | purity=0.6, pre_rerank=50, {extra} | {cells} | "
+                f"{'+'.join(str(r) for r in res)} | "
+                f"{len(pr)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(pr)) or '—'}) |"
+            )
     lines.append("")
 
     lines.append("### Call 3: dense-only pool diagnostic (the root-cause discriminator)\n")

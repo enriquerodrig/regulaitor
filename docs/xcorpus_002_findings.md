@@ -45,13 +45,25 @@ Read alongside `xcorpus_002_investigation.md` for the raw measurement table (8 c
   - **NIS2 art 35 still missed** — the reranker positions NIS2 art 35 BELOW DORA arts 19 and 22 (semantically adjacent: "ICT incident notification" DORA vs "incident notification" NIS2). This is the actual deeper ceiling.
   - **Recommended config for cross-corpus demos**: `RetrievalConfig(max_chunks_per_norma=2)`. Production default stays `None` for backward-compat; the cap is opt-in. Updating the production default to 2 is a candidate paid-validation question for the bundle's final A/B (would invalidate the H15 baseline; intentionally deferred).
 
-## Ceiling carried to v0.1.12
+## v0.1.12 finding (capability shipped — empirical xcorpus-002 measurement DEFERRED)
 
-NIS2 art 35 still missing from cross-corpus xcorpus-002 output even with cap=2. The dense pool DOES contain it (Call 3 unchanged across all v0.1.9-v0.1.11 runs). The reranker scores it BELOW DORA 19/22 chunks at this query.
+- **WHAT** — implemented: `RetrievalConfig.top_k_auto: int | None = None` field. When set, `run_auto` uses this value as the purity-gate window AND final output size INSTEAD of `cfg.top_k`. The explicit-corpus `run()` path ignores this field entirely (T6 byte-identical guarantee preserved). Backward-compat default `None` = use `cfg.top_k` exactly as v0.1.11.
+- **WHY** — surgical follow-up to v0.1.11 ceiling (NIS2 art 35 still missed at top_k=5 even with cap_per_norma=2 — reranker scores it below DORA 19/22). Hypothesis: with top_k_auto=12 + cap_per_norma=3, max-share = 3/12 = 0.25 < 0.6 threshold, so the gate stays multi-corpus AND 12 slots give the relaxed cap room for NIS2 art 35 if the reranker positions it within the per-norma top-3.
+- **HOW** — `dataclasses.replace(cfg, top_k=cfg.top_k_auto)` builds a temporary `gate_cfg` only when `cfg.top_k_auto is not None`; the gate operates on this `gate_cfg` (using `gate_cfg.top_k` for its window + output size). The explicit `cfg.top_k` and the explicit-corpus `run()` path stay untouched. Two new unit-test modules (12 tests total): `test_retrieval_config_top_k_auto_field.py` (field defaults, validation, composition) + `test_top_k_auto_in_run_auto.py` (wiring contract with mocked rerank).
+- **IMPACT** — **capability shipped + wiring algorithmically verified; empirical xcorpus-002 measurement DEFERRED**.
+  - The unit tests prove the wiring works at the algorithm level: top_k_auto=12 + per-norma cap composes correctly to 12 chunks across 4 normas (mocked), gate computes share over the 12-window correctly, explicit-corpus path is unaffected.
+  - **The empirical question** (does top_k_auto=12 + cap_per_norma=3 actually surface NIS2 art 35 on the real LanceDB index?) **was NOT measured** in v0.1.12. The 12-call diagnostic (Calls 9-12 of `scripts/diagnose_xcorpus_002.py`) was killed at 41 min wall time due to repeated CPU-rerank underestimation on my side (see §22.22 disclosure below). Re-measurement deferred to either (a) a separate dedicated session with proper timing budget for ~15-20 min minimum, or (b) the v0.1.20 paid bundle validation which will exercise the cumulative config at real-eval scale.
+  - **Recommended demo-mode config when measurement confirms**: `RetrievalConfig(top_k_auto=12, max_chunks_per_norma=3, max_chunks_per_article=2)`. Production defaults stay `None` for all three (backward-compat); the recommended values are opt-in via env override or explicit config.
 
-**v0.1.12 candidate fix**: raise `top_k` 5→12. NIS2 art 35 may surface in deduped positions 6-12 since the dense pool has it. Trade-off: increases Analyst context size + chunk-budget assumptions downstream.
+## v0.1.12 §22.22 honest disclosure (CPU rerank cost discipline)
 
-**v0.1.13 fallback** (if v0.1.12 insufficient): different reranker model (larger ceremony, requires paid re-baseline).
+Pattern that surfaced in v0.1.9 + v0.1.10 + v0.1.12: I have consistently underestimated CPU-rerank cost by 3-10×. Per-call cost of `reranker.rerank(passages_50, top_n=50)` on CPU is **~15-30s sustained**, not the "5-10s" I kept assuming. Multi-call diagnostics scale linearly: 12 sequential calls = ~3-6 min minimum, but with warmup + state accumulation the actual wall time was 41+ min before kill. The slow tests in `tests/integration/test_xcorpus_002_diagnostic.py` exclude themselves from the default `pytest -m "not slow"` gate precisely to avoid this cost during normal CI; explicit invocation `pytest -m slow` is the right place to incur it.
+
+New hard rule registered in memory `feedback_local_cpu_rerank_cost.md`: ANY local-CPU diagnostic that calls `reranker.rerank` more than 3 times sequentially should be estimated as **N × 30s minimum** (be conservative, communicate range) AND if total estimate exceeds 5 min, should be redesigned to run only 1-2 critical configs rather than full sweeps.
+
+## Ceiling carried to v0.1.13+
+
+NIS2 art 35 still missing from xcorpus-002 emit (last measured baseline: v0.1.11 cap_per_norma=2 → 2/3 expected). v0.1.12 capability shipped but empirical fix not yet measured. Next candidate intervention if v0.1.12 measurement (eventually) shows ≤2/3: try different reranker model (large milestone), or accept the architectural ceiling and document for memoria + industry demo as "we identified single-article + single-norma dominance failure modes in standard bge-reranker-v2-m3 on cross-corpus multi-regulation queries; our two-axis cap mitigates GDPR-side missing articles but the reranker's specific NIS2-art-35 ranking is below mitigation through tuning levers alone".
 
 ## Cumulative score
 

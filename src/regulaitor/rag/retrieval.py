@@ -42,8 +42,17 @@ class RetrievalConfig:
     cap=3 on top_k=5, max-share is 3/5=0.6 (boundary); with cap=2, max-share
     is 2/5=0.4 < 0.6 default threshold → purity gate guaranteed multi-corpus.
 
-    Both caps default ``None`` = no cap = backward-compat with v0.1.9. Opt-in
-    via env override or explicit config; see ``docs/xcorpus_002_investigation.md``.
+    v0.1.12 (xcorpus-002 follow-up to v0.1.11 — NIS2 art 35 still missed because
+    reranker scores it below DORA 19/22 within top-5): ``top_k_auto`` lets the
+    auto path use a DIFFERENT top_k than the explicit-corpus ``run()`` path.
+    When None (default), the auto path uses ``cfg.top_k`` exactly as before.
+    When set, ``run_auto`` uses this override for both the purity-gate window
+    AND the final output size, leaving ``cfg.top_k`` (and the explicit-corpus
+    path's T6 byte-identical guarantee) untouched.
+
+    All three new fields default ``None`` = no override = backward-compat with
+    v0.1.9. Opt-in via env override or explicit config; see
+    ``docs/xcorpus_002_findings.md``.
     """
 
     pre_rerank: int = PRE_RERANK  # 50
@@ -52,6 +61,7 @@ class RetrievalConfig:
     query_normalize: bool = False  # default identity == current behaviour
     max_chunks_per_article: int | None = None  # v0.1.10; None == no cap == v0.1.9 behaviour
     max_chunks_per_norma: int | None = None  # v0.1.11; None == no cap == v0.1.10 behaviour
+    top_k_auto: int | None = None  # v0.1.12; None == use cfg.top_k for auto == v0.1.11 behaviour
 
     def __post_init__(self) -> None:
         if not isinstance(self.pre_rerank, int) or isinstance(self.pre_rerank, bool):
@@ -96,6 +106,14 @@ class RetrievalConfig:
                 raise ValueError(
                     f"max_chunks_per_norma must be >= 1, got {self.max_chunks_per_norma}"
                 )
+        # v0.1.12 — top_k_auto validation: None OR positive int.
+        if self.top_k_auto is not None:
+            if not isinstance(self.top_k_auto, int) or isinstance(self.top_k_auto, bool):
+                raise TypeError(
+                    f"top_k_auto must be int or None, got {type(self.top_k_auto).__name__}"
+                )
+            if self.top_k_auto < 1:
+                raise ValueError(f"top_k_auto must be >= 1, got {self.top_k_auto}")
 
 
 _KNOWN_FIELDS = frozenset(RetrievalConfig.__dataclass_fields__)
@@ -323,13 +341,24 @@ def run_auto(
     query: str, language: Language, cfg: RetrievalConfig
 ) -> tuple[list[RetrievedChunk], list[Norma]]:
     """H15.1 cross-corpus path (ADR-0017): multi-corpus retrieve -> rerank ->
-    (v0.1.10 optional per-article dedup) -> post-rerank purity gate.
+    (v0.1.10 optional per-article dedup) -> (v0.1.11 optional per-norma dedup)
+    -> (v0.1.12 optional auto-only top_k override via top_k_auto) -> purity gate.
     Returns (chunks, resolved_normas).
 
     v0.1.10 (xcorpus-002 follow-up): when `cfg.max_chunks_per_article` is set,
     the reranked list is deduplicated to at most N chunks per (norma, article)
-    key BEFORE the purity gate fires. Backward-compat default `None` skips this
-    step entirely (v0.1.9 behaviour). See `docs/xcorpus_002_investigation.md`.
+    key BEFORE the purity gate fires.
+
+    v0.1.11: when `cfg.max_chunks_per_norma` is set, the reranked list is
+    further deduplicated to at most N chunks per `norma` AFTER per-article
+    dedup, BEFORE the purity gate.
+
+    v0.1.12: when `cfg.top_k_auto` is set, the purity gate window AND the
+    final output size use `cfg.top_k_auto` instead of `cfg.top_k`. The
+    explicit-corpus `run()` path ignores this field entirely, preserving the
+    T6 byte-identical guarantee. Backward-compat defaults (None for all three
+    new fields) make this function semantically identical to v0.1.9. See
+    `docs/xcorpus_002_findings.md`.
     """
     [query_vec] = embeddings.embed([query])
 
@@ -343,10 +372,7 @@ def run_auto(
     if not reranked:
         return [], []
 
-    # v0.1.10 — optional per-article dedup BEFORE the purity gate. When
-    # `cfg.max_chunks_per_article is None` (the backward-compat default), the
-    # dedup is skipped entirely and the construction below collapses to the
-    # exact v0.1.9 expression.
+    # v0.1.10 — optional per-article dedup BEFORE the purity gate.
     if cfg.max_chunks_per_article is not None:
         ranked_triples = [
             (candidates[idx]["norma"], candidates[idx]["articulo"], (idx, score))
@@ -356,14 +382,21 @@ def run_auto(
     else:
         ranked_pairs = [(candidates[idx]["norma"], (idx, score)) for idx, score in reranked]
 
-    # v0.1.11 — optional per-norma dedup AFTER per-article dedup, BEFORE the
-    # purity gate. Composes cleanly: per-article first thins out same-article
-    # repeats, then per-norma enforces cross-corpus diversity. When
-    # `cfg.max_chunks_per_norma is None` (backward-compat default), this step
-    # is skipped entirely and `ranked_pairs` reaches the purity gate unchanged.
+    # v0.1.11 — optional per-norma dedup AFTER per-article dedup, BEFORE gate.
     if cfg.max_chunks_per_norma is not None:
         ranked_pairs = _apply_per_norma_dedup(ranked_pairs, cfg.max_chunks_per_norma)
 
-    kept, resolved = _apply_purity_gate(ranked_pairs, cfg)
+    # v0.1.12 — optional auto-only top_k override. When cfg.top_k_auto is set,
+    # build a temporary gate-config with that as top_k (leaving cfg.top_k AND
+    # the explicit-corpus run() path's behaviour untouched). When None, the
+    # gate uses cfg.top_k exactly as v0.1.11 did (backward-compat).
+    if cfg.top_k_auto is not None:
+        from dataclasses import replace
+
+        gate_cfg = replace(cfg, top_k=cfg.top_k_auto)
+    else:
+        gate_cfg = cfg
+
+    kept, resolved = _apply_purity_gate(ranked_pairs, gate_cfg)
     enriched = _enrich(candidates, [p for _, p in kept])
     return enriched, resolved
