@@ -3488,3 +3488,284 @@ Plan acordado: 8 microhitos decimales + 1 paid validation final + retorno a H16/
 Tras `v0.1.16` → retorno a **H16** (Despliegue HF Spaces) y **H17** (cierre académico TFM) per CLAUDE.md §16.3.
 
 **Sin skills nuevas** (`evals-runner` activa desde H8; `cost-accounting` sigue H17). Ver `docs/retriever_h15-2_redesign.md` para el study report canónico.
+
+
+---
+
+## v0.1.8 — Harness checkpoint per-case + cost-estimation discipline (cerrado 2026-05-20, squash `91080ec`, tag `v0.1.8`)
+
+> Primer microhito del plan maximalista post-H15.2. Resuelve la causa estructural del desastre H15.2 T6 (harness escribía `evals/reports/latest.md` atómicamente solo al final → cualquier exception mid-loop perdía N cases de RAM).
+
+### Decisión
+
+Wrap del main-loop chat case body en `try/except` (captura `compute_chat_metrics` failures que en H15.2 mataron el loop por Haiku 429 credits) + nuevo módulo `evals/checkpoint.py` que persiste cada result como JSONL con `flush + fsync` BEFORE next case starts.
+
+### Implementación
+
+- `evals/checkpoint.py` NEW (~115 líneas): `checkpoint_path(run_id, *, root)` deterministic; `append_case(run_id, result)` one JSONL line + flush + `os.fsync` (sobrevive SystemExit / OS kill / OOM); `load_completed(run_id)` forward-compat-safe (unknown kind raises ValueError loudly).
+- `evals/harness.py`: nuevo `_CHECKPOINT_ROOT = Path("evals/checkpoints")`; `main()` genera `run_id = timestamp + commit-sha-short` al inicio; chat loop body wrapped in try/except; `_error_chat_result()` placeholder preserves case en report; `checkpoint.append_case()` llamado AFTER EACH case (chat + doc) BEFORE next case starts.
+- Tests: `tests/unit/evals/test_checkpoint.py` NEW (9 tests $0), `tests/unit/evals/test_harness_crash_recovery.py` NEW (3 tests $0 — per-case exception NOT kills loop, checkpoint BEFORE next case, catastrophic SystemExit preserves prior cases).
+- `tests/integration/test_evals_smoke.py` patch: monkeypatch `_CHECKPOINT_ROOT` to `tmp_path` (era leak silencioso de checkpoints reales durante tests).
+- `.gitignore`: añadido `evals/checkpoints/`.
+
+### Memoria (discipline registrada en `~/.claude/projects/.../memory/feedback_cost_estimation_discipline.md`)
+
+Hard rules para futuros paid runs (effective desde v0.1.8):
+- Probe minimum N = 5 (NO 3) — la varianza per-case en este gold-set es alta
+- Cost estimates SIEMPRE como ranges (low / expected / high = expected × 1.5) NO point estimates
+- Si user budget < high-estimate → DO NOT recommend "proceed", recommend SKIP o smaller scope
+- No paid run authorized hasta harness checkpoint per-case shipped (regla satisfecha ya por v0.1.8)
+
+### Gate autoritativo
+
+`uv run pytest -m "not slow"` → **794 passed / 0 failed / 1 skipped esperado / 93.51% coverage** exit 0 + strict `mypy src` Success 71 source files (+12 tests vs H15.2's 782 = 9 checkpoint + 3 crash-recovery). $0 entire milestone. Sin skills nuevas.
+
+---
+
+## v0.1.9 — xcorpus-002 retrieval diagnostic (cerrado 2026-05-21, squash `c8e096b`, tag `v0.1.9`)
+
+> Cierra H15.1's open question sobre por qué xcorpus-002 regresó RHR ✅ → block ❌ con `corpus="auto"` defaults. Diagnostic-only milestone con outcome §22.22-honest: documentation, NO production change.
+
+### Diagnóstico (3-call $0 local CPU)
+
+1. **Defaults** (purity=0.6, top_k=5, pre_rerank=50): emits `5× nis2.23` → 1/3 expected articles surfaced
+2. **Lower threshold** (purity=0.5): IDÉNTICO output → purity gate NOT the bottleneck
+3. **Dense pool 200** (no rerank, no gate): ALL 3 expected articles (nis2.23, nis2.35, gdpr.33) present → dense retrieval NOT the bottleneck
+
+### Conclusión
+
+Root cause = **standard `BAAI/bge-reranker-v2-m3` single-article dominance**: el reranker score 5 paragraphs distintos de NIS2 art 23 más alto que NIS2 art 35 o GDPR art 33. Classic single-article failure mode en cross-corpus multi-regulation queries. NOT purity gate, NOT dense retrieval.
+
+### Tres fix candidates identificados
+
+- (A) **Per-article deduplication cap** en purity gate → más surgical → implementado en v0.1.10
+- (B) MMR (Maximal Marginal Relevance) penalty en reranker stage → medium ceremony
+- (C) Hybrid bge_score + article_diversity_bonus → medium-large
+
+### Implementación
+
+- `scripts/diagnose_xcorpus_002.py` NEW (3 calls, ~30-60s real CPU when not zombied)
+- `docs/xcorpus_002_investigation.md` NEW (auto-generated diagnostic data)
+- `tests/integration/test_xcorpus_002_diagnostic.py` NEW (3 slow `@pytest.mark.slow` tests pin baseline)
+
+### Disciplina nueva registrada (`feedback_optimization_narrative_doc.md`)
+
+Cada milestone (incluyendo deferred ceilings) documentado con bloque WHAT/WHY/HOW/IMPACT memoria-ready en investigation doc + decisions log entry. Negative findings ARE memoria-worthy. Para H17 final memoria, the material está ready-to-consolidate.
+
+### Gate autoritativo
+
+`uv run pytest -m "not slow"` → 794 passed / 0 failed / 1 skipped / 93.51% (3 nuevos slow tests excluidos del default gate). 1/3 expected articles surfaced UNCHANGED de H15.1 baseline. $0 entire milestone.
+
+---
+
+## v0.1.10 — Per-article dedup cap (cerrado 2026-05-21, squash `2ab7a93`, tag `v0.1.10`)
+
+> Follow-up to v0.1.9 finding (option A surgical). Implementa per-article cap, MIDE outcome empíricamente: algorithm-WORKS pero xcorpus-002 NOT fixed alone — deeper finding identifica reranker bias at NORMA level, no solo article level.
+
+### Decisión
+
+`RetrievalConfig.max_chunks_per_article: int | None = None` (backward-compat default None = no cap = v0.1.9 behaviour preserved). When set to N, caps each `(norma, article)` key to N chunks BEFORE purity gate.
+
+### Implementación
+
+- `_apply_per_article_dedup(ranked_triples, max_per_article)` NEW pure helper: opera sobre `(norma, article, payload)` best-first triples, preserva order
+- `run_auto()` wires dedup BEFORE purity gate cuando `cfg.max_chunks_per_article is not None`; otherwise collapses a exacta expresión v0.1.9
+- Tests: `test_per_article_dedup.py` NEW (6 tests), `test_retrieval_config_dedup_field.py` NEW (5 tests)
+- Slow test extendido con Call 4+5 measurement (cap=2 alone, cap=2 + purity=0.5)
+
+### Outcome medido ($0)
+
+- Call 4 (cap=2): emits `nis2.23, nis2.23, nis2.30, nis2.13, nis2.10` (4 distinct NIS2 articles vs baseline 1) — **algorithm WORKS**
+- Call 5 (cap=2 + purity=0.5): IDENTICAL emitted set — purity gate threshold no importa cuando top-5 sigue siendo 5/5 NIS2 (just diversified within norma)
+- **1/3 expected articles surfaced UNCHANGED** — deeper finding: reranker bias at NORMA level, not just article level
+- Production defaults UNCHANGED (cap=None)
+
+### Tres nuevas fix candidates surfaced
+
+- (i) **Per-NORMA cap** (analogous to per-article, different granularity) → most surgical next → v0.1.11
+- (ii) Raise top_k 5→12 → v0.1.12 candidate
+- (iii) Different reranker model → large milestone, requires paid re-baseline
+
+### Gate autoritativo
+
+`uv run pytest -m "not slow"` → **805 passed / 0 failed / 1 skipped / 93.48% coverage** + mypy strict 71 files (+11: 6 dedup + 5 config field). $0 entire milestone.
+
+---
+
+## v0.1.11 — Per-NORMA dedup cap (cerrado 2026-05-21, squash `107479d`, tag `v0.1.11`)
+
+> Follow-up to v0.1.10 deeper finding (option (i) surgical). MIDE BREAKTHROUGH: 1/3 → 2/3 expected articles surfaced (NIS2 23 + GDPR 33).
+
+### Decisión
+
+`RetrievalConfig.max_chunks_per_norma: int | None = None` (backward-compat default). When set to N, caps each `norma` key to N chunks AFTER per-article dedup (composes cleanly), BEFORE purity gate.
+
+### Implementación
+
+- `_apply_per_norma_dedup(ranked, max_per_norma)` NEW pure helper: opera sobre `(norma, payload)` pairs (matches per-article output + purity gate input), preserves order
+- `run_auto()` wires per-norma dedup AFTER per-article dedup, BEFORE gate
+- Tests: `test_per_norma_dedup.py` NEW (6 tests), `test_retrieval_config_per_norma_field.py` NEW (6 tests)
+
+### BREAKTHROUGH measurement (boundary math discovery)
+
+| Call | Config | Outcome |
+|---|---|---|
+| 6 (cap=3) | norma_cap=3 + top_k=5 | max-share = 3/5 = 0.6 EXACTLY threshold (inclusive) → gate STILL collapses → 1/3 |
+| 7 (combo art=2 + norma=3) | both caps | IDENTICAL Call 6 → boundary math same |
+| **8 (cap=2)** | **norma_cap=2 sub-threshold** | **max-share = 2/5 = 0.4 < 0.6 → multi-corpus FORCED → emits `nis2.23, nis2.23, dora.19, dora.22, gdpr.33` → 2/3 expected (NIS2 23 + GDPR 33)** |
+
+**Math nuance crítica**: cap MUST put dominant-norma share STRICTLY BELOW threshold. cap=3 boundary-exact (3/5=0.6) collapsa; cap=2 sub-threshold (2/5=0.4) NO.
+
+### NIS2 35 still missed (ceiling carried to v0.1.12)
+
+El reranker scores NIS2 art 35 BELOW DORA 19/22 (semantically adjacent: "ICT incident notification" DORA vs "incident notification" NIS2). Deeper ceiling — fix candidate v0.1.12 raise top_k 5→12 (NIS2 35 may be at positions 6-12 of deduped list since dense pool has it).
+
+### Recommended demo config
+
+`RetrievalConfig(max_chunks_per_norma=2)` para cross-corpus queries. Production default permanece `None` (backward-compat); cap es opt-in via env override o explicit config. Updating production default a 2 = candidate for v0.1.20 paid validation (would invalidate H15 baseline; intentionally deferred).
+
+### Gate autoritativo
+
+`uv run pytest -m "not slow"` → **817 passed / 0 failed / 1 skipped / 93.47% coverage** + mypy strict 71 files (+12 tests). $0 entire milestone.
+
+---
+
+## v0.1.12 — top_k_auto field para auto-path override (cerrado 2026-05-21, squash `64c6eac`, tag `v0.1.12`)
+
+> Follow-up to v0.1.11 ceiling (NIS2 35 still missed). Capability shipped + wiring algorithmically verified; **empirical xcorpus-002 measurement DEFERRED** (12-call diagnostic killed at 41 min — 3ª subestimación CPU rerank esta sesión, nueva memory registrada).
+
+### Decisión
+
+`RetrievalConfig.top_k_auto: int | None = None`. Cuando se setea, `run_auto` usa este valor como purity-gate window AND final output size INSTEAD of `cfg.top_k`. La explicit-corpus `run()` path ignora este field entirely → preserves T6 byte-identical guarantee.
+
+### Implementación
+
+- `RetrievalConfig.top_k_auto` field + validation
+- `run_auto()` wires override via `dataclasses.replace(cfg, top_k=cfg.top_k_auto)` pattern → temporary `gate_cfg` passed a `_apply_purity_gate`
+- Tests: `test_retrieval_config_top_k_auto_field.py` NEW (6 tests), `test_top_k_auto_in_run_auto.py` NEW (3 tests wiring contract with mocked rerank)
+- Script extended con Calls 9-12 (top_k=12 variations) pero NO ejecutado (killed)
+
+### §22.22 honest deferral
+
+12-call diagnostic killed at 41 min wall time due a repeated CPU-rerank underestimation pattern (v0.1.9 + v0.1.10 + v0.1.12). Wiring algorithmically verified by unit tests with mocked rerank; **EMPIRICAL question** (does top_k_auto=12 + cap_per_norma=3 surface NIS2 art 35?) deferred a (a) dedicated session con proper time budget (~15-20 min minimum for 4 critical calls), o (b) v0.1.20 paid bundle validation que ejercita cumulative config at real eval scale.
+
+### Nueva memory registrada (`feedback_local_cpu_rerank_cost.md`)
+
+3ª iteración del mismo pattern → hard rules:
+- Per-call `reranker.rerank()` on CPU = 15-30s sustained NOT 5-10s
+- N-call diagnostic = N × 30s + 60s warmup × 1.5 margin
+- If estimate >5min → REDESIGN with 1-2 critical configs only
+- NEVER use PowerShell `| Select-Object -Last N` for long scripts (buffers stdout until exit)
+- Check zombie processes between runs
+
+### Recommended demo-mode config (cuando measurement confirme)
+
+`RetrievalConfig(top_k_auto=12, max_chunks_per_norma=3, max_chunks_per_article=2)`. Production defaults stay None para todos los 3.
+
+### Gate autoritativo
+
+`uv run pytest -m "not slow"` → **826 passed / 0 failed / 1 skipped / 93.56% coverage** + mypy strict 71 files (+9: 6 config + 3 wiring). $0 entire milestone.
+
+---
+
+## v0.1.13 — Industry cross-corpus gold extension (cerrado 2026-05-21, squash `3ee42d9`, tag `v0.1.13`)
+
+> Gold-set extendido 44→54 chat cases por 10 cross-corpus, industry-realistic questions. User-validated antes de añadir per industry-demo readiness requirement (TFM dual-target: LinkedIn publish + AI industry presencial session).
+
+### Tres motivaciones convergentes
+
+1. **Statistical representativeness**: prior gold 2/44 = 4.5% cross-corpus. Sistema cuya unique value es cross-corpus reasoning needs better gold weighting
+2. **Production-UX realism**: real compliance officers ask vague queries ("¿esto es legal?" / "¿qué hago si X?") not lawyer-clean ones. 5 vague-real cases test this
+3. **Industry-demo readiness**: AI engineers en presencial session will test typical industry scenarios
+
+### 10 cases añadidos (todos `corpus_esperado="auto"`)
+
+**Precise (5)** — lawyer-clean cross-corpus:
+- `industry-c1` Hospital + IA diagnóstico (AI Act + GDPR + (NIS2) triple)
+- `industry-c3` Fintech + IA scoring crediticio + DORA (AI Act + GDPR + DORA triple)
+- `industry-c4` Banco DORA + ciberataque + brecha datos (DORA + NIS2 + GDPR triple)
+- `industry-c5` Cloud crítico sector financiero (NIS2 + DORA + GDPR triple)
+- `industry-c8` IA screening CVs (AI Act + GDPR)
+
+**Vague-real (5)** — production-UX representative:
+- `industry-v1` worry-tone "¿reconocimiento facial oficina es legal?"
+- `industry-v2` practical "¿si hay brecha qué hago?"
+- `industry-v3` speculative "¿IA RRHH problema?"
+- `industry-v4` reactive "¿incidente pago, a quién avisamos?"
+- `industry-v5` confused "¿hosting 30 empleados, NIS2 aplica?"
+
+### Implementación
+
+- `evals/gold_set.jsonl`: 10 new JSONL lines (additive only; no existing modified)
+- `tests/unit/evals/test_industry_gold_cases_load.py` NEW (6 tests): schema validity, all use auto, ≥3 criterios, non-empty articles, 5+5 split pinned, vague cases avoid legalese
+- `docs/industry_gold_extension.md` NEW: memoria-ready WHAT/WHY/HOW/IMPACT + 10 cases table + trade-offs accepted
+
+### §22.22 honest deferrals
+
+- Empirical measurement (do these 10 cases pass with recommended demo-config?) deferred a v0.1.20 paid bundle validation
+- Articulos_esperados convention carry-forward (citation-granularity confound de H14/H15.1; will be addressed en v0.1.18)
+- Vague-case articulos_esperados son aspirational: el user NO mencionó esos articles; surfacing them requires both retrieval (works with v0.1.11 cap=2) AND Analyst reasoning (TBD — diagnostic value para potential future Analyst-prompt microhito)
+
+### Gate autoritativo
+
+`uv run pytest -m "not slow"` → **832 passed / 0 failed / 1 skipped / 93.56% coverage** + mypy strict 71 files (+6 industry-gold load tests). $0 entire milestone.
+
+---
+
+## v0.1.14 — Segmenter heading regex extension (cerrado 2026-05-21, squash `1ebe17d`, post-merge populate `c2227c1`, tag `v0.1.14`)
+
+> **Closes H15 "0 segments" deferral**. Surgical 1-line regex fix al `_HEADING_LIKE` pattern detecta Spanish numbered sections ("1. Intro", "2.1 Sub", "3.1.1 Detail"). ADR-0019 (count: 18 → 19).
+
+### Diagnóstico
+
+Real fixture `case_doc-001_politica-ia-empresarial-con-si.pdf` con 5 numbered sections + gold `expected_n_segments=5 ±2`:
+- Pre-fix: segmenter detected 0 headings (regex blind a "1. Introducción" pattern) → token-windowed fallback → **1 segment** de 1519 chars (token_count=225 << max_tokens=1500)
+- Root cause: `_HEADING_LIKE` regex matched solo ALL-CAPS o markdown `#` headings, NOT Spanish numbered-section pattern (canonical convention en compliance docs)
+
+### Decisión (ADR-0019)
+
+Extender `_HEADING_LIKE` con third alternative para numbered sections:
+
+```python
+_HEADING_LIKE = re.compile(
+    r"^(?:"
+    r"[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ \-]{2,80}"  # ALL CAPS heading
+    r"|#{1,6}\s+\S.{0,80}"               # Markdown heading
+    r"|\d+(?:\.\d+)*\.?\s+\S.{2,100}"   # NEW v0.1.14: numbered sections
+    r")$"
+)
+```
+
+El downstream filter `not stripped.endswith(".")` en `_detect_heading_lines` continúa excluyendo sentences ordinarias.
+
+### IMPACT MEDIDO (real fixtures, $0 local)
+
+**8/8 testable doc fixtures NOW within expected ± tolerance** (excluding 2 by-design blocked-redteam):
+
+| Fixture | Actual | Expected ± tol | Status |
+|---|---|---|---|
+| doc-001 política IA con sistemas | 5 | 5 ± 2 | OK |
+| doc-002 política IA sin transparencia | 4 | 4 ± 2 | OK |
+| doc-003 política IA sin medidas | 6 | 6 ± 2 | OK |
+| doc-005 política privacidad sin base | 5 | 5 ± 2 | OK |
+| doc-006 política privacidad sin transferencias | 5 | 5 ± 2 | OK |
+| doc-007 política privacidad con tracking | 6 | 6 ± 2 | OK |
+| doc-008 política privacidad con medidas | 4 | 4 ± 2 | OK |
+| doc-009 contrato proveedor IA | 7 | 7 ± 2 | OK |
+
+**Pre-fix all 8 silently MISS-ing** → doc-mode evaluation was structurally broken since H5 (2026-05-07 → 2026-05-21 gap cerrado por this surgical fix).
+
+### Implementación
+
+- `src/regulaitor/document/segmenter.py:_HEADING_LIKE` (1 regex line + docstring + comment)
+- 5 nuevos unit tests en `tests/unit/test_segmenter.py` pin numbered-section detection (single-level, multi-level, two-section minimum, downstream filter, doc-001-shape regression)
+- `docs/adr/0019-segmenter-numbered-section-heading-detection.md` NEW: surgical fix rationale + alternativas + false-positive risk on academic docs documentado
+
+### §22.22 honest
+
+- Doc-mode A/B paid validation still deferred a v0.1.20 paid bundle (segmentation primitive correctness shipped now; integrated E2E with Analyst + judge requires paid)
+- False-positive risk on academic-style numbered bullets documented en ADR-0019; mitigation via downstream filter catches common case
+
+### Gate autoritativo
+
+`uv run pytest -m "not slow"` → **837 passed / 0 failed / 1 skipped esperado / coverage exit 0** + strict `mypy src` Success 71 files exit 0 (+5 segmenter tests vs v0.1.13). §6 invariant intact (Auditor + citation validator byte-unchanged). $0 entire milestone.

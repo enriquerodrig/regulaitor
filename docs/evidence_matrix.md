@@ -135,7 +135,7 @@ milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (3490 lines as of H15.2 closure; every approved technical decision from H0 to H15.2).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (3772 lines as of v0.1.14 closure; every approved technical decision from H0 to v0.1.14 maximalist plan microhito 7/12).
 
 ---
 
@@ -169,6 +169,13 @@ Each closed milestone has its own §HX section in
 | **H15** | `v0.1.5-h15` | [spec](superpowers/specs/2026-05-18-h15-auditor-calibration-design.md) | [plan](superpowers/plans/2026-05-18-h15-auditor-calibration.md) | [0016](adr/0016-auditor-calibration.md) | `76fc6e7` |
 | **H15.1** | `v0.1.6-h15.1` | [spec](superpowers/specs/2026-05-19-h15-1-retriever-optimization-design.md) | [plan](superpowers/plans/2026-05-19-h15-1-retriever-optimization.md) | [0017](adr/0017-retriever-cross-corpus-auto.md) | `e283412` |
 | **H15.2** | `v0.1.7-h15.2` | [spec](superpowers/specs/2026-05-20-h15-2-eval-redesign-design.md) | [plan](superpowers/plans/2026-05-20-h15-2-eval-redesign.md) | [0018](adr/0018-retriever-config-wired-into-explicit-path.md) | `0bf8081` |
+| **v0.1.8** | `v0.1.8` | — | mini-plan in commit body | — | `91080ec` |
+| **v0.1.9** | `v0.1.9` | — | mini-plan in commit body | — | `c8e096b` |
+| **v0.1.10** | `v0.1.10` | — | mini-plan in commit body | — | `2ab7a93` |
+| **v0.1.11** | `v0.1.11` | — | mini-plan in commit body | — | `107479d` |
+| **v0.1.12** | `v0.1.12` | — | mini-plan in commit body | — | `64c6eac` |
+| **v0.1.13** | `v0.1.13` | — | mini-plan in commit body | — | `3ee42d9` |
+| **v0.1.14** | `v0.1.14` | — | mini-plan in commit body | [0019](adr/0019-segmenter-numbered-section-heading-detection.md) | `1ebe17d` |
 
 ---
 
@@ -184,7 +191,7 @@ Each closed milestone has its own §HX section in
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0018 (**18 ADRs** — H15.2 added 0018 retriever-config-wired) | ✅ |
+| 9 | ADRs current | 0001-0019 (**19 ADRs** — v0.1.14 added 0019 segmenter heading regex) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---
