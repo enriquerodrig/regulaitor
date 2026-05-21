@@ -167,6 +167,48 @@ def test_call5_v0_1_10_cap2_plus_lower_threshold_produces_identical_set_to_call4
     )
 
 
+def test_call8_v0_1_11_cap_per_norma_2_breakthrough_surfaces_gdpr_33() -> None:
+    """v0.1.11 Call 8: with `max_chunks_per_norma=2` and otherwise defaults,
+    the gate is mathematically forced to multi-corpus (max-share 2/5=0.4 < 0.6
+    default threshold). MEASURED: emits `nis2.23, nis2.23, dora.19, dora.22,
+    gdpr.33` → resolved_normas = [dora, gdpr, nis2] → 2/3 expected articles
+    surfaced (NIS2 23 + GDPR 33). NIS2 35 still missed (reranker scores it
+    below DORA 19/22 — deeper ceiling carried to v0.1.12).
+
+    This pins the v0.1.11 breakthrough — real measured 1/3 → 2/3 improvement
+    over baseline. If this fails (cap=2 no longer surfaces GDPR 33), the
+    purity gate / reranker changed and v0.1.11's narrative needs revisit."""
+    cfg = retrieval.RetrievalConfig(max_chunks_per_norma=2)
+    chunks, resolved = retrieval.run_auto(QUERY, "es", cfg)
+    emitted = _emitted_pairs(chunks)
+
+    # Multi-corpus emission (the structural breakthrough): purity gate did NOT
+    # collapse to a single norma because max-share = 2/5 = 0.4 < 0.6 threshold.
+    assert len(set(resolved)) >= 2, (
+        f"purity gate collapsed under cap_per_norma=2 (resolved={resolved}); "
+        "the math (2/5=0.4 < 0.6 threshold) should have prevented this. "
+        "Either the gate or reranker changed; re-investigate."
+    )
+    assert "gdpr" in resolved, (
+        f"GDPR not in resolved_normas under cap=2 (resolved={resolved}); "
+        "v0.1.11 baseline had GDPR 33 surfaced as part of the breakthrough."
+    )
+
+    # The 2/3 expected articles surfaced (real measured improvement vs 1/3 baseline).
+    assert ("nis2", "23") in emitted, "NIS2 23 missing — was always present in baseline."
+    assert ("gdpr", "33") in emitted, (
+        "GDPR 33 missing — was the v0.1.11 breakthrough vs the 1/3 baseline. "
+        "Re-investigate whether reranker scoring changed for this query."
+    )
+    # NIS2 35 STILL missing — the deeper ceiling carried to v0.1.12.
+    assert ("nis2", "35") not in emitted, (
+        "NIS2 35 unexpectedly surfaced under cap=2 alone. The v0.1.11 honest "
+        "finding was that NIS2 35 is below DORA 19/22 in the reranker → not in "
+        "deduped top-5. If it now surfaces, the reranker improved and the "
+        "v0.1.12 candidate (raise top_k 5→12) may not be needed."
+    )
+
+
 def test_call3_dense_pool_contains_all_three_expected_articles() -> None:
     """v0.1.9 Call 3: at pre_rerank=200, the raw dense pool (no rerank, no
     gate) contains ALL 3 expected articles: NIS2 23, NIS2 35, GDPR 33.

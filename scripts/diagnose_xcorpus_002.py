@@ -110,9 +110,49 @@ def main() -> None:
     print(f"      expected present: {sorted(present5)} ({len(present5)}/3)")
 
     # ---------------------------------------------------------------------
+    # Call 6: v0.1.11 — auto-path with per-norma cap=3 (norma cap alone)
+    # ---------------------------------------------------------------------
+    print("\n[6/7] auto-path with max_chunks_per_norma=3 (norma cap alone, v0.1.11)")
+    cfg_norma = retrieval.RetrievalConfig(max_chunks_per_norma=3)
+    chunks6, resolved6 = retrieval.run_auto(QUERY, LANGUAGE, cfg_norma)
+    emitted6 = _emitted_keys(chunks6)
+    present6 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks6])
+    print(f"      resolved_normas: {resolved6}")
+    print(f"      emitted: {emitted6}")
+    print(f"      expected present: {sorted(present6)} ({len(present6)}/3)")
+
+    # ---------------------------------------------------------------------
+    # Call 7: v0.1.11 — combo per-article cap=2 + per-norma cap=3
+    # ---------------------------------------------------------------------
+    print("\n[7/7] auto-path combo cap_per_article=2 + cap_per_norma=3 (v0.1.11)")
+    cfg_combo2 = retrieval.RetrievalConfig(max_chunks_per_article=2, max_chunks_per_norma=3)
+    chunks7, resolved7 = retrieval.run_auto(QUERY, LANGUAGE, cfg_combo2)
+    emitted7 = _emitted_keys(chunks7)
+    present7 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks7])
+    print(f"      resolved_normas: {resolved7}")
+    print(f"      emitted: {emitted7}")
+    print(f"      expected present: {sorted(present7)} ({len(present7)}/3)")
+
+    # ---------------------------------------------------------------------
+    # Call 8: v0.1.11 — per-norma cap=2 (sub-threshold; should force multi-corpus)
+    # ---------------------------------------------------------------------
+    # With cap=2 + top_k=5: max-share = 2/5 = 0.4 < 0.6 threshold → gate
+    # cannot collapse → multi-corpus emission guaranteed. Cap=3 (Call 6) hit
+    # the boundary exactly (3/5 = 0.6 = threshold inclusive); cap=2 is the
+    # first value mathematically sufficient to defeat the default gate.
+    print("\n[8/8] auto-path with max_chunks_per_norma=2 (sub-threshold, v0.1.11)")
+    cfg_norma2 = retrieval.RetrievalConfig(max_chunks_per_norma=2)
+    chunks8, resolved8 = retrieval.run_auto(QUERY, LANGUAGE, cfg_norma2)
+    emitted8 = _emitted_keys(chunks8)
+    present8 = _present([{"norma": c.norma, "articulo": c.articulo} for c in chunks8])
+    print(f"      resolved_normas: {resolved8}")
+    print(f"      emitted: {emitted8}")
+    print(f"      expected present: {sorted(present8)} ({len(present8)}/3)")
+
+    # ---------------------------------------------------------------------
     # Call 3: dense-only at pre_rerank=200 (no rerank, no purity gate)
     # ---------------------------------------------------------------------
-    print("\n[3/5] dense-only pool at pre_rerank=200 (no rerank, no purity gate)")
+    print("\n[3/8] dense-only pool at pre_rerank=200 (no rerank, no purity gate)")
     [qvec] = embeddings.embed([QUERY])
     table = store.connect(INDEX_PATH)
     where_clause = f"language = '{LANGUAGE}'"
@@ -141,6 +181,15 @@ def main() -> None:
         emitted5,
         resolved5,
         present5,
+        emitted6,
+        resolved6,
+        present6,
+        emitted7,
+        resolved7,
+        present7,
+        emitted8,
+        resolved8,
+        present8,
     )
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(markdown, encoding="utf-8")
@@ -164,6 +213,15 @@ def _render_markdown(
     emitted5: list[str] | None = None,
     resolved5: list[Any] | None = None,
     present5: set[tuple[str, str]] | None = None,
+    emitted6: list[str] | None = None,
+    resolved6: list[Any] | None = None,
+    present6: set[tuple[str, str]] | None = None,
+    emitted7: list[str] | None = None,
+    resolved7: list[Any] | None = None,
+    present7: set[tuple[str, str]] | None = None,
+    emitted8: list[str] | None = None,
+    resolved8: list[Any] | None = None,
+    present8: set[tuple[str, str]] | None = None,
 ) -> str:
     expected_str = ", ".join(f"`{n}.{a}`" for (n, a) in EXPECTED)
     missing3 = sorted(set(EXPECTED) - present3)
@@ -208,6 +266,31 @@ def _render_markdown(
             f"{', '.join(f'`{k}`' for k in emitted5)} | "
             f"{'+'.join(str(r) for r in resolved5)} | "
             f"{len(present5)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(present5)) or '—'}) |"
+        )
+    if present6 is not None and emitted6 is not None and resolved6 is not None:
+        lines.append(
+            f"| 6 (v0.1.11 norma_cap=3) | "
+            f"purity=0.6, top_k=5, pre_rerank=50, max_chunks_per_norma=3 | "
+            f"{', '.join(f'`{k}`' for k in emitted6)} | "
+            f"{'+'.join(str(r) for r in resolved6)} | "
+            f"{len(present6)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(present6)) or '—'}) |"
+        )
+    if present7 is not None and emitted7 is not None and resolved7 is not None:
+        lines.append(
+            f"| 7 (v0.1.11 combo art_cap=2 + norma_cap=3) | "
+            f"purity=0.6, top_k=5, pre_rerank=50, "
+            f"max_chunks_per_article=2, max_chunks_per_norma=3 | "
+            f"{', '.join(f'`{k}`' for k in emitted7)} | "
+            f"{'+'.join(str(r) for r in resolved7)} | "
+            f"{len(present7)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(present7)) or '—'}) |"
+        )
+    if present8 is not None and emitted8 is not None and resolved8 is not None:
+        lines.append(
+            f"| 8 (v0.1.11 norma_cap=2 — sub-threshold) | "
+            f"purity=0.6, top_k=5, pre_rerank=50, max_chunks_per_norma=2 | "
+            f"{', '.join(f'`{k}`' for k in emitted8)} | "
+            f"{'+'.join(str(r) for r in resolved8)} | "
+            f"{len(present8)}/3 ({', '.join(f'`{n}.{a}`' for (n, a) in sorted(present8)) or '—'}) |"
         )
     lines.append("")
 

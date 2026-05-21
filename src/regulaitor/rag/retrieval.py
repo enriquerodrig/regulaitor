@@ -32,11 +32,18 @@ class RetrievalConfig:
     value are the A/B variable (ADR-0017). `query_normalize` stays deterministic
     (no LLM — preserves the LLM-free-retriever principle).
 
-    v0.1.10 (xcorpus-002 follow-up, motivated by single-article dominance):
+    v0.1.10 (xcorpus-002 follow-up, single-article dominance):
     ``max_chunks_per_article`` caps the number of chunks per (norma, article)
-    key in the reranked list BEFORE the purity gate fires. Default `None` =
-    no cap = backward-compat with v0.1.9. Opt-in via env override or explicit
-    config; see ``docs/xcorpus_002_investigation.md``.
+    key in the reranked list BEFORE the purity gate fires.
+
+    v0.1.11 (xcorpus-002 follow-up to v0.1.10's deeper finding — reranker bias
+    at NORMA level, not just article level): ``max_chunks_per_norma`` caps the
+    number of chunks per ``norma`` key, applied AFTER per-article cap. With
+    cap=3 on top_k=5, max-share is 3/5=0.6 (boundary); with cap=2, max-share
+    is 2/5=0.4 < 0.6 default threshold → purity gate guaranteed multi-corpus.
+
+    Both caps default ``None`` = no cap = backward-compat with v0.1.9. Opt-in
+    via env override or explicit config; see ``docs/xcorpus_002_investigation.md``.
     """
 
     pre_rerank: int = PRE_RERANK  # 50
@@ -44,6 +51,7 @@ class RetrievalConfig:
     purity_threshold: float = 0.6  # auto path only; >= is inclusive
     query_normalize: bool = False  # default identity == current behaviour
     max_chunks_per_article: int | None = None  # v0.1.10; None == no cap == v0.1.9 behaviour
+    max_chunks_per_norma: int | None = None  # v0.1.11; None == no cap == v0.1.10 behaviour
 
     def __post_init__(self) -> None:
         if not isinstance(self.pre_rerank, int) or isinstance(self.pre_rerank, bool):
@@ -74,6 +82,19 @@ class RetrievalConfig:
             if self.max_chunks_per_article < 1:
                 raise ValueError(
                     f"max_chunks_per_article must be >= 1, got {self.max_chunks_per_article}"
+                )
+        # v0.1.11 — max_chunks_per_norma validation: None OR positive int.
+        if self.max_chunks_per_norma is not None:
+            if not isinstance(self.max_chunks_per_norma, int) or isinstance(
+                self.max_chunks_per_norma, bool
+            ):
+                raise TypeError(
+                    "max_chunks_per_norma must be int or None, "
+                    f"got {type(self.max_chunks_per_norma).__name__}"
+                )
+            if self.max_chunks_per_norma < 1:
+                raise ValueError(
+                    f"max_chunks_per_norma must be >= 1, got {self.max_chunks_per_norma}"
                 )
 
 
@@ -168,6 +189,31 @@ def _apply_per_article_dedup(
         key = (norma, article)
         if seen[key] < max_per_article:
             seen[key] += 1
+            out.append((norma, payload))
+    return out
+
+
+def _apply_per_norma_dedup(
+    ranked: list[tuple[str, _T]], max_per_norma: int
+) -> list[tuple[str, _T]]:
+    """v0.1.11 — cap chunks per ``norma`` key in best-first order.
+
+    Pure helper. Input is `(norma, payload)` pairs (matching the per-article
+    helper's output and the purity gate's input). Caps each norma to
+    ``max_per_norma`` chunks, preserving order.
+
+    Motivated by v0.1.10 measurement: per-article cap (v0.1.10) recovered
+    article diversity within a single norma but the top-`top_k` was still
+    dominated by one norma → purity gate still collapsed. The per-norma cap
+    forces cross-corpus diversity at the norma level. Composes cleanly with
+    the per-article cap (apply per-article first, then per-norma). See
+    `docs/xcorpus_002_investigation.md`.
+    """
+    seen: Counter[str] = Counter()
+    out: list[tuple[str, _T]] = []
+    for norma, payload in ranked:
+        if seen[norma] < max_per_norma:
+            seen[norma] += 1
             out.append((norma, payload))
     return out
 
@@ -309,6 +355,14 @@ def run_auto(
         ranked_pairs = _apply_per_article_dedup(ranked_triples, cfg.max_chunks_per_article)
     else:
         ranked_pairs = [(candidates[idx]["norma"], (idx, score)) for idx, score in reranked]
+
+    # v0.1.11 — optional per-norma dedup AFTER per-article dedup, BEFORE the
+    # purity gate. Composes cleanly: per-article first thins out same-article
+    # repeats, then per-norma enforces cross-corpus diversity. When
+    # `cfg.max_chunks_per_norma is None` (backward-compat default), this step
+    # is skipped entirely and `ranked_pairs` reaches the purity gate unchanged.
+    if cfg.max_chunks_per_norma is not None:
+        ranked_pairs = _apply_per_norma_dedup(ranked_pairs, cfg.max_chunks_per_norma)
 
     kept, resolved = _apply_purity_gate(ranked_pairs, cfg)
     enriched = _enrich(candidates, [p for _, p in kept])
