@@ -3809,3 +3809,34 @@ User-approved insertion at v0.1.14 close (2026-05-21) to ship a chat gap-analysi
 - `uv run python -m scripts.redteam --smoke` → block_rate **0.92** ≥0.90 ✅ (= v0.1.14 frozen carry; prompt-blind so unaffected by prompt change).
 - 4 git-diff HARD invariant checks per spec §5 all EMPTY (§6 Auditor/validator + schemas + backend H1-H5/H7 + prior prompt files v1.0/v1.1/v1.2).
 - Cost: **$0** total (no paid LLM run in v0.1.15).
+
+## v0.1.16 — Dual-layer §17 thresholds + judge family stays Haiku 4.5 (cerrado 2026-05-21, squash `<squash-sha>`, tag `v0.1.16-section17-thresholds`)
+
+### Decision
+
+Define the numeric v0.1.20-bar that the v0.1.20 paid bundle must clear, rendered as a dual-layer table in `evals/report.py` alongside the existing CLAUDE.md §17 aspirational targets. Per ADR-0021: bar values per metric derived from H10 (30-case baseline) + H15 v1.2 (30-case partial intervention) — no promised numbers. Judge family stays Haiku 4.5 (ADR-0010 D1 caveat resolved with explicit "stay"; cross-vendor migration to GPT-4o-mini or Llama-3.3-70b via Groq deferred to HX post-TFM). Soft mark only (no CI gate; ADR-0010 D4 carries).
+
+### Implementation
+
+- **MODIFY** `evals/report.py` (~80 lines net change): replace `_THRESHOLDS` 3-tuple `(metric, threshold, gated)` with 4-tuple `(metric, v0120_bar, aspirational, gated)`; refactor `_render_aggregate_table` to emit 4-column table `Métrica | Valor | v0.1.20-bar | Aspiracional` with dual ✅/❌ marks per gated metric; add new `_render_caveats_block` function rendering a 4-bullet "Caveats — v0.1.20-bar reading" subsection (aspirational framing, bar derivation lineage, Haiku-stays-judge, latency-contamination-note — all verbatim from spec §2 D2); wire `_render_caveats_block()` into `render_report` between aggregate table and per-case appendix.
+- **Bar values (verbatim from spec §2 D2 + ADR-0021 D2)**: faithfulness 0.65, answer_relevancy 0.55, context_precision 0.55, citation_precision 0.25, citation_recall 0.60, verdict_match 0.35, severity_match 0.35; context_recall 0.0 (info-only, gated=False); latency/cost rows keep single-threshold semantics (operational, aspirational slot = (info)).
+- **Aspirational values (verbatim from CLAUDE.md §17)**: 0.85/0.85/0.80/0.90/0.80/0.85/0.80 for the 7 gated; 0.80 carried for context_recall info-only.
+- **NEW** `tests/unit/evals/test_report_dual_threshold.py` (6 tests $0): metric coverage (all 8); bar values pinned; aspirational values pinned; bar < aspirational sanity; 4-column rendering with dual marks; caveats block 4 anchors present.
+- **NEW** `docs/adr/0021-v0120-bar-thresholds.md` (ADR count 20 → 21): D1-D4 decisions; 5 rejected alternatives (aspirational-only, per-case-type stratification, hard `--gate` CLI, judge migration to GPT-4o-mini, multi-judge consensus); same-vendor judge weakness documented honestly; latency contamination caveat carried.
+- **NEW** `docs/v0120_bar_thresholds.md` (119 lines): memoria-ready WHAT/WHY/HOW/IMPACT per `feedback_optimization_narrative_doc.md` + bar derivation table + 2 callout boxes (§17 vs v0.1.20-bar relationship + judge family lineage ADR-0010 D1 → H12 silent carry → v0.1.16 D3 explicit).
+- **NO** code change to `src/regulaitor/` (entire backend H1-H5/H7 + Auditor + citation-validator + Pydantic schemas + DTOs untouched). **NO** code change to `evals/judge.py`/`cache.py`/`harness.py`/`metrics.py`/`schemas.py` (judge stays Haiku 4.5; cache keys preserved; flow unchanged; `AggregateMetrics` schema unchanged). Verified by 3 git-diff checks at T5 (§6 + all-src/ + eval-internals).
+
+### IMPACT
+
+- **v0.1.20 acceptance ritual unlocked**: pre-v0.1.16, v0.1.20 had no defined "success" target. Post-v0.1.16, v0.1.20 will render the dual-layer report; decisions_log §v0.1.20 will narrate "X/8 metrics passed v0.1.20-bar; Y/8 below — documented as deeper system-level ceiling per H15/H15.1 §22.22 pattern" + per-metric production-default flips decided in that narrative.
+- **§22.22 honest framing carried forward**: aspirational §17 targets stay visible (no overclaim, no dishonest hiding) AND an intermediate bar is defined; the report shows BOTH layers. Reviewer / examiner can see the trajectory.
+- **ADR-0010 D1 caveat resolved**: the silent "deferred to H12" carry-forward since 2026-05-17 is replaced with an explicit "stays Haiku 4.5 in v0.1.16; cross-vendor migration moves to HX post-TFM with documented rationale" decision.
+- **Surgical change**: 1 src file modified (`evals/report.py`), 1 new test file, 2 new docs (ADR + memoria). Backend H1-H5/H7 + Auditor + citation-validator + eval-internals-other-than-report.py all BYTE-UNCHANGED.
+- **$0 milestone**: no paid LLM call in v0.1.16. Single bundled paid validation at v0.1.20 when budget recharges.
+
+### Gate
+
+- `uv run pytest -m "not slow"` → **856 passed / 0 failed / 1 skipped** (850 baseline + 6 from `test_report_dual_threshold.py`), coverage 92.46% ≥90%, exit 0.
+- `uv run mypy src` → Success: no issues found in 71 source files, exit 0.
+- `uv run python -m scripts.redteam --smoke` → block_rate **0.92** ≥0.90 ✅ (= v0.1.14/v0.1.15 frozen carry; prompt-blind + retriever-blind + Auditor-blind so unaffected by report-layer change).
+- 3 git-diff HARD invariant checks (per spec §4) all EMPTY (§6 Auditor/validator + all src/ + eval-internals-other-than-report.py).

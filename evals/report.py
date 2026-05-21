@@ -13,55 +13,104 @@ from evals.schemas import (
     EvalRunMeta,
 )
 
-# Threshold table per CLAUDE.md §17. (metric_name, threshold, gated)
-_THRESHOLDS = [
-    ("faithfulness_mean", 0.85, True),
-    ("answer_relevancy_mean", 0.85, True),
-    ("context_precision_mean", 0.80, True),
-    ("context_recall_mean", 0.80, False),  # info-only, not gated
-    ("citation_precision_mean", 0.90, True),
-    ("citation_recall_mean", 0.80, True),
-    ("verdict_match_rate", 0.85, True),
-    ("severity_match_rate", 0.80, True),
+# Threshold table — dual layer per ADR-0021 (v0.1.16).
+# v0.1.20-bar = derived from H10 + H15 v1.2 measured baselines (spec §2 D2);
+# aspirational = CLAUDE.md §17 long-term targets.
+# Tuple shape: (metric_name, v0120_bar, aspirational, gated_in_report)
+# - gated=True  → render ✅/❌ for both threshold columns.
+# - gated=False → render `(info)` in both columns (e.g. context_recall_mean).
+_THRESHOLDS: list[tuple[str, float, float, bool]] = [
+    ("faithfulness_mean", 0.65, 0.85, True),
+    ("answer_relevancy_mean", 0.55, 0.85, True),
+    ("context_precision_mean", 0.55, 0.80, True),
+    ("context_recall_mean", 0.0, 0.80, False),  # info-only carry; bar irrelevant
+    ("citation_precision_mean", 0.25, 0.90, True),
+    ("citation_recall_mean", 0.60, 0.80, True),
+    ("verdict_match_rate", 0.35, 0.85, True),
+    ("severity_match_rate", 0.35, 0.80, True),
 ]
 
 
 def _render_aggregate_table(agg: AggregateMetrics) -> str:
     rows: list[str] = []
-    rows.append("| Métrica | Valor | Threshold | Pass |")
+    rows.append("| Métrica | Valor | v0.1.20-bar | Aspiracional |")
     rows.append("|---|---|---|---|")
-    for metric_name, threshold, gated in _THRESHOLDS:
+    for metric_name, v0120_bar, aspirational, gated in _THRESHOLDS:
         value = getattr(agg, metric_name)
         if not gated:
-            mark = "➖"
-            threshold_str = "(info)"
-        elif value >= threshold:
-            mark = "✅"
-            threshold_str = f"≥{threshold:.2f}"
+            bar_cell = "(info)"
+            aspir_cell = "(info)"
         else:
-            mark = f"❌ ({value - threshold:+.2f})"
-            threshold_str = f"≥{threshold:.2f}"
-        rows.append(f"| {metric_name} | {value:.2f} | {threshold_str} | {mark} |")
+            # v0.1.20-bar cell with pass/fail (soft mark per ADR-0021 D4).
+            if value >= v0120_bar:
+                bar_cell = f"≥{v0120_bar:.2f} ✅"
+            else:
+                bar_cell = f"≥{v0120_bar:.2f} ❌ ({value - v0120_bar:+.2f})"
+            # Aspirational cell with pass/fail (info-only — never blocks).
+            if value >= aspirational:
+                aspir_cell = f"≥{aspirational:.2f} ✅"
+            else:
+                aspir_cell = f"≥{aspirational:.2f} ❌ ({value - aspirational:+.2f})"
+        rows.append(f"| {metric_name} | {value:.2f} | {bar_cell} | {aspir_cell} |")
 
-    # Latency + cost (different threshold semantics)
+    # Latency + cost (single-threshold semantics — operational, not quality).
+    # Place existing pass/fail in the v0.1.20-bar slot; aspirational slot = `(info)`.
     latency_pass = "✅" if agg.latency_p95_ms <= 12000 else f"❌ (+{agg.latency_p95_ms - 12000})"
-    rows.append(f"| latency_p95_ms | {agg.latency_p95_ms} | ≤12000 | {latency_pass} |")
-    # Per-mode latencies are info-only for now (combined is the gated metric per spec §5.4)
-    rows.append(f"| chat_latency_p95_ms | {agg.chat_latency_p95_ms} | (info) | ➖ |")
-    rows.append(f"| doc_latency_p95_ms | {agg.doc_latency_p95_ms} | (info) | ➖ |")
+    rows.append(f"| latency_p95_ms | {agg.latency_p95_ms} | ≤12000 {latency_pass} | (info) |")
+    rows.append(f"| chat_latency_p95_ms | {agg.chat_latency_p95_ms} | (info) | (info) |")
+    rows.append(f"| doc_latency_p95_ms | {agg.doc_latency_p95_ms} | (info) | (info) |")
     if agg.cost_per_chat_eur <= 0.05:
         cost_chat_pass = "✅"
     else:
         cost_chat_pass = f"❌ ({agg.cost_per_chat_eur - 0.05:+.3f})"
-    rows.append(f"| cost_per_chat_eur | {agg.cost_per_chat_eur:.3f} | ≤0.05 | {cost_chat_pass} |")
+    rows.append(
+        f"| cost_per_chat_eur | {agg.cost_per_chat_eur:.3f} | ≤0.05 {cost_chat_pass} | (info) |"
+    )
     if agg.cost_per_doc_eur <= 0.50:
         cost_doc_pass = "✅"
     else:
         cost_doc_pass = f"❌ ({agg.cost_per_doc_eur - 0.50:+.3f})"
-    rows.append(f"| cost_per_doc_eur | {agg.cost_per_doc_eur:.3f} | ≤0.50 | {cost_doc_pass} |")
-    rows.append(f"| cost_total_eur | {agg.cost_total_eur:.2f} | (info) | ➖ |")
-    rows.append(f"| cache_hit_rate | {agg.cache_hit_rate:.2f} | (info) | ➖ |")
+    rows.append(
+        f"| cost_per_doc_eur | {agg.cost_per_doc_eur:.3f} | ≤0.50 {cost_doc_pass} | (info) |"
+    )
+    rows.append(f"| cost_total_eur | {agg.cost_total_eur:.2f} | (info) | (info) |")
+    rows.append(f"| cache_hit_rate | {agg.cache_hit_rate:.2f} | (info) | (info) |")
     return "\n".join(rows)
+
+
+def _render_caveats_block() -> str:
+    """v0.1.16: render the v0.1.20-bar reading caveats subsection.
+
+    Per spec §2 D2 caveats wording (verbatim). Inserted between the aggregate
+    metrics table and the per-case appendix in `render_report`. The 4 bullets
+    document the dual-layer interpretation, bar derivation lineage, judge family
+    decision, and latency-contamination caveat carried from H8/§17.
+    """
+    parts: list[str] = []
+    parts.append("## Caveats — v0.1.20-bar reading")
+    parts.append("")
+    parts.append(
+        "1. **Aspirational column** = CLAUDE.md §17 long-term ideal targets; no run "
+        "has ever hit them; they remain as direction-setting, not as v0.1.20 ship gate."
+    )
+    parts.append(
+        "2. **v0.1.20-bar column** = anchored to H10 (full-30-case measured baseline) + "
+        "H15 v1.2 (30-case partial intervention measurement); the 64-case set is harder "
+        "so even matching the bar is meaningful evidence the maximalist-plan stack didn't "
+        "regress on the easier subset."
+    )
+    parts.append(
+        "3. **Judge family stays Haiku 4.5** per ADR-0010 D1 caveat (same vendor as "
+        "production Sonnet, different model class). Cross-vendor migration deferred to "
+        "HX (post-TFM); §19 satisfied literally; documented honestly."
+    )
+    parts.append(
+        "4. **Latency p95** number remains contaminated by batch+rate-limit+tenacity "
+        "backoff per H8 amendment §H8 + §17 note; v0.1.16 does NOT fix this. H17 LangFuse "
+        "refactor is the proper instrument; until then `latency_p95_ms` is informational "
+        "despite being formally gated in the report."
+    )
+    return "\n".join(parts)
 
 
 def _render_per_case_chat(r: ChatCaseResult) -> str:
@@ -158,6 +207,8 @@ def render_report(
     sections.append("## Aggregate metrics")
     sections.append("")
     sections.append(_render_aggregate_table(agg))
+    sections.append("")
+    sections.append(_render_caveats_block())
     sections.append("")
     sections.append(f"## Per-case appendix — chat ({agg.n_chat_cases} cases)")
     sections.append("")

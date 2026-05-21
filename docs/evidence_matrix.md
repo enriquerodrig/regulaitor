@@ -135,7 +135,7 @@ milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (3811 lines as of v0.1.15 closure; every approved technical decision from H0 to v0.1.15 maximalist plan microhito 8/12).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (3842 lines as of v0.1.16 closure; every approved technical decision from H0 to v0.1.16 maximalist plan microhito 9/12).
 
 ---
 
@@ -177,6 +177,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.13** | `v0.1.13` | — | mini-plan in commit body | — | `3ee42d9` |
 | **v0.1.14** | `v0.1.14` | — | mini-plan in commit body | [0019](adr/0019-segmenter-numbered-section-heading-detection.md) | `1ebe17d` |
 | **v0.1.15** | `v0.1.15-gap-analysis-chat` | [spec](superpowers/specs/2026-05-21-v0.1.15-gap-analysis-chat-mode-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.15-gap-analysis-chat-mode.md) | [0020](adr/0020-chat-gap-analysis-mode.md) | `4ea2d9e` |
+| **v0.1.16** | `v0.1.16-section17-thresholds` | [spec](superpowers/specs/2026-05-21-v0.1.16-section17-thresholds-judge-family-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.16-section17-thresholds-judge-family.md) | [0021](adr/0021-v0120-bar-thresholds.md) | `<squash-sha>` |
 
 ---
 
@@ -192,7 +193,7 @@ Each closed milestone has its own §HX section in
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0020 (**20 ADRs** — v0.1.15 added 0020 chat gap-analysis mode) | ✅ |
+| 9 | ADRs current | 0001-0021 (**21 ADRs** — v0.1.16 added 0021 v0.1.20-bar thresholds + judge family) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---
