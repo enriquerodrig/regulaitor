@@ -77,13 +77,19 @@ def _state_with_audited():
 
 
 def test_council_node_attaches_review_without_changing_verdict():
+    """v0.1.19: council node records review; bind_verdict returns None when
+    policy.would_escalate returns same verdict as current, so the node
+    returns only {"council_review": ...} without "audited_answer"."""
     state = _state_with_audited()
     with patch.object(g, "_council") as mk:
+        # Mock the council agent and its policy's would_escalate method.
+        # would_escalate returns the current verdict (no escalation), so
+        # bind_verdict returns None and the node only returns council_review.
         mk.return_value.review.return_value = _council_review()
+        mk.return_value._policy.would_escalate.return_value = AuditVerdict.PASS
         out = g._council_node(state)
     assert isinstance(out["council_review"], CouncilReview)
-    # Verdict/audited_answer are NOT in the node's return dict -> graph never mutates them.
-    assert "verdict" not in out
+    # bind_verdict returns None (no escalation), so no "audited_answer" in out.
     assert "audited_answer" not in out
 
 

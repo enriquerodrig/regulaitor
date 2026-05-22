@@ -1,11 +1,20 @@
-"""CouncilAgent + aggregation policies (H13).
+"""CouncilAgent + aggregation policies (H13 → v0.1.19).
 
-Advisory layer: the Council records evidence and NEVER mutates the
-deterministic verdict in H13. The H15 promotion seam is the module
-constant ``_COUNCIL_BINDING`` (kept False here) together with
-``MonotonicEscalatePolicy`` (added in a later task): while the seam is
-off, the graph node only records the Council outcome and never lets it
-change the verdict.
+Advisory layer (H13): the Council records evidence. Under
+``AdvisoryMajorityPolicy`` (H13 default; still available, used by callers
+that pass it explicitly) the Council never mutates the deterministic
+verdict — its review is recorded as ``council_review`` only.
+
+Binding layer (v0.1.19, ADR-0025): the H15 promotion seam — module
+constant ``_COUNCIL_BINDING`` together with ``MonotonicEscalatePolicy`` —
+is now ON. ``CouncilAgent`` defaults to ``MonotonicEscalatePolicy`` and
+the ``bind_verdict()`` helper below consumes ``would_escalate()`` to
+promote PASS → RHR on a unanimous (3/3 ok) BLOCK vote. The policy never
+relaxes BLOCK or RHR (conservative-only direction). The production-side
+citation validator (``citation/validator.py``) and the Auditor's
+Lenient-Finding + Strict-Answer aggregation (``agents/auditor.py``) are
+byte-unchanged in v0.1.19; the §6 "no citation, no answer" invariant
+operates at those layers and is unaffected.
 """
 
 from __future__ import annotations
@@ -28,9 +37,12 @@ from regulaitor.models import router
 
 AgreementLabel = Literal["unanimous", "majority", "split", "degraded"]
 
-# H15 promotion seam. Flipping this True + selecting MonotonicEscalatePolicy
-# is the entire promotion to a binding gate (see decisions log §H13).
-_COUNCIL_BINDING: bool = False
+# H15 promotion seam, FLIPPED ON in v0.1.19 / ADR-0025. Production now uses
+# MonotonicEscalatePolicy as the CouncilAgent default + the bind_verdict()
+# helper below consumes would_escalate() to escalate PASS -> RHR on unanimous
+# (3/3 ok) BLOCK vote. Never relaxes BLOCK or RHR (conservative-only direction;
+# §6 invariant ROCK-SOLID).
+_COUNCIL_BINDING: bool = True
 
 
 class AggregationPolicy(Protocol):
@@ -128,7 +140,11 @@ class CouncilAgent:
     """Advisory 3-judge council. Never mutates the verdict in H13."""
 
     def __init__(self, policy: AggregationPolicy | None = None) -> None:
-        self._policy: AggregationPolicy = policy or AdvisoryMajorityPolicy()
+        # v0.1.19 / ADR-0025 D4: default policy changes from AdvisoryMajorityPolicy
+        # to MonotonicEscalatePolicy. aggregate() behavior IDENTICAL (verified by
+        # test_monotonic_aggregate_matches_advisory); the would_escalate() method
+        # becomes available for bind_verdict() to consume.
+        self._policy: AggregationPolicy = policy or MonotonicEscalatePolicy()
         self._system = _PROMPT_PATH.read_text(encoding="utf-8")
 
     def _findings_under_review(self, audited: AuditedAnswer) -> list[Finding]:
@@ -238,3 +254,63 @@ class CouncilAgent:
             diverges_from_auditor=verdict != audited.verdict,
             reason=reason,
         )
+
+
+# ---------------------------------------------------------------------------
+# v0.1.19 / ADR-0025 — Council binding helper
+# ---------------------------------------------------------------------------
+
+
+def bind_verdict(
+    audited: AuditedAnswer,
+    review: CouncilReview,
+    council: CouncilAgent,
+) -> AuditedAnswer | None:
+    """Apply Council binding to the audited verdict (v0.1.19 / ADR-0025).
+
+    Returns a new AuditedAnswer with the escalated verdict + a
+    "COUNCIL_BIND:"-prefixed reason iff:
+    1. _COUNCIL_BINDING is True (module flag; True in v0.1.19+).
+    2. The CouncilAgent's policy exposes a would_escalate(audited_verdict,
+       judges) -> AuditVerdict method (MonotonicEscalatePolicy in v0.1.19).
+    3. The policy's would_escalate returns a verdict that differs from the
+       current audited.verdict.
+
+    Returns None when no binding fires (the common case — Auditor verdict
+    stands). The orchestration node uses None to mean "keep the existing
+    audited_answer".
+
+    Per ADR-0025 D1: the MonotonicEscalatePolicy is conservative-only
+    (PASS -> RHR on unanimous BLOCK; NEVER relaxes BLOCK or RHR), so this
+    helper can never WEAKEN a verdict — only escalate.
+
+    Signature design (ADR-0025 D3 / brainstorming Q5): takes the
+    CouncilAgent (not the policy directly). Keeps the private-access
+    concern (council._policy) INTERNAL to council.py. Orchestration's
+    call site is fully public-API.
+    """
+    if not _COUNCIL_BINDING:
+        return None
+    policy = council._policy  # private access INSIDE same module — clean
+    would_escalate_fn = getattr(policy, "would_escalate", None)
+    if would_escalate_fn is None:
+        return None
+    new_verdict = would_escalate_fn(audited.verdict, review.judges)
+    if new_verdict == audited.verdict:
+        return None
+    # Binding fires. Build a new reason that preserves the original auditor
+    # reason (if any) for audit-trail clarity.
+    n_block = sum(1 for v in review.judges if v.ok and v.vote == AuditVerdict.BLOCK)
+    n_ok = sum(1 for v in review.judges if v.ok)
+    original_reason = audited.reason if audited.reason else "None"
+    new_reason = (
+        f"COUNCIL_BIND: {n_block}/{n_ok} judges voted BLOCK; "
+        f"promoted {audited.verdict.value} -> {new_verdict.value}. "
+        f"Original auditor reason: {original_reason}."
+    )
+    return AuditedAnswer(
+        answer=audited.answer,
+        verdict=new_verdict,
+        audit_results=audited.audit_results,
+        reason=new_reason,
+    )

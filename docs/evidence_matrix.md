@@ -135,7 +135,7 @@ milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (3996 lines as of v0.1.18 closure; every approved technical decision from H0 to v0.1.18 maximalist plan microhito 12/12).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (4055 lines as of v0.1.19 closure; every approved technical decision from H0 to v0.1.19 Council binding ON).
 
 ---
 
@@ -181,6 +181,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.17** | `v0.1.17-no-answer-diagnosis` | [spec](superpowers/specs/2026-05-21-v0.1.17-no-answer-residual-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.17-no-answer-residual.md) | [0022](adr/0022-no-answer-residual-diagnostic.md) | `e5dbedd` |
 | **v0.1.17.1** | `v0.1.17.1-no-answer-fix` | [spec](superpowers/specs/2026-05-22-v0.1.17.1-no-answer-fix-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.17.1-no-answer-fix.md) | [0023](adr/0023-no-answer-fix.md) | `98f3768` |
 | **v0.1.18** | `v0.1.18-citation-granularity` | [spec](superpowers/specs/2026-05-22-v0.1.18-citation-granularity-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.18-citation-granularity.md) | [0024](adr/0024-citation-granularity.md) | `670e35e` |
+| **v0.1.19** | `v0.1.19-council-binding` | [spec](superpowers/specs/2026-05-22-v0.1.19-council-binding-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.19-council-binding.md) | [0025](adr/0025-council-binding.md) | `<squash-sha>` |
 
 ---
 
@@ -196,7 +197,7 @@ Each closed milestone has its own §HX section in
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0024 (**24 ADRs** — v0.1.18 added 0024 citation granularity confound eval-instrument fix) | ✅ |
+| 9 | ADRs current | 0001-0025 (**25 ADRs** — v0.1.19 added 0025 Council binding ON conservative-only direction) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---

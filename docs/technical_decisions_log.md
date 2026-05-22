@@ -3994,3 +3994,62 @@ Two-stage review (spec compliance + code quality) per implementation task. Code-
 ### Plan maximalist progress
 
 Microhito **12/12 done** — the FINAL $0 microhito of the maximalist plan. Sequence after v0.1.18: **v0.1.19** (Auditor RHR aggregation semantics + Council binding ON — the §6-invariant-adjacent work; involves touching Auditor + flipping `MonotonicEscalatePolicy._COUNCIL_BINDING` from False to True; new ADR likely; ceremony TBD during v0.1.19 brainstorming) · **v0.1.20** (single paid validation A/B cuando recargue budget — measures v1.0 vs v1.4 + retrieval levers + segmenter + gap-analysis cases + citation granularity instrument against v0.1.20-bar from ADR-0021) · luego retorno a **H16** (HF Spaces public deploy) + **H17** (TFM cierre académico).
+
+---
+
+## §v0.1.19 — Auditor RHR aggregation + Council binding ON (2026-05-22, squash `<squash-sha>`, tag `v0.1.19-council-binding`)
+
+**Date:** 2026-05-22 (close)
+**Branch:** `feat/v0.1.19-council-binding` from main @ `abf93cd`
+**Spec:** `docs/superpowers/specs/2026-05-22-v0.1.19-council-binding-design.md` (commit `abf93cd`)
+**Plan:** `docs/superpowers/plans/2026-05-22-v0.1.19-council-binding.md`
+**ADR:** ADR-0025
+**Cost:** $0 (no paid LLM run; empirical effect on escalation rate measured at v0.1.20)
+
+### WHAT shipped (per §6 honest framing)
+
+- **Council binding ON in production** (conservative-only direction per ADR-0025 D1). The `_COUNCIL_BINDING: bool = False` flag in `src/regulaitor/agents/council.py:33` flipped to True. The `MonotonicEscalatePolicy.would_escalate()` rule (PASS → RHR on unanimous 3/3 BLOCK; NEVER relaxes BLOCK or RHR) is now active in production via the new `bind_verdict()` helper.
+- **NEW `bind_verdict(audited, review, council)` top-level helper** in `council.py`. Returns new AuditedAnswer with `"COUNCIL_BIND:"`-prefixed reason when would_escalate changes verdict; None otherwise. Signature design (D3): takes CouncilAgent (not the policy directly) — private-access concern stays internal to council.py.
+- **`CouncilAgent.__init__` default policy changed** (D4): `AdvisoryMajorityPolicy()` → `MonotonicEscalatePolicy()`. Aggregate behavior IDENTICAL (verified by pre-existing test). The `would_escalate` method becomes available for `bind_verdict` to consume.
+- **`_council_node` wired** (D5) in `src/regulaitor/orchestration/graph.py`: calls `bind_verdict()` after `council.review()`; when binding fires returns `{"council_review": review, "audited_answer": new_audited}` so downstream state picks up the new RHR verdict.
+- **`_council_notice` updated** in `src/regulaitor/api/schemas.py`: signature becomes `(cr, audited=None)` with backward-compat default. New branch: when `audited.reason` starts with `"COUNCIL_BIND:"`, emit the binding-fired notice ("promovieron el veredicto a requires_human_review por unanimidad"). Callers in `to_ask_response()` + `ui_streamlit/_render.py` updated to pass `state.audited_answer`.
+- **ADR-0025 documents the spec amendment honestly** (§22.22): spec assumed 2 src/ files; reality is 4 (`_council_notice` lives in `api/schemas.py`, not `graph.py`). Implementation scope expanded transparently. The §6 invariant interpretive distinction remains intact.
+
+### WHY (closing the H13 + H15 deferral lineage)
+
+The H13 Council of Judges (ADR-0014) shipped as an advisory layer with the binding seam wired-OFF (`_COUNCIL_BINDING=False`). The H15 §16.3 deferral list explicitly carried "Council binding ON" as post-H15.X work. The empirical evidence from H13 paid run (12/21 cases divergent, including 1/12 chat-11 Auditor=PASS → Council=RHR escalation case) motivated the conservative-only binding direction.
+
+The conservative-only choice (per spec Q1 Option A) preserves §6 ROCK-SOLID: only escalates (PASS → RHR); never relaxes. The 7/12 H13 false-RHR pattern (Auditor=RHR → Council=valid) stays UNCHANGED — deferred to v0.1.20+ evidence-driven decision.
+
+### HOW (TDD discipline + spec amendment transparency)
+
+- T0 (controller): branch creation + test path verification (discovered `_council_notice` lives in `api/schemas.py`, not `graph.py` — spec amendment caught + documented before T1).
+- T1 (haiku): TDD red on 3 test files. 8 new tests in `test_council_policy.py` (7 bind_verdict + 1 flag pin); NEW `test_graph_council_binding.py` with 5 tests; 2 new tests in `test_council_dto.py`. ~13 failing tests + ~5 existing pass.
+- T2 (haiku): GREEN by modifying `council.py` — flag flip + default policy + `bind_verdict()` helper. 7 bind_verdict tests + flag pin GREEN. Removed stale `test_council_binding_seam_is_off` (asserted flag is False; legitimate instrument-change consequence per v0.1.17.1 T2 / v0.1.18 T2 precedent). Full gate 903 passed / 3 failed (1 _council_node + 2 _council_notice tests pending T3). Module docstring polished post-review.
+- T3 (haiku): GREEN by modifying 3 src/ files — `graph.py` (_council_node wires bind_verdict), `api/schemas.py` (_council_notice signature + branch + caller update), `ui_streamlit/_render.py` (caller update). Adjusted Council mock in `tests/integration/test_council_chat_flow.py` to expose `_policy.would_escalate()` (legitimate instrument-change consequence; continues to verify the no-binding case). All 15 new tests GREEN. Full gate 906 passed / 0 failed / 1 skipped, 93.62% coverage.
+- T4 (Opus): ADR-0025 with D1-D5 + 6 rejected alternatives + spec-amendment transparency + companion ADRs 0006/0014/0016/0021/0024.
+- T5 (controller-run gate): 5 HARD git-diff invariants empty (§6 validator + Auditor + Analyst prompts v1.0-v1.4 + eval pipeline + gold set) + 6th HARD invariant src/ scope localized to 4 expected files + 3 dynamic gates green (pytest 907 total / 906 passed / 0 failed / 1 skipped / 93.62% coverage exit 0; mypy strict 71 files Success exit 0; redteam-smoke 0.92 carry).
+- T6 (Opus, this entry): closure docs across decisions_log + evidence_matrix + CLAUDE.md.
+
+### IMPACT (§22.22 honest framing)
+
+- **H13 ADR-0014 Council-binding seam CLOSED**: the wired-OFF flag flipped + helper wired through. H15 §16.3 deferral lineage on Council binding RESOLVED.
+- **§6 invariant ROCK-SOLID**: validator + Auditor aggregation byte-unchanged. Only the Council escalation seam activated. Monotonic-conservative direction.
+- **chat-11-style escalation cases caught**: Auditor=PASS + Council=3/3 BLOCK now promotes to RHR in production.
+- **TFM defense narrative gains another clean layer separation**: validator (§6) vs Auditor aggregation vs Council escalation. v0.1.19 touches only the third.
+- **H13 false-RHR pattern (7/12 cases) UNCHANGED**: conservative-only direction doesn't address it; deferred to v0.1.20+ evidence-driven decision.
+- **Empirical escalation rate UNMEASURED in v0.1.19**: $0 milestone. v0.1.20 paid bundle measures real production behavior.
+- **Spec amendment transparency**: ADR-0025 D5 + T3 commit body document the "4 src/ files vs spec's 2" honestly — future readers won't be confused.
+- **Reusable `bind_verdict()` helper**: future policies can extend without modifying orchestration.
+
+### Gate authoritative
+
+- `uv run pytest -m "not slow"` → 907 total / 906 passed / 0 failed / 1 skipped, 93.62% coverage exit 0. Delta from main baseline 893 (controller-verified pre-T6): +14 net (15 added test functions − 1 stale removed). Added breakdown: 7 bind_verdict + 1 flag pin (test_council_policy.py) + 5 _council_node (NEW test_graph_council_binding.py) + 2 _council_notice (test_council_dto.py). Removed: `test_council_binding_seam_is_off` (asserted flag is False; invalid post-flip).
+- `uv run mypy src` → Success 71 source files exit 0 (UNCHANGED — `bind_verdict()` added to existing `council.py`).
+- `python -m scripts.redteam --smoke` → block_rate 0.92 (= v0.1.14-v0.1.18 carry; Council layer change is post-validator so unaffected).
+- 5 HARD git-diff invariants all empty (§6 validator + Auditor + Analyst prompts v1.0-v1.4 + eval pipeline + gold set).
+- 6th HARD invariant: src/ scope = 4 expected files (council.py + graph.py + api/schemas.py + ui_streamlit/_render.py).
+
+### Plan progress
+
+H13 + H15 Council-binding deferral lineage RESOLVED. Sequence after v0.1.19: **v0.1.20** (single paid validation A/B when user recharges budget — measures all post-maximalist-plan capabilities + Council binding behavior against v0.1.20-bar from ADR-0021). After v0.1.20 → **H16** (HF Spaces public deploy) + **H17** (TFM cierre académico).

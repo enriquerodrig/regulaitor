@@ -22,7 +22,7 @@ from langgraph.graph import END, StateGraph
 
 from regulaitor.agents.analyst import AnalystAgent
 from regulaitor.agents.auditor import AuditorAgent
-from regulaitor.agents.council import CouncilAgent
+from regulaitor.agents.council import CouncilAgent, bind_verdict
 from regulaitor.agents.retriever import RetrieverAgent
 from regulaitor.citation.schemas import AuditVerdict
 from regulaitor.corpus.schemas import CorpusSelector, Language
@@ -115,21 +115,30 @@ def _auditor_node(state: ChatState) -> dict[str, Any]:
 
 
 def _council_node(state: ChatState) -> dict[str, Any]:
-    """Advisory: attaches council_review, NEVER returns verdict/audited_answer.
-    Any failure is swallowed (returns {}) so the chat turn is unaffected."""
+    """Council layer. Always records advisory review; in v0.1.19+ (ADR-0025)
+    also binds verdict per MonotonicEscalatePolicy when council unanimously
+    disagrees with PASS (PASS -> RHR only; conservative-only direction;
+    never relaxes BLOCK or RHR).
+
+    Any failure is swallowed (returns {}) so the chat turn is unaffected.
+    """
     # Defensive: _route_after_audit already guarantees audited_answer is set; also
     # guard context (ChatState.context is Optional) so the advisory node returns {}
     # cleanly instead of relying on the try/except to swallow an AttributeError.
     if state.audited_answer is None or state.context is None:
         return {}
     try:
-        # state is frozen since _route_after_audit evaluated;
-        # _council_trigger_reason is deterministic here (never "not_triggered").
-        review = _council().review(
+        council_agent = _council()
+        review = council_agent.review(
             state.audited_answer,
             state.context,
             trigger_reason=_council_trigger_reason(state),  # type: ignore[arg-type]
         )
+        # v0.1.19: try to bind the verdict per MonotonicEscalatePolicy.
+        # bind_verdict returns None when no binding fires (the common case).
+        new_audited = bind_verdict(state.audited_answer, review, council_agent)
+        if new_audited is not None:
+            return {"council_review": review, "audited_answer": new_audited}
         return {"council_review": review}
     except Exception as e:  # noqa: BLE001 advisory layer must not break the turn
         logger.warning("council_node failed (swallowed): %s", type(e).__name__)

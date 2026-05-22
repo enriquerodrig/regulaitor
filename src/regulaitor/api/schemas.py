@@ -305,9 +305,32 @@ def _council_review_to_dto(cr: CouncilReview) -> CouncilReviewDTO:
     )
 
 
-def _council_notice(cr: CouncilReview | None) -> str | None:
+def _council_notice(
+    cr: CouncilReview | None,
+    audited: AuditedAnswer | None = None,
+) -> str | None:
+    """User-facing notice when Council diverges from Auditor.
+
+    v0.1.19 (ADR-0025): when ``audited.reason`` starts with ``"COUNCIL_BIND:"``,
+    the Council binding fired and the verdict was promoted from PASS to
+    requires_human_review. The notice reflects the promotion. Otherwise the
+    legacy advisory notice is emitted (Council diverged but verdict unchanged).
+
+    Backward-compat: callers may pass ``audited=None`` (v0.1.18 single-arg
+    callers); in that case the legacy advisory notice is emitted.
+    """
     if cr is None or not cr.diverges_from_auditor:
         return None
+    if (
+        audited is not None
+        and audited.reason is not None
+        and audited.reason.startswith("COUNCIL_BIND:")
+    ):
+        return (
+            "Hallazgo marcado por revisión colegiada (Council): los jueces "
+            "independientes promovieron el veredicto a requires_human_review "
+            "por unanimidad. Se recomienda revisión humana."
+        )
     return (
         "Hallazgo marcado por revisión colegiada (Council): los jueces "
         "independientes discreparon de la validación automática. El veredicto "
@@ -331,7 +354,7 @@ def to_ask_response(state: ChatState, response_time_ms: int) -> AskResponse:
         audit_results=[_to_audit_result_dto(r) for r in audited.audit_results],
         reason=audited.reason,
         response_time_ms=response_time_ms,
-        council_notice=_council_notice(state.council_review),
+        council_notice=_council_notice(state.council_review, state.audited_answer),
         council=(
             _council_review_to_dto(state.council_review)
             if state.council_review is not None

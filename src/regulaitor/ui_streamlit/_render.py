@@ -143,7 +143,7 @@ def chat_state(state: ChatState) -> None:
     verdict_badge(audited.verdict, reason=audited.reason)
 
     # Advisory Council notice (H13): show prominently if diverges from Auditor
-    notice = _council_notice(state.council_review)
+    notice = _council_notice(state.council_review, state.audited_answer)
     cr = state.council_review
     if notice and cr is not None:
         st.warning(notice)

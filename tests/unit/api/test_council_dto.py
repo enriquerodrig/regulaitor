@@ -107,3 +107,58 @@ def test_dto_round_trips_failed_judge():
     assert j.error_category == "RuntimeError"
     assert j.vote == "requires_human_review"
     assert j.reason == "judge_failed"
+
+
+# ---------------------------------------------------------------------------
+# v0.1.19 — _council_notice branches on COUNCIL_BIND: reason prefix
+# ---------------------------------------------------------------------------
+
+
+def test_council_notice_indicates_binding_fired() -> None:
+    """v0.1.19: when audited.reason starts with 'COUNCIL_BIND:', the notice
+    text reflects the binding override (verdict promoted, not just advisory)."""
+    from regulaitor.citation.schemas import (
+        Answer,
+        AuditedAnswer,
+    )
+
+    audited = AuditedAnswer(
+        answer=Answer(query="q", language="es", text="resp", findings=[]),
+        verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+        audit_results=[],
+        reason=(
+            "COUNCIL_BIND: 3/3 judges voted BLOCK; promoted pass -> "
+            "requires_human_review. Original auditor reason: None."
+        ),
+    )
+    notice = _council_notice(_cr(True), audited)
+    assert notice is not None
+    # The binding-fired notice should NOT contain the advisory message's
+    # "no cambia" fragment; instead it should mention the promotion.
+    assert "no cambia" not in notice
+    assert "promov" in notice.lower() or "promot" in notice.lower() or "ascend" in notice.lower()
+
+
+def test_council_notice_advisory_unchanged_when_no_binding() -> None:
+    """v0.1.19 backward-compat: when audited.reason does NOT start with
+    'COUNCIL_BIND:' (or audited is None), the advisory notice is unchanged."""
+    from regulaitor.citation.schemas import (
+        Answer,
+        AuditedAnswer,
+    )
+
+    # Case 1: audited has a non-binding reason → advisory notice.
+    audited = AuditedAnswer(
+        answer=Answer(query="q", language="es", text="resp", findings=[]),
+        verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+        audit_results=[],
+        reason="REQUIRES_HUMAN_REVIEW: 1 of 1 citations invalid.",
+    )
+    notice = _council_notice(_cr(True), audited)
+    assert notice is not None
+    # Advisory notice path unchanged.
+    assert "revisión colegiada" in notice or "Council" in notice
+
+    # Case 2: audited=None (backward-compat with v0.1.18 callers).
+    notice_no_audited = _council_notice(_cr(True), None)
+    assert notice_no_audited is not None  # advisory divergence still emits notice
