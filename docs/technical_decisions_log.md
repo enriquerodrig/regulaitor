@@ -3840,3 +3840,36 @@ Define the numeric v0.1.20-bar that the v0.1.20 paid bundle must clear, rendered
 - `uv run mypy src` → Success: no issues found in 71 source files, exit 0.
 - `uv run python -m scripts.redteam --smoke` → block_rate **0.92** ≥0.90 ✅ (= v0.1.14/v0.1.15 frozen carry; prompt-blind + retriever-blind + Auditor-blind so unaffected by report-layer change).
 - 3 git-diff HARD invariant checks (per spec §4) all EMPTY (§6 Auditor/validator + all src/ + eval-internals-other-than-report.py).
+
+## v0.1.17 — No-Answer residual diagnostic ($0 cache-mining classifier) (cerrado 2026-05-22, squash `<squash-sha>`, tag `v0.1.17-no-answer-diagnosis`)
+
+### Decision
+
+Ship a $0 enhanced diagnostic that disambiguates the no_answer residual (~23% H10 baseline 7/30 + 2/14 H15 v1.2 holdout) into 4 sub-cases (refusal / analyst_raise / transport_error / other) by mining the existing 381-file judge cache. Per ADR-0022: diagnostic-first approach; intervention itself NOT shipped in v0.1.17 (deferred to v0.1.17.1 based on the diagnostic verdict). The contribution is the classified evidence + taxonomy + conditional intervention recommendation — fix-the-right-thing risk reduced by $0 evidence-driven decision.
+
+### Implementation
+
+- **NEW** `scripts/diagnose_no_answer.py` (~559 lines): module constants (REFUSAL_PHRASES_ES 16 ES + REFUSAL_PHRASES_EN 6 EN + REFUSAL_PHRASES 22 total + REPORTS_TO_SCAN 3 canonical reports); public frozen dataclasses CacheEntry / ReportCase / NoAnswerDiagnosis; functions `parse_no_answer_cases_from_report` / `load_cache_entries` / `find_actual_answer_in_cache` / `_find_refusal_phrase` (length-sort longest-first to favor more-specific matches; doesn't change behavior, only improves matched_phrase informativeness) / `classify_no_answer_case` / `_recommend_intervention` / `render_diagnosis_markdown` / `_load_gold_queries` / `main`; 4-bucket classifier per spec §2 D3.
+- **NEW** `tests/unit/scripts/test_diagnose_no_answer.py` (~262 lines, 11 tests $0): refusal phrase match (each of 22 phrases) + case-insensitive match + transport_error on sentinel string + transport_error on empty string + analyst_raise on cache miss + other on non-refusal prose + actual_answer extractor (positive + None paths) + report parser (chat + cross-corpus case IDs) + REFUSAL_PHRASES seed-list regression anchor (16 ES + 6 EN pinned). Spec estimated ~7-8 tests; 11 is justified scope expansion for robustness (case-insensitivity test + extractor None mirror + parser cross-corpus mirror).
+- **NEW** `docs/no_answer_residual_diagnosis.md` (89 lines): PRODUCED BY THE SCRIPT (not hand-written) at T4. Contains Dataset / Aggregate counts / Per-report breakdown / Per-case classification table / Trajectory analysis (H10 v1.0 → H15 v1.2 class shift) / Recommended intervention / §22.22 honest caveats. Doubles as memoria-ready WHAT/WHY/HOW/IMPACT per `feedback_optimization_narrative_doc.md`.
+- **NEW** `docs/adr/0022-no-answer-residual-diagnostic.md` (91 lines; ADR count 21 → 22): D1-D4 decisions + 5 rejected alternatives (fix-first prompt v1.4, fix-first harness retry, diagnostic + speculative intervention, re-run via paid Sonnet probe, modify scripts/diagnose_baseline.py in place); cache-mining heuristic + REFUSAL_PHRASES non-exhaustive caveats documented; companion ADRs 0010 + 0016 + 0020 + 0021.
+- **NO** code change to `src/regulaitor/` (entire backend H1-H5/H7 + Auditor + citation-validator + Pydantic schemas + DTOs untouched). **NO** code change to eval pipeline (`evals/judge.py` / `evals/cache.py` / `evals/harness.py` / `evals/metrics.py` / `evals/schemas.py` / `evals/report.py`). **NO** code change to Analyst prompts v1.0/v1.1/v1.2/v1.3. **NO** change to `evals/gold_set.jsonl`. Verified by 5 git-diff HARD checks at T5 (all EMPTY).
+
+### IMPACT
+
+- **Diagnostic verdict** (per `docs/no_answer_residual_diagnosis.md`): **other-dominant** (10/12 = 83%). Total no_answer cases classified: 12. Counts: refusal=0, analyst_raise=0, transport_error=2 (17%), other=10 (83%).
+- **Trajectory analysis** (H10 v1.0 → H15 v1.2): analyst_raise 0→0, transport_error 1→0 (Intervention B fully eliminated transport_error on the 30-case cohort), other 6→3 (Intervention B halved `other`), refusal 0→0 (no seed-list matches throughout — see deeper finding).
+- **Deeper finding (beyond mechanical "other-dominant" interpretation)**: inspecting the 10 `other` cases reveals they are mostly **prose-without-findings** — Analyst emits a substantive text-field answer (real RGPD/AI Act content) but fails to structure it as `Finding` objects with citations. This is a **5th mechanism** v0.1.17's 4-bucket taxonomy didn't anticipate. The redteam-block cases (chat-014, chat-015) ARE refusals but with phrasings outside the 22-entry seed list ("Esta solicitud/consulta no puede ser atendida").
+- **Next microhito decided**: **v0.1.17.1** = TWO-part intervention: (a) expand REFUSAL_PHRASES seed to catch "Esta solicitud/consulta no puede ser atendida" patterns (reclassifies ~2 cases from `other` → `refusal`); (b) tighten Analyst Output contract via prompt v1.4 to FORCE Finding emission even when emitting substantive prose (the current v1.1/v1.2/v1.3 contract addresses "emit findings:[] when refusing" but doesn't address "always emit findings:[Finding(citation=...)] when answering"). The deeper finding makes this a more focused intervention than the script's mechanical recommendation (which only said "expand seed list").
+- **§22.22 honest framing carried forward**: classified evidence shipped + taxonomy + conditional intervention recommendation computed from actual data + deeper finding documented honestly (the prose-without-findings 5th mechanism the spec didn't anticipate). The diagnostic-first approach paid off: a fix-first prompt v1.4 (skipping the diagnostic) would have addressed only the refusal-phrasing aspect, not the more dominant prose-without-findings pattern.
+- **Fix-the-right-thing risk reduced**: $0 evidence-driven decision exposed a 5th mechanism that would have been missed by speculative fix-first.
+- **Taxonomy reusable**: the 4-bucket schema + dataclasses can be re-run against future v0.1.20 paid bundle reports to track no_answer trajectory across milestones. v0.1.17.1 may extend to 5 buckets (refusal / analyst_raise / transport_error / prose_without_findings / other) based on this finding.
+- **Surgical change**: 1 new script + 1 new test file + 2 new docs. Backend H1-H5/H7 + Auditor + citation-validator + eval pipeline + Analyst prompts + gold set ALL BYTE-UNCHANGED.
+- **$0 milestone**: no paid LLM call in v0.1.17.
+
+### Gate
+
+- `uv run pytest -m "not slow"` → **867 passed / 0 failed / 1 skipped** (856 baseline + 11 from `test_diagnose_no_answer.py`), coverage 92.46% ≥90% exit 0.
+- `uv run mypy src` → Success: no issues found in 71 source files, exit 0.
+- `uv run python -m scripts.redteam --smoke` → block_rate **0.92** ≥0.90 ✅ (= v0.1.14/v0.1.15/v0.1.16 frozen carry; diagnostic-blind so unaffected).
+- 5 git-diff HARD invariant checks (per spec §4) all EMPTY (§6 + all src/ + eval-internals incl. report.py + Analyst prompts v1.0-v1.3 + gold set).
