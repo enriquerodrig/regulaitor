@@ -1,15 +1,21 @@
 # scripts/diagnose_no_answer.py
-"""v0.1.17 — $0 No-Answer residual diagnostic. Disambiguates the no_answer
-residual into 4 sub-cases by mining the judge cache:
+"""v0.1.17 + v0.1.17.1 — $0 No-Answer residual diagnostic. Disambiguates the
+no_answer residual into 5 sub-cases by mining the judge cache:
 
-- refusal:         Analyst emitted Answer with a structured refusal phrase
-                   (legitimate, per v1.1/v1.2/v1.3 Output contract).
-- analyst_raise:   Analyst raised before judge was called (no actual_answer
-                   ever cached for this case's query).
-- transport_error: actual_answer is empty string OR "(backend error)" sentinel
-                   from the harness exception wrapper.
-- other:           Analyst-emitted prose without standard refusal phrasing.
-                   Needs manual review.
+- refusal:                Analyst emitted Answer with a structured refusal
+                          phrase (legitimate, per v1.1/v1.2/v1.3/v1.4 Output
+                          contract).
+- analyst_raise:          Analyst raised before judge was called (no
+                          actual_answer ever cached for this case's query).
+- transport_error:        actual_answer is empty string OR "(backend error)"
+                          sentinel from the harness exception wrapper.
+- prose_without_findings: Analyst emitted substantive prose (> 100 chars)
+                          without standard refusal phrasing — the 5th
+                          mechanism surfaced by v0.1.17 per-case inspection;
+                          v0.1.17.1's Analyst prompt v1.4 Hard Rule 9
+                          targets exactly this pattern.
+- other:                  Short (≤ 100 chars) non-refusal Analyst output.
+                          Needs manual review (heuristic edge case).
 
 Algorithm per spec §2 D3:
 1. Parse 3 canonical reports for no_answer cases (emitted=[] + verdict
@@ -54,6 +60,11 @@ REFUSAL_PHRASES_ES: list[str] = [
     "no puedo responder",
     "no dispongo de información",
     "fuera del ámbito del corpus",
+    # v0.1.17.1 additions — observed in chat-014/015 redteam-block refusals
+    # that v0.1.17's 22-entry seed missed. Evidence-driven, not prophylactic.
+    "esta solicitud no puede ser atendida",
+    "esta consulta no puede ser atendida",
+    "no se puede atender",
 ]
 
 REFUSAL_PHRASES_EN: list[str] = [
@@ -122,7 +133,9 @@ class NoAnswerDiagnosis:
     expected_articles: list[str]
     expected_verdict: str
     actual_verdict: str
-    classification: str  # "refusal" / "analyst_raise" / "transport_error" / "other"
+    classification: (
+        str  # "refusal" / "analyst_raise" / "transport_error" / "prose_without_findings" / "other"
+    )
     actual_answer_snippet: str  # first 200 chars OR "(not in cache)" / "(empty)"
     matched_phrase: str | None  # which REFUSAL_PHRASES entry fired
     classifier_confidence: str  # "high" / "medium" / "low"
@@ -263,7 +276,9 @@ def _find_refusal_phrase(text: str) -> str | None:
 
 
 def classify_no_answer_case(case: ReportCase, cache_entries: list[CacheEntry]) -> NoAnswerDiagnosis:
-    """Classify one no_answer case into one of 4 buckets per spec §2 D3."""
+    """Classify one no_answer case into one of 5 buckets per spec §2 D3 +
+    v0.1.17.1 spec §D4 (prose_without_findings 5th bucket).
+    """
     actual_answer = find_actual_answer_in_cache(case.query, cache_entries)
 
     if actual_answer is None:
@@ -307,6 +322,25 @@ def classify_no_answer_case(case: ReportCase, cache_entries: list[CacheEntry]) -
             actual_answer_snippet=snippet,
             matched_phrase=phrase,
             classifier_confidence="high",
+        )
+
+    # v0.1.17.1: 5th bucket — substantive prose without structured Findings.
+    # Heuristic: > 100 chars of non-refusal text indicates the Analyst
+    # emitted a real prose answer but failed to structure it as Findings
+    # (the dominant pattern surfaced by v0.1.17 per-case inspection of
+    # `other`). Short cases (<= 100 chars) stay in `other` for manual review
+    # per spec D4 conservative-heuristic rationale.
+    if len(actual_answer.strip()) > 100:
+        return NoAnswerDiagnosis(
+            report_file=case.report_file,
+            case_id=case.case_id,
+            expected_articles=case.expected_articles,
+            expected_verdict=case.expected_verdict,
+            actual_verdict=case.actual_verdict,
+            classification="prose_without_findings",
+            actual_answer_snippet=snippet,
+            matched_phrase=None,
+            classifier_confidence="medium",  # heuristic — may need manual review.
         )
 
     return NoAnswerDiagnosis(
@@ -365,6 +399,17 @@ def _recommend_intervention(counts: dict[str, int]) -> str:
             "retry-on-transport-error hook (eval-side; no Analyst prompt "
             "change)."
         )
+    if pct.get("prose_without_findings", 0) > 50:
+        return (
+            "**prose_without_findings-dominant.** The Analyst is emitting "
+            "substantive prose into the `text` field but failing to structure "
+            "it as `Finding` objects with citations — the 5th mechanism "
+            "surfaced by v0.1.17's per-case inspection. **v0.1.17.1 ships "
+            "exactly that intervention: Analyst prompt v1.4 with Hard Rule 9 "
+            "(force-Finding-emission + self-check) opt-in via "
+            "`REGULAITOR_ANALYST_PROMPT_VERSION=v1.4`.** Empirical "
+            "effectiveness measured in v0.1.20 paid bundle."
+        )
     if pct.get("other", 0) > 30:
         return (
             "**Other-dominant.** The classifier's REFUSAL_PHRASES seed list is "
@@ -385,12 +430,14 @@ def render_diagnosis_markdown(results: list[NoAnswerDiagnosis], counts: dict[str
     """Produce the docs/no_answer_residual_diagnosis.md content."""
     total = sum(counts.values())
     parts: list[str] = []
-    parts.append("# No-Answer residual diagnostic (v0.1.17)")
+    parts.append("# No-Answer residual diagnostic (v0.1.17 + v0.1.17.1)")
     parts.append("")
     parts.append(
         "**Status:** $0 cache-mining diagnostic shipped 2026-05-21 (tag "
-        "`v0.1.17-no-answer-diagnosis`). Intervention deferred to v0.1.17.1 "
-        "or v0.1.18 based on the recommendation below."
+        "`v0.1.17-no-answer-diagnosis`); v0.1.17.1 extended the taxonomy "
+        "to 5 buckets + expanded REFUSAL_PHRASES seed 22→25 (tag "
+        "`v0.1.17.1-no-answer-fix`). Intervention details in ADR-0023; "
+        "empirical v1.4 effectiveness measured in v0.1.20 paid bundle."
     )
     parts.append("")
     parts.append(
@@ -417,15 +464,22 @@ def render_diagnosis_markdown(results: list[NoAnswerDiagnosis], counts: dict[str
     )
     parts.append("")
     parts.append(
-        f"**Classifier version:** v0.1.17 (4 buckets: refusal / analyst_raise / "
-        f"transport_error / other). **Total no_answer cases found:** {total}."
+        f"**Classifier version:** v0.1.17.1 (5 buckets: refusal / analyst_raise / "
+        f"transport_error / prose_without_findings / other). **Total no_answer "
+        f"cases found:** {total}."
     )
     parts.append("")
     parts.append("## Aggregate counts")
     parts.append("")
     parts.append("| Classification | Count | Share |")
     parts.append("|---|---|---|")
-    for label in ("refusal", "analyst_raise", "transport_error", "other"):
+    for label in (
+        "refusal",
+        "analyst_raise",
+        "transport_error",
+        "prose_without_findings",
+        "other",
+    ):
         n = counts.get(label, 0)
         share = (n / total * 100) if total else 0.0
         parts.append(f"| {label} | {n} | {share:.0f}% |")
@@ -442,7 +496,13 @@ def render_diagnosis_markdown(results: list[NoAnswerDiagnosis], counts: dict[str
         report_total = sum(sub.values())
         parts.append(f"### `{report}` ({report_total} no_answer cases)")
         parts.append("")
-        for label in ("refusal", "analyst_raise", "transport_error", "other"):
+        for label in (
+            "refusal",
+            "analyst_raise",
+            "transport_error",
+            "prose_without_findings",
+            "other",
+        ):
             n = sub.get(label, 0)
             parts.append(f"- {label}: {n}")
         parts.append("")
@@ -468,7 +528,13 @@ def render_diagnosis_markdown(results: list[NoAnswerDiagnosis], counts: dict[str
     h15_counts = by_report.get("candidate-v1.2.md", {})
     parts.append("H10 (v1.0 prompt) → H15 v1.2 (hardened Output contract) class shift:")
     parts.append("")
-    for label in ("refusal", "analyst_raise", "transport_error", "other"):
+    for label in (
+        "refusal",
+        "analyst_raise",
+        "transport_error",
+        "prose_without_findings",
+        "other",
+    ):
         h10 = h10_counts.get(label, 0)
         h15 = h15_counts.get(label, 0)
         parts.append(f"- {label}: H10={h10} → H15 v1.2={h15} (Δ={h15 - h10:+d})")
@@ -493,9 +559,20 @@ def render_diagnosis_markdown(results: list[NoAnswerDiagnosis], counts: dict[str
         "would fail and the case would classify as `analyst_raise`."
     )
     parts.append(
-        "- **REFUSAL_PHRASES seed list is human-curated**: 22 phrases (16 "
-        "ES + 6 EN). False negatives possible (Analyst phrasing not in seed "
-        "→ classified as `other`). Expand if `other` count is high."
+        "- **REFUSAL_PHRASES seed list is human-curated**: 25 phrases (19 "
+        "ES + 6 EN; v0.1.17.1 added 3 ES `atendida` patterns observed in "
+        "chat-014/015). False negatives possible (Analyst phrasing not in "
+        "seed → classified as `other` if ≤ 100 chars OR "
+        "`prose_without_findings` if > 100 chars). Expand if `other` or "
+        "`prose_without_findings` count is high in unexpected ways."
+    )
+    parts.append(
+        "- **`prose_without_findings` 100-char threshold is a heuristic** "
+        "motivated by v0.1.17 observation that all 8 prose-without-findings "
+        "cases exceeded 200 chars. Future diagnostic runs may surface short "
+        "substantive prose cases that the threshold misses — these stay in "
+        "`other` and remain visible for manual review (per spec D4 "
+        "conservative-heuristic rationale)."
     )
     parts.append(
         "- **Cache absence ambiguity**: `analyst_raise` and `transport_error` "
@@ -535,6 +612,7 @@ def main() -> int:
         "refusal": 0,
         "analyst_raise": 0,
         "transport_error": 0,
+        "prose_without_findings": 0,
         "other": 0,
     }
     for case in all_cases:

@@ -135,7 +135,7 @@ milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (3875 lines as of v0.1.17 closure; every approved technical decision from H0 to v0.1.17 maximalist plan microhito 10/12).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (3932 lines as of v0.1.17.1 closure; every approved technical decision from H0 to v0.1.17.1 maximalist plan microhito 10b/12).
 
 ---
 
@@ -179,6 +179,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.15** | `v0.1.15-gap-analysis-chat` | [spec](superpowers/specs/2026-05-21-v0.1.15-gap-analysis-chat-mode-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.15-gap-analysis-chat-mode.md) | [0020](adr/0020-chat-gap-analysis-mode.md) | `4ea2d9e` |
 | **v0.1.16** | `v0.1.16-section17-thresholds` | [spec](superpowers/specs/2026-05-21-v0.1.16-section17-thresholds-judge-family-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.16-section17-thresholds-judge-family.md) | [0021](adr/0021-v0120-bar-thresholds.md) | `bc7b349` |
 | **v0.1.17** | `v0.1.17-no-answer-diagnosis` | [spec](superpowers/specs/2026-05-21-v0.1.17-no-answer-residual-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.17-no-answer-residual.md) | [0022](adr/0022-no-answer-residual-diagnostic.md) | `e5dbedd` |
+| **v0.1.17.1** | `v0.1.17.1-no-answer-fix` | [spec](superpowers/specs/2026-05-22-v0.1.17.1-no-answer-fix-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.17.1-no-answer-fix.md) | [0023](adr/0023-no-answer-fix.md) | `<squash-sha>` |
 
 ---
 
@@ -194,7 +195,7 @@ Each closed milestone has its own §HX section in
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0022 (**22 ADRs** — v0.1.17 added 0022 no-Answer residual diagnostic) | ✅ |
+| 9 | ADRs current | 0001-0023 (**23 ADRs** — v0.1.17.1 added 0023 no-Answer residual fix TWO-part + 5-bucket extension) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---

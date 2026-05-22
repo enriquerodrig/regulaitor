@@ -3873,3 +3873,60 @@ Ship a $0 enhanced diagnostic that disambiguates the no_answer residual (~23% H1
 - `uv run mypy src` → Success: no issues found in 71 source files, exit 0.
 - `uv run python -m scripts.redteam --smoke` → block_rate **0.92** ≥0.90 ✅ (= v0.1.14/v0.1.15/v0.1.16 frozen carry; diagnostic-blind so unaffected).
 - 5 git-diff HARD invariant checks (per spec §4) all EMPTY (§6 + all src/ + eval-internals incl. report.py + Analyst prompts v1.0-v1.3 + gold set).
+
+---
+
+## §v0.1.17.1 — No-Answer residual fix (TWO-part + 5-bucket extension) (2026-05-22, squash `<squash-sha>`, tag `v0.1.17.1-no-answer-fix`)
+
+**Date:** 2026-05-22 (close)
+**Branch:** `feat/v0.1.17.1-no-answer-fix` from main @ `27d2235`
+**Spec:** `docs/superpowers/specs/2026-05-22-v0.1.17.1-no-answer-fix-design.md` (commit `2c7ddba`)
+**Plan:** `docs/superpowers/plans/2026-05-22-v0.1.17.1-no-answer-fix.md` (commit `27d2235`)
+**ADR:** ADR-0023
+**Cost:** $0 (no paid LLM run; empirical v1.0 vs v1.4 A/B deferred to v0.1.20 bundle)
+
+### WHAT shipped (per §6 honest framing)
+
+- **(a) REFUSAL_PHRASES expansion**: `scripts/diagnose_no_answer.py` seed 22 → 25 (16 ES + 6 EN → 19 ES + 6 EN). Three evidence-driven ES additions: `"esta solicitud no puede ser atendida"`, `"esta consulta no puede ser atendida"`, `"no se puede atender"` (observed in chat-014/015 redteam-block cases).
+- **(b) Analyst prompt v1.4**: new file `src/regulaitor/agents/prompts/analyst/system.v1.4.md` (216 lines) = v1.3 verbatim + Hard Rule 9 (force-Finding-emission + self-check + "remove the claim or add Finding" out) + Output contract amendment on context-supports-answer branch ("Per Hard rule 9, every substantive claim in `text` must map to ≥1 Finding — empty `findings` with non-empty substantive `text` is INVALID"). Hard rules 1-8 + Output format + Output contract — gap-analysis branch + Examples 1-3 BYTE-IDENTICAL to v1.3 (regression-zero on gap-analysis chat mode + Q&A; verified by 4 byte-equal tests in `tests/unit/test_analyst_v1_4_loads.py`). Production default stays **v1.0** (boundary contract carried since v0.1.15); v1.4 opt-in via `REGULAITOR_ANALYST_PROMPT_VERSION=v1.4` for v0.1.20 paid bundle.
+- **(c) Classifier 5th bucket**: `classify_no_answer_case` gains `prose_without_findings` (non-empty + no refusal phrase + `len(actual_answer.strip()) > 100`). Cases ≤100 chars without refusal phrase stay `other` (conservative heuristic per ADR-0023 D4 + §22.22 caveat). `_recommend_intervention` gains 5th branch for prose-dominant (>50%) → labels intervention as v1.4 + force-Finding-emission. `render_diagnosis_markdown` renders 5 buckets across aggregate counts + per-report breakdown + trajectory analysis. The render function's H1 + Status string also refreshed in T6 to self-describe as the v0.1.17 + v0.1.17.1 instrument.
+- **Diagnostic re-run** (`docs/no_answer_residual_diagnosis.md` regenerated as v0.1.17.1 closure artifact). Actual verdict over 12 total no_answer cases: refusal=**2** (was 0), prose_without_findings=**8** (new bucket), other=**0** (was 10), transport_error=**2** (unchanged), analyst_raise=**0** (unchanged). **Clean 100% partition** of v0.1.17's `other`-dominant residual into the two new evidence-driven categories. Per-report breakdown: candidate-v1.2.md (3 cases: refusal=2, prose_without_findings=1) / holdout-v1.2-chat.md (2 cases: transport_error=1, prose_without_findings=1) / latest.md H10 baseline (7 cases: transport_error=1, prose_without_findings=6).
+
+### WHY (evidence-driven derivation from v0.1.17)
+
+v0.1.17 diagnostic verdict: other-dominant 10/12 (83%). ADR-0022 D1 conditional intervention rules said this → v0.1.17.1 expand REFUSAL_PHRASES seed + re-run. But the diagnostic-first design paid off in a deeper way: per-case inspection of the 10 `other` cases revealed an unanticipated 5th mechanism — 8 of 10 are prose-without-findings (Analyst emits substantive prose in `text` without structuring as Finding objects), only 2 are missed-refusal-phrasings (chat-014/015). A fix-first prompt v1.4 (skipping v0.1.17 diagnostic entirely) would have targeted only the refusal-phrasing aspect (secondary, 17%) instead of the dominant prose pattern (67%). The diagnostic redirected v1.4's wording from "expand structured-refusal contract" (speculative) to "force Finding emission on substantive prose" (evidence-driven). The T6 re-run validates the redirection: 100% of v0.1.17's `other` partition splits cleanly into refusal (2) + prose_without_findings (8), confirming the 5th-mechanism hypothesis empirically.
+
+### HOW (TDD red→green discipline preserved)
+
+- **T0** (controller): branch creation `feat/v0.1.17.1-no-answer-fix` from main @ `27d2235`.
+- **T1** (haiku): TDD red on `test_diagnose_no_answer.py` (+4 new tests + 1 updated pinned-counts assertion + module docstring fix from code-quality review; commit `120dcfb`).
+- **T2** (haiku): GREEN by extending `scripts/diagnose_no_answer.py` (3 phrases + 5th bucket logic + recommendation branch + 5-bucket renderer + module docstring + 1 forced test rename for misleading-name fix from code-quality review; commit `29fcbc5`).
+- **T3** (haiku): TDD red on new `tests/unit/test_analyst_v1_4_loads.py` (9 tests: 8 from spec §3.2 + 1 mirror-parity 5-version coexist test; commit `347f91b`).
+- **T4** (Opus): GREEN by creating `src/regulaitor/agents/prompts/analyst/system.v1.4.md` (v1.3 verbatim + 3 surgical changes: frontmatter changelog + Hard Rule 9 + Output contract amendment; byte-identity discipline verified by 4 byte-equal tests; commit `24d067b`).
+- **T5** (Opus): ADR-0023 with D1-D5 + 7 rejected alternatives + companion ADRs 0016/0020/0021/0022 + I-1 carry-forward from T4 code-quality review for v0.1.20 (commit `f5baee8`).
+- **T6** (controller-run, no subagent): re-ran `python -m scripts.diagnose_no_answer` against the same cache snapshot used in v0.1.17. Verdict: refusal=2, prose_without_findings=8, other=0, transport_error=2, analyst_raise=0 (12 total). Bundled with a small render-string refresh in the script's `render_diagnosis_markdown` H1 + Status so the artifact self-describes as the v0.1.17 + v0.1.17.1 instrument (commit `e5b16dc`).
+- **T7** (controller-run gate): 5 HARD git-diff invariants empty (§6 + src-only-prompt + eval-internals + prior Analyst prompts v1.0-v1.3 + gold set) + 3 dynamic gates green (pytest 880/0/1, mypy strict 71 files exit 0, redteam-smoke 0.92 carry).
+- **T8** (Opus, this entry): closure docs across decisions_log + evidence_matrix + CLAUDE.md WITH T6 verdict-numbers injected.
+
+Two-stage review (spec compliance + code quality) per implementation task. Code-quality reviews caught: T1 Critical (stale module docstring on the test file) — fixed by amend. T2 Important (misleading test name `test_classify_other_when_non_refusal_prose` after assertion update) — fixed by rename to `test_classify_prose_just_above_100_char_threshold`. T4 Important I-1 (Hard Rule 9 vs gap-analysis Example 3 "Importante: confirmar..." borderline-substantive-claim interaction) — accepted as carry-forward for v0.1.20 empirical measurement; if the failure mode materializes empirically, prompt v1.5 needs a gap-analysis orientation-prose carve-out sentence. T4 Important I-2 (English self-check question inside bilingual prompt) — accepted as carry-forward; non-issue under current `model_compatibility: [claude-sonnet-4-6]` declaration.
+
+### IMPACT (§22.22 honest framing)
+
+- **§6 invariant strengthened**: Hard Rule 9 makes "no citation, no answer" explicit at the prompt level, not just enforced downstream by the Auditor. v1.4's self-check forces the model to reason about Finding/text alignment before emitting.
+- **5-bucket taxonomy reusable**: future diagnostic re-runs (v0.1.20, post-TFM) directly count the 5th mechanism instead of inferring from `other`. The T6 re-run demonstrated the instrument's diagnostic precision (clean 100% partition of v0.1.17's `other` into refusal+prose_without_findings).
+- **Boundary contract preserved**: production default v1.0 unchanged; v1.4 opt-in via env. Zero production risk.
+- **Empirical v1.4 effectiveness UNMEASURED in v0.1.17.1**: $0 milestone, no paid run. v0.1.20 paid bundle measures v1.0 vs v1.4 against v0.1.20-bar (ADR-0021).
+- **JUNK-Finding risk guarded structurally; empirical assessment deferred**: Hard Rule 9 explicitly offers "remove the claim from `text` and emit a refusal" as alternative to fabricated Findings; actual model behavior under v1.4 measured at v0.1.20.
+- **Cross-prompt regression risk at v1.4**: Hard Rule 9 + gap-analysis branch interactions structurally pinned via `test_v1_4_preserves_gap_analysis_branch_verbatim` byte-equality test; T4 reviewer flagged Example 3's "Importante: confirmar la clasificación alto riesgo bajo art. 6" as borderline-substantive — carried forward for v0.1.20 measurement on the 10 industry-g\*/industry-gv\* gold cases.
+- **Diagnostic-first design vindicated**: had v0.1.17.1 been a speculative fix-first (skipping v0.1.17), v1.4 would have addressed only 17% of the residual instead of the dominant 67%. The diagnostic-first discipline (ADR-0022) paid off by exposing the 5th mechanism that redirected v1.4's wording.
+
+### Gate authoritative
+
+- `uv run pytest -m "not slow" --junit-xml C:\tmp\v01171-final.xml` → 880 passed / 0 failed / 1 skipped (`tests/integration/test_document_e2e_clean.py::test_*` skip-anchor on ANTHROPIC_API_KEY unset), 93.56% coverage exit 0. Delta from baseline 867: +13 (4 new in test_diagnose_no_answer.py + 9 new in test_analyst_v1_4_loads.py).
+- `uv run mypy src` → Success 71 source files exit 0 (UNCHANGED — v0.1.17.1 adds no `.py` under `src/`, only the `system.v1.4.md` markdown resource).
+- `python -m scripts.redteam --smoke` → block_rate **0.92** (= v0.1.14/v0.1.15/v0.1.16/v0.1.17 carry; prompt-blind + production default is still v1.0 so unaffected by v1.4).
+- 5 HARD git-diff invariants all empty (§6 Auditor + citation/validator; ALL src/ except the new v1.4 prompt; eval pipeline judge/cache/harness/metrics/schemas/report; prior Analyst prompts v1.0-v1.3; gold set).
+
+### Plan maximalist progress
+
+Microhito **10b/12** done. Sequence: v0.1.18 (citation granularity confound — eval-instrument fix for H8 apartado-level vs H14 article-level expected_articles mismatch; may require full A/B re-baseline) · v0.1.19 (Auditor RHR + Council binding ON, the §6-invariant-adjacent work) · v0.1.20 (single paid validation A/B cuando recargue budget — measures v1.0 vs v1.4 + retrieval levers + segmenter + gap-analysis cases against v0.1.20-bar) · luego retorno a **H16** (HF Spaces deploy) + **H17** (TFM cierre académico).

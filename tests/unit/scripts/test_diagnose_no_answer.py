@@ -1,15 +1,23 @@
-"""v0.1.17 — No-Answer residual classifier ($0 cache-mining diagnostic).
+"""v0.1.17 + v0.1.17.1 — No-Answer residual classifier ($0 cache-mining diagnostic).
 
-Pins the v0.1.17 4-bucket taxonomy from spec §2 D3:
+v0.1.17 pins the original 4-bucket taxonomy from spec §2 D3:
 - refusal: actual_answer contains a REFUSAL_PHRASES seed phrase.
 - analyst_raise: no cache entry matched for the case's query.
 - transport_error: actual_answer is empty OR "(backend error)" sentinel.
 - other: actual_answer is non-empty + no refusal phrase (needs manual review).
 
+v0.1.17.1 extends to 5 buckets (per-case inspection of v0.1.17's `other` cases
+surfaced a 5th mechanism: prose_without_findings — Analyst emits substantive
+prose into `text` without structured Findings) + expands REFUSAL_PHRASES seed
+22 → 25 (3 ES `atendida` phrases observed in chat-014/015 redteam-block cases):
+- prose_without_findings (NEW): actual_answer > 100 chars + no refusal phrase.
+
 Plus the cache-mining helpers (query→actual_answer extractor) and the
 markdown report parser (per-case appendix → ReportCase).
 
-Source of truth: docs/superpowers/specs/2026-05-21-v0.1.17-no-answer-residual-design.md
+Sources of truth:
+- docs/superpowers/specs/2026-05-21-v0.1.17-no-answer-residual-design.md
+- docs/superpowers/specs/2026-05-22-v0.1.17.1-no-answer-fix-design.md
 """
 
 from __future__ import annotations
@@ -135,18 +143,29 @@ def test_classify_analyst_raise_when_no_cache_entry() -> None:
 # --- Other (non-refusal prose) classification ----------------------------
 
 
-def test_classify_other_when_non_refusal_prose() -> None:
-    """Non-empty actual_answer without any refusal phrase → 'other'."""
+def test_classify_prose_just_above_100_char_threshold() -> None:
+    """v0.1.17.1: short-but-over-threshold non-refusal prose (113 chars,
+    just above the 100-char heuristic) → 'prose_without_findings'.
+
+    This pairs with `test_classify_other_when_short_non_refusal` (≤100
+    chars boundary) and `test_classify_prose_without_findings_when_long_substantive`
+    (>200 chars typical) to fully pin the boundary behavior:
+        ≤100 chars                  → other
+        >100 chars (just above)     → prose_without_findings  ← this test
+        >200 chars (typical)        → prose_without_findings
+    """
     case = _make_report_case()
     # Real-shaped prose that does NOT contain any refusal phrase.
+    # This text is 113 chars, just above the 100-char threshold.
     answer = (
         "El artículo 12 del AI Act regula los registros automáticos de "
         "eventos durante el funcionamiento del sistema."
     )
     cache_entries = [_make_cache_entry(case.query, answer)]
     result = classify_no_answer_case(case, cache_entries)
-    assert result.classification == "other"
+    assert result.classification == "prose_without_findings"
     assert result.matched_phrase is None
+    assert result.classifier_confidence == "medium"
 
 
 # --- actual_answer extractor ---------------------------------------------
@@ -242,12 +261,13 @@ def test_parse_handles_cross_corpus_case_ids() -> None:
 
 
 def test_refusal_phrases_seed_list_pinned() -> None:
-    """The REFUSAL_PHRASES seed list has exactly 16 Spanish + 6 English
-    entries. Pin to catch accidental drift (seed expansion must be
+    """The REFUSAL_PHRASES seed list has exactly 19 Spanish + 6 English
+    entries (v0.1.17.1: +3 ES for "atendida" patterns observed in
+    chat-014/015). Pin to catch accidental drift (seed expansion must be
     intentional + accompanied by a follow-up plan)."""
     assert (
-        len(REFUSAL_PHRASES_ES) == 16
-    ), f"REFUSAL_PHRASES_ES drift: expected 16, got {len(REFUSAL_PHRASES_ES)}"
+        len(REFUSAL_PHRASES_ES) == 19
+    ), f"REFUSAL_PHRASES_ES drift: expected 19, got {len(REFUSAL_PHRASES_ES)}"
     assert (
         len(REFUSAL_PHRASES_EN) == 6
     ), f"REFUSAL_PHRASES_EN drift: expected 6, got {len(REFUSAL_PHRASES_EN)}"
@@ -258,5 +278,94 @@ def test_refusal_phrases_seed_list_pinned() -> None:
     assert "fuera del ámbito del corpus" in REFUSAL_PHRASES_ES
     assert "i cannot provide" in REFUSAL_PHRASES_EN
     assert "the corpus does not support" in REFUSAL_PHRASES_EN
-    # Total = 22.
-    assert len(REFUSAL_PHRASES) == 22
+    # v0.1.17.1 additions (evidence-driven, observed in chat-014/015
+    # redteam-block cases that the 22-entry seed missed).
+    assert "esta solicitud no puede ser atendida" in REFUSAL_PHRASES_ES
+    assert "esta consulta no puede ser atendida" in REFUSAL_PHRASES_ES
+    assert "no se puede atender" in REFUSAL_PHRASES_ES
+    # Total = 25.
+    assert len(REFUSAL_PHRASES) == 25
+
+
+# --- v0.1.17.1: 5th bucket (prose_without_findings) + new refusal phrases ---
+
+
+def test_classify_prose_without_findings_when_long_substantive() -> None:
+    """v0.1.17.1: cache entry present + non-empty + no refusal phrase +
+    actual_answer > 100 chars → 'prose_without_findings' (the 5th bucket
+    surfaced by v0.1.17 per-case inspection of `other`).
+
+    Uses a real-shaped sample from v0.1.17 docs/no_answer_residual_diagnosis.md
+    per-case table (chat-003-style prose answer)."""
+    case = _make_report_case()
+    # Real-shaped prose answer > 100 chars (substantive AI Act content).
+    answer = (
+        "El AI Act impone a los proveedores de sistemas de IA de alto riesgo "
+        "un conjunto de obligaciones de gestión de riesgos, supervisión humana "
+        "y registro automático de eventos durante el funcionamiento del sistema."
+    )
+    assert len(answer) > 100, "fixture sanity: prose sample must exceed 100 chars"
+    cache_entries = [_make_cache_entry(case.query, answer)]
+    result = classify_no_answer_case(case, cache_entries)
+    assert (
+        result.classification == "prose_without_findings"
+    ), f"expected 'prose_without_findings', got {result.classification!r}"
+    assert result.matched_phrase is None
+
+
+def test_classify_other_when_short_non_refusal() -> None:
+    """v0.1.17.1 boundary test: cache entry present + non-empty + no refusal
+    phrase + actual_answer ≤ 100 chars → stays 'other' (the 5th-bucket rule
+    applies only to LONG substantive prose; short edge cases stay in `other`
+    for manual review per spec D4 conservative-heuristic rationale)."""
+    case = _make_report_case()
+    answer = "El artículo 12 regula los registros."  # 38 chars, < 100
+    assert len(answer) <= 100, "fixture sanity: short sample must be ≤ 100 chars"
+    cache_entries = [_make_cache_entry(case.query, answer)]
+    result = classify_no_answer_case(case, cache_entries)
+    assert (
+        result.classification == "other"
+    ), f"expected 'other' for short non-refusal, got {result.classification!r}"
+    assert result.matched_phrase is None
+
+
+def test_classify_refusal_with_new_atendida_phrases() -> None:
+    """v0.1.17.1: cache entry present + actual_answer contains
+    'esta solicitud no puede ser atendida' (or sibling phrase) → 'refusal'.
+
+    Regression anchor that chat-014/015-style redteam-block refusals (which
+    classified as `other` in v0.1.17 because the seed missed the phrase) now
+    correctly classify as `refusal`."""
+    case = _make_report_case()
+    answer = (
+        "Esta solicitud no puede ser atendida porque implica inventar "
+        "contenido normativo no presente en el corpus."
+    )
+    cache_entries = [_make_cache_entry(case.query, answer)]
+    result = classify_no_answer_case(case, cache_entries)
+    assert result.classification == "refusal", f"expected 'refusal', got {result.classification!r}"
+    assert result.matched_phrase is not None
+    assert "atendida" in result.matched_phrase.lower()
+
+
+def test_recommend_intervention_handles_prose_without_findings_dominant() -> None:
+    """v0.1.17.1: when prose_without_findings dominates (> 50%), the
+    recommendation must reference prose_without_findings-dominant + v1.4 +
+    force-Finding-emission (the v0.1.17.1 intervention itself)."""
+    from scripts.diagnose_no_answer import _recommend_intervention
+
+    counts = {
+        "refusal": 2,
+        "analyst_raise": 0,
+        "transport_error": 0,
+        "prose_without_findings": 8,
+        "other": 0,
+    }
+    text = _recommend_intervention(counts)
+    assert (
+        "prose_without_findings-dominant" in text.lower()
+    ), "recommendation must label the dominant class"
+    assert "v1.4" in text, "recommendation must reference prompt v1.4"
+    assert (
+        "force-finding-emission" in text.lower() or "force-finding" in text.lower()
+    ), "recommendation must mention force-Finding-emission as the intervention shape"
