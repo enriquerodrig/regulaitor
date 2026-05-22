@@ -3997,7 +3997,7 @@ Microhito **12/12 done** — the FINAL $0 microhito of the maximalist plan. Sequ
 
 ---
 
-## §v0.1.19 — Auditor RHR aggregation + Council binding ON (2026-05-22, squash `<squash-sha>`, tag `v0.1.19-council-binding`)
+## §v0.1.19 — Auditor RHR aggregation + Council binding ON (2026-05-22, squash `8831bcd`, tag `v0.1.19-council-binding`)
 
 **Date:** 2026-05-22 (close)
 **Branch:** `feat/v0.1.19-council-binding` from main @ `abf93cd`

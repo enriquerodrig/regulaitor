@@ -1,6 +1,6 @@
 # ADR 0025 — Auditor RHR aggregation + Council binding ON (v0.1.19)
 
-- **Status:** Accepted — 2026-05-22 — squash `<squash-sha>`, tag `v0.1.19-council-binding`
+- **Status:** Accepted — 2026-05-22 — squash `8831bcd`, tag `v0.1.19-council-binding`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0006 (H4 chat E2E architecture — Auditor Lenient-Finding + Strict-Answer aggregation that v0.1.19 leaves byte-unchanged), 0014 (H13 Council of Judges — the wired-OFF binding seam this milestone closes; D7 `_COUNCIL_BINDING=False` is the literal flag flipped here), 0016 (H15 Auditor calibration — §16.3 deferral list explicitly carried "Council binding" as post-H15.X work; this is that work), 0021 (v0.1.16 v0.1.20-bar measurement venue — Council binding effect on escalation/false-RHR rate measured in the v0.1.20 paid bundle), 0024 (v0.1.18 citation granularity confound — most recent preceding milestone; established the §6 interpretive distinction this milestone reinforces).
 
