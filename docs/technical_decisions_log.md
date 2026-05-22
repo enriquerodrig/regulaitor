@@ -3933,7 +3933,7 @@ Microhito **10b/12** done. Sequence: v0.1.18 (citation granularity confound — 
 
 ---
 
-## §v0.1.18 — Citation granularity confound (eval-instrument fix) (2026-05-22, squash `<squash-sha>`, tag `v0.1.18-citation-granularity`)
+## §v0.1.18 — Citation granularity confound (eval-instrument fix) (2026-05-22, squash `670e35e`, tag `v0.1.18-citation-granularity`)
 
 **Date:** 2026-05-22 (close)
 **Branch:** `feat/v0.1.18-citation-granularity` from main @ `48f2533`

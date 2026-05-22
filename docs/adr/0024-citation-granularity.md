@@ -1,6 +1,6 @@
 # ADR 0024 — Citation granularity confound (eval-instrument fix) (v0.1.18)
 
-- **Status:** Accepted — 2026-05-22 — squash `<squash-sha>`, tag `v0.1.18-citation-granularity`
+- **Status:** Accepted — 2026-05-22 — squash `670e35e`, tag `v0.1.18-citation-granularity`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0010 (H8 evaluation harness — the canonical citation_precision/recall metric instrument this fixes; D7 cache-stores-judge-only is the substrate that enables $0 re-rendering), 0015 (H14 cross-corpus expansion — introduced the article-level expected_articles annotation style that exposed the H8 apartado-level baseline assumption), 0017 (H15.1 retriever optimization — the §22.22 design-defect disclosure on instrument invariance that flagged this exact confound; v0.1.18 RESOLVES it), 0021 (v0.1.16 dual-layer thresholds + v0.1.20-bar — the measurement venue that requires this instrument fix for a fair denominator), 0023 (v0.1.17.1 no-Answer fix — the immediately-preceding eval-side milestone; pattern reference for boundary-contract preservation).
 

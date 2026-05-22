@@ -180,7 +180,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.16** | `v0.1.16-section17-thresholds` | [spec](superpowers/specs/2026-05-21-v0.1.16-section17-thresholds-judge-family-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.16-section17-thresholds-judge-family.md) | [0021](adr/0021-v0120-bar-thresholds.md) | `bc7b349` |
 | **v0.1.17** | `v0.1.17-no-answer-diagnosis` | [spec](superpowers/specs/2026-05-21-v0.1.17-no-answer-residual-design.md) | [plan](superpowers/plans/2026-05-21-v0.1.17-no-answer-residual.md) | [0022](adr/0022-no-answer-residual-diagnostic.md) | `e5dbedd` |
 | **v0.1.17.1** | `v0.1.17.1-no-answer-fix` | [spec](superpowers/specs/2026-05-22-v0.1.17.1-no-answer-fix-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.17.1-no-answer-fix.md) | [0023](adr/0023-no-answer-fix.md) | `98f3768` |
-| **v0.1.18** | `v0.1.18-citation-granularity` | [spec](superpowers/specs/2026-05-22-v0.1.18-citation-granularity-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.18-citation-granularity.md) | [0024](adr/0024-citation-granularity.md) | `<squash-sha>` |
+| **v0.1.18** | `v0.1.18-citation-granularity` | [spec](superpowers/specs/2026-05-22-v0.1.18-citation-granularity-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.18-citation-granularity.md) | [0024](adr/0024-citation-granularity.md) | `670e35e` |
 
 ---
 
