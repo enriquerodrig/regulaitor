@@ -3930,3 +3930,67 @@ Two-stage review (spec compliance + code quality) per implementation task. Code-
 ### Plan maximalist progress
 
 Microhito **10b/12** done. Sequence: v0.1.18 (citation granularity confound — eval-instrument fix for H8 apartado-level vs H14 article-level expected_articles mismatch; may require full A/B re-baseline) · v0.1.19 (Auditor RHR + Council binding ON, the §6-invariant-adjacent work) · v0.1.20 (single paid validation A/B cuando recargue budget — measures v1.0 vs v1.4 + retrieval levers + segmenter + gap-analysis cases against v0.1.20-bar) · luego retorno a **H16** (HF Spaces deploy) + **H17** (TFM cierre académico).
+
+---
+
+## §v0.1.18 — Citation granularity confound (eval-instrument fix) (2026-05-22, squash `<squash-sha>`, tag `v0.1.18-citation-granularity`)
+
+**Date:** 2026-05-22 (close)
+**Branch:** `feat/v0.1.18-citation-granularity` from main @ `48f2533`
+**Spec:** `docs/superpowers/specs/2026-05-22-v0.1.18-citation-granularity-design.md` (commit `48f2533`)
+**Plan:** `docs/superpowers/plans/2026-05-22-v0.1.18-citation-granularity.md` (commit `a27798e`)
+**ADR:** ADR-0024
+**Cost:** $0 (no paid LLM run; re-rendering uses pure-Python regex over existing report markdown)
+
+### WHAT shipped (per §6 honest framing)
+
+- **Hierarchical containment match** in `evals/metrics.py`: new `_citation_matches(emitted: str, expected: str) -> bool` helper encoding the 7-row truth table per ADR-0024 D1. `compute_citation_metrics` rewrites to iterate deduped emitted vs deduped expected with the new helper instead of set intersection. Signature + return type + dedup-first behavior preserved so existing callers + the 5 pre-existing `compute_citation_metrics` tests stay unchanged. Prefix-collision defended via trailing-dot startswith.
+- **Re-rendered 15 historical chat-mode reports at $0** via new `scripts/rerender_reports.py` (~200 lines; string-surgery + aggregate recomputation; idempotent). Implementation pivoted from the plan's original `make eval-from-cache` approach after T3 controller-verification discovered that `--cache-only` caches ONLY the judge layer (chat graph still calls real Anthropic API; per `evals/harness.py:204-208`) — NOT $0 as the plan assumed. The pivot expanded the script's scope from 2 files to 15 files (T0 glob discovered the broader set).
+- **T3 dramatic flip** (the H15.1 §22.22 design-defect RESOLUTION evidence): `evals/reports/h15/holdout-v1.2-chat.md` citation_precision_mean changed from 0.00 to **0.65**; citation_recall_mean changed from 0.00 to **0.64**. The v1.2 prompt's actual citation quality on the cross-corpus holdout becomes visible retroactively (was 100% instrument-artifact under the old set-intersection contract). Two related H15-era holdouts flipped similarly: `h15_1-holdout.md` (0.00 → 0.69 / 0.72), `holdout-v1.2-chat-probe.md` (0.00 → 0.71 / 1.00).
+- **H10 baseline + supporting reports**: `latest.md` (H10 30-case) 0.18 → 0.21 (+0.03 precision) / 0.48 → 0.56 (+0.07 recall); `latest.cost.md` 0.49 → 0.56 (+0.08) / 0.60 → 0.69 (+0.09); `latest.evaluation.md` 0.46 → 0.53 (+0.07) / 0.55 → 0.63 (+0.08). Smaller deltas reflect both the new rule AND the block-case-exclusion convention (per `evals/metrics.py::aggregate`).
+- **9 byte-identical files** (4 H15-era cohort reports + 5 probes) had per-row values invariant under both rules + aggregates already excluding block cases (the H15 study aggregator already did this). Script ran on them but produced byte-identical output — git correctly shows no diff. Documented in ADR-0024 Consequences as historical-pipeline detail, not a defect.
+- **ADR-0024**: count 23 → 24. Companion ADRs 0010 + 0015 + 0017 + 0021 + 0023. Documents the §6 interpretive distinction (production-side citation VALIDATION byte-unchanged in `src/regulaitor/citation/validator.py`; only post-hoc EVAL precision/recall metric rewritten in `evals/metrics.py`).
+
+### WHY (resolving the H15.1 §22.22 design-defect disclosure)
+
+The H15.1 §22.22 design-defect disclosure (ADR-0017, `docs/retriever_optimization.md`) flagged that v1.2's holdout citation=0.00 was instrument-artifact (granularity mismatch: H8 apartado-level `expected_articles` vs H14/industry article-level `expected_articles`), NOT a measurement of v1.2 quality. Empirical evidence collected during brainstorming:
+
+- Gold set: 64 chat cases. 38 apartado-level expected (97% of H8) + 91 article-level expected (100% of H14+industry) + 1 H8 outlier (chat-028 RGPD art 44 general principle — intentional article-level).
+- Holdout report (pre-v0.1.18): every 0.00/0.00 line = granularity mismatch where Analyst correctly cited apartados within the expected article. Sample `emitted=['2.2','3.1','3.2','3.3']` vs `expected=['2','3']` scores precision=1.00 + recall=1.00 under hierarchical containment.
+
+v0.1.18 fixes the instrument so the v0.1.20 paid bundle measurement has a fair denominator across the heterogeneous gold set.
+
+### HOW (TDD discipline preserved + T3 pivot)
+
+- **T0** (controller): branch creation `feat/v0.1.18-citation-granularity` from main @ `48f2533` + verify `make eval-from-cache` mechanism (discovered it covers only `evals/reports/latest.md` AND is NOT $0 — caches judge layer only per `evals/harness.py:204-208`). Glob discovered 15 chat-mode reports with the per-case Citation row format (more than the plan's original 2).
+- **T1** (haiku, commit `e15a00c`): TDD red on `tests/unit/test_evals_metrics.py` — appended 12 new tests (7 helper truth-table rules + 5 aggregate scenarios including holdout-replay + chat-028 outlier + prefix-collision anti-regression). 5 pre-existing `compute_citation_metrics` tests stay UNCHANGED (analysis: dedup-first preserves edge-case behavior). Amended with clarifying section-header comment about parameter-order convention (Important issue from code-quality review M-1).
+- **T2** (haiku, commit `eebcbcc`): GREEN by extending `evals/metrics.py` — add `_citation_matches` helper + rewrite `compute_citation_metrics` body. All 12 new tests green; pre-existing 5 stay green; full gate 892/0/1.
+- **T3** (controller-run, commit `8e24b22`): **PIVOT** from plan's `make eval-from-cache` + script approach to script-only approach (after T3 verification found `--cache-only` is NOT $0). Created `scripts/rerender_reports.py` with expanded scope (15 files). Inspected dramatic flips: holdout 0.00 → 0.65/0.64; h15_1-holdout 0.00 → 0.69/0.72; holdout-probe 0.00 → 0.71/1.00. 6 reports modified; 9 byte-identical (per-row invariant + aggregate already correct in H15 study output).
+- **T4** (Opus, commit `dd767cc`): ADR-0024 with D1-D5 + 6 rejected alternatives (the 6th = the `make eval-from-cache` approach rejected at T3 pivot) + §6 interpretive distinction + apples-to-oranges aggregate caveat in Consequences.
+- **T5** (controller-run gate): 5 HARD git-diff invariants empty (§6 + entire src/ + eval pipeline non-metric + Analyst prompts v1.0-v1.4 + gold set) + 3 dynamic gates green (pytest 892/0/1, mypy 71 files, redteam-smoke 0.92 carry).
+- **T6** (Opus, this entry): closure docs across decisions_log + evidence_matrix + CLAUDE.md WITH T3 verdict-numbers injected.
+
+Two-stage review (spec compliance + code quality) per implementation task. Code-quality reviews caught: T1 Important (docstring parameter-order ambiguity — fixed by amend with section-header clarifying comment), T2 1 Important (empty-string edge case — declined as private-function YAGNI guarded by call-site invariants) + 2 Minor (None guard YAGNI + asymmetric loop documentation — both no-action). The T3 pivot disclosure is the most important honesty point: the plan's $0 assumption about `make eval-from-cache` was empirically wrong; controller verification caught it before any paid call occurred.
+
+### IMPACT (§22.22 honest framing)
+
+- **H15.1 §22.22 design-defect RESOLVED**: the instrument-artifact-not-quality narrative is no longer needed; v1.2's actual citation quality is now visible retroactively (holdout citation_recall_mean = **0.64** instead of 0.00).
+- **§6 invariant interpretive distinction strengthened**: production-side citation VALIDATION (`src/regulaitor/citation/validator.py`) is byte-unchanged; v0.1.18 fixes only the post-hoc EVAL precision/recall metric. The two-layer architecture (validator + metric) is now explicit in TFM defense narrative.
+- **v0.1.20 paid bundle measurement gets a fair denominator**: the 35-of-64 article-level expected cases no longer drag citation metrics to 0.00 via instrument artifact.
+- **Backward consistency**: retrospective re-rendering of canonical historical reports means v0.1.20 comparison numbers are apples-to-apples vs H10/H15/H15.1.
+- **5 pre-existing `compute_citation_metrics` tests stay GREEN unchanged**: dedup-first behavior preserved by construction. No regression in the well-tested baseline.
+- **`scripts/rerender_reports.py` is reusable**: future eval extensions can re-use the string-surgery + aggregate-recomputation pattern.
+- **T3 pivot transparency**: the `make eval-from-cache` IS-NOT-$0 discovery is documented in ADR-0024 D3 + Alternatives so future milestones don't repeat the assumption. This is the §22.22 honest framing in action — the plan's assumption was wrong; T3 controller-verification caught it; pivot documented.
+- **Apples-to-oranges aggregate caveat in re-rendered reports**: the script's `old → new` mean comparison includes block cases in `old` (per-row mean) but excludes them in `new` (matching `evals/metrics.py::aggregate`). The HEADLINE holdout flip (0.00 → 0.65) is REAL — every per-row value was 0.00 (instrument-artifact) and is now meaningful. The smaller H10/H8 cohort deltas reflect both the new rule AND the block-exclusion convention. Documented in ADR-0024 Consequences.
+- **Empirical validation of the v0.1.20 measurement narrative NOT in v0.1.18**: v0.1.18 ships the prerequisite; v0.1.20 paid run validates that the v1.4 prompt + retrieval levers actually improve citation quality under the corrected instrument.
+
+### Gate authoritative
+
+- `uv run pytest -m "not slow" --junit-xml C:\tmp\v0118-final.xml` → 892 passed / 0 failed / 1 skipped, ≥90% coverage exit 0. Delta from v0.1.17.1 baseline 880: +12 (12 new in test_evals_metrics.py; 5 pre-existing `compute_citation_metrics` tests stay unchanged).
+- `uv run mypy src` → Success 71 source files exit 0 (UNCHANGED — `scripts/rerender_reports.py` is under `scripts/`, not `src/`).
+- `python -m scripts.redteam --smoke` → block_rate **0.92** (= v0.1.14/v0.1.15/v0.1.16/v0.1.17/v0.1.17.1 carry; metric-side change is eval-only so unaffected).
+- 5 HARD git-diff invariants all empty (§6 Auditor + citation/validator; entire src/; eval pipeline non-metric files judge/cache/harness/schemas/report; prior Analyst prompts v1.0-v1.4; gold set).
+
+### Plan maximalist progress
+
+Microhito **12/12 done** — the FINAL $0 microhito of the maximalist plan. Sequence after v0.1.18: **v0.1.19** (Auditor RHR aggregation semantics + Council binding ON — the §6-invariant-adjacent work; involves touching Auditor + flipping `MonotonicEscalatePolicy._COUNCIL_BINDING` from False to True; new ADR likely; ceremony TBD during v0.1.19 brainstorming) · **v0.1.20** (single paid validation A/B cuando recargue budget — measures v1.0 vs v1.4 + retrieval levers + segmenter + gap-analysis cases + citation granularity instrument against v0.1.20-bar from ADR-0021) · luego retorno a **H16** (HF Spaces public deploy) + **H17** (TFM cierre académico).

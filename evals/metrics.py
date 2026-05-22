@@ -40,6 +40,42 @@ def _format_articulo(c: Citation) -> str:
     return c.articulo
 
 
+def _citation_matches(emitted: str, expected: str) -> bool:
+    """Hierarchical containment match (v0.1.18 spec §D1).
+
+    Match semantics (article-level "X" vs apartado-level "X.Y"):
+
+    | expected | emitted | match | rationale                                          |
+    |----------|---------|-------|----------------------------------------------------|
+    | "X"      | "X"     | True  | exact article-level                                |
+    | "X"      | "X.Y"   | True  | article-expected matches any apartado of X         |
+    | "X.Y"    | "X.Y"   | True  | exact apartado-level                               |
+    | "X.Y"    | "X.Z"   | False | different apartados = different obligations        |
+    | "X.Y"    | "X"     | False | apartado-expected requires apartado-specific match |
+    | "X"      | "W.Y"   | False | different article                                  |
+    | "X.Y"    | "W.Z"   | False | different article                                  |
+
+    The asymmetry is deliberate: an article-only expected is a coarser
+    target that ANY of its apartados satisfies (the question doesn't
+    care which sub-clause; e.g. chat-028 RGPD art 44 general principle).
+    An apartado-only expected is a finer target that requires hitting
+    the right sub-clause (e.g. chat-001 art 6.1 is the high-risk
+    definition, art 6.2 is the listing — different obligations).
+
+    See docs/adr/0024-citation-granularity.md for the full rationale.
+    """
+    if emitted == expected:
+        return True
+    # Article-level expected: emitted may be the same article OR any of its apartados.
+    if "." not in expected:
+        # expected is article-level "X"; emitted matches if it starts with "X.".
+        # The trailing dot prevents the prefix-collision (e.g. "106.1" does NOT
+        # match "6" because "106.1" doesn't start with "6.").
+        return emitted.startswith(f"{expected}.")
+    # Apartado-level expected: only exact match counts (handled above by the == check).
+    return False
+
+
 def extract_emitted_articles_chat(state: ChatState) -> list[str]:
     """Articles cited in the audited answer of a chat case. Empty if blocked."""
     if state.audited_answer is None:
@@ -62,29 +98,41 @@ def extract_emitted_articles_doc(report: DocumentReport) -> list[str]:
 
 
 def compute_citation_metrics(emitted: list[str], expected: list[str]) -> CitationMetrics:
-    """Article-level set comparison. Edge cases follow spec §5.2.
+    """Hierarchical citation match per v0.1.18 spec §D1.
 
-    When emitted is empty, precision is 0.0 (no hits possible).
-    When expected is empty, both precision and recall are 0.0 (no valid targets).
+    Each emitted (deduped) citation is counted as a hit if it matches ANY
+    expected (deduped) citation under the hierarchical containment rule
+    (see _citation_matches). Each expected citation is counted as covered
+    if ANY emitted citation matches it.
+
+    Edge cases (preserved from the pre-v0.1.18 set-based version):
+    - When emitted is empty, precision is 0.0 (no hits possible).
+    - When expected is empty, both precision and recall are 0.0 (case
+      is ill-defined; spec §5.2 convention).
+    - Inputs are deduplicated upfront (sorted set), so the new rule
+      preserves the old dedup behavior on the pre-existing test cases.
     """
-    emitted_set = set(emitted)
-    expected_set = set(expected)
-    intersection = emitted_set & expected_set
+    emitted_unique = sorted(set(emitted))
+    expected_unique = sorted(set(expected))
 
-    if not expected_set:
-        # No expected articles means the case is ill-defined; return 0.0 for both.
-        precision = 0.0
-        recall = 0.0
-    elif not emitted_set:
+    if not expected_unique or not emitted_unique:
         precision = 0.0
         recall = 0.0
     else:
-        precision = len(intersection) / len(emitted_set)
-        recall = len(intersection) / len(expected_set)
+        # Hit count for precision: deduped emitted items matching SOME expected.
+        emitted_hits = sum(
+            1 for e in emitted_unique if any(_citation_matches(e, x) for x in expected_unique)
+        )
+        # Covered count for recall: deduped expected items matched by SOME emitted.
+        expected_covered = sum(
+            1 for x in expected_unique if any(_citation_matches(e, x) for e in emitted_unique)
+        )
+        precision = emitted_hits / len(emitted_unique)
+        recall = expected_covered / len(expected_unique)
 
     return CitationMetrics(
-        emitted=sorted(emitted_set),
-        expected=sorted(expected_set),
+        emitted=emitted_unique,
+        expected=expected_unique,
         precision=precision,
         recall=recall,
     )

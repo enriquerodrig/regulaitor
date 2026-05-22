@@ -11,8 +11,8 @@
 | answer_relevancy_mean | 0.87 | ≥0.85 | ✅ |
 | context_precision_mean | 0.83 | ≥0.80 | ✅ |
 | context_recall_mean | 0.67 | (info) | ➖ |
-| citation_precision_mean | 0.00 | ≥0.90 | ❌ (-0.90) |
-| citation_recall_mean | 0.00 | ≥0.80 | ❌ (-0.80) |
+| citation_precision_mean | 0.71 | ≥0.90 | ❌ (-0.90) |
+| citation_recall_mean | 1.00 | ≥0.80 | ❌ (-0.80) |
 | verdict_match_rate | 0.33 | ≥0.85 | ❌ (-0.52) |
 | severity_match_rate | 0.67 | ≥0.80 | ❌ (-0.13) |
 | latency_p95_ms | 389302 | ≤12000 | ❌ (+377302) |
@@ -29,7 +29,7 @@
 
 - **Verdict**: actual=`requires_human_review` expected=`pass` ❌
 - **Severity**: actual=`info` expected=`medium` ❌
-- **Citations**: emitted=['2.2', '3.1', '3.2', '3.3', '34.4'] expected=['2', '3'] precision=0.00 recall=0.00
+- **Citations**: emitted=['2.2', '3.1', '3.2', '3.3', '34.4'] expected=['2', '3'] precision=0.80 recall=1.00
 - **RAG metrics**: faithfulness=0.80 answer_relevancy=0.90 context_precision=1.00 context_recall=0.33
 - **Latency**: 376827 ms | **Cost**: 0.0632 € | **Cache hit**: False
 - **Criteria**:
@@ -41,7 +41,7 @@
 
 - **Verdict**: actual=`requires_human_review` expected=`pass` ❌
 - **Severity**: actual=`high` expected=`high` ✅
-- **Citations**: emitted=['20', '21.1', '4'] expected=['21'] precision=0.00 recall=0.00
+- **Citations**: emitted=['20', '21.1', '4'] expected=['21'] precision=0.33 recall=1.00
 - **RAG metrics**: faithfulness=1.00 answer_relevancy=0.84 context_precision=1.00 context_recall=0.67
 - **Latency**: 357703 ms | **Cost**: 0.0469 € | **Cache hit**: False
 - **Criteria**:
@@ -53,7 +53,7 @@
 
 - **Verdict**: actual=`pass` expected=`pass` ✅
 - **Severity**: actual=`high` expected=`high` ✅
-- **Citations**: emitted=['23.4'] expected=['23'] precision=0.00 recall=0.00
+- **Citations**: emitted=['23.4'] expected=['23'] precision=1.00 recall=1.00
 - **RAG metrics**: faithfulness=0.91 answer_relevancy=0.88 context_precision=0.50 context_recall=1.00
 - **Latency**: 361233 ms | **Cost**: 0.0525 € | **Cache hit**: False
 - **Criteria**:

@@ -588,3 +588,131 @@ def test_safe_p95_single_value_returns_that_value() -> None:
 
     assert _safe_p95([5000]) == 5000
     assert _safe_p95([]) == 0
+
+
+# ---------------------------------------------------------------------------
+# v0.1.18 — hierarchical containment citation match
+#
+# Function signature: `_citation_matches(emitted: str, expected: str) -> bool`
+# (positional order is emitted-first). Test docstrings below use the spec's
+# §D1 truth-table column order (expected | emitted) for consistency with
+# ADR-0024; the call sites use the function's positional order. Verify by
+# reading the actual `_citation_matches(...)` argument positions in each test
+# body when in doubt.
+# ---------------------------------------------------------------------------
+
+
+def test_citation_matches_exact_article() -> None:
+    """expected='X', emitted='X' → True (exact article-level)."""
+    from evals.metrics import _citation_matches
+
+    assert _citation_matches("44", "44") is True
+
+
+def test_citation_matches_article_expected_apartado_emitted() -> None:
+    """expected='X', emitted='X.Y' → True (article-expected matches any apartado of X)."""
+    from evals.metrics import _citation_matches
+
+    assert _citation_matches("2.2", "2") is True
+    assert _citation_matches("3.1", "3") is True
+
+
+def test_citation_matches_exact_apartado() -> None:
+    """expected='X.Y', emitted='X.Y' → True (exact apartado-level)."""
+    from evals.metrics import _citation_matches
+
+    assert _citation_matches("6.1", "6.1") is True
+
+
+def test_citation_matches_apartado_expected_different_apartado_emitted() -> None:
+    """expected='X.Y', emitted='X.Z' → False (different apartados = different obligations)."""
+    from evals.metrics import _citation_matches
+
+    assert _citation_matches("6.2", "6.1") is False
+
+
+def test_citation_matches_apartado_expected_article_emitted() -> None:
+    """expected='X.Y', emitted='X' → False (apartado-expected requires apartado-specific
+    match; article-only emitted is too coarse)."""
+    from evals.metrics import _citation_matches
+
+    assert _citation_matches("6", "6.1") is False
+
+
+def test_citation_matches_different_article_apartado_levels() -> None:
+    """expected='X', emitted='W.Y' (W≠X) → False (different article).
+
+    Also pins the prefix-collision anti-regression: '106.1' does NOT match '6'
+    via startswith because '106.1' starts with '1', not '6.'."""
+    from evals.metrics import _citation_matches
+
+    assert _citation_matches("5.1", "6") is False
+    assert _citation_matches("106.1", "6") is False
+
+
+def test_citation_matches_different_article_both_levels() -> None:
+    """expected='X.Y', emitted='W.Z' (W≠X) → False (different article)."""
+    from evals.metrics import _citation_matches
+
+    assert _citation_matches("5.1", "6.1") is False
+
+
+def test_compute_citation_metrics_holdout_scenario() -> None:
+    """The H15 v1.2 holdout dora-001 style: article-level expected, apartado-level emitted.
+
+    Pre-v0.1.18: precision=0.00, recall=0.00 (instrument artifact).
+    Post-v0.1.18: precision=1.00, recall=1.00 (every apartado hit IS within an
+    expected article; both expected articles are covered by emitted apartados).
+    """
+    cm = compute_citation_metrics(
+        emitted=["2.2", "3.1", "3.2", "3.3"],
+        expected=["2", "3"],
+    )
+    assert cm.precision == 1.0
+    assert cm.recall == 1.0
+
+
+def test_compute_citation_metrics_h8_apartado_match() -> None:
+    """H8 chat-001 style: exact apartado match. Behavior UNCHANGED by v0.1.18."""
+    cm = compute_citation_metrics(
+        emitted=["6.1"],
+        expected=["6.1", "6.2"],
+    )
+    assert cm.precision == 1.0  # 1/1 emitted hits an expected
+    assert cm.recall == 0.5  # 1/2 expected covered
+
+
+def test_compute_citation_metrics_h8_wrong_apartado_stays_miss() -> None:
+    """H8-style: emitted hits the wrong apartado of the right article.
+    Stays a miss (apartado-expected requires exact apartado match; no leniency)."""
+    cm = compute_citation_metrics(
+        emitted=["6.3", "6.7"],
+        expected=["6.1", "6.2"],
+    )
+    assert cm.precision == 0.0
+    assert cm.recall == 0.0
+
+
+def test_compute_citation_metrics_chat_028_article_level_expected() -> None:
+    """chat-028 H8 outlier: expected=['44'] (article-level, RGPD art 44 general
+    principle). Emitted apartado '44.1' OR exact '44' both match."""
+    # Emitted apartado within expected article.
+    cm1 = compute_citation_metrics(emitted=["44.1"], expected=["44"])
+    assert cm1.precision == 1.0
+    assert cm1.recall == 1.0
+
+    # Emitted exact article.
+    cm2 = compute_citation_metrics(emitted=["44"], expected=["44"])
+    assert cm2.precision == 1.0
+    assert cm2.recall == 1.0
+
+
+def test_compute_citation_metrics_mixed_emitted_partial_coverage() -> None:
+    """Mixed scenario: some emitted hit expected, some don't. Some expected are
+    covered, some aren't."""
+    cm = compute_citation_metrics(
+        emitted=["2.2", "3.1", "99.1"],  # 2.2 hits '2'; 3.1 hits '3'; 99.1 hits nothing
+        expected=["2", "3", "5"],  # '2' covered by 2.2; '3' by 3.1; '5' uncovered
+    )
+    assert cm.precision == pytest.approx(2 / 3)  # 2 of 3 emitted hit something
+    assert cm.recall == pytest.approx(2 / 3)  # 2 of 3 expected are covered

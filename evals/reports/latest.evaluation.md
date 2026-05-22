@@ -11,8 +11,8 @@
 | answer_relevancy_mean | 0.76 | ≥0.85 | ❌ (-0.09) |
 | context_precision_mean | 0.62 | ≥0.80 | ❌ (-0.18) |
 | context_recall_mean | 0.50 | (info) | ➖ |
-| citation_precision_mean | 0.42 | ≥0.90 | ❌ (-0.48) |
-| citation_recall_mean | 0.50 | ≥0.80 | ❌ (-0.30) |
+| citation_precision_mean | 0.53 | ≥0.90 | ❌ (-0.48) |
+| citation_recall_mean | 0.63 | ≥0.80 | ❌ (-0.30) |
 | verdict_match_rate | 0.17 | ≥0.85 | ❌ (-0.68) |
 | severity_match_rate | 0.04 | ≥0.80 | ❌ (-0.76) |
 | latency_p95_ms | 400166 | ≤12000 | ❌ (+388166) |
