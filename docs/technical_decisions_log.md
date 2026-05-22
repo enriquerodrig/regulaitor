@@ -3876,7 +3876,7 @@ Ship a $0 enhanced diagnostic that disambiguates the no_answer residual (~23% H1
 
 ---
 
-## §v0.1.17.1 — No-Answer residual fix (TWO-part + 5-bucket extension) (2026-05-22, squash `<squash-sha>`, tag `v0.1.17.1-no-answer-fix`)
+## §v0.1.17.1 — No-Answer residual fix (TWO-part + 5-bucket extension) (2026-05-22, squash `98f3768`, tag `v0.1.17.1-no-answer-fix`)
 
 **Date:** 2026-05-22 (close)
 **Branch:** `feat/v0.1.17.1-no-answer-fix` from main @ `27d2235`

@@ -1,6 +1,6 @@
 # ADR 0023 — No-Answer residual fix (TWO-part + 5-bucket extension) (v0.1.17.1)
 
-- **Status:** Accepted — 2026-05-22 — squash `<squash-sha>`, tag `v0.1.17.1-no-answer-fix`
+- **Status:** Accepted — 2026-05-22 — squash `98f3768`, tag `v0.1.17.1-no-answer-fix`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0016 (H15 Auditor calibration — REGULAITOR_ANALYST_PROMPT_VERSION env seam this extends with v1.4; production default stays v1.0 per the boundary contract carried since v0.1.15), 0020 (v0.1.15 chat gap-analysis — Analyst prompt v1.3 this builds on; v1.4 preserves gap-analysis chat mode byte-identical), 0021 (v0.1.16 dual-layer thresholds + judge family — same v0.1.20 acceptance ritual will measure v1.4 against the v0.1.20-bar), 0022 (v0.1.17 no-Answer residual diagnostic — the evidence-driving the v0.1.17.1 intervention; D1's "other-dominant → v0.1.17.1 expand REFUSAL_PHRASES + re-run" branch fires, plus the 5th-mechanism finding redirects v1.4's wording).
 
