@@ -1,6 +1,6 @@
 # ADR 0022 — No-Answer residual diagnostic ($0 cache-mining classifier) (v0.1.17)
 
-- **Status:** Accepted — 2026-05-21 — squash `<squash-sha>`, tag `v0.1.17-no-answer-diagnosis`
+- **Status:** Accepted — 2026-05-22 — squash `e5dbedd`, tag `v0.1.17-no-answer-diagnosis`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0010 (H8 evaluation harness — the existing diagnostic baseline classifier `scripts/diagnose_baseline.py` this extends; D7 cache-stores-judge-only is the mining substrate), 0016 (H15 Auditor calibration — Intervention B "hardened output contract" v1.1+v1.2 whose effectiveness this measures), 0020 (v0.1.15 chat gap-analysis — §22.22 capability-shipped + measurement-deferred pattern carried), 0021 (v0.1.16 dual-layer thresholds + judge family — measurement-architecture lineage; same Haiku 4.5 judge powers the cache being mined).
 

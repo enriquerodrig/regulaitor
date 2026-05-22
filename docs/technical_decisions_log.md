@@ -3841,7 +3841,7 @@ Define the numeric v0.1.20-bar that the v0.1.20 paid bundle must clear, rendered
 - `uv run python -m scripts.redteam --smoke` → block_rate **0.92** ≥0.90 ✅ (= v0.1.14/v0.1.15 frozen carry; prompt-blind + retriever-blind + Auditor-blind so unaffected by report-layer change).
 - 3 git-diff HARD invariant checks (per spec §4) all EMPTY (§6 Auditor/validator + all src/ + eval-internals-other-than-report.py).
 
-## v0.1.17 — No-Answer residual diagnostic ($0 cache-mining classifier) (cerrado 2026-05-22, squash `<squash-sha>`, tag `v0.1.17-no-answer-diagnosis`)
+## v0.1.17 — No-Answer residual diagnostic ($0 cache-mining classifier) (cerrado 2026-05-22, squash `e5dbedd`, tag `v0.1.17-no-answer-diagnosis`)
 
 ### Decision
 
