@@ -6,10 +6,11 @@ import pytest
 from regulaitor.agents.analyst import AnalystAgent
 
 
-def test_default_is_v1_0_when_env_unset(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_default_is_v1_4_when_env_unset(monkeypatch: pytest.MonkeyPatch) -> None:
+    # v0.1.20 flipped env-unset default v1.0 -> v1.4 per ADR-0026.
     monkeypatch.delenv("REGULAITOR_ANALYST_PROMPT_VERSION", raising=False)
     a = AnalystAgent()
-    assert a.prompt_version == "v1.0"
+    assert a.prompt_version == "v1.4"
 
 
 def test_env_consult_wired__absent_version_raises(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -36,3 +37,18 @@ def test_invalid_env_falls_back_to_v1_0(monkeypatch: pytest.MonkeyPatch) -> None
     monkeypatch.setenv("REGULAITOR_ANALYST_PROMPT_VERSION", "not-a-version")
     a = AnalystAgent()
     assert a.prompt_version == "v1.0"  # invalid env ignored with WARNING, never crashes
+
+
+def test_document_analyst_role_defaults_to_v1_0_when_env_unset(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """v0.1.20 / ADR-0026 role-aware default: the FLIP only applies to the
+    chat `analyst` role; `document_analyst` still defaults to v1.0 because
+    v1.4 was authored for chat role only (doc-mode A/B carried forward as
+    future work). Regression-pin so a future "uniform default" refactor
+    doesn't silently break doc-mode by trying to load a non-existent
+    document_analyst/system.v1.4.md."""
+    monkeypatch.delenv("REGULAITOR_ANALYST_PROMPT_VERSION", raising=False)
+    a = AnalystAgent(prompt_role="document_analyst")
+    assert a.prompt_role == "document_analyst"
+    assert a.prompt_version == "v1.0"

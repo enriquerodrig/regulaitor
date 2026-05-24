@@ -18,11 +18,12 @@ Pins the v1.4 prompt added in v0.1.17.1. Asserts:
    (regression anchor on v0.1.15 work).
 8. All 5 prompt versions (v1.0, v1.1, v1.2, v1.3, v1.4) coexist on disk
    (regression-pin that prior versions stay available for env override;
-   production default v1.0 unchanged per ADR-0016 env seam).
+   v0.1.20 flipped production default v1.0 -> v1.4 per ADR-0026; v1.0
+   still loadable via REGULAITOR_ANALYST_PROMPT_VERSION=v1.0).
 
-The default-when-env-unset regression is already pinned by
-`tests/unit/test_analyst_prompt_env_seam.py::test_default_is_v1_0_when_env_unset`
-(unchanged in v0.1.17.1).
+The default-when-env-unset regression is pinned by
+`tests/unit/test_analyst_prompt_env_seam.py::test_default_is_v1_4_when_env_unset`
+(updated in v0.1.20).
 """
 
 from __future__ import annotations
@@ -187,7 +188,8 @@ def test_v1_4_changelog_documents_v0_1_17_1() -> None:
 
 def test_all_five_prompt_versions_coexist_on_disk() -> None:
     """v1.0, v1.1, v1.2, v1.3, v1.4 all present (env override stays
-    meaningful + production default v1.0 unchanged per ADR-0016 env seam)."""
+    meaningful + v0.1.20 flipped production default v1.0 -> v1.4 per
+    ADR-0026; v1.0 still loadable via env)."""
     for path, expected_version in [
         (_V10, "version: 1.0"),
         (_V11, "version: 1.1"),

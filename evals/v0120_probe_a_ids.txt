@@ -1,0 +1,8 @@
+# v0.1.20 PROBE-A — ARM A (v1.0 baseline) first 5 deterministic cases (chat-001..005).
+# Used by scripts/v0120_run.py with REGULAITOR_ANALYST_PROMPT_VERSION unset.
+# Lines starting with # and blank lines are ignored by the --cases-file loader.
+chat-001
+chat-002
+chat-003
+chat-004
+chat-005

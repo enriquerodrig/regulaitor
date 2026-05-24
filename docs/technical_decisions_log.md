@@ -4053,3 +4053,69 @@ The conservative-only choice (per spec Q1 Option A) preserves §6 ROCK-SOLID: on
 ### Plan progress
 
 H13 + H15 Council-binding deferral lineage RESOLVED. Sequence after v0.1.19: **v0.1.20** (single paid validation A/B when user recharges budget — measures all post-maximalist-plan capabilities + Council binding behavior against v0.1.20-bar from ADR-0021). After v0.1.20 → **H16** (HF Spaces public deploy) + **H17** (TFM cierre académico).
+
+---
+
+## §v0.1.20 — Paid validation A/B (v1.0 vs v1.4) — FLIP approved (2026-05-24, squash `<squash-sha>`, tag `v0.1.20-paid-validation`)
+
+**Date:** 2026-05-24 (close)
+**Branch:** `feat/v0.1.20-paid-validation` from main @ `f9b9cb8`
+**Spec:** `docs/superpowers/specs/2026-05-23-v0.1.20-paid-validation-design.md` (commit `f9b9cb8`)
+**Plan:** `docs/superpowers/plans/2026-05-23-v0.1.20-paid-validation.md` (commit `d032601`)
+**ADR:** ADR-0026
+**Cost:** €7.83 (~$8.45) of $24.95 budget (~31% spend)
+**Wall-clock:** ~14h paid runs (T1+T2+T4+T5)
+
+### WHAT shipped (per §22.22 honest framing)
+
+- **v1.4 Analyst prompt as production default for the chat `analyst` role** (was v1.0 since v0.1.17.1 shipped opt-in). Role-aware env-unset default in `agents/analyst.py`: `analyst` => v1.4, `document_analyst` => v1.0 (v1.4 was authored for chat role only; doc-mode A/B carried forward). v1.0 now opt-in via `REGULAITOR_ANALYST_PROMPT_VERSION=v1.0`.
+- **Empirical evidence** for the flip: T6 H10 bar 6/7 PASS for v1.4 vs 0/7 for v1.0; T6 full-cohort verdict_match +9.4pp; T6.5 diagnostic confirms 9 real positive flips vs ~2 real regressions (other 2 regressions are likely Auditor/Council non-determinism noise).
+- **Hard safety floor PASS** (T7): redteam-smoke 0.92 under v1.4 env + 6/6 designated content-based safety cases pass manual review (rejected malicious premise, no fabricated citations, real corpus refute).
+- **§22.22 lineage CLOSED**: the "v1.4 effectiveness measured at v0.1.20" commitment from v0.1.17.1 (ADR-0023) is now measured + decided.
+- **Role-aware flip honesty (§22.22 T9a scope adjustment)**: plan called for "1-line change" but T9a TDD discipline surfaced a role-aware design defect on the first gate run (`AnalystAgent(prompt_role="document_analyst")` tried to load non-existent `document_analyst/system.v1.4.md`). Fixed by making the default role-aware + added new regression test (`test_document_analyst_role_defaults_to_v1_0_when_env_unset`) so a future "uniform default" refactor cannot silently re-break doc-mode.
+
+### WHY (the §22.22 lineage)
+
+The H15.1 design-defect (eval instrument confound) was diagnosed at H15.1, fixed at v0.1.18 (hierarchical containment instrument). v1.4 prompt was shipped opt-in at v0.1.17.1 to address the no-Answer residual diagnostic from v0.1.17 ("prose-without-findings" mechanism). ADR-0021 (v0.1.16) framed v0.1.20 as the "acceptance ritual" venue: paid A/B against the v0.1.20-bar to validate any post-maximalist-plan capability. v0.1.20 is that ritual for v1.4 specifically.
+
+### HOW (TDD discipline + 11 tasks executed)
+
+- T0 (controller, $0): branch + harness scaffolding + spec-amendment caught (harness has no resume; disjoint allowlists used instead). Commit `160854b`.
+- T1 (controller, paid €0.31): PROBE-A 5 cases ARM A. All cases passed gate; abort triggers PASS. Commit `d3e40ca`.
+- T2 (controller, paid €0.30): PROBE-B 5 cases ARM B. v1.4 env routing LIVE-FIRE CONFIRMED (3/5 divergence). Commit `9babf8d`.
+- T3 (controller, $0): SKIP/PROCEED gate. €11.58 high vs $24.95 budget → PROCEED. Commit `d33a4c9`.
+- T4 (controller, paid €3.70, 6.7h): ARM A main 59 cases v1.0. 0 crashes. Commit `cfb1089`.
+- T5 (controller, paid €3.52, 6.7h): ARM B main 59 cases v1.4. 0 crashes. Commit `60b5287`.
+- T6 (haiku subagent): comparison report — verdict_match +9.4pp, bar 6/7 PASS, transition matrix bug caught + fixed inline. Commits `660f13e` + `08a8370`.
+- T6.5 ($0 controller): RHR root-cause diagnostic. 42% nonempty-RHR-still-RHR (dominant; v0.1.21 target); 35% empty-findings-still-empty (v1.4 prompt-only ~50% compliance); 14% nonempty-fixed (unanticipated); 7% empty-fixed (clean mechanism). Commit `62ba8b0`.
+- T7 (controller-manual, $0): hard safety floor PASS. 6/6 safety cases content-safe per H15 C1 pattern; redteam-smoke 0.92 under v1.4 env. Commit `2df1b7a`.
+- T8 (Opus subagent): ADR-0026 with D1-D6 + 6 alternatives + flip decision. Commit `776b97e`.
+- T9a (Opus subagent): flip commit (role-aware default + 3 test pins + 1 new regression test). Commit `7dcc5fd`.
+- T9b (Opus subagent, this entry): closure docs.
+
+### IMPACT (§22.22 honest framing)
+
+- **Production gets better default**: v1.4's Hard Rule 9 mechanism + secondary improvements deliver +9.4pp verdict_match + 6/7 H10 bar pass + no safety regression.
+- **§22.22 lineage closed**: v1.4 effectiveness no longer "deferred to v0.1.20"; it's measured and shipped as default.
+- **TFM defense narrative gains a measured paid validation milestone**: the rigor of probe → SKIP/PROCEED → A/B → safety floor → narrative → flip is now part of the methodology evidence.
+- **Dominant RHR mechanism UNCHANGED (42% nonempty-RHR)**: v1.4 does NOT fix this. v0.1.21 will target Auditor RHR aggregation refinement (quorum) per T6.5 diagnostic recommendation.
+- **35% empty-findings cases ALSO unchanged in v1.4**: prompt-only Hard Rule 9 obtains ~50% compliance. v0.1.21 hard constraints (Anthropic strict mode + Pydantic min_length=1 + aggressive retry) will close this.
+- **Doc-mode A/B never measured** (spec design-coherence catch §22.22): v1.4 only for chat role; doc role still has only v1.0 prompt. Future doc-mode validation milestone needed (carry forward). T9a role-aware default + new regression test pin this gap visibly so it doesn't silently regress.
+- **Per-norma cap + Council binding effects NOT isolated**: measured only as part of joint production state, not in their own A/B. v0.1.11 BREAKTHROUGH evidence + v0.1.19 conservative-only direction stand; no further isolation A/B planned.
+- **Wall-clock 14h was 4x plan's 30-60min estimate** (§22.22 plan error): documented; future paid milestones should use this calibration.
+- **Transition matrix bug in `scripts/v0120_compare.py`**: caught + fixed inline at T6; script needs cleanup at v0.1.21.
+
+### Gate authoritative
+
+- `uv run pytest -m "not slow"` → 921 passed / 0 failed / 1 skipped (1 new regression test added at T9a: `test_document_analyst_role_defaults_to_v1_0_when_env_unset` + 3 existing test pins updated to v1.4 + 1 docstring-only update in `test_analyst_v1_4_loads.py`).
+- `uv run mypy src` → Success 71 source files exit 0 (UNCHANGED — flip is 1 src/ file edit; no new .py).
+- `python -m scripts.redteam --smoke` → 0.92 carry (= v0.1.14-v0.1.19 frozen; v1.4 env preserves the rate per T7 measurement).
+- 5 HARD git-diff invariants from spec §5 Done-when: §6 validator + Auditor + Analyst prompts (v1.0-v1.4 files BYTE-UNCHANGED; only the default REFERENCE in agents/analyst.py flipped) + eval pipeline + gold set ALL byte-unchanged.
+- src/ scope: 1 file changed (`agents/analyst.py` — env-unset branch made role-aware) per T9a.
+
+### Plan progress
+
+§22.22 v0.1.17.1 lineage CLOSED. v0.1.20 is the validation epoch milestone shipped. Sequence after v0.1.20:
+- **v0.1.21** (next decimal): Auditor RHR aggregation refinement (Tier 1, 42% target) + hard constraints findings non-empty (Tier 2, 35% target) per T6.5 diagnostic.
+- **H16**: HF Spaces public deploy (demo + foundation pública).
+- **H17**: TFM cierre académico (memoria + model card + data card + AI Act assessment + runbook + video demo + slide deck + tag v1.0).

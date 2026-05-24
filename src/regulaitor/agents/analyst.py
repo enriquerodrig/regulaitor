@@ -61,12 +61,19 @@ class AnalystAgent:
         prompt_version: str | None = None,
     ) -> None:
         if prompt_version is None:
-            # Eval-only env seam (ADR 0016), analogous to ADR-0013
-            # REGULAITOR_ROUTER_MODE. Unset/invalid => v1.0 => byte-identical
-            # production behavior. Never crashes on a bad env value.
+            # Eval-only env seam (ADR 0016 + ADR-0026), analogous to ADR-0013
+            # REGULAITOR_ROUTER_MODE. v0.1.20 flipped the env-unset default
+            # for the chat `analyst` role from v1.0 to v1.4 per ADR-0026
+            # (T6 bar 6/7 PASS + T7 safety floor PASS). The `document_analyst`
+            # role keeps v1.0 default (v1.4 was authored for the chat role
+            # only; doc-mode A/B carried forward as future work per ADR-0026
+            # IMPACT). Invalid env still falls back to v1.0 (known-safe
+            # baseline; never crashes on a bad env value). Opt-in to v1.0 for
+            # chat via REGULAITOR_ANALYST_PROMPT_VERSION=v1.0.
+            default_version = "v1.4" if prompt_role == "analyst" else "v1.0"
             env_v = os.environ.get("REGULAITOR_ANALYST_PROMPT_VERSION")
             if env_v is None:
-                prompt_version = "v1.0"
+                prompt_version = default_version
             elif _PROMPT_VERSION_PATTERN.match(env_v):
                 prompt_version = env_v
             else:

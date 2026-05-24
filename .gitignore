@@ -73,6 +73,12 @@ evals/reports/*
 !evals/reports/latest.evaluation.md
 !evals/reports/latest.cost.md
 !evals/reports/latest.council.md
+# v0.1.20 paid validation A/B reports — tracked as TFM evidence (paid measurement
+# artifacts; ARM A baseline + ARM B candidate + comparison + safety floor +
+# probe summaries + SKIP/PROCEED decision). See spec docs/superpowers/specs/
+# 2026-05-23-v0.1.20-paid-validation-design.md.
+!evals/reports/v0.1.20/
+!evals/reports/v0.1.20/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports
