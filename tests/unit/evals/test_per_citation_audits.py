@@ -1,7 +1,14 @@
-"""Test per_citation_audits field propagation (spec D2)."""
+"""Test per_citation_audits field propagation (spec D2).
+
+v0.1.21.3: two tests below marked `slow` because they call `compute_chat_metrics`
+which transitively imports ragas / HuggingFace embeddings (network-dependent;
+fails on offline/SSL-degraded environments). The backward_compat test is a pure
+schema unit test and stays as default (no network).
+"""
 
 from unittest.mock import Mock
 
+import pytest
 from evals.metrics import compute_chat_metrics
 from evals.schemas import ChatCaseResult, GoldCaseChat
 
@@ -16,6 +23,7 @@ from regulaitor.citation.schemas import (
 from regulaitor.orchestration.state import ChatState
 
 
+@pytest.mark.slow
 def test_chat_case_result_per_citation_audits_populated():
     """compute_chat_metrics extracts audit_results and populates per_citation_audits."""
     citation = Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="test text")
@@ -106,6 +114,7 @@ def test_chat_case_result_per_citation_audits_backward_compat():
     assert result.per_citation_audits is None
 
 
+@pytest.mark.slow
 def test_chat_case_result_per_citation_audits_round_trip():
     """New format with per_citation_audits serializes and deserializes correctly."""
     citation = Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="test text")

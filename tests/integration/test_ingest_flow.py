@@ -1,4 +1,11 @@
-"""Integration tests for ingest.run() end-to-end with mocked HTTP."""
+"""Integration tests for ingest.run() end-to-end with mocked HTTP.
+
+v0.1.21.3: marked `slow` because module-level imports (regulaitor.corpus.ingest →
+regulaitor.rag chain) transitively load HuggingFace embeddings model metadata
+on first run, which requires network. In offline/SSL-degraded environments the
+collection itself fails before any test body runs. Excluded from default `pytest
+-m "not slow"` gate; re-runnable explicitly via `pytest tests/integration/test_ingest_flow.py`.
+"""
 
 from __future__ import annotations
 
@@ -9,6 +16,8 @@ import pytest
 
 from regulaitor.corpus import ingest
 from regulaitor.corpus import manifest as manifest_mod
+
+pytestmark = pytest.mark.slow
 
 
 @pytest.fixture
