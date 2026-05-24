@@ -1,6 +1,6 @@
 # ADR 0026 — v0.1.20 paid validation A/B (v1.0 vs v1.4) + FLIP decision
 
-- **Status:** Accepted — 2026-05-24 — squash `<squash-sha>`, tag `v0.1.20-paid-validation`
+- **Status:** Accepted — 2026-05-24 — squash `1f838ee`, tag `v0.1.20-paid-validation`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0010 (H8 judge architecture — Haiku 4.5 stays per ADR-0021; no judge change in v0.1.20), 0016 (H15 Auditor calibration — system-level study established the v1.x prompt-iteration framework; v0.1.20 measures the v1.4 candidate from the v0.1.17.1 branch of that lineage), 0017 (H15.1 retriever cross-corpus design-defect → v0.1.18 resolved instrument; v0.1.20 measures under the corrected hierarchical containment), 0021 (v0.1.16 dual-layer thresholds — the v0.1.20-bar is THE target this milestone validates against; "acceptance ritual" venue), 0023 (v0.1.17.1 v1.4 prompt shipped opt-in; production default stays v1.0 pending paid measurement — measured here), 0024 (v0.1.18 citation granularity instrument — used for v0.1.20 metric computation), 0025 (v0.1.19 Council binding ON — production state inherited by BOTH arms in v0.1.20).
 

@@ -182,7 +182,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.17.1** | `v0.1.17.1-no-answer-fix` | [spec](superpowers/specs/2026-05-22-v0.1.17.1-no-answer-fix-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.17.1-no-answer-fix.md) | [0023](adr/0023-no-answer-fix.md) | `98f3768` |
 | **v0.1.18** | `v0.1.18-citation-granularity` | [spec](superpowers/specs/2026-05-22-v0.1.18-citation-granularity-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.18-citation-granularity.md) | [0024](adr/0024-citation-granularity.md) | `670e35e` |
 | **v0.1.19** | `v0.1.19-council-binding` | [spec](superpowers/specs/2026-05-22-v0.1.19-council-binding-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.19-council-binding.md) | [0025](adr/0025-council-binding.md) | `8831bcd` |
-| **v0.1.20** | `v0.1.20-paid-validation` | [spec](superpowers/specs/2026-05-23-v0.1.20-paid-validation-design.md) | [plan](superpowers/plans/2026-05-23-v0.1.20-paid-validation.md) | [0026](adr/0026-v0120-paid-validation.md) | `<squash-sha>` |
+| **v0.1.20** | `v0.1.20-paid-validation` | [spec](superpowers/specs/2026-05-23-v0.1.20-paid-validation-design.md) | [plan](superpowers/plans/2026-05-23-v0.1.20-paid-validation.md) | [0026](adr/0026-v0120-paid-validation.md) | `1f838ee` |
 
 ---
 

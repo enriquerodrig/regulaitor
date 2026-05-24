@@ -4056,7 +4056,7 @@ H13 + H15 Council-binding deferral lineage RESOLVED. Sequence after v0.1.19: **v
 
 ---
 
-## §v0.1.20 — Paid validation A/B (v1.0 vs v1.4) — FLIP approved (2026-05-24, squash `<squash-sha>`, tag `v0.1.20-paid-validation`)
+## §v0.1.20 — Paid validation A/B (v1.0 vs v1.4) — FLIP approved (2026-05-24, squash `1f838ee`, tag `v0.1.20-paid-validation`)
 
 **Date:** 2026-05-24 (close)
 **Branch:** `feat/v0.1.20-paid-validation` from main @ `f9b9cb8`
