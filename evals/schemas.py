@@ -95,6 +95,8 @@ class ChatCaseResult(BaseModel):
     latency_ms: int = Field(ge=0)
     cost_eur: float = Field(ge=0)
     cache_hit: bool
+    # v0.1.21.1 (spec D2): per-citation audit details for future diagnostics
+    per_citation_audits: list[dict] | None = None
 
 
 class DocCaseResult(BaseModel):

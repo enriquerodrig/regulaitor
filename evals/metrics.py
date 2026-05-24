@@ -331,6 +331,27 @@ def compute_chat_metrics(
         expected_articles=case.articulos_esperados,
     )
 
+    # v0.1.21.1 D2: extract per-citation audit results from AuditedAnswer
+    per_citation_audits = None
+    if audited and audited.audit_results:
+        per_citation_audits = [
+            {
+                "validated": ar.validated,
+                "article_exists": ar.article_exists,
+                "apartado_exists": ar.apartado_exists,
+                "text_normalized_match": ar.text_normalized_match,
+                "reason": ar.reason,
+                "citation": {
+                    "norma": ar.citation.norma,
+                    "articulo": ar.citation.articulo,
+                    "apartado": ar.citation.apartado,
+                    "language": ar.citation.language,
+                    "text": ar.citation.text,
+                },
+            }
+            for ar in audited.audit_results
+        ]
+
     return ChatCaseResult(
         case_id=case.id,
         expected_verdict=case.expected_verdict,
@@ -348,6 +369,7 @@ def compute_chat_metrics(
         latency_ms=latency_ms,
         cost_eur=cost_eur,
         cache_hit=cache_hit,
+        per_citation_audits=per_citation_audits,
     )
 
 

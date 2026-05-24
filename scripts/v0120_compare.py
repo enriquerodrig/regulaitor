@@ -181,7 +181,7 @@ def build_verdict_transition_matrix(
     cases_by_id_a = {c.case_id: c for c in cases_a}
     cases_by_id_b = {c.case_id: c for c in cases_b}
 
-    verdicts = ["pass", "RHR", "block"]
+    verdicts = ["pass", "requires_human_review", "block"]
     matrix = {v1: {v2: 0 for v2 in verdicts} for v1 in verdicts}
 
     for case_id, case_a in cases_by_id_a.items():

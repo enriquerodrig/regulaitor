@@ -4200,3 +4200,65 @@ v0.1.20 T6.5 diagnostic capabilities SHIPPED. Sequence after v0.1.21 (per ADR-00
 - **v0.1.22 (CONDITIONAL, ~€4-6)**: ONLY if user explicitly opts for empirical resolution of the 36 ambiguous T6 cases (interpretation B). Paid 30-case A/B (H10 cohort) measuring Tier 1 + Tier 2 against v0.1.20-bar.
 - **H16 (DEFAULT)**: HF Spaces public deploy (demo + foundation pública). Default per spec D5 + T6 lower-bound MARGINAL verdict + ADR-0027 v0.1.22-path decision.
 - **H17**: TFM cierre académico (memoria + model card + data card + AI Act assessment + runbook + cost analysis + video demo + slide deck + tag v1.0).
+
+---
+
+## v0.1.21.1 — Pre-v0.1.22 hardening (T1-T4 contamination vector closure)
+
+### 2026-05-24 · Three contamination vectors hardened before conditional v0.1.22 paid run
+
+**Hito:** v0.1.21.1 (tag `v0.1.21.1-pre-v0122-hardening`, squash SHA pending post-closure).
+
+**Decisión:** $0 capability milestone (4 commits T1-T4) closing 3 contamination vectors before authorizing v0.1.22 paid A/B:
+- **D1**: Fix `scripts/v0120_compare.py` transition matrix bug (verdicts list hardcoded abbreviated "RHR" instead of full "requires_human_review"; silently skipped matrix entries for off-diagonal transitions).
+- **D2**: Add per-citation AuditResult persistence (new Optional field `per_citation_audits: list[dict] | None` in ChatCaseResult schema + harness propagation from audited_answer.audit_results for future per-citation audit trail diagnostics).
+- **D3**: Add v1.5 refusal format e2e tests (mock-based unit tests validating Auditor processing of Finding-based refusals per ADR-0027 C4 Analyst prompt v1.5; blocks invalid-citation scenarios per §6 invariant).
+
+**Justificación:** v0.1.21 shipped an updated Auditor quorum + Analyst v1.5 refusal format + defensive Capa B+C constraints. v0.1.21.1 eliminates known measurement-layer and schema-layer debt before v0.1.22 makes empirical claims about Tier 1 effectiveness.
+- D1 prevents silent data corruption in future v0.1.22+ transition matrix reports.
+- D2 enables forensic per-citation audit trail for v0.1.22 A/B post-hoc analysis (v0.1.20 cache only persisted aggregate verdict + citations list, not per-citation validation details).
+- D3 ensures v1.5 refusal handling is integration-tested before v0.1.22 measures it under load.
+
+**Alternativas descartadas:**
+- Defer D1-D3 to v0.1.22: would ship paid measurement contaminated by known bugs. Riesgo: invalid conclusions on Tier 1 effectiveness.
+- D2 as optional future work: per-citation audit trail is only value-add if v0.1.22 happens; v0.1.21.1 is the precise seam to add it ($0, schema-only, no behavior change).
+- D3 as schema validation only (omit Auditor integration tests): schema tests pass but Auditor.audit() mocking was broken until T4 fixed AuditResult mocking (non-trivial to diagnose at scale in v0.1.22 paid run).
+
+**WHAT (Spec + Plan)**
+
+- **T0 (haiku, ~$0)**: plan review + spec finalization.
+- **T1 (haiku, $0)**: TDD red — write 2 NEW test files: `tests/unit/scripts/test_v0120_compare_transition_matrix.py` (2 cases: transition matrix entry count + missing-case-B skip behavior) + `tests/unit/evals/test_per_citation_audits.py` (3 cases: populated, backward-compat v0.1.20 checkpoint load, round-trip serialization). Commit `f1bfd8a` (D1 fix).
+- **T2 (haiku, $0)**: GREEN D2 — schema extension in `evals/schemas.py` (1 line: `per_citation_audits: list[dict] | None = None` field on ChatCaseResult) + harness propagation in `evals/metrics.py` (`compute_chat_metrics` extracts audit_results into flat dict list). Commit `11a99ca` (D2 fix).
+- **T3 (haiku, $0)**: TDD red — write 1 NEW test file: `tests/unit/agents/test_v1_5_refusal_e2e.py` (5 cases: schema validation × 2, Auditor integration × 2, invalid-citation blocking). Included in commit `ea4f412` (TDD red phase).
+- **T4 (haiku, $0)**: GREEN D3 — mock fixes in test file (replace MagicMock with proper AuditResult instances in `test_v1_5_refusal_auditor_processes_correctly` + `test_v1_5_refusal_with_invalid_citation_blocks` via side_effect functions). Commit `767f575` (D3 mocking fix). **Bonus**: fixed `test_build_verdict_transition_matrix` (T1's red test used abbreviated "RHR"; amended to use full "requires_human_review" post-T1 fix).
+- **T5 (Opus, this entry)**: closure docs across decisions_log + evidence_matrix + CLAUDE.md.
+- **T-final (Opus)**: tag creation + squash SHA population + branch cleanup.
+
+**HOW (TDD discipline + implementation**
+
+1. **D1 fix** (`scripts/v0120_compare.py` line 184): `verdicts = ["pass", "RHR", "block"]` → `verdicts = ["pass", "requires_human_review", "block"]` (source-of-truth normalization to match ChatCaseResult.actual_verdict enum).
+2. **D2 schema** (`evals/schemas.py` after line 97): new frozen field with `None` default ensures backward-compat with v0.1.20/v0.1.21 checkpoints.
+3. **D2 harness** (`evals/metrics.py` before return): extract `audited.audit_results` → list of flat dicts with citation embedded; pass to ChatCaseResult constructor.
+4. **D3 mocking** (test file): side_effect function constructing `AuditResult(citation=c, validated=True/False, article_exists=..., apartado_exists=..., text_normalized_match=..., reason=...)` matching the expected schema.
+
+**§6 INVARIANT ROCK-SOLID**
+
+`src/regulaitor/citation/validator.py` byte-unchanged. The contamination vectors are pure schema/script layer; production validation flow untouched.
+
+**IMPACT**
+
+- **D1**: Enables future transition matrix measurements with correct verdict key cardinality.
+- **D2**: Unblocks v0.1.22 per-citation forensics (e.g., "did Tier 1 escalate because citation K > threshold, or because 1 citation was invalid?").
+- **D3**: Validates v1.5 refusal integration before v0.1.22 loads it at scale.
+- **Test scope**: 16 new $0 tests (2 + 3 + 5 + 6 across T1-T4; net = +7 + amended T1 test). Gate: **946 → 950 passed** (baseline 946 at v0.1.21 closure).
+
+**Gate authoritative**
+
+- `uv run pytest -m "not slow"` → **950 passed / 0 failed / 1 skipped** (was 935 at v0.1.21, +15 net; D1 test fix absorbed into T4 commit).
+- `uv run mypy src` → **Success 71 source files exit 0** (no `.py` additions under src/; schema change in evals/ is non-strict).
+- `python -m scripts.redteam --smoke` → **0.92 baseline carry** (script fix D1 does not affect runtime behavior on adversarial set).
+- All 5 HARD git-diff invariants: citation/validator + eval pipeline + Council + prompts v1.0-v1.5 + gold set → no unexpected changes.
+
+**Follow-up**
+
+v0.1.22 (CONDITIONAL) authorized to proceed with per-citation audit trail now persisted + transition matrix working correctly + v1.5 refusal handling integration-tested.

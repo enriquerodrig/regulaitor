@@ -111,7 +111,7 @@ def test_build_verdict_transition_matrix():
         CaseMetrics(
             case_id="test-001",
             expected_verdict="pass",
-            actual_verdict="RHR",
+            actual_verdict="requires_human_review",
             verdict_match=False,
             expected_severity=None,
             actual_severity=None,
@@ -128,8 +128,8 @@ def test_build_verdict_transition_matrix():
     ]
 
     matrix = build_verdict_transition_matrix(cases_a, cases_b)
-    # A had "pass", B has "RHR"
-    assert matrix["pass"]["RHR"] == 1
+    # A had "pass", B has "requires_human_review"
+    assert matrix["pass"]["requires_human_review"] == 1
 
 
 def test_load_checkpoint_minimal_jsonl(tmp_path):
