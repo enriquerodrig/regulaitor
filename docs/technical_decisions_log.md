@@ -4207,7 +4207,7 @@ v0.1.20 T6.5 diagnostic capabilities SHIPPED. Sequence after v0.1.21 (per ADR-00
 
 ### 2026-05-24 · Three contamination vectors hardened before conditional v0.1.22 paid run
 
-**Hito:** v0.1.21.1 (tag `v0.1.21.1-pre-v0122-hardening`, squash SHA pending post-closure).
+**Hito:** v0.1.21.1 (tag `v0.1.21.1-pre-v0122-hardening`, squash `911ecae` on main).
 
 **Decisión:** $0 capability milestone (4 commits T1-T4) closing 3 contamination vectors before authorizing v0.1.22 paid A/B:
 - **D1**: Fix `scripts/v0120_compare.py` transition matrix bug (verdicts list hardcoded abbreviated "RHR" instead of full "requires_human_review"; silently skipped matrix entries for off-diagonal transitions).
