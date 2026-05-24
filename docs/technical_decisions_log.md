@@ -4122,7 +4122,7 @@ The H15.1 design-defect (eval instrument confound) was diagnosed at H15.1, fixed
 
 ---
 
-## §v0.1.21 — Auditor RHR quorum (Tier 1) + Analyst format hard constraints (Tier 2 Capa A+B+C) (2026-05-24, squash `<squash-sha>`, tag `v0.1.21-auditor-quorum-hard-constraints`)
+## §v0.1.21 — Auditor RHR quorum (Tier 1) + Analyst format hard constraints (Tier 2 Capa A+B+C) (2026-05-24, squash `f073e74`, tag `v0.1.21-auditor-quorum-hard-constraints`)
 
 **Date:** 2026-05-24 (close)
 **Branch:** `feat/v0.1.21-auditor-quorum-hard-constraints` from main @ `1f838ee`

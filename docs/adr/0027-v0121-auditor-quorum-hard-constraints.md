@@ -1,6 +1,6 @@
 # ADR 0027 — Auditor RHR quorum + Analyst format hard constraints (v0.1.21)
 
-- **Status:** Accepted — 2026-05-24 — squash `<squash-sha>`, tag `v0.1.21-auditor-quorum-hard-constraints`
+- **Status:** Accepted — 2026-05-24 — squash `f073e74`, tag `v0.1.21-auditor-quorum-hard-constraints`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0006 (H4 chat E2E architecture — Auditor Lenient-Finding + Strict-Answer aggregation that v0.1.21 D1 refines), 0016 (H15 Auditor calibration — system-level study established the iteration framework; v0.1.21 is one specific lever from that ledger), 0021 (v0.1.16 v0.1.20-bar — measurement target; v0.1.21 ships capabilities but defers paid bar measurement to conditional v0.1.22), 0023 (v0.1.17.1 v1.4 prompt — soft Hard Rule 9 that v0.1.21 hardens at schema/server layer), 0024 (v0.1.18 citation granularity instrument — used for any future paid measurement), 0025 (v0.1.19 Council binding ON — production state inherited; v0.1.21 does NOT modify Council binding), 0026 (v0.1.20 paid validation — provides the T6.5 diagnostic that motivates v0.1.21).
 
