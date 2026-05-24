@@ -83,7 +83,7 @@ def test_top_k_auto_none_uses_cfg_top_k_default(monkeypatch: pytest.MonkeyPatch)
     cands = [_make_candidate("nis2", "23", i) for i in range(10)]
     _mock_dense_and_rerank(monkeypatch, cands, list(range(10)))
 
-    cfg = retrieval.RetrievalConfig()  # top_k=5, top_k_auto=None
+    cfg = retrieval.RetrievalConfig(top_k_auto=None, max_chunks_per_norma=None)
     chunks, resolved = retrieval.run_auto("q", "es", cfg)
 
     # All 10 are NIS2 23 → gate sees 5/5 = 1.0 ≥ 0.6 → collapses to NIS2 → kept
@@ -99,7 +99,7 @@ def test_top_k_auto_12_uses_12_for_gate_and_output(monkeypatch: pytest.MonkeyPat
     cands = [_make_candidate("nis2", "23", i) for i in range(15)]
     _mock_dense_and_rerank(monkeypatch, cands, list(range(15)))
 
-    cfg = retrieval.RetrievalConfig(top_k=5, top_k_auto=12)
+    cfg = retrieval.RetrievalConfig(top_k=5, top_k_auto=12, max_chunks_per_norma=None)
     chunks, resolved = retrieval.run_auto("q", "es", cfg)
 
     # 15 NIS2 → gate sees top-12 = 12/12 = 1.0 ≥ 0.6 → collapses to NIS2 →

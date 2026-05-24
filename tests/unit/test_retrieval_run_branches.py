@@ -82,7 +82,9 @@ def test_auto_drops_norma_filter_and_applies_gate(_patch, monkeypatch) -> None:
         "rerank",
         lambda _q, _p, top_n: [(0, 0.9), (1, 0.85), (2, 0.8), (3, 0.75), (4, 0.5)],
     )
-    out, resolved = retrieval.run_auto("q", "es", retrieval.RetrievalConfig())
+    out, resolved = retrieval.run_auto(
+        "q", "es", retrieval.RetrievalConfig(max_chunks_per_norma=None, top_k_auto=None)
+    )
     assert "norma" not in (table.search_obj.where_clause or "")
     assert table.search_obj.where_clause == "language = 'es'"
     assert resolved == ["gdpr"]

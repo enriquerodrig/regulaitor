@@ -20,10 +20,11 @@ from regulaitor.rag.retrieval import RetrievalConfig
 
 
 def test_default_is_none_for_backward_compat() -> None:
-    """RetrievalConfig() default has top_k_auto=None → auto path uses cfg.top_k
-    (= 5 default) → v0.1.11 behaviour preserved."""
+    """RetrievalConfig() default has top_k_auto=12 (v0.1.21.2 flip) →
+    auto path uses 12 pre-purity-gate window. Opt-out via explicit None
+    restores v0.1.11 behaviour (uses cfg.top_k=5 instead)."""
     cfg = RetrievalConfig()
-    assert cfg.top_k_auto is None
+    assert cfg.top_k_auto == 12
 
 
 def test_explicit_int_value_preserved() -> None:

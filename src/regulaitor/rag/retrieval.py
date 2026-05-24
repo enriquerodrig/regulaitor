@@ -60,8 +60,12 @@ class RetrievalConfig:
     purity_threshold: float = 0.6  # auto path only; >= is inclusive
     query_normalize: bool = False  # default identity == current behaviour
     max_chunks_per_article: int | None = None  # v0.1.10; None == no cap == v0.1.9 behaviour
-    max_chunks_per_norma: int | None = None  # v0.1.11; None == no cap == v0.1.10 behaviour
-    top_k_auto: int | None = None  # v0.1.12; None == use cfg.top_k for auto == v0.1.11 behaviour
+    max_chunks_per_norma: int | None = (
+        2  # v0.1.21.2; default cap=2 per v0.1.11 BREAKTHROUGH; opt-out via None
+    )
+    top_k_auto: int | None = (
+        12  # v0.1.21.2; default auto-path top_k=12 per v0.1.12 spec; opt-out via None
+    )
 
     def __post_init__(self) -> None:
         if not isinstance(self.pre_rerank, int) or isinstance(self.pre_rerank, bool):

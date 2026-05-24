@@ -13,10 +13,11 @@ from regulaitor.rag.retrieval import RetrievalConfig
 
 
 def test_default_is_none_for_backward_compat() -> None:
-    """RetrievalConfig() default has max_chunks_per_norma=None → no cap →
-    v0.1.10 behaviour preserved for any caller that doesn't set the field."""
+    """RetrievalConfig() default has max_chunks_per_norma=2 (v0.1.21.2 flip) →
+    per-norma cap enables cross-corpus diversity. Opt-out via explicit None
+    restores v0.1.10 behaviour."""
     cfg = RetrievalConfig()
-    assert cfg.max_chunks_per_norma is None
+    assert cfg.max_chunks_per_norma == 2
 
 
 def test_explicit_int_value_preserved() -> None:

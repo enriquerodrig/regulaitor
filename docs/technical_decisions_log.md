@@ -4262,3 +4262,51 @@ v0.1.20 T6.5 diagnostic capabilities SHIPPED. Sequence after v0.1.21 (per ADR-00
 **Follow-up**
 
 v0.1.22 (CONDITIONAL) authorized to proceed with per-citation audit trail now persisted + transition matrix working correctly + v1.5 refusal handling integration-tested.
+
+---
+
+## §v0.1.21.2 — Tier 2 retrieval defaults flip + chat refusal mock (2026-05-24, squash `<squash-sha>`, tag `v0.1.21.2-tier2-flips`)
+
+**Date:** 2026-05-24 (close)
+**Branch:** `feat/v0.1.21.2-tier2-flips` from main @ `09eee5a`
+**Spec:** `docs/superpowers/specs/2026-05-24-v0.1.21.2-tier2-flips-design.md` (commit `78c95ce`)
+**Plan:** `docs/superpowers/plans/2026-05-24-v0.1.21.2-tier2-flips.md` (commit `d50450e`)
+**ADR:** ADR-0028
+**Cost:** $0 (no paid LLM run)
+
+### WHAT shipped
+
+- D1: Flipped `max_chunks_per_norma=2` to production default in `src/regulaitor/rag/retrieval.py:63` (v0.1.11 BREAKTHROUGH 1/3→2/3 cross-corpus measured).
+- D2: Flipped `top_k_auto=12` to production default in `src/regulaitor/rag/retrieval.py:64` (v0.1.12 wiring algorithmically verified; auto-corpus subset only).
+- D3: NEW `tests/unit/redteam/test_chat_refusal_mock.py` (6 chat refusal mock e2e tests) closes v0.1.21 final-review I5 caveat — smoke gate is doc-mode filtered, so chat refusal under v1.5+Capa A+B was unmeasured.
+- Backward-compat: `RetrievalConfig(max_chunks_per_norma=None)` or `top_k_auto=None` opt-out restores old behaviour.
+
+### WHY
+
+Tier 2 carry-forward from v0.1.21 final review I5 + production-default discipline ("future product foundation" preference). v0.1.11 + v0.1.12 capabilities have been opt-in since shipment; v0.1.21.2 promotes them to default based on prior mechanical evidence.
+
+### HOW
+
+T0 controller scaffolding + T1 TDD red (~13 new tests across 2 NEW test files: 7 retrieval defaults + 6 chat refusal mock) + T2 GREEN D1 + T3 GREEN D2 + T4 GREEN D3 + cleanup linter normalization + T5 ADR-0028 + T6 closure (this entry) + T-final ceremony.
+
+### IMPACT (§22.22 honest)
+
+- Production gets the best-evidence default config + auto-path queries benefit (cross-corpus cohorts v0.1.13 / v0.1.15 + H14 xcorpus-* are primary expected beneficiaries of D1).
+- I5 caveat closed via mock coverage of v1.5 + Capa A+B+C flow.
+- **NO paid validation pre-flip**: v0.1.22 paid run (CONDITIONAL) measures cumulative impact (Tier 1 quorum + Capa A+B+C + v1.5 prompt + retrieval defaults) rather than isolating each flip's contribution.
+- H10 cohort impact UNKNOWN pre-flip (H10 not cross-corpus dominant); if v0.1.22 evidence shows regression, easy 1-line revert per default.
+- 4th consecutive milestone with §22.22 framing on capability ships without paid pre-validation (v0.1.19 / v0.1.20 / v0.1.21 / v0.1.21.2 — pattern: per-task reviews validate per-task correctness; cumulative empirical validation lives at the paid-milestone cadence).
+
+### Gate authoritative
+
+- `uv run pytest -m "not slow"` → 968 passed / 0 failed / 1 skipped (+13 from 955 baseline at v0.1.21.1 close).
+- `uv run mypy src` → 71 source files Success UNCHANGED (1 src/ file modified: `rag/retrieval.py` 2 lines; no new `.py` under `src/`).
+- redteam-smoke 0.92 carry preserved.
+
+### §6 invariant interpretive distinction
+
+Production-side citation VALIDATION (`citation/validator.py`) byte-unchanged. v0.1.21.2 modifies retrieval-config defaults only — upstream of the validator, downstream of the corpus. Auditor (Tier 1 quorum v0.1.21) + Pydantic schema (Capa B v0.1.21) + Council (binding ON v0.1.19) + Analyst prompts v1.0-v1.5 + eval pipeline + gold set ALL BYTE-UNCHANGED.
+
+### Plan progress
+
+Next: v0.1.22 paid 30-case A/B CONDITIONAL on user authorization (~€4-6, ~7h wall-clock; cumulative package measurement). Default per ADR-0027 dual interpretation A: defer paid validation, proceed to H16 (HF Spaces deploy) → H17 (TFM closure).
