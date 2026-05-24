@@ -185,7 +185,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.20** | `v0.1.20-paid-validation` | [spec](superpowers/specs/2026-05-23-v0.1.20-paid-validation-design.md) | [plan](superpowers/plans/2026-05-23-v0.1.20-paid-validation.md) | [0026](adr/0026-v0120-paid-validation.md) | `1f838ee` |
 | **v0.1.21** | `v0.1.21-auditor-quorum-hard-constraints` | [spec](superpowers/specs/2026-05-24-v0.1.21-auditor-quorum-hard-constraints-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.21-auditor-quorum-hard-constraints.md) | [0027](adr/0027-v0121-auditor-quorum-hard-constraints.md) | `f073e74` |
 | **v0.1.21.1** | `v0.1.21.1-pre-v0122-hardening` | [decisions_log](technical_decisions_log.md#v0121--pre-v0122-hardening-t1-t4-contamination-vector-closure) | (T1-T4 closure docs) | (no ADR; $0 capability) | `911ecae` |
-| **v0.1.21.2** | `v0.1.21.2-tier2-flips` | [spec](superpowers/specs/2026-05-24-v0.1.21.2-tier2-flips-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.21.2-tier2-flips.md) | [0028](adr/0028-v0121_2-retrieval-defaults-flip.md) | `<squash-sha>` |
+| **v0.1.21.2** |  `v0.1.21.2-tier2-flips` | [spec](superpowers/specs/2026-05-24-v0.1.21.2-tier2-flips-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.21.2-tier2-flips.md) | [0028](adr/0028-v0121_2-retrieval-defaults-flip.md) | `6552d1c` |
 
 ---
 

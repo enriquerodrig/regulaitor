@@ -4265,7 +4265,7 @@ v0.1.22 (CONDITIONAL) authorized to proceed with per-citation audit trail now pe
 
 ---
 
-## §v0.1.21.2 — Tier 2 retrieval defaults flip + chat refusal mock (2026-05-24, squash `<squash-sha>`, tag `v0.1.21.2-tier2-flips`)
+## §v0.1.21.2 — Tier 2 retrieval defaults flip + chat refusal mock (2026-05-24, squash `6552d1c`, tag `v0.1.21.2-tier2-flips`)
 
 **Date:** 2026-05-24 (close)
 **Branch:** `feat/v0.1.21.2-tier2-flips` from main @ `09eee5a`

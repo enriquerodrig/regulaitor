@@ -1,6 +1,6 @@
 # ADR 0028 — Tier 2 retrieval defaults flip + chat refusal mock (v0.1.21.2)
 
-- **Status:** Accepted — 2026-05-24 — squash `<squash-sha>`, tag `v0.1.21.2-tier2-flips`
+- **Status:** Accepted — 2026-05-24 — squash `6552d1c`, tag `v0.1.21.2-tier2-flips`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0017 (H15.1 retriever optimization — original per-norma cap motivation; v0.1.11 BREAKTHROUGH 1/3 → 2/3 cross-corpus demonstration), 0018 (H15.2 eval rede-design — top_k_auto wiring algorithmically verified through the `RetrievalConfig` per-call resolution path), 0026 (v0.1.20 paid validation framework — the venue where the cumulative effect of v0.1.21.2 retrieval defaults will be measured), 0027 (v0.1.21 Tier 1 quorum + Tier 2 Capa A+B+C + v1.5 prompt — production state into which v0.1.21.2 lands).
 
