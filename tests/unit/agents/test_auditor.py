@@ -160,17 +160,20 @@ def test_audit_audit_results_flat_across_findings(
     assert len(result.audit_results) == 3
 
 
-def test_audit_answer_with_no_findings_passes(monkeypatch: pytest.MonkeyPatch) -> None:
-    """When Analyst emits empty findings (corpus doesn't support answer), verdict=PASS."""
-    from regulaitor.agents import auditor
+def test_audit_answer_with_no_findings_rejected_at_schema(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """v0.1.21 (Capa B): Answer with empty findings is no longer constructible.
+    This test's original intent (no findings -> PASS verdict) is now moot
+    because the schema forbids empty findings. Renamed post-final-review
+    (C2 M3) to match v0.1.21 actual behavior: empty findings is REJECTED at
+    schema level, never reaches the Auditor at all. Pinning that _answer()
+    rejects empty input.
+    """
+    from pydantic import ValidationError
 
-    answer = _answer([])
-    monkeypatch.setattr(auditor.validator, "validate", MagicMock())  # never called
-
-    result = AuditorAgent().audit(answer)
-
-    assert result.verdict == AuditVerdict.PASS
-    assert len(result.audit_results) == 0
+    with pytest.raises(ValidationError):
+        _answer([])
 
 
 def test_audit_reason_uses_pipe_separator_not_semicolon(

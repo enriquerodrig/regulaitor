@@ -211,7 +211,13 @@ def test_analyze_retries_once_when_findings_missing(monkeypatch: pytest.MonkeyPa
 def test_analyze_no_retry_when_other_validation_errors(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """If validation errors include fields other than findings, do NOT retry."""
+    """v0.1.21 (Capa C): retry on ANY ValidationError up to MAX_ATTEMPTS=3.
+
+    Pre-v0.1.21 contract: if validation errors included fields other than
+    findings, do NOT retry. v0.1.21 contract: catch ANY ValidationError
+    (including missing fields beyond findings) and retry with failure-specific
+    feedback up to 3 attempts total.
+    """
     from regulaitor.agents import analyst
 
     malformed = CompletionResult(
@@ -226,18 +232,20 @@ def test_analyze_no_retry_when_other_validation_errors(
     monkeypatch.setattr(analyst.router, "complete", complete_mock)
 
     agent = AnalystAgent()
-    with pytest.raises(RuntimeError, match="malformed Answer:"):
+    with pytest.raises(RuntimeError, match="malformed Answer"):
         agent.analyze(query="q", context=_make_context())
 
-    assert complete_mock.call_count == 1, "must not retry when error is not findings-only"
+    # v0.1.21: now retries up to 3 times on ANY ValidationError.
+    assert complete_mock.call_count == 3, "v0.1.21 retries 3x on any validation error"
 
 
 def test_analyze_raises_after_two_failed_attempts(monkeypatch: pytest.MonkeyPatch) -> None:
-    """If both attempts omit `findings`, raise RuntimeError with 'after retry' marker."""
+    """v0.1.21 (Capa C): after 3 attempts, raise RuntimeError with 'after N retries' marker."""
     from regulaitor.agents import analyst
 
     complete_mock = MagicMock(
         side_effect=[
+            _make_completion_result_missing_findings(),
             _make_completion_result_missing_findings(),
             _make_completion_result_missing_findings(),
         ]
@@ -245,7 +253,8 @@ def test_analyze_raises_after_two_failed_attempts(monkeypatch: pytest.MonkeyPatc
     monkeypatch.setattr(analyst.router, "complete", complete_mock)
 
     agent = AnalystAgent()
-    with pytest.raises(RuntimeError, match="malformed Answer after retry"):
+    with pytest.raises(RuntimeError, match="malformed Answer after 2 retries"):
         agent.analyze(query="q", context=_make_context())
 
-    assert complete_mock.call_count == 2
+    # v0.1.21: now attempts 3 times before giving up.
+    assert complete_mock.call_count == 3

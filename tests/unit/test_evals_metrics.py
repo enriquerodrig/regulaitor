@@ -322,18 +322,14 @@ def test_extract_severity_chat_handles_none_audited() -> None:
     assert _extract_severity_chat(None) is None
 
 
-def test_extract_severity_chat_handles_no_findings() -> None:
+def test_extract_severity_chat_handles_audited_answer_none() -> None:
+    """Post-v0.1.21 (Capa B forbids findings=[]), the no-findings path now
+    only reaches metrics via AuditedAnswer=None (e.g. transport_error case).
+    Pin that _extract_severity_chat tolerates None input.
+    """
     from evals.metrics import _extract_severity_chat
 
-    from regulaitor.citation.schemas import (
-        Answer,
-        AuditedAnswer,
-        AuditVerdict,
-    )
-
-    answer = Answer(query="q", language="es", text="resp", findings=[])
-    audited = AuditedAnswer(answer=answer, verdict=AuditVerdict.PASS, audit_results=[], reason=None)
-    assert _extract_severity_chat(audited) is None
+    assert _extract_severity_chat(None) is None
 
 
 # ---------------------------------------------------------------------------

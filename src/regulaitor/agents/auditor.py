@@ -34,15 +34,36 @@ class AuditorAgent:
                 "pass" if any(r.validated for r in this_finding_results) else "blocked"
             )
 
-        # Strict: Answer aggregates
+        # Strict: Answer aggregates.
+        # v0.1.21 (ADR-0027 D1): per-citation RHR quorum semantics. Count
+        # invalid citations across ALL citations in the answer; only escalate
+        # to turn-level RHR when >=2 per-citation validations failed.
+        # A single isolated invalid citation no longer forces turn-RHR —
+        # addresses the dominant v0.1.20 T6.5 "nonempty-RHR-still-RHR" pattern
+        # (42% of v1.0 RHR cases) without weakening §6 (per-citation
+        # validation in citation/validator.py is byte-unchanged).
+        n_invalid_citations = sum(1 for r in all_results if not r.validated)
         verdict: AuditVerdict
         reason: str | None
         if not finding_verdicts or all(v == "pass" for v in finding_verdicts):
-            verdict, reason = AuditVerdict.PASS, None
+            # All findings pass at the Finding level (Lenient-Finding was generous).
+            # But if >=2 citations are invalid even within passing Findings,
+            # escalate to RHR via quorum logic.
+            if n_invalid_citations >= 2:
+                verdict = AuditVerdict.REQUIRES_HUMAN_REVIEW
+                reason = _aggregate_reason(
+                    answer, all_results, per_finding_results, "REQUIRES_HUMAN_REVIEW"
+                )
+            else:
+                verdict, reason = AuditVerdict.PASS, None
         elif all(v == "blocked" for v in finding_verdicts):
             verdict = AuditVerdict.BLOCK
             reason = _aggregate_reason(answer, all_results, per_finding_results, "BLOCK")
         else:
+            # Partial case (some findings pass, some blocked): preserve the
+            # pre-existing Strict-Answer behavior of escalating to RHR.
+            # The quorum logic does not apply to partial cases; Finding-level
+            # aggregation is untouched per spec D1.
             verdict = AuditVerdict.REQUIRES_HUMAN_REVIEW
             reason = _aggregate_reason(
                 answer, all_results, per_finding_results, "REQUIRES_HUMAN_REVIEW"

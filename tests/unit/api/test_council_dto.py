@@ -120,10 +120,19 @@ def test_council_notice_indicates_binding_fired() -> None:
     from regulaitor.citation.schemas import (
         Answer,
         AuditedAnswer,
+        Citation,
+        Finding,
     )
 
+    # v0.1.21 (Capa B): Answer requires findings >=1. Inline a minimal
+    # valid Finding so the test's intent (notice branching on COUNCIL_BIND
+    # reason prefix) stays focused.
+    _dummy_finding = Finding(
+        text="dummy",
+        citations=[Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="t")],
+    )
     audited = AuditedAnswer(
-        answer=Answer(query="q", language="es", text="resp", findings=[]),
+        answer=Answer(query="q", language="es", text="resp", findings=[_dummy_finding]),
         verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
         audit_results=[],
         reason=(
@@ -142,14 +151,22 @@ def test_council_notice_indicates_binding_fired() -> None:
 def test_council_notice_advisory_unchanged_when_no_binding() -> None:
     """v0.1.19 backward-compat: when audited.reason does NOT start with
     'COUNCIL_BIND:' (or audited is None), the advisory notice is unchanged."""
+    # Case 1: audited has a non-binding reason → advisory notice.
+    # v0.1.21 (Capa B): Answer requires findings >=1; reuse the dummy
+    # from the prior test via inline construction.
     from regulaitor.citation.schemas import (
         Answer,
         AuditedAnswer,
+        Citation,
+        Finding,
     )
 
-    # Case 1: audited has a non-binding reason → advisory notice.
+    _dummy_finding = Finding(
+        text="dummy",
+        citations=[Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="t")],
+    )
     audited = AuditedAnswer(
-        answer=Answer(query="q", language="es", text="resp", findings=[]),
+        answer=Answer(query="q", language="es", text="resp", findings=[_dummy_finding]),
         verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
         audit_results=[],
         reason="REQUIRES_HUMAN_REVIEW: 1 of 1 citations invalid.",

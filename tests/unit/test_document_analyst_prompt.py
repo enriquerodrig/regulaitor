@@ -10,12 +10,16 @@ from regulaitor.agents.analyst import PROMPTS_DIR, AnalystAgent
 def test_default_role_is_analyst_backcompat(monkeypatch):
     # Existing H4 prompt should still load with no prompt_role argument.
     # v0.1.20 flipped env-unset default for the chat `analyst` role v1.0 -> v1.4
-    # per ADR-0026; `document_analyst` role still defaults to v1.0 (v1.4 was
-    # authored for chat role only; doc-mode A/B carried forward).
+    # per ADR-0026; v0.1.21 final-review C4 further flipped chat default
+    # v1.4 -> v1.5 (v1.5 ships Finding-based refusal compatible with Tier 2
+    # Capa A+B hard constraints on findings non-empty; see ADR-0027
+    # "Implementation note (post-final-review)"). `document_analyst` role
+    # still defaults to v1.0 (no v1.5 for doc-mode; doc-mode A/B + refusal
+    # coherence carried forward).
     monkeypatch.delenv("REGULAITOR_ANALYST_PROMPT_VERSION", raising=False)
     a = AnalystAgent()
     assert a.prompt_role == "analyst"
-    assert a.prompt_version == "v1.4"
+    assert a.prompt_version == "v1.5"
 
 
 def test_document_analyst_role_loads_v1():

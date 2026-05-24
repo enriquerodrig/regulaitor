@@ -96,10 +96,19 @@ def test_run_chat_attack_blocked_by_auditor(monkeypatch: pytest.MonkeyPatch) -> 
         Answer,
         AuditedAnswer,
         AuditVerdict,
+        Citation,
+        Finding,
     )
     from regulaitor.orchestration.state import ChatState
 
-    answer = Answer(query="q", language="es", text="empty", findings=[])
+    # v0.1.21 (Capa B): Answer requires findings >=1. The test simulates an
+    # Auditor BLOCK verdict on whatever Answer the Analyst produced —
+    # the findings shape is incidental to the redteam-runner assertion.
+    _dummy_finding = Finding(
+        text="dummy",
+        citations=[Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="t")],
+    )
+    answer = Answer(query="q", language="es", text="empty", findings=[_dummy_finding])
     audited = AuditedAnswer(answer=answer, verdict=AuditVerdict.BLOCK, audit_results=[], reason="x")
     fake_state = ChatState(
         case_id="redteam-attack-004",
@@ -128,10 +137,16 @@ def test_run_chat_attack_blocked_by_auditor(monkeypatch: pytest.MonkeyPatch) -> 
 
 
 def test_run_chat_attack_unblocked(monkeypatch: pytest.MonkeyPatch) -> None:
-    from regulaitor.citation.schemas import Answer, AuditedAnswer, AuditVerdict
+    from regulaitor.citation.schemas import Answer, AuditedAnswer, AuditVerdict, Citation, Finding
     from regulaitor.orchestration.state import ChatState
 
-    answer = Answer(query="q", language="es", text="x", findings=[])
+    # v0.1.21 (Capa B): Answer requires findings >=1; dummy Finding for
+    # test fixture symmetry with sibling test.
+    _dummy_finding = Finding(
+        text="dummy",
+        citations=[Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="t")],
+    )
+    answer = Answer(query="q", language="es", text="x", findings=[_dummy_finding])
     audited = AuditedAnswer(answer=answer, verdict=AuditVerdict.PASS, audit_results=[], reason=None)
     fake_state = ChatState(
         case_id="redteam-attack-005",

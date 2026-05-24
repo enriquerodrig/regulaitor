@@ -34,9 +34,24 @@ def _strip_unsupported_schema_fields(schema: dict[str, Any]) -> dict[str, Any]:
     Hard-sets additionalProperties=False at root regardless of input value
     (defense against future Pydantic schema generation changes that might
     emit additionalProperties=True under extra="allow").
+
+    v0.1.21 (ADR-0027 D2, Capa A): also injects `minItems: 1` on the
+    `findings` array property at the root level. Defense-in-depth with
+    Pydantic Capa B; the Anthropic API rejects tool_use responses where
+    `findings` is empty at the model-output stage (closer to the source
+    than Capa B), feeding the failure into Capa C retry loop.
     """
     cleaned = dict(schema)
     cleaned["additionalProperties"] = False  # hard set, not setdefault
+    # Capa A: inject minItems=1 on findings if the property exists.
+    props = cleaned.get("properties")
+    if isinstance(props, dict) and "findings" in props and isinstance(props["findings"], dict):
+        # Copy-on-write so the original Pydantic schema dict is not mutated.
+        props = dict(props)
+        findings_schema = dict(props["findings"])
+        findings_schema["minItems"] = 1
+        props["findings"] = findings_schema
+        cleaned["properties"] = props
     return cleaned
 
 
@@ -64,13 +79,21 @@ class AnalystAgent:
             # Eval-only env seam (ADR 0016 + ADR-0026), analogous to ADR-0013
             # REGULAITOR_ROUTER_MODE. v0.1.20 flipped the env-unset default
             # for the chat `analyst` role from v1.0 to v1.4 per ADR-0026
-            # (T6 bar 6/7 PASS + T7 safety floor PASS). The `document_analyst`
-            # role keeps v1.0 default (v1.4 was authored for the chat role
-            # only; doc-mode A/B carried forward as future work per ADR-0026
-            # IMPACT). Invalid env still falls back to v1.0 (known-safe
-            # baseline; never crashes on a bad env value). Opt-in to v1.0 for
-            # chat via REGULAITOR_ANALYST_PROMPT_VERSION=v1.0.
-            default_version = "v1.4" if prompt_role == "analyst" else "v1.0"
+            # (T6 bar 6/7 PASS + T7 safety floor PASS). v0.1.21 further
+            # flipped the chat default v1.4 -> v1.5 per ADR-0027 final-review
+            # C4 (v1.4's `findings: []` refusal pattern is incompatible with
+            # v0.1.21 Tier 2 Capa A+B hard constraints on findings non-empty;
+            # v1.5 ships Finding-based refusal that satisfies the schema
+            # while preserving §6 "no citation, no answer" via corpus-grounded
+            # refusal). The `document_analyst` role keeps v1.0 default (no
+            # v1.5 was authored for doc-mode; doc-mode A/B + refusal coherence
+            # carried forward as future work per ADR-0027 amendment).
+            # Invalid env still falls back to v1.0 (known-safe baseline;
+            # never crashes on a bad env value). Opt-in to v1.0 for chat via
+            # REGULAITOR_ANALYST_PROMPT_VERSION=v1.0; v1.4 still loadable via
+            # the same env (for retrospective comparison with the v0.1.20
+            # paid A/B).
+            default_version = "v1.5" if prompt_role == "analyst" else "v1.0"
             env_v = os.environ.get("REGULAITOR_ANALYST_PROMPT_VERSION")
             if env_v is None:
                 prompt_version = default_version
@@ -104,16 +127,29 @@ class AnalystAgent:
     def analyze(self, query: str, context: Context) -> Answer:
         """Produce a validated Answer via Anthropic tool use.
 
-        H8 finding: Sonnet occasionally drops the `findings` field despite the
-        tool_use input_schema marking it required. One retry with a `tool_result`
-        error message recovers the case without contaminating downstream with
-        sentinel fallbacks. Spec §6 "no citation, no answer" stays intact —
-        if the second attempt also fails, RuntimeError surfaces as before.
+        v0.1.21 (ADR-0027 D4, Capa C): aggressive retry with
+        failure-specific feedback. Up to 3 attempts total. On each Pydantic
+        ValidationError (Capa B `findings=[]` rejection, or any other
+        format failure), the next attempt's tool_result message includes:
+        - the failure category ("findings empty" vs other validation),
+        - a quoted excerpt of the offending `text` field (first 200 chars),
+        - an actionable instruction to map claims to Findings or remove
+          unsupported claims from `text`.
+
+        Spec §6 "no citation, no answer" stays intact — if all 3 attempts
+        fail, RuntimeError surfaces (preserves H8 behavior); the Auditor
+        still acts on the eventual valid response if attempts 1 or 2 succeed.
         """
         tools_spec = [
             {
                 "name": "emit_answer",
                 "description": "Emit the final Answer with findings + citations.",
+                # v0.1.21 (ADR-0027 D2, Capa A): strict mode enforces the
+                # `minItems: 1` on `findings` at the Anthropic API layer
+                # (T0 verified strict support on Sonnet 4.6). Capa B
+                # (Pydantic min_length=1) is the post-API defense; Capa C
+                # (this retry loop) is the recovery layer.
+                "strict": True,
                 "input_schema": _strip_unsupported_schema_fields(Answer.model_json_schema()),
             }
         ]
@@ -121,8 +157,9 @@ class AnalystAgent:
             {"role": "user", "content": _render_user_message(query, context)}
         ]
         last_error: ValidationError | None = None
-        retried = False
-        for attempt in (1, 2):
+        n_retries = 0
+        max_attempts = 3
+        for attempt in range(1, max_attempts + 1):
             result = router.complete(
                 messages=messages,
                 system=self._system_prompt,
@@ -139,10 +176,22 @@ class AnalystAgent:
                 return Answer.model_validate(result.tool_use_input)
             except ValidationError as e:
                 last_error = e
-                if attempt == 2 or not _is_findings_missing(e):
+                if attempt == max_attempts:
                     break
-                # H8 retry: feed back the malformed tool_use with a tool_result error
-                tool_use_id = "retry_h4_findings"
+                # Capa C: build failure-specific feedback and retry.
+                offending_text = ""
+                if isinstance(result.tool_use_input, dict):
+                    raw_text = result.tool_use_input.get("text")
+                    if isinstance(raw_text, str):
+                        offending_text = raw_text[:200]
+                feedback = (
+                    "Your previous response had `findings=[]`. Your text claimed: "
+                    f"'{offending_text}'. Map each substantive claim to a "
+                    "Finding with citations. If you cannot find a citation in "
+                    "the retrieved context to support a claim, remove that "
+                    "claim from text."
+                )
+                tool_use_id = f"retry_v0121_attempt{attempt}"
                 messages = messages + [
                     {
                         "role": "assistant",
@@ -161,20 +210,14 @@ class AnalystAgent:
                             {
                                 "type": "tool_result",
                                 "tool_use_id": tool_use_id,
-                                "content": (
-                                    "Your emit_answer call was missing the required "
-                                    "`findings` field. Re-emit the Answer with all "
-                                    "required fields. If the corpus does not support "
-                                    "specific findings, emit `findings: []` as your "
-                                    "system instructions describe."
-                                ),
+                                "content": feedback,
                                 "is_error": True,
                             }
                         ],
                     },
                 ]
-                retried = True
-        suffix = " after retry" if retried else ""
+                n_retries += 1
+        suffix = f" after {n_retries} retries" if n_retries else ""
         raise RuntimeError(
             f"Analyst emitted malformed Answer{suffix}: "
             f"{last_error.error_count() if last_error else 0} validation errors. "

@@ -55,7 +55,7 @@ def test_finding_round_trip(finding: Finding) -> None:
     query=_NON_EMPTY,
     language=_LANG,
     text=_NON_EMPTY,
-    findings=st.lists(_finding_strategy(), max_size=3),
+    findings=st.lists(_finding_strategy(), min_size=1, max_size=3),  # v0.1.21: min_size=1
 )
 @settings(max_examples=30)
 def test_answer_round_trip(query: str, language: str, text: str, findings: list[Finding]) -> None:

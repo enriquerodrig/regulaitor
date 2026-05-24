@@ -135,7 +135,7 @@ milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (4121 lines as of v0.1.20 closure; every approved technical decision from H0 to v0.1.20 paid validation A/B + FLIP v1.0→v1.4 production default for chat role).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (4200+ lines as of v0.1.21 closure; every approved technical decision from H0 to v0.1.21 Auditor RHR quorum (Tier 1) + Analyst format hard constraints (Tier 2 Capa A+B+C)).
 
 ---
 
@@ -183,6 +183,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.18** | `v0.1.18-citation-granularity` | [spec](superpowers/specs/2026-05-22-v0.1.18-citation-granularity-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.18-citation-granularity.md) | [0024](adr/0024-citation-granularity.md) | `670e35e` |
 | **v0.1.19** | `v0.1.19-council-binding` | [spec](superpowers/specs/2026-05-22-v0.1.19-council-binding-design.md) | [plan](superpowers/plans/2026-05-22-v0.1.19-council-binding.md) | [0025](adr/0025-council-binding.md) | `8831bcd` |
 | **v0.1.20** | `v0.1.20-paid-validation` | [spec](superpowers/specs/2026-05-23-v0.1.20-paid-validation-design.md) | [plan](superpowers/plans/2026-05-23-v0.1.20-paid-validation.md) | [0026](adr/0026-v0120-paid-validation.md) | `1f838ee` |
+| **v0.1.21** | `v0.1.21-auditor-quorum-hard-constraints` | [spec](superpowers/specs/2026-05-24-v0.1.21-auditor-quorum-hard-constraints-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.21-auditor-quorum-hard-constraints.md) | [0027](adr/0027-v0121-auditor-quorum-hard-constraints.md) | `<squash-sha>` |
 
 ---
 
@@ -198,7 +199,7 @@ Each closed milestone has its own §HX section in
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0026 (**26 ADRs** — v0.1.20 added 0026 paid validation A/B + FLIP v1.0→v1.4 production default for chat role) | ✅ |
+| 9 | ADRs current | 0001-0027 (**27 ADRs** — v0.1.21 added 0027 Auditor RHR quorum (Tier 1) + Analyst format hard constraints (Tier 2 Capa A+B+C); v0.1.20 added 0026 paid validation A/B + FLIP v1.0→v1.4 production default for chat role) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---

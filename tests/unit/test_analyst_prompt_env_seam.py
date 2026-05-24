@@ -6,11 +6,14 @@ import pytest
 from regulaitor.agents.analyst import AnalystAgent
 
 
-def test_default_is_v1_4_when_env_unset(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_default_is_v1_5_when_env_unset(monkeypatch: pytest.MonkeyPatch) -> None:
     # v0.1.20 flipped env-unset default v1.0 -> v1.4 per ADR-0026.
+    # v0.1.21 further flipped v1.4 -> v1.5 per ADR-0027 final-review C4
+    # (v1.4's `findings: []` refusal pattern is incompatible with v0.1.21
+    # Tier 2 Capa A+B hard constraints; v1.5 ships Finding-based refusal).
     monkeypatch.delenv("REGULAITOR_ANALYST_PROMPT_VERSION", raising=False)
     a = AnalystAgent()
-    assert a.prompt_version == "v1.4"
+    assert a.prompt_version == "v1.5"
 
 
 def test_env_consult_wired__absent_version_raises(monkeypatch: pytest.MonkeyPatch) -> None:

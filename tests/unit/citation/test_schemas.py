@@ -212,10 +212,17 @@ def test_answer_is_frozen() -> None:
         a.text = "other"  # type: ignore[misc]
 
 
-def test_answer_findings_can_be_empty() -> None:
-    """When corpus does not support answer, Analyst emits empty findings."""
-    a = Answer(query="q", language="es", text="No relevant content found.", findings=[])
-    assert a.findings == []
+def test_answer_rejects_empty_findings() -> None:
+    """v0.1.21 (ADR-0027 D3, Capa B): empty findings is invalid at schema layer.
+
+    Pre-v0.1.21 contract allowed `findings=[]` (the "no relevant content found"
+    escape hatch); v0.1.21 makes this invalid because empty findings has been
+    consistently classified as the no-Answer residual / prose-without-findings
+    pattern (v0.1.17 + v0.1.20 T6.5 diagnostics) — the Analyst MUST emit at
+    least one Finding or the request must be refused upstream.
+    """
+    with pytest.raises(ValidationError):
+        Answer(query="q", language="es", text="No relevant content found.", findings=[])
 
 
 def test_audit_verdict_enum_values() -> None:

@@ -79,6 +79,9 @@ evals/reports/*
 # 2026-05-23-v0.1.20-paid-validation-design.md.
 !evals/reports/v0.1.20/
 !evals/reports/v0.1.20/*
+# v0.1.21 quorum diagnostic + closure reports — tracked as TFM evidence
+!evals/reports/v0.1.21/
+!evals/reports/v0.1.21/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports

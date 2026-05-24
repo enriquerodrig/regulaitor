@@ -104,7 +104,13 @@ class Answer(BaseModel):
     query: str
     language: Language
     text: str = Field(min_length=1)
-    findings: list[Finding]
+    # v0.1.21 (ADR-0027 D3, Capa B): server-side defense-in-depth.
+    # `findings=[]` is now invalid at the schema layer; the Analyst's
+    # Capa C retry loop catches the resulting ValidationError and
+    # re-prompts Sonnet with failure-specific feedback. Capa A
+    # (Anthropic strict mode + minItems) is the API-level guarantee
+    # upstream; Capa B is the post-API defense.
+    findings: list[Finding] = Field(min_length=1)
 
 
 class AuditVerdict(StrEnum):
