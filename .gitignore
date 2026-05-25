@@ -82,6 +82,12 @@ evals/reports/*
 # v0.1.21 quorum diagnostic + closure reports — tracked as TFM evidence
 !evals/reports/v0.1.21/
 !evals/reports/v0.1.21/*
+# v0.1.22 paid validation reports — tracked as TFM evidence (cumulative-impact
+# measurement vs v0.1.20 ARM B baseline; includes preserved probe-attempt-{1,2,3}
+# evidence files for §22.22 disclosure of SSL + Capa A infrastructure block + fix).
+# See ADR-0029 + spec docs/superpowers/specs/2026-05-24-v0.1.22-paid-validation-design.md.
+!evals/reports/v0.1.22/
+!evals/reports/v0.1.22/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports

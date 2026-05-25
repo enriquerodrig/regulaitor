@@ -1,0 +1,7 @@
+# v0.1.22 probe allowlist — 5 cases (chat-001..005), deterministic H10 subset.
+# Generated 2026-05-24 per spec docs/superpowers/specs/2026-05-24-v0.1.22-paid-validation-design.md §D3.
+chat-001
+chat-002
+chat-003
+chat-004
+chat-005

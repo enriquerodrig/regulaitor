@@ -150,6 +150,76 @@ def test_strip_schema_hard_sets_additional_properties_false() -> None:
     assert result["additionalProperties"] is False
 
 
+def test_strip_schema_sets_additional_properties_false_recursive_in_defs() -> None:
+    """v0.1.22 regression guard: every object-typed subschema (root + $defs + nested
+    properties) must have additionalProperties=False. Pre-fix, the function only
+    set the root flag; nested $defs (Finding, Citation) shipped without the
+    flag, causing Anthropic strict mode (Capa A) to reject the tool with
+    ``400 invalid_request_error: For 'object' type, 'additionalProperties' must
+    be explicitly set to false``. Shipped silently broken in v0.1.21 (T0 probe
+    used a trivial schema; missed nested-object case). See ADR-0029 §22.22.
+    """
+    # Schema with a $defs entry that is itself an object type.
+    schema = {
+        "type": "object",
+        "properties": {
+            "findings": {"type": "array", "items": {"$ref": "#/$defs/Finding"}},
+        },
+        "$defs": {
+            "Finding": {
+                "type": "object",
+                "properties": {
+                    "text": {"type": "string"},
+                    "citations": {
+                        "type": "array",
+                        "items": {"$ref": "#/$defs/Citation"},
+                    },
+                },
+            },
+            "Citation": {
+                "type": "object",
+                "properties": {"text": {"type": "string"}},
+            },
+        },
+    }
+    result = _strip_unsupported_schema_fields(schema)
+    assert result["additionalProperties"] is False
+    assert result["$defs"]["Finding"]["additionalProperties"] is False
+    assert result["$defs"]["Citation"]["additionalProperties"] is False
+
+
+def test_strip_schema_does_not_set_on_non_object_subschemas() -> None:
+    """The recursive walker must only set additionalProperties on object types;
+    array, string, integer, etc. types must remain untouched (additionalProperties
+    on a non-object is nonsensical and could confuse downstream validators)."""
+    schema = {
+        "type": "object",
+        "properties": {
+            "tags": {"type": "array", "items": {"type": "string"}},
+            "count": {"type": "integer"},
+        },
+    }
+    result = _strip_unsupported_schema_fields(schema)
+    assert result["additionalProperties"] is False
+    assert "additionalProperties" not in result["properties"]["tags"]
+    assert "additionalProperties" not in result["properties"]["tags"]["items"]
+    assert "additionalProperties" not in result["properties"]["count"]
+
+
+def test_strip_schema_does_not_mutate_input() -> None:
+    """The walker returns a deep-copy; the original schema dict must be unchanged
+    (defense against shared schema dicts referenced from Pydantic class state)."""
+    original = {
+        "type": "object",
+        "$defs": {"Finding": {"type": "object", "properties": {}}},
+    }
+    import copy
+
+    snapshot = copy.deepcopy(original)
+    _strip_unsupported_schema_fields(original)
+    assert original == snapshot
+
+
 def test_init_rejects_path_traversal() -> None:
     """AnalystAgent must reject prompt_version values that could enable path traversal."""
     with pytest.raises(ValueError):

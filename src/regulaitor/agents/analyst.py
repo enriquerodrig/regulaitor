@@ -28,12 +28,39 @@ _PROMPT_ROLE_PATTERN = re.compile(r"^(analyst|document_analyst)$")
 logger = logging.getLogger("regulaitor.agents.analyst")
 
 
+def _set_additional_properties_false_recursive(node: Any) -> Any:
+    """Walk a JSON Schema and set ``additionalProperties: False`` on every
+    object-typed subschema (root + nested + $defs).
+
+    v0.1.22 (ADR-0029): the original root-only setter ([analyst.py:45] pre-fix)
+    left ``$defs`` entries (Finding, Citation) and nested object properties
+    untouched. Anthropic strict mode (Capa A; ``"strict": True``) rejects such
+    schemas with ``400 invalid_request_error: tools.0.custom: For 'object'
+    type, 'additionalProperties' must be explicitly set to false``. The bug
+    shipped silently in v0.1.21 because the T0 strict-mode probe used a
+    trivial schema (no nested objects, no $defs). v0.1.22 paid probe
+    discovered it on 5/5 chat cases → 100% RHR rate (broken-fail-safe per
+    §6 invariant preservation; documented honestly in ADR-0029 §22.22).
+
+    Returns a deep-copy with the patch applied; original schema not mutated.
+    """
+    if isinstance(node, dict):
+        new = {k: _set_additional_properties_false_recursive(v) for k, v in node.items()}
+        if new.get("type") == "object":
+            new["additionalProperties"] = False
+        return new
+    if isinstance(node, list):
+        return [_set_additional_properties_false_recursive(item) for item in node]
+    return node
+
+
 def _strip_unsupported_schema_fields(schema: dict[str, Any]) -> dict[str, Any]:
     """Pydantic v2 -> JSON Schema may include fields Anthropic SDK rejects.
 
-    Hard-sets additionalProperties=False at root regardless of input value
-    (defense against future Pydantic schema generation changes that might
-    emit additionalProperties=True under extra="allow").
+    Recursively sets ``additionalProperties: False`` on every object-typed
+    subschema (v0.1.22 fix; pre-fix root-only setter shipped silently broken
+    in v0.1.21 — see ``_set_additional_properties_false_recursive`` docstring
+    for the full §22.22 disclosure).
 
     v0.1.21 (ADR-0027 D2, Capa A): also injects `minItems: 1` on the
     `findings` array property at the root level. Defense-in-depth with
@@ -41,8 +68,7 @@ def _strip_unsupported_schema_fields(schema: dict[str, Any]) -> dict[str, Any]:
     `findings` is empty at the model-output stage (closer to the source
     than Capa B), feeding the failure into Capa C retry loop.
     """
-    cleaned = dict(schema)
-    cleaned["additionalProperties"] = False  # hard set, not setdefault
+    cleaned = _set_additional_properties_false_recursive(schema)
     # Capa A: inject minItems=1 on findings if the property exists.
     props = cleaned.get("properties")
     if isinstance(props, dict) and "findings" in props and isinstance(props["findings"], dict):

@@ -1,0 +1,27 @@
+# v0.1.22 main allowlist — 25 cases (chat-006..030), H10 cohort minus probe.
+# Generated 2026-05-24 per spec docs/superpowers/specs/2026-05-24-v0.1.22-paid-validation-design.md §D2.
+chat-006
+chat-007
+chat-008
+chat-009
+chat-010
+chat-011
+chat-012
+chat-013
+chat-014
+chat-015
+chat-016
+chat-017
+chat-018
+chat-019
+chat-020
+chat-021
+chat-022
+chat-023
+chat-024
+chat-025
+chat-026
+chat-027
+chat-028
+chat-029
+chat-030

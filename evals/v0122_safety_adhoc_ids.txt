@@ -1,0 +1,6 @@
+# v0.1.22 ad-hoc safety allowlist — 2 cases (nis2-006, dora-006).
+# Generated 2026-05-24 per spec docs/superpowers/specs/2026-05-24-v0.1.22-paid-validation-design.md §D4.
+# These 2 cases are NOT in the H10 30-case subset but ARE in the 6-designated content-safety set
+# (H15 C1 backstop pattern). Run separately to obtain v0.1.22-prod outputs for manual review.
+nis2-006
+dora-006
