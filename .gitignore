@@ -88,6 +88,11 @@ evals/reports/*
 # See ADR-0029 + spec docs/superpowers/specs/2026-05-24-v0.1.22-paid-validation-design.md.
 !evals/reports/v0.1.22/
 !evals/reports/v0.1.22/*
+# v0.1.22.1 verdict-match drop diagnostic reports — tracked as TFM evidence
+# ($0 cache-mining; 4-hypothesis attribution + v0.1.23 decision-tree). See
+# spec docs/superpowers/specs/2026-05-25-v0.1.22.1-verdict-diagnostic-design.md.
+!evals/reports/v0.1.22.1/
+!evals/reports/v0.1.22.1/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports

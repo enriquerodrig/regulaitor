@@ -4388,3 +4388,57 @@ Production-side citation VALIDATION (`citation/validator.py`) byte-unchanged. v0
 **5 consecutive milestones with §22.22 honest framing on capability ship + paid validation cadence** (v0.1.19 / v0.1.20 / v0.1.21 / v0.1.21.2 / v0.1.22). Pattern: per-task reviews validate per-task correctness; cumulative empirical validation lives at paid-milestone cadence; honest disclosure of trade-offs in closure narrative. v0.1.22 closes the v0.1.21 T6 §22.22 caveat lineage AND closes the cumulative-impact measurement question for the entire v0.1.19→v0.1.21.2 capability arc.
 
 Next: **H16** (HF Spaces public deploy + foundation production-grade per "future product" preference; dual deploy HF Spaces demo + Render/Fly.io setup; Docker compose + secrets manager + health checks + CORS/CSP) → **H17** (TFM cierre académico: memoria + model card + data card + AI Act assessment + runbook + cost analysis + video demo + slide deck + evidence matrix completa + Product Roadmap appendix + tag `v1.0.0`).
+
+---
+
+## §v0.1.22.1 — Verdict-match drop diagnostic ($0 cache mining) (2026-05-25, squash `<squash-sha>`, tag `v0.1.22.1-verdict-diagnostic`)
+
+**WHAT**: $0 diagnostic mini-milestone (mirrors v0.1.21.1 pattern) responding to user-flagged §22.22 observation at v0.1.22 close: "verdict_match muy bajo + no hay mejoría tan grande como la esperada". Mined v0.1.22 checkpoints + per_citation_audits trail (v0.1.21.1 D2) + gold expectations + comparison.md to classify the 16 RHR cases per 4 hypotheses (H1-H4 per spec §D1).
+
+**WHY**: v0.1.22 closed with verdict_match 0.30 < bar 0.35 (FAIL by -0.05; flat vs ARM B baseline). T5 mechanism diagnostic showed 11/30 = Bucket C (NEW Tier 1 quorum-triggered RHR). User pushed back on the CONDITIONAL CONFIRM outcome wanting to identify root cause BEFORE accepting trade-off and proceeding to H16. Diagnostic-first pattern (v0.1.17 / v0.1.21 T6 precedent) preferred over speculative intervention.
+
+**HOW**: NEW `scripts/v0122_1_verdict_diagnostic.py` (789 lines; ruff + black + mypy strict clean; idempotent; $0 — pure cache mining). 4-hypothesis classifier with precedence H4 > H1 > H3 > H2:
+- H1 (validator-too-strict vs eval-metric mismatch): production `citation/validator.py` H4 STRICT vs eval-metric v0.1.18 hierarchical containment match per ADR-0024
+- H2 (refusal-as-Finding gold misalign): H15 C1 pattern where gold expects `block` but v1.5 returns `pass` with refusal-Finding + corpus citation
+- H3 (threshold ≥2 too aggressive): edge cases where Sonnet over-cites but gold-expected ARE valid
+- H4 (sonnet wrong articles): real Tier 1 catch (working as designed)
+
+**IMPACT**: **H1 DOMINANT 10/16 = 62.5%**. H4 = 1/16 (chat-003 legitimate). H2 = H3 = 0/16. Mixed/unclassifiable (n_invalid=1; below quorum) = 5/16.
+
+| Hypothesis | Count | % of 16 RHRs |
+|---|---|---|
+| **H1 (validator-too-strict)** | **10** | **62.5%** |
+| H2 (refusal-as-Finding) | 0 | 0% |
+| H3 (threshold too aggressive) | 0 | 0% |
+| H4 (sonnet wrong articles) | 1 | 6.2% |
+| Mixed / unclassifiable | 5 | 31.2% |
+
+**Per-case examples (H1 dominant)**: chat-016, chat-017, chat-018, chat-019, chat-021..026 all show emitted citations matching gold per hierarchical containment but validator marks them invalid via strict text matching → unnecessary Tier 1 escalation.
+
+**§22.22 caveats** (5 documented in `evals/reports/v0.1.22.1/verdict-drop-analysis.md`):
+1. H2 refusal-regex heuristic may false-positive on substantive answers
+2. Hierarchical containment lenient bidirectional may over-attribute H1 if gold inconsistent
+3. Hypothesis precedence H4 > H1 > H3 > H2 prioritizes "legitimate catch"; 5 mixed cases need manual review
+4. Gold expected_citations may itself be incomplete (alternative valid articles); treated as ground-truth
+5. per_citation_audits trail verified populated for all 30 v0.1.22-prod cases (post-v0.1.21.1 D2)
+
+**v0.1.23 decision tree (per spec §D2)**: H1 dominant → v0.1.23 path = propagate hierarchical containment match from `evals/metrics.py` to production `src/regulaitor/citation/validator.py`. **HIGH §6 risk** (validator IS the §6 enforcement layer). Requires NEW ADR-0030 + careful TDD + paid mini-run (~€2-3) to validate verdict_match improvement on H10 cohort.
+
+**Alternative path**: user may prefer to defer v0.1.23 + accept Tier 1 working-as-designed verdict_match drop as documented safety cost + proceed directly to H16. Decision deferred to user authorization post-T-final review.
+
+**HARD invariants intact** (5 PASS, all empty diffs):
+- `git diff main...HEAD -- src/` MUST be empty (NO src/ touch) ✅
+- `git diff main...HEAD -- tests/` MUST be empty (NO test additions) ✅
+- `git diff main...HEAD -- evals/gold_set.jsonl` MUST be empty ✅
+- `git diff main...HEAD -- evals/metrics.py evals/schemas.py evals/harness.py evals/report.py` MUST be empty ✅
+- `git diff main...HEAD -- docs/adr/` MUST be empty (NO new ADR per spec) ✅
+
+**Gate authoritative**: pytest -m "not slow" → 962 passed / 0 failed / 1 skipped UNCHANGED. mypy strict → 71 source files Success exit 0 UNCHANGED. redteam-smoke → 0.92 frozen carry. Coverage 88.55% (inherited from v0.1.21.3 @slow hotfix; v0.1.22.1 does NOT regress).
+
+**Deliverables**: `scripts/v0122_1_verdict_diagnostic.py` (789 lines), `evals/reports/v0.1.22.1/verdict-drop-analysis.md` (277 lines; 16-row table + per-case detail), `evals/reports/v0.1.22.1/v0.1.23-decision-tree.md` (38 lines explicit recommendation).
+
+**Plan progress**: 6 consecutive milestones with §22.22 honest framing pattern (v0.1.19 / v0.1.20 / v0.1.21 / v0.1.21.2 / v0.1.22 / v0.1.22.1). v0.1.22.1 closes the user-flagged "improvement not as big as expected" caveat with diagnostic-grounded root-cause identification.
+
+Next: **v0.1.23** (CONDITIONAL on user authorization — propagate hierarchical containment to validator.py; HIGH §6 risk; ADR-0030; ~2-3 days $0 implementation + ~€2-3 paid mini-validation) **OR direct to H16** (accept verdict_match drop as documented safety cost; proceed to public deploy + foundation production-grade). User decides at T-final review.
+
+Sin skills nuevas. Ver `evals/reports/v0.1.22.1/` (script + 2 reports).
