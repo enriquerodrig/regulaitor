@@ -1,6 +1,6 @@
 # ADR 0029 — v0.1.22 paid validation (cumulative-impact A/B vs v0.1.20 ARM B baseline)
 
-- **Status:** Accepted — 2026-05-25 — squash `<squash-sha>`, tag `v0.1.22-paid-validation`
+- **Status:** Accepted — 2026-05-25 — squash `57d7711`, tag `v0.1.22-paid-validation`
 - **Deciders:** Project owner.
 - **Companion ADRs:** 0010 (H8 judge architecture — Haiku 4.5 stays per ADR-0021), 0017 (H15.1 retriever design-defect → resolved at v0.1.18 instrument fix), 0021 (v0.1.16 v0.1.20-bar — the formal measurement target), 0023 (v0.1.17.1 v1.4 prompt — production default flipped at v0.1.20 closure, baseline-side of v0.1.22 ARM B), 0024 (v0.1.18 citation granularity instrument — applied to both arms), 0025 (v0.1.19 Council binding ON — production state inherited by both arms), 0026 (v0.1.20 paid validation methodology — pattern v0.1.22 mirrors with 1-arm-vs-cached optimization), 0027 (v0.1.21 Auditor RHR quorum + Tier 2 Capa A+B+C + v1.5 — the cumulative capabilities v0.1.22 measures), 0028 (v0.1.21.2 retrieval defaults flip — also in cumulative package).
 

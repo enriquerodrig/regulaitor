@@ -186,7 +186,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.21** | `v0.1.21-auditor-quorum-hard-constraints` | [spec](superpowers/specs/2026-05-24-v0.1.21-auditor-quorum-hard-constraints-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.21-auditor-quorum-hard-constraints.md) | [0027](adr/0027-v0121-auditor-quorum-hard-constraints.md) | `f073e74` |
 | **v0.1.21.1** | `v0.1.21.1-pre-v0122-hardening` | [decisions_log](technical_decisions_log.md#v0121--pre-v0122-hardening-t1-t4-contamination-vector-closure) | (T1-T4 closure docs) | (no ADR; $0 capability) | `911ecae` |
 | **v0.1.21.2** |  `v0.1.21.2-tier2-flips` | [spec](superpowers/specs/2026-05-24-v0.1.21.2-tier2-flips-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.21.2-tier2-flips.md) | [0028](adr/0028-v0121_2-retrieval-defaults-flip.md) | `6552d1c` |
-| **v0.1.22** | `v0.1.22-paid-validation` | [spec](superpowers/specs/2026-05-24-v0.1.22-paid-validation-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.22-paid-validation.md) | [0029](adr/0029-v0122-paid-validation.md) | `<squash-sha>` |
+| **v0.1.22** | `v0.1.22-paid-validation` | [spec](superpowers/specs/2026-05-24-v0.1.22-paid-validation-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.22-paid-validation.md) | [0029](adr/0029-v0122-paid-validation.md) | `57d7711` |
 
 Scope summary for v0.1.22 row: Cumulative paid validation (v0.1.19→v0.1.21.2 package on H10 30-case + 2 ad-hoc safety) vs v0.1.20 ARM B cached baseline; Capa A schema fix (spec amendment per §22.22 #4); decision **CONDITIONAL CONFIRM** per spec D4. Gate: 962/0/1 + mypy 71 Success + redteam-smoke 0.92 + coverage 88.55% (pre-existing inherited from v0.1.21.3 `@slow` hotfix; v0.1.22 IMPROVES by +0.72pp via Capa A regression tests).
 

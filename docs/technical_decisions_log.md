@@ -4313,7 +4313,7 @@ Next: v0.1.22 paid 30-case A/B CONDITIONAL on user authorization (~€4-6, ~7h w
 
 ---
 
-## §v0.1.22 — Paid validation (cumulative-impact A/B vs v0.1.20 ARM B baseline) (2026-05-25, squash `<squash-sha>`, tag `v0.1.22-paid-validation`)
+## §v0.1.22 — Paid validation (cumulative-impact A/B vs v0.1.20 ARM B baseline) (2026-05-25, squash `57d7711`, tag `v0.1.22-paid-validation`)
 
 **Date:** 2026-05-25 (close)
 **Branch:** `feat/v0.1.22-paid-validation` from main @ `de85fad`
