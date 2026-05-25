@@ -4391,7 +4391,7 @@ Next: **H16** (HF Spaces public deploy + foundation production-grade per "future
 
 ---
 
-## §v0.1.22.1 — Verdict-match drop diagnostic ($0 cache mining) (2026-05-25, squash `<squash-sha>`, tag `v0.1.22.1-verdict-diagnostic`)
+## §v0.1.22.1 — Verdict-match drop diagnostic ($0 cache mining) (2026-05-25, squash `14335ff`, tag `v0.1.22.1-verdict-diagnostic`)
 
 **WHAT**: $0 diagnostic mini-milestone (mirrors v0.1.21.1 pattern) responding to user-flagged §22.22 observation at v0.1.22 close: "verdict_match muy bajo + no hay mejoría tan grande como la esperada". Mined v0.1.22 checkpoints + per_citation_audits trail (v0.1.21.1 D2) + gold expectations + comparison.md to classify the 16 RHR cases per 4 hypotheses (H1-H4 per spec §D1).
 
