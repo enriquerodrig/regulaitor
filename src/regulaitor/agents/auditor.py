@@ -42,6 +42,14 @@ class AuditorAgent:
         # addresses the dominant v0.1.20 T6.5 "nonempty-RHR-still-RHR" pattern
         # (42% of v1.0 RHR cases) without weakening §6 (per-citation
         # validation in citation/validator.py is byte-unchanged).
+        # v0.1.23 ADR-0030 Design B (LENIENT quorum-counting based on
+        # article+apartado existence only) was ACCEPTED then REVERTED post-T6
+        # empirical refutation (verdict_match regressed -0.03 vs predicted
+        # +0.10; 0/10 H1-predicted cases flipped RHR -> PASS; 2/10 unexpectedly
+        # moved RHR -> BLOCK). §6 invariant HELD throughout (validator + Finding-
+        # Lenient unchanged) but Design B failed outcome equivalence — Tier 1
+        # quorum was NOT the bottleneck for H1 cases as the v0.1.22.1 diagnostic
+        # had inferred. See ADR-0030 §REVERT for the empirical narrative.
         n_invalid_citations = sum(1 for r in all_results if not r.validated)
         verdict: AuditVerdict
         reason: str | None

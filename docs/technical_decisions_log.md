@@ -4442,3 +4442,98 @@ Next: **H16** (HF Spaces public deploy + foundation production-grade per "future
 Next: **v0.1.23** (CONDITIONAL on user authorization — propagate hierarchical containment to validator.py; HIGH §6 risk; ADR-0030; ~2-3 days $0 implementation + ~€2-3 paid mini-validation) **OR direct to H16** (accept verdict_match drop as documented safety cost; proceed to public deploy + foundation production-grade). User decides at T-final review.
 
 Sin skills nuevas. Ver `evals/reports/v0.1.22.1/` (script + 2 reports).
+
+---
+
+## §v0.1.23 — Auditor lenient quorum (Design B) — ACCEPTED then REVERTED per empirical refutation (2026-05-26, squash `<squash-sha>`, tag `v0.1.23-auditor-lenient-quorum`)
+
+**Date:** 2026-05-26 (close)
+**Branch:** `feat/v0.1.23-auditor-lenient-quorum` from main @ `293eb64`
+**Spec:** `docs/superpowers/specs/2026-05-25-v0.1.23-auditor-lenient-quorum-design.md` (commit `168a5b3`)
+**Plan:** `docs/superpowers/plans/2026-05-25-v0.1.23-auditor-lenient-quorum.md` (commit `dd18b44`)
+**ADR:** ADR-0030 (count: 29 → 30; status ACCEPTED then **REVERTED**; preserved as scientific record per §22.22)
+**Cost:** €1.76 total (~$1.89 USD) — €0.31 probe (T4) + €1.45 main (T5). On-forecast (-7% vs €1.90 expected; well under €2.85 high-extrapolation).
+
+### WHAT shipped — REVERT outcome
+
+Design B Auditor lenient quorum was **SHIPPED at T1+T2 + ADR-documented at T3 + paid-validated at T4+T5 + REFUTED at T6 + REVERTED at T-revert** (2026-05-26). Production-side `agents/auditor.py` Tier 1 quorum-counting line **RESTORED to STRICT** `not r.validated` (= pre-v0.1.23 baseline = v0.1.21 ADR-0027 + v0.1.22.1 baseline). 5 new unit tests removed; `_is_lenient_valid` helper deleted. ADR-0030 retained with **§REVERT section appended** documenting the empirical refutation (prospective Design B reasoning preserved verbatim as scientific record). Tag `v0.1.23-auditor-lenient-quorum` still applied (semantically: "the experiment that was run + reverted; production state RESTORED to v0.1.22.1 baseline").
+
+### WHY (the hypothesis under test)
+
+v0.1.22.1 H1-dominant diagnostic attributed 10/16 RHR cases (62.5%) to validator-too-strict vs eval-metric mismatch. The hypothesis: Tier 1 quorum reads STRICT validator output as ground-truth + escalates RHR on paraphrased-citation cases (article+apartado exist; text mismatch on Check 3). Design B chosen 2026-05-25 from 3 alternatives evaluated (A validator-direct / B Auditor-only / C schema field) for **LOW §6 risk surface** (Auditor-only intervention; validator + schemas BYTE-UNCHANGED; outcome-equivalent to A/C per design analysis). User-authorized intervention path A (not interpretation B = defer to H16). v0.1.22 CONDITIONAL CONFIRM left verdict_match flat at 0.30 below bar 0.35; v0.1.23 was the surgical intervention to lift it.
+
+### HOW (task summary T0-T8 + T-revert)
+
+T0 controller branch + state verification ($0). T1 TDD red: 5 new tests in `tests/unit/agents/test_auditor.py` failing (ImportError on `_is_lenient_valid` + AssertionError on Tier 1 quorum integration scenario). T2 GREEN: inline `_is_lenient_valid(result)` helper (~10 lines) + 1-line change at Tier 1 quorum-count line (`not r.validated` → `not _is_lenient_valid(r)`); 0 regressions in pre-existing test_auditor_quorum.py (none needed updating because all pre-existing tests pinned strict-quorum scenarios where `article_exists=False` OR `apartado_exists=False`, which lenient still rejects). T3 ADR-0030 (~232 lines; Opus subagent; §6 interpretive distinction as centerpiece + 3 designs evaluated + §22.22 disclosures). T4 PAID probe: 5 cases (chat-001..005) under post-fix production state; €0.31 actual vs €0.32 forecast (on-forecast). T5 SKIP/PROCEED gate: probe cost-per-case €0.062 within 1.5× v0.1.22 anchor (€0.063) → PROCEED. T5 PAID main: 25 cases (chat-006..030); €1.45 actual vs €1.58 forecast (on-forecast); 30-case canonical report merged via `scripts/v0123_merge_reports.py`. T6 $0 diagnostic: 4 scripts + 4 reports — `scripts/v0123_comparison.py` (7-metric A/B v0.1.23-prod vs cached v0.1.22-prod), per-citation-mechanism 5-bucket re-run on v0.1.23-prod, verdict-flip-review for the 10 H1-predicted cases. T-revert: 1-line restoration of `agents/auditor.py` Tier 1 quorum-count line + 5 new tests removed + ADR-0030 amended with §REVERT section + this closure narrative.
+
+### IMPACT (the headline — empirical refutation)
+
+**Prediction REFUTED by paid measurement.** Per `evals/reports/v0.1.23/comparison.md` (7-metric A/B v0.1.23-prod vs cached v0.1.22-prod, H10 30-case combined cohort):
+
+| Metric | v0.1.22 cached | v0.1.23 fresh | Δ | Bar | Predicted |
+|---|---|---|---|---|---|
+| faithfulness | 0.72 | 0.76 | +0.04 | ≥0.65 ✅ | — collateral |
+| answer_relevancy | 0.73 | 0.73 | 0.00 | ≥0.55 ✅ | — |
+| context_precision | 0.66 | 0.59 | -0.06 | ≥0.55 ✅ | — |
+| citation_precision | 0.28 | 0.28 | 0.00 | ≥0.25 ✅ | — |
+| citation_recall | 0.67 | 0.68 | +0.02 | ≥0.60 ✅ | — |
+| **verdict_match** | **0.30** | **0.27** | **-0.03 ❌** | **≥0.35 ❌** | **+0.10 (predicted lift)** |
+| severity_match | 0.40 | 0.37 | -0.03 | ≥0.35 ✅ | — |
+
+**Verdict counts**: pass=10 → 10 (flat) / RHR=16 → 14 (-2) / **block=4 → 6 (+2)** — 2 cases moved RHR → BLOCK (NEW unexpected failure mode, opposite of predicted direction).
+
+**Per-citation verdict-flip review** (`evals/reports/v0.1.23/verdict-flip-review.md`): **0 / 10 H1 cases flipped RHR → PASS** as predicted (predicted ~6-7 / 10 = 60-70%; actual 0% confirmation rate). 8/10 unchanged RHR (chat-018, 019, 021, 022, 023, 024, 025, 026); 2/10 flipped RHR → **BLOCK** (chat-016, 017; unexpected direction).
+
+**5-bucket diagnostic comparison** (`evals/reports/v0.1.23/per-citation-mechanism.md`): Bucket A=0 (unchanged), Bucket B 4 → 6 (+2 block cases), Bucket C 11 → 10 (-1; minimal change), Bucket D 0 → 4 (+4; n_invalid=1 cases visible because strict count differs from lenient count), Bucket E 15 → 10 (-5; cases moved to other buckets).
+
+### §22.22 honest framing (the centerpiece — 3 root-cause mechanisms)
+
+1. **API drift (2/10 cases, ~20%)**: 2-day gap between v0.1.22 paid run (2026-05-24) and v0.1.23 paid run (2026-05-26). Sonnet non-determinism even at temperature=0 produced DIFFERENT citation outputs for chat-016 + chat-017 — different validator outcomes → different Auditor verdict routing → predictions based on cached v0.1.22 per_citation_audits trail invalid for these cases. This is the empirical noise floor for cross-day paid comparisons.
+
+2. **Design B assumption invalid (8/10 cases, ~80% — the dominant finding)**: Tier 1 quorum was **NOT the bottleneck** for the H1 unchanged-RHR cases. Even with lenient counting (`article_exists AND apartado_exists`), 8 cases remain RHR. The v0.1.22.1 H1 attribution assumed quorum-escalation was the active path for these cases; the v0.1.23 measurement shows other Auditor aggregation paths (Strict-Answer routing partial-Findings → RHR; Finding-Lenient strict-text-match at line 52) are the actual gatekeepers. Lenient quorum loosens what counts as "invalid for quorum purposes" but the cases never reached the quorum gate.
+
+3. **Diagnostic measurement artifact (caveat documented in v0.1.22.1 §22.22 #2)**: per_citation_audits trail (v0.1.21.1 D2) stores combined `validated: bool` field; sub-checks (1 article_exists / 2 apartado_exists / 3 text_normalized_match) NOT separately enumerated. The v0.1.22.1 H1 attribution counted `text_not_in_apartado` reason-text as Check 3 evidence but cannot definitively separate strict-only-failures from strict+lenient-failures (Check 1/2 ALSO). The H1 attribution counts may have over-estimated by mistaking Check 1/2 failures for Check 3 failures.
+
+### Lessons learned (4 carry-forwards to H16 + HX post-TFM)
+
+1. **Check decomposition for accurate Hi attribution**: future $0 diagnostics should re-run validator with check-by-check decomposition OR extend AuditResult schema with `failed_check: Literal[1, 2, 3, None]` field for production-side instrumentation that auto-populates per-citation without re-validation. The v0.1.22.1 diagnostic was correct in methodology but limited by the data the trail stored.
+2. **Tier 1 quorum NOT the verdict_match bottleneck**: future intervention should target Strict-Answer routing OR Finding-Lenient (the Auditor paths that actually dominate verdict_match drop), not the quorum threshold or quorum counting basis.
+3. **API drift ~20% noise floor over 2-day windows**: future paid validations should run baselines + intervention same-day when possible, or account for ~20% noise floor when interpreting cross-day comparisons.
+4. **Designs A/C carry-forward to HX post-TFM if verdict_match becomes critical**: Design A (validator-direct change) OR Design C (schema field addition + separated check decomposition) could intervene at the layer where the bottleneck actually exists, but at HIGHER §6 risk. Deferred to HX post-TFM. v0.1.23 validates Design B's LOW §6 risk choice was right (clean revert preserved §6); validates the OUTCOME assumption was wrong (Tier 1 quorum wasn't the lever).
+
+### §6 invariant — HELD throughout
+
+`src/regulaitor/citation/validator.py` + `src/regulaitor/citation/schemas.py` **BYTE-UNCHANGED across both T1+T2 (Design B activation) and T-revert (restoration)**. Verified by `git diff main -- src/regulaitor/citation/` empty at both points. Finding-Lenient layer (line 52 of pre-v0.1.23 auditor.py) remained STRICT throughout: any Finding with 0 strict-valid citations still blocked. 0 fabrications detected in v0.1.23 probe + main; redteam-smoke 0.92 carry preserved (= v0.1.14-v0.1.22 frozen carry; Auditor lenient quorum did not regress deterministic sanitizer/injection path during the activation window). The lenient quorum loosens, does not strengthen — by construction it cannot let a fabricated article/apartado pass the Finding-Lenient guard. The clean revert restores production state IDENTICAL to v0.1.22.1 baseline.
+
+### Cost summary (§22.22-honest)
+
+- T4 probe: **€0.31** (= ~$0.33 USD)
+- T5 main: **€1.45** (= ~$1.56 USD)
+- **Total v0.1.23 paid spend: €1.76 = ~$1.89 USD**
+- Forecast: €1.90 expected / €2.85 high (×1.5) → actual on-forecast (-7%)
+- Anthropic budget remaining post-v0.1.23: **~$9.06** (from ~$10.95 pre-v0.1.23)
+
+**The paid spend bought the EMPIRICAL REFUTATION of the Design B prediction**. This is a §22.22-honest cost: the experiment had to be run to confirm or refute the v0.1.22.1 hypothesis. The €1.76 produced a measurement that closes the v0.1.22 verdict_match question (Tier 1 quorum is NOT the lever) and shifts future intervention design to Designs A/C (HX post-TFM) if verdict_match becomes critical.
+
+### Gate authoritative
+
+- `uv run pytest -m "not slow"` → **962 passed / 0 failed / 1 skipped** (back to v0.1.22.1 baseline; 5 new tests added at T1+T2 then removed at T-revert; net delta vs main = 0).
+- `uv run mypy src` → **Success 71 source files exit 0** UNCHANGED (no new `.py` under `src/`; the `_is_lenient_valid` helper was added to existing `agents/auditor.py` at T2 and removed at T-revert).
+- `redteam-smoke` **0.92** frozen carry (= v0.1.14-v0.1.22 + v0.1.22.1 baseline; the lenient quorum activation window did not regress deterministic patterns; the revert restored byte-identical pre-activation state).
+- Coverage **88.55%** (inherited from v0.1.21.3 `@slow` hotfix; unchanged across v0.1.22 + v0.1.22.1 + v0.1.23; carry-forward to H16).
+
+### Carry-forwards to H16
+
+1. **Designs A/C deferred to HX post-TFM** if verdict_match becomes critical (Design A validator-direct change OR Design C schema field addition + separated check decomposition; HIGHER §6 risk than Design B; only pursued if real-world need surfaces post-deploy).
+2. **AuditResult schema extension `failed_check: Literal[1, 2, 3, None]`** for per-check decomposition diagnostic instrumentation (cleaner replacement for v0.1.22.1's reason-text mining; would close the §22.22 diagnostic measurement artifact carried from v0.1.22.1).
+3. **Gold expected_verdict update for H15 C1 pattern (5/6 designated content cases)** — closes the v0.1.22 #8 carry-forward (gold-expected `block` vs v1.5 returns `pass` with refusal-Finding); orthogonal to v0.1.23 but compounds verdict_match drop.
+4. **Coverage gate threshold adjustment 88.55% → 85% OR fix offline-SSL test path** (carry-forward from v0.1.22 / v0.1.21.3).
+5. **truststore in `pyproject.toml`** (currently `.venv` only; carry-forward from v0.1.22).
+
+### Plan progress
+
+**7 consecutive milestones with §22.22 honest framing pattern** (v0.1.19 / v0.1.20 / v0.1.21 / v0.1.21.2 / v0.1.22 / v0.1.22.1 / v0.1.23). **v0.1.23 is the FIRST milestone in this lineage to ship a REVERT outcome** — meta-validation of the diagnostic-first methodology (diagnose → intervene → measure → refute → revert → document is the science cycle that lets the project ship REVERTs honestly without disturbing the §6 invariant). The REVERT outcome **strengthens the TFM defense narrative**: hypothesis → diagnostic → intervention → measurement → refutation → revert → honest disclosure. The §6 invariant held throughout. **The methodology is the contribution.**
+
+Next: **H16** (HF Spaces public deploy + foundation production-grade per "future product" preference; dual deploy HF Spaces demo + Render/Fly.io setup; Docker compose + secrets manager + health checks + CORS/CSP; addresses carry-forwards: truststore + coverage gate + AuditResult schema extension + gold expected_verdict + Design A/C HX-deferral) → **H17** (TFM cierre académico: memoria + model card + data card + AI Act assessment + runbook + cost analysis + video demo + slide deck + evidence matrix completa + **Product Roadmap appendix** + tag `v1.0.0`).
+
+Sin skills nuevas. Ver ADR-0030 (with §REVERT section) + `evals/reports/v0.1.23/` (6 report files: probe + v0.1.23-prod-main + v0.1.23-prod + comparison + per-citation-mechanism + verdict-flip-review).

@@ -93,6 +93,11 @@ evals/reports/*
 # spec docs/superpowers/specs/2026-05-25-v0.1.22.1-verdict-diagnostic-design.md.
 !evals/reports/v0.1.22.1/
 !evals/reports/v0.1.22.1/*
+# v0.1.23 Auditor lenient quorum paid validation reports — tracked as TFM evidence
+# (1-arm fresh post-fix vs cached v0.1.22-prod baseline; ~€2 paid; Design B per
+# ADR-0030). See spec docs/superpowers/specs/2026-05-25-v0.1.23-auditor-lenient-quorum-design.md.
+!evals/reports/v0.1.23/
+!evals/reports/v0.1.23/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports

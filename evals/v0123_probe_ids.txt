@@ -1,0 +1,9 @@
+# v0.1.23 probe allowlist — 5 cases (chat-001..005), deterministic H10 subset.
+# Generated 2026-05-25 per spec docs/superpowers/specs/2026-05-25-v0.1.23-auditor-lenient-quorum-design.md §D4.
+# Post-fix production state (env-unset = v1.5 + Auditor LENIENT quorum + Tier 2 Capa A+B+C
+# + retrieval defaults + Council binding ON).
+chat-001
+chat-002
+chat-003
+chat-004
+chat-005

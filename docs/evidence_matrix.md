@@ -135,7 +135,7 @@ milestone.
 | **P6 — Cadena de despliegue** | `docker-compose.yml`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), deployment to HF Spaces | partial: CI ✅; Docker + deploy **deferred H16** |
 | **P7 — Monitorización y mejora continua** | [`src/regulaitor/observability/logging.py`](../src/regulaitor/observability/logging.py); [`langfuse_client.py`](../src/regulaitor/observability/langfuse_client.py); [`docs/runbook.md`](runbook.md); postmortems | logs ✅ H4; LangFuse ✅ H11 (metadata-only, verified live); runbook ✅ H11; postmortems opt HX6 |
 
-**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (4200+ lines as of v0.1.21 closure; every approved technical decision from H0 to v0.1.21 Auditor RHR quorum (Tier 1) + Analyst format hard constraints (Tier 2 Capa A+B+C)).
+**TFM defense memoria backbone**: [`docs/technical_decisions_log.md`](technical_decisions_log.md) (4500+ lines as of v0.1.23 closure; every approved technical decision from H0 to v0.1.23 Auditor lenient quorum Design B ACCEPTED then REVERTED per T6 empirical refutation — the FIRST REVERT outcome in the 7-consecutive-§22.22 lineage; the methodology is the contribution).
 
 ---
 
@@ -187,8 +187,11 @@ Each closed milestone has its own §HX section in
 | **v0.1.21.1** | `v0.1.21.1-pre-v0122-hardening` | [decisions_log](technical_decisions_log.md#v0121--pre-v0122-hardening-t1-t4-contamination-vector-closure) | (T1-T4 closure docs) | (no ADR; $0 capability) | `911ecae` |
 | **v0.1.21.2** |  `v0.1.21.2-tier2-flips` | [spec](superpowers/specs/2026-05-24-v0.1.21.2-tier2-flips-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.21.2-tier2-flips.md) | [0028](adr/0028-v0121_2-retrieval-defaults-flip.md) | `6552d1c` |
 | **v0.1.22** | `v0.1.22-paid-validation` | [spec](superpowers/specs/2026-05-24-v0.1.22-paid-validation-design.md) | [plan](superpowers/plans/2026-05-24-v0.1.22-paid-validation.md) | [0029](adr/0029-v0122-paid-validation.md) | `57d7711` |
+| **v0.1.23** | `v0.1.23-auditor-lenient-quorum` | [spec](superpowers/specs/2026-05-25-v0.1.23-auditor-lenient-quorum-design.md) | [plan](superpowers/plans/2026-05-25-v0.1.23-auditor-lenient-quorum.md) | [0030](adr/0030-auditor-lenient-quorum.md) (status: ACCEPTED then REVERTED) | `<squash-sha>` |
 
 Scope summary for v0.1.22 row: Cumulative paid validation (v0.1.19→v0.1.21.2 package on H10 30-case + 2 ad-hoc safety) vs v0.1.20 ARM B cached baseline; Capa A schema fix (spec amendment per §22.22 #4); decision **CONDITIONAL CONFIRM** per spec D4. Gate: 962/0/1 + mypy 71 Success + redteam-smoke 0.92 + coverage 88.55% (pre-existing inherited from v0.1.21.3 `@slow` hotfix; v0.1.22 IMPROVES by +0.72pp via Capa A regression tests).
+
+Scope summary for v0.1.23 row: Auditor lenient quorum Design B SHIPPED then REVERTED per T6 empirical refutation (verdict_match REGRESSED -0.03 vs predicted +0.10 lift; 0/10 H1-predicted cases flipped RHR → PASS; 2/10 moved RHR → BLOCK unexpected direction). §6 invariant HELD throughout (validator + schemas BYTE-UNCHANGED across both activation T1+T2 and restoration T-revert). Production state restored to v0.1.22.1 baseline. €1.76 / ~$1.89 USD paid (on-forecast -7%) bought the empirical refutation. ADR-0030 retained with §REVERT section as scientific record. 3 root-cause mechanisms attributed (API drift ~20% + Design B assumption invalid ~80% + diagnostic measurement artifact). Gate: **962/0/1 (back to v0.1.22.1 baseline)** + mypy 71 Success UNCHANGED + redteam-smoke 0.92 carry + coverage 88.55% (unchanged). **7 consecutive §22.22 milestones; v0.1.23 is the FIRST REVERT outcome — meta-validation of diagnostic-first methodology.**
 
 ---
 
@@ -204,7 +207,7 @@ Scope summary for v0.1.22 row: Cumulative paid validation (v0.1.19→v0.1.21.2 p
 | 6 | gitleaks clean | pre-commit (Linux) + **CI Security job v8.21.2 (H11, authoritative)** | ✅ |
 | 7 | bandit/pip-audit no high/critical | 0/0/0 (post `cb75d48`) | ✅ |
 | 8 | Demo reproducible by external human via README | H10 README + reproducibility check | ⏳ |
-| 9 | ADRs current | 0001-0029 (**29 ADRs** — v0.1.22 added 0029 paid validation cumulative-impact A/B vs v0.1.20 ARM B baseline (1-arm fresh vs cached baseline; CONDITIONAL CONFIRM per spec D4; NEW v0.1.21 Tier 1 quorum mechanism fires 36.7% of cohort empirically resolving ADR-0027 §22.22 caveat; Capa A schema fix shipped DURING v0.1.22 per spec amendment §22.22); v0.1.21.2 added 0028 Tier 2 retrieval defaults flip (max_chunks_per_norma=2 + top_k_auto=12) + chat refusal mock e2e; v0.1.21 added 0027 Auditor RHR quorum (Tier 1) + Analyst format hard constraints (Tier 2 Capa A+B+C); v0.1.20 added 0026 paid validation A/B + FLIP v1.0→v1.4 production default for chat role) | ✅ |
+| 9 | ADRs current | 0001-0030 (**29 ADRs** active — ADR-0030 added at v0.1.23 ACCEPTED then REVERTED per T6 empirical refutation; the ADR documents both the prospective Design B reasoning AND the §REVERT empirical outcome — preserved as scientific record. The active production-side ADR lineage stops at 0029. v0.1.22 added 0029 paid validation cumulative-impact A/B vs v0.1.20 ARM B baseline (1-arm fresh vs cached baseline; CONDITIONAL CONFIRM per spec D4; NEW v0.1.21 Tier 1 quorum mechanism fires 36.7% of cohort empirically resolving ADR-0027 §22.22 caveat; Capa A schema fix shipped DURING v0.1.22 per spec amendment §22.22); v0.1.21.2 added 0028 Tier 2 retrieval defaults flip (max_chunks_per_norma=2 + top_k_auto=12) + chat refusal mock e2e; v0.1.21 added 0027 Auditor RHR quorum (Tier 1) + Analyst format hard constraints (Tier 2 Capa A+B+C); v0.1.20 added 0026 paid validation A/B + FLIP v1.0→v1.4 production default for chat role) | ✅ |
 | 10 | Tag `v0.1.0-mvp` published | H10 closure | ⏳ |
 
 ---
