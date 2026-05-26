@@ -4538,7 +4538,7 @@ Next: **H16** (HF Spaces public deploy + foundation production-grade per "future
 
 Sin skills nuevas. Ver ADR-0030 (with §REVERT section) + `evals/reports/v0.1.23/` (6 report files: probe + v0.1.23-prod-main + v0.1.23-prod + comparison + per-citation-mechanism + verdict-flip-review).
 
-## §v0.1.24 — Gold alignment + AuditResult decomposition ($0 mini-milestone post-v0.1.23 REVERT) (2026-05-26, squash `<squash-sha>`, tag `v0.1.24-gold-alignment-decomposition`)
+## §v0.1.24 — Gold alignment + AuditResult decomposition ($0 mini-milestone post-v0.1.23 REVERT) (2026-05-26, squash `f749635`, tag `v0.1.24-gold-alignment-decomposition`)
 
 **Date:** 2026-05-26 (close)
 **Branch:** `feat/v0.1.24-gold-alignment-decomposition` from main @ `1885ab6`

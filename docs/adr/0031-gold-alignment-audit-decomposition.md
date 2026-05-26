@@ -1,6 +1,6 @@
 # ADR 0031 — Gold alignment + AuditResult decomposition (v0.1.24)
 
-- **Status:** Accepted — 2026-05-26 — squash `<squash-sha>`, tag `v0.1.24-gold-alignment-decomposition`
+- **Status:** Accepted — 2026-05-26 — squash `f749635`, tag `v0.1.24-gold-alignment-decomposition`
 - **Deciders:** controller + project owner (low-risk recovery path chosen 2026-05-26 post-v0.1.23 REVERT).
 - **Companion ADRs:** 0024 (v0.1.18 hierarchical containment in eval-metric — the conceptual lineage; v0.1.24 O2 mirrors the same decomposition concept at the AuditResult schema layer that v0.1.18 applied at the eval-metric layer; v0.1.24 O1 layers on top of the same eval-metric instrument with a per-case opt-in for the gold-vs-production-behavior mismatch), 0025 (v0.1.19 Council binding ON — production state inherited; unchanged), 0027 (v0.1.21 Tier 1 RHR quorum + Tier 2 Capa A+B+C — production state inherited; unchanged), 0029 (v0.1.22 paid validation — exposed verdict_match drop that motivated v0.1.22.1 + v0.1.23 + v0.1.24 lineage), 0030 (v0.1.23 Design B Auditor lenient quorum REVERTED per empirical refutation; the REVERT lessons learned drive v0.1.24's low-risk pre-intervention scope).
 
