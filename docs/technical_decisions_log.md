@@ -4621,7 +4621,7 @@ Sin skills nuevas. Ver ADR-0031 + `evals/reports/v0.1.24/` (2 report files: verd
 
 ---
 
-## §v0.1.24.1 — Per-Finding Auditor path diagnostic ($0 mini-milestone) (2026-05-26, squash `<squash-sha>`, tag `v0.1.24.1-finding-path-diagnostic`)
+## §v0.1.24.1 — Per-Finding Auditor path diagnostic ($0 mini-milestone) (2026-05-26, squash `3c4eb71`, tag `v0.1.24.1-finding-path-diagnostic`)
 
 **WHAT**: $0 cross-version comparison diagnostic mirrors v0.1.21.1 / v0.1.21.3 light pattern. Categorizes the 10 v0.1.22.1 H1 cases by Auditor PATH (A: Tier 1 firing / B: Strict-Answer partial routing / C-ish: all-blocked or API drift) via cross-version comparison v0.1.22-prod vs v0.1.23-prod actual_verdict. NO new ADR. NO src/ touch.
 
