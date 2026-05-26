@@ -1,6 +1,6 @@
 # ADR 0030 — Auditor lenient quorum (Design B) (v0.1.23)
 
-- **Status:** Accepted 2026-05-25 then **REVERTED 2026-05-26** per T6 empirical refutation — squash `<squash-sha>`, tag `v0.1.23-auditor-lenient-quorum` (semantically: REVERT-milestone; the experiment is preserved in git history; production-side `agents/auditor.py` Tier 1 quorum-counting RESTORED to STRICT `not r.validated` per v0.1.21 ADR-0027 + pre-v0.1.23 baseline). See §REVERT section at end.
+- **Status:** Accepted 2026-05-25 then **REVERTED 2026-05-26** per T6 empirical refutation — squash `e774bb9`, tag `v0.1.23-auditor-lenient-quorum` (semantically: REVERT-milestone; the experiment is preserved in git history; production-side `agents/auditor.py` Tier 1 quorum-counting RESTORED to STRICT `not r.validated` per v0.1.21 ADR-0027 + pre-v0.1.23 baseline). See §REVERT section at end.
 - **Deciders:** controller + project owner (path A + Design B chosen 2026-05-25 post-v0.1.22.1 diagnostic).
 - **Companion ADRs:** 0024 (v0.1.18 hierarchical containment in eval-metric — the conceptual lineage; v0.1.23 applies the same hierarchical concept at the Auditor aggregation layer that v0.1.18 applied at the eval-metric layer), 0027 (v0.1.21 Tier 1 RHR quorum — the mechanism being refined; v0.1.23 changes ONLY the per-citation invalidity counter that quorum reads), 0029 (v0.1.22 paid validation — exposed the verdict_match drop that motivated this milestone; the cumulative-package was CONDITIONAL CONFIRM with verdict_match flat at 0.30 below bar 0.35).
 
@@ -227,7 +227,7 @@ The three designs (A validator-direct / B Auditor-only / C schema field) are doc
   - `evals/gold_set.jsonl` (gold ground truth — orthogonal).
 - **Test coverage**: 5 new $0 unit tests in `tests/unit/agents/test_auditor.py`; updated test_auditor_quorum.py sites where they pinned strict quorum on lenient-valid scenarios.
 - **Companion ADRs**: 0024 (v0.1.18 hierarchical containment in eval-metric — conceptual lineage), 0027 (v0.1.21 Tier 1 RHR quorum — mechanism being refined), 0029 (v0.1.22 paid validation — exposed verdict_match drop).
-- **Future commits referenced from this ADR**: T1+T2 (`6adbc17`), T3 ADR-0030 (this commit), T4+T5 paid (TBD), T6 comparison (TBD), T7 closure docs (TBD), T-final squash (TBD; `<squash-sha>` placeholder populated at T-final).
+- **Future commits referenced from this ADR**: T1+T2 (`6adbc17`), T3 ADR-0030 (this commit), T4+T5 paid (TBD), T6 comparison (TBD), T7 closure docs (TBD), T-final squash (`e774bb9`; populated at T-final).
 - **Empirical resolution**: T6 outcome documented in `evals/reports/v0.1.23/comparison.md` + `per-citation-mechanism.md` + `verdict-flip-review.md` (predicted 10 H1 flips RHR → PASS; actual count is the headline finding).
 - **Future**: if T6 outcome is CONFIRM or CONDITIONAL CONFIRM → **H16** (HF Spaces deploy + foundation production-grade per user pref) → **H17** (TFM closure: memoria + model card + data card + AI Act assessment + runbook + cost analysis + video demo + slide deck + Product Roadmap appendix + tag v1.0.0). If T6 outcome is REVERT → CONDITIONAL CLOSE v0.1.23 with REVERT documented; proceed to H16 with v0.1.22 CONDITIONAL CONFIRM state.
 

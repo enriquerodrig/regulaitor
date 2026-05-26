@@ -4445,7 +4445,7 @@ Sin skills nuevas. Ver `evals/reports/v0.1.22.1/` (script + 2 reports).
 
 ---
 
-## §v0.1.23 — Auditor lenient quorum (Design B) — ACCEPTED then REVERTED per empirical refutation (2026-05-26, squash `<squash-sha>`, tag `v0.1.23-auditor-lenient-quorum`)
+## §v0.1.23 — Auditor lenient quorum (Design B) — ACCEPTED then REVERTED per empirical refutation (2026-05-26, squash `e774bb9`, tag `v0.1.23-auditor-lenient-quorum`)
 
 **Date:** 2026-05-26 (close)
 **Branch:** `feat/v0.1.23-auditor-lenient-quorum` from main @ `293eb64`
