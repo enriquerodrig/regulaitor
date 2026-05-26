@@ -1,4 +1,4 @@
-# Technical Decisions Log
+﻿# Technical Decisions Log
 
 Registro cronológico de todas las decisiones técnicas tomadas durante el desarrollo de RegulAItor. Su propósito es servir como espinazo para la memoria del TFM y para la defensa académica. Las decisiones de arquitectura no triviales tienen además su ADR formal en `docs/adr/`.
 
@@ -4661,7 +4661,7 @@ Sin skills nuevas. Ver `evals/reports/v0.1.24.1/finding-path-attribution.md` + `
 
 ---
 
-## §v0.1.25 — Auditor Strict-Answer partial-routing softening (Design H D2; paid validation CONFIRM) (2026-05-26, squash `<squash-sha>`, tag `v0.1.25-auditor-partial-routing`)
+## §v0.1.25 — Auditor Strict-Answer partial-routing softening (Design H D2; paid validation CONFIRM) (2026-05-26, squash `79e5d89`, tag `v0.1.25-auditor-partial-routing`)
 
 **Date:** 2026-05-26 (close)
 **Branch:** `feat/v0.1.25-auditor-partial-routing` from main @ `a98ddeb`
@@ -4680,7 +4680,7 @@ v0.1.24.1 finding-path diagnostic (`evals/reports/v0.1.24.1/finding-path-attribu
 
 ### HOW (task summary T0-T6 + T7-T8)
 
-T0 controller branch + state verification ($0). T1 TDD red (7 new unit tests + 1 .gitignore update; squash `47a8995`). T2 GREEN (helper + 1-branch wiring; 0 pre-existing test regressions; same squash). T3 ADR-0032 (Opus subagent; squash `01ef316`; ~164 lines; §6 THREE-layer architecture centerpiece + 3 D-variants evaluated + 7 §22.22 disclosures + flip protocol mirroring ADR-0029 D4 + ADR-0030 §REVERT precedent invocation). T4 PAID probe (5 cases €0.30; on-forecast vs €0.32 expected). T5 SKIP/PROCEED PROCEED + PAID main (25 cases €1.36; on-forecast; squash `4c943f1` for T6 reports). T6 $0 cache-mining diagnostics (3 reports: comparison + per-citation-mechanism + verdict-flip-review). T7 closure docs (this entry + evidence_matrix updates + CLAUDE.md updates). T8 pre-closure gate. T-final ceremony (squash + tag + populate 5 `<squash-sha>` placeholders + memory roll-forward).
+T0 controller branch + state verification ($0). T1 TDD red (7 new unit tests + 1 .gitignore update; squash `47a8995`). T2 GREEN (helper + 1-branch wiring; 0 pre-existing test regressions; same squash). T3 ADR-0032 (Opus subagent; squash `01ef316`; ~164 lines; §6 THREE-layer architecture centerpiece + 3 D-variants evaluated + 7 §22.22 disclosures + flip protocol mirroring ADR-0029 D4 + ADR-0030 §REVERT precedent invocation). T4 PAID probe (5 cases €0.30; on-forecast vs €0.32 expected). T5 SKIP/PROCEED PROCEED + PAID main (25 cases €1.36; on-forecast; squash `4c943f1` for T6 reports). T6 $0 cache-mining diagnostics (3 reports: comparison + per-citation-mechanism + verdict-flip-review). T7 closure docs (this entry + evidence_matrix updates + CLAUDE.md updates). T8 pre-closure gate. T-final ceremony (squash + tag + populate 5 `79e5d89` placeholders + memory roll-forward).
 
 ### IMPACT (the headline — LARGEST verdict_match lift in the H1→v0.1.24 lineage)
 

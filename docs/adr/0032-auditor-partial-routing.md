@@ -1,6 +1,6 @@
-# ADR 0032 — Auditor Strict-Answer partial-Findings routing softening (Design H D2) (v0.1.25)
+﻿# ADR 0032 — Auditor Strict-Answer partial-Findings routing softening (Design H D2) (v0.1.25)
 
-- **Status:** Accepted — 2026-05-26 — squash `<squash-sha>`, tag `v0.1.25-auditor-partial-routing`
+- **Status:** Accepted — 2026-05-26 — squash `79e5d89`, tag `v0.1.25-auditor-partial-routing`
 - **Deciders:** controller + project owner (Design H D2 chosen 2026-05-26 from D1/D2/D3 alternatives post-v0.1.24.1 Path B DOMINANT 8/10 diagnostic).
 - **Companion ADRs:** 0027 (v0.1.21 Tier 1 RHR quorum — the v0.1.21 STRICT counter that v0.1.23 attempted to loosen + that v0.1.25 leaves UNCHANGED), 0029 (v0.1.22 paid validation — exposed verdict_match drop 0.30 < bar 0.35 that motivated the v0.1.22.1 → v0.1.23 → v0.1.24 → v0.1.24.1 → v0.1.25 lineage), 0030 (v0.1.23 Design B Auditor lenient quorum REVERTED per empirical refutation; the REVERT post-mortem narrowed the candidate intervention layer + supplied the v0.1.23 REVERT precedent invoked by v0.1.25 flip protocol), 0031 (v0.1.24 gold alignment + AuditResult `failed_check` decomposition — O2 confirmed H1.C=10/10 paraphrase-only at the v0.1.22.1 H1 cases + supplied the per-citation instrumentation that v0.1.25's D2 helper reads).
 
@@ -159,6 +159,6 @@ The honest framing of what v0.1.25 ships, predicts, and explicitly does NOT reso
   - `evals/gold_set.jsonl` (gold ground truth; v0.1.24 O1 acceptable_verdicts already shipped — orthogonal).
 - **Test coverage**: 7 new $0 unit tests in `tests/unit/agents/test_auditor.py` (4 helper + 3 integration). Baseline 972 + 7 new = 979 expected at the T8 pre-closure gate.
 - **Companion ADRs**: 0027 (v0.1.21 Tier 1 STRICT quorum — unchanged), 0029 (v0.1.22 paid validation — exposed verdict_match drop), 0030 (v0.1.23 Design B REVERT — flip protocol precedent + narrowed candidate layer), 0031 (v0.1.24 gold alignment + O2 `failed_check` decomposition — supplied per-citation instrumentation that D2 helper reads + confirmed H1.C = 10/10).
-- **Future commits referenced from this ADR**: T1+T2 (`47a8995`), T3 ADR-0032 (this commit), T4+T5 paid (TBD), T6 comparison + per-citation diagnostic + verdict-flip review (TBD), T7 closure docs (TBD), T-final squash (`<squash-sha>`; populated at T-final).
+- **Future commits referenced from this ADR**: T1+T2 (`47a8995`), T3 ADR-0032 (this commit), T4+T5 paid (TBD), T6 comparison + per-citation diagnostic + verdict-flip review (TBD), T7 closure docs (TBD), T-final squash (`79e5d89`; populated at T-final).
 - **Empirical resolution**: T6 outcome documented in `evals/reports/v0.1.25/comparison.md` + `per-citation-mechanism.md` + `verdict-flip-review.md` (predicted 6-8 of 10 H1 flips RHR → PASS; actual count is the headline finding).
 - **Future**: if T6 outcome is CONFIRM or CONDITIONAL CONFIRM → **H16** (HF Spaces deploy + foundation production-grade per user pref) → **H17** (TFM closure: memoria + model card + data card + AI Act assessment + runbook + cost analysis + video demo + slide deck + Product Roadmap appendix + tag v1.0.0). If T6 outcome is REVERT → CONDITIONAL CLOSE v0.1.25 with REVERT documented (§REVERT section appended); proceed to H16 with v0.1.22.1 baseline restored (Design H D2 reverted; v0.1.24 O1 + O2 + v0.1.24.1 diagnostic evidence preserved).

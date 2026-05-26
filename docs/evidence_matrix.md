@@ -1,4 +1,4 @@
-# Evidence Matrix — RegulAItor MVP
+﻿# Evidence Matrix — RegulAItor MVP
 
 Mapping of RegulAItor artefacts to the five Máster IA Generativa modules
 (per `CLAUDE.md` §24). Each row points at concrete files / commits / reports
@@ -193,7 +193,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.23** | `v0.1.23-auditor-lenient-quorum` | [spec](superpowers/specs/2026-05-25-v0.1.23-auditor-lenient-quorum-design.md) | [plan](superpowers/plans/2026-05-25-v0.1.23-auditor-lenient-quorum.md) | [0030](adr/0030-auditor-lenient-quorum.md) (status: ACCEPTED then REVERTED) | `e774bb9` |
 | **v0.1.24** | `v0.1.24-gold-alignment-decomposition` | [spec](superpowers/specs/2026-05-26-v0.1.24-gold-alignment-decomposition-design.md) | [plan](superpowers/plans/2026-05-26-v0.1.24-gold-alignment-decomposition.md) | [0031](adr/0031-gold-alignment-audit-decomposition.md) | `f749635` |
 | **v0.1.24.1** | `v0.1.24.1-finding-path-diagnostic` | [decisions_log](technical_decisions_log.md#v0124-1--per-finding-auditor-path-diagnostic) | (light pattern; no spec/plan) | (no ADR; $0 cross-version diagnostic) | `3c4eb71` |
-| **v0.1.25** | `v0.1.25-auditor-partial-routing` | [spec](superpowers/specs/2026-05-26-v0.1.25-auditor-partial-routing-design.md) | [plan](superpowers/plans/2026-05-26-v0.1.25-auditor-partial-routing.md) | [0032](adr/0032-auditor-partial-routing.md) | `<squash-sha>` |
+| **v0.1.25** | `v0.1.25-auditor-partial-routing` | [spec](superpowers/specs/2026-05-26-v0.1.25-auditor-partial-routing-design.md) | [plan](superpowers/plans/2026-05-26-v0.1.25-auditor-partial-routing.md) | [0032](adr/0032-auditor-partial-routing.md) | `79e5d89` |
 
 Scope summary for v0.1.22 row: Cumulative paid validation (v0.1.19→v0.1.21.2 package on H10 30-case + 2 ad-hoc safety) vs v0.1.20 ARM B cached baseline; Capa A schema fix (spec amendment per §22.22 #4); decision **CONDITIONAL CONFIRM** per spec D4. Gate: 962/0/1 + mypy 71 Success + redteam-smoke 0.92 + coverage 88.55% (pre-existing inherited from v0.1.21.3 `@slow` hotfix; v0.1.22 IMPROVES by +0.72pp via Capa A regression tests).
 
