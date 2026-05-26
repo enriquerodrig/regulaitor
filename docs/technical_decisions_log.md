@@ -4618,3 +4618,43 @@ The §6 invariant statement evolves from **"byte-unchanged"** to **"byte-equival
 Next: **v0.1.25 (CONDITIONAL)** — Finding-Lenient softening for Check 3 lenient-valid citations OR Strict-Answer routing intervention (MEDIUM-HIGH §6 risk; needs ADR-0032; ~3-5 days $0 implementation + ~€2-3 paid mini-validation); user decides based on v0.1.24 O2 finding (the H1.C universal pattern surfaces the actual gatekeeper layer). Default if v0.1.25 deferred: **H16** (HF Spaces public deploy + foundation production-grade per "future product" preference; addresses v0.1.24 carry-forwards: truststore + coverage gate + gold extension; the v0.1.25 intervention can also be pursued post-H16 if deferral preferred). **H17** (TFM cierre académico: memoria + model card + data card + AI Act assessment + runbook + cost analysis + video demo + slide deck + evidence matrix completa + Product Roadmap appendix + §"v0.1.23 REVERT — methodology as contribution" subsection + §"v0.1.24 alignment + instrumentation — post-REVERT methodology continuation" subsection + tag `v1.0.0`).
 
 Sin skills nuevas. Ver ADR-0031 + `evals/reports/v0.1.24/` (2 report files: verdict-match-re-aggregation + decomposition-h-attribution) + `scripts/v0124_re_aggregate.py` + `scripts/v0124_decomposition_diagnostic.py`.
+
+---
+
+## §v0.1.24.1 — Per-Finding Auditor path diagnostic ($0 mini-milestone) (2026-05-26, squash `<squash-sha>`, tag `v0.1.24.1-finding-path-diagnostic`)
+
+**WHAT**: $0 cross-version comparison diagnostic mirrors v0.1.21.1 / v0.1.21.3 light pattern. Categorizes the 10 v0.1.22.1 H1 cases by Auditor PATH (A: Tier 1 firing / B: Strict-Answer partial routing / C-ish: all-blocked or API drift) via cross-version comparison v0.1.22-prod vs v0.1.23-prod actual_verdict. NO new ADR. NO src/ touch.
+
+**WHY**: post-v0.1.24 O2 (H1.C=10/10 attribution vindicated; Tier 1 was wrong layer per v0.1.23 REVERT), still didn't know per-case which Auditor PATH each H1.C case routes through. Methodology continuation (diagnose-first) required before committing to v0.1.25 Design D/G/H selection. Lesson from v0.1.23: "right diagnosis, wrong intervention layer" — v0.1.24.1 narrows the LAYER selection empirically.
+
+**HOW**: NEW `scripts/v0124_1_finding_path_diagnostic.py` (257 lines; ruff + black + mypy strict clean; idempotent). Reads cached v0.1.22-prod + v0.1.23-prod per-case actual_verdict; categorizes per cross-version inference table (spec §2.3). Outputs `evals/reports/v0.1.24.1/finding-path-attribution.md` with case_id → Path mapping + aggregate counts + headline + §22.22 caveats.
+
+**IMPACT (the headline)**: **Path B (Strict-Answer partial routing) DOMINANT at 8/10 = 80%**.
+
+| Path | Count | % | v0.1.25 Design implication |
+|---|---|---|---|
+| A (Tier 1 firing) | 0 | 0% | Design G/B not the target |
+| **B (Strict-Answer partial routing)** | **8** | **80%** | **Design H = v0.1.25 target** |
+| C-ish (all-blocked OR API drift) | 2 | 20% | Design D narrow coverage; partial Design H benefit |
+| ambiguous | 0 | 0% | clean attribution |
+
+**v0.1.25 Design H locked-in recommendation**: Strict-Answer partial-Findings routing softening. Currently `partial → RHR` (line ~70 auditor.py); change to `partial → PASS if ≥X% Findings pass + n_invalid_strict ≤ Y` OR more sophisticated logic. MEDIUM §6 risk (changes routing not validation; Finding-Lenient + Tier 1 + validator all stay byte-equivalent). NEW ADR-0032. Paid mini-validation ~€2-3 to confirm verdict_match lift.
+
+**§22.22 caveats** (5 in report):
+1. Cross-version inference confounded by Sonnet ~20% noise floor (v0.1.23 §REVERT root cause #1)
+2. Path C-ish ambiguity: chat-016 + chat-017 went RHR→BLOCK; could be all-blocked routing OR API drift; cannot definitively separate
+3. Per-Finding citation grouping LOST in cached AuditResults; cross-version is the workaround
+4. Recommendation accuracy depends on v0.1.22.1 H1 attribution + v0.1.24 O2 H1.C confirmation (both validated)
+5. v0.1.25+ design selection still requires user judgment; this diagnostic narrows but doesn't fully determine
+
+**§6 invariant**: HELD. NO src/ touch. NO test additions. NO gold update. NO new ADR (mirrors v0.1.21.1 / v0.1.21.3 light pattern).
+
+**Gate authoritative**: pytest 972/0/1 UNCHANGED. mypy strict 71 source files Success UNCHANGED. redteam-smoke 0.92 carry. Coverage 88.55% inherited.
+
+**Plan progress**: **9 consecutive milestones with §22.22 honest framing** (v0.1.19 / v0.1.20 / v0.1.21 / v0.1.21.2 / v0.1.22 / v0.1.22.1 / v0.1.23 / v0.1.24 / v0.1.24.1). v0.1.24.1 is the SECOND $0 mini-diagnostic in the post-REVERT recovery chain (v0.1.24 was O1+O2; v0.1.24.1 narrows v0.1.25 layer selection). Methodology contribution: diagnose-first holds even when previous diagnostic looked sufficient.
+
+**Carry-forwards to v0.1.25**: ADR-0032 documents Design H (Strict-Answer partial routing); careful TDD; paid mini-validation; CONFIRM/CONDITIONAL CONFIRM/REVERT per outcome.
+
+**Next**: v0.1.25 (CONDITIONAL on user authorization) — Design H Strict-Answer partial routing softening. MEDIUM §6 risk; ADR-0032; ~3-5 días $0 implementation + ~€2-3 paid mini-validation. OR direct H16 if user prefers to defer + accept residual drop (~0.10 below bar post-v0.1.24 +0.10 lift).
+
+Sin skills nuevas. Ver `evals/reports/v0.1.24.1/finding-path-attribution.md` + `scripts/v0124_1_finding_path_diagnostic.py`.

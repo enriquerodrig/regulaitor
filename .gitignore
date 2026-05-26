@@ -98,6 +98,15 @@ evals/reports/*
 # ADR-0030). See spec docs/superpowers/specs/2026-05-25-v0.1.23-auditor-lenient-quorum-design.md.
 !evals/reports/v0.1.23/
 !evals/reports/v0.1.23/*
+# v0.1.24 gold alignment + AuditResult decomposition — tracked as TFM evidence
+# ($0 mini-milestone; O1 acceptable_verdicts + O2 failed_check; re-aggregation
+# diagnostic on cached v0.1.22/v0.1.23 data). See ADR-0031.
+!evals/reports/v0.1.24/
+!evals/reports/v0.1.24/*
+# v0.1.24.1 per-Finding Auditor path diagnostic — tracked as TFM evidence
+# ($0 mini-milestone; cross-version comparison v0.1.22 vs v0.1.23; NO new ADR).
+!evals/reports/v0.1.24.1/
+!evals/reports/v0.1.24.1/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports
