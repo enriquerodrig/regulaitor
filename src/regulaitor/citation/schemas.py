@@ -35,6 +35,10 @@ class AuditResult(BaseModel):
     apartado_exists: bool | None
     text_normalized_match: bool
     reason: str | None
+    failed_check: Literal[1, 2, 3] | None = None
+    # v0.1.24 (ADR-0031): which check fired first on fail-fast.
+    # 1=article_not_exists (Check 1), 2=apartado_not_exists (Check 2),
+    # 3=text_not_match (Check 3). None=all checks passed OR pre-v0.1.24 cached AuditResult.
 
 
 class RetrievedChunk(BaseModel):

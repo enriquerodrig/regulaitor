@@ -228,3 +228,87 @@ def test_validate_text_from_other_article_rejected() -> None:
     assert r.text_normalized_match is False
     assert r.reason is not None
     assert "text_not_in_article" in r.reason
+
+
+# ---------------------------------------------------------------------------
+# v0.1.24 (ADR-0031): failed_check field tests
+# ---------------------------------------------------------------------------
+
+
+def test_audit_result_failed_check_optional_field_default_none(
+    loader_with_data: _FakeLoader,
+) -> None:
+    """AuditResult.failed_check defaults to None (backward-compat)."""
+    c = Citation(
+        norma="ai_act",
+        articulo="6",
+        apartado="1",
+        language="es",
+        text="el apartado 1 fija el ámbito",
+    )
+    r = validate(c, loader=loader_with_data)
+    assert r.failed_check is None
+
+
+def test_validator_populates_failed_check_1_when_article_not_exists(
+    loader_with_data: _FakeLoader,
+) -> None:
+    """When Check 1 fails (article not found), failed_check=1."""
+    c = Citation(norma="ai_act", articulo="999", language="es", text="text")
+    r = validate(c, loader=loader_with_data)
+    assert r.validated is False
+    assert r.article_exists is False
+    assert r.failed_check == 1
+
+
+def test_validator_populates_failed_check_2_when_apartado_not_exists(
+    loader_with_data: _FakeLoader,
+) -> None:
+    """When Check 2 fails (apartado not found), failed_check=2."""
+    c = Citation(
+        norma="ai_act",
+        articulo="6",
+        apartado="99",
+        language="es",
+        text="text",
+    )
+    r = validate(c, loader=loader_with_data)
+    assert r.validated is False
+    assert r.article_exists is True
+    assert r.apartado_exists is False
+    assert r.failed_check == 2
+
+
+def test_validator_populates_failed_check_3_when_text_not_match(
+    loader_with_data: _FakeLoader,
+) -> None:
+    """When Check 3 fails (text not found), failed_check=3."""
+    c = Citation(
+        norma="ai_act",
+        articulo="6",
+        apartado="1",
+        language="es",
+        text="texto que no aparece nunca",
+    )
+    r = validate(c, loader=loader_with_data)
+    assert r.validated is False
+    assert r.article_exists is True
+    assert r.apartado_exists is True
+    assert r.text_normalized_match is False
+    assert r.failed_check == 3
+
+
+def test_validator_failed_check_none_when_all_checks_pass(
+    loader_with_data: _FakeLoader,
+) -> None:
+    """When all checks pass, failed_check=None."""
+    c = Citation(
+        norma="ai_act",
+        articulo="6",
+        apartado="1",
+        language="es",
+        text="el apartado 1 fija el ámbito",
+    )
+    r = validate(c, loader=loader_with_data)
+    assert r.validated is True
+    assert r.failed_check is None

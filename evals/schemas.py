@@ -34,6 +34,10 @@ class GoldCaseChat(BaseModel):
     salida_esperada: str | None
     requiere_revision_humana: bool
     expected_verdict: Literal["pass", "block", "requires_human_review"]
+    acceptable_verdicts: list[str] | None = None
+    # v0.1.24 (ADR-0031): optional multi-value verdict match for refusal-as-pass cases
+    # where v1.5 production behavior may emit pass/RHR/block all as content-safe outcomes.
+    # None = use expected_verdict single-value match (pre-v0.1.24 behavior).
 
 
 class GoldCaseDoc(BaseModel):

@@ -57,6 +57,7 @@ def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> Aud
                 f"article_not_found: {citation.norma} has no articulo "
                 f"{citation.articulo} in language {citation.language}"
             ),
+            failed_check=1,
         )
 
     # Check 2: apartado_exists (only when apartado is given)
@@ -83,6 +84,7 @@ def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> Aud
                     f"{citation.articulo} {citation.language} has no apartado "
                     f"{citation.apartado}. Valid apartados: {valid_apartados}."
                 ),
+                failed_check=2,
             )
     else:
         target_text = ld.get_article_text(citation.norma, citation.articulo, citation.language)
@@ -107,6 +109,7 @@ def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> Aud
                 f"{citation.language}; cited text not found after normalization "
                 f"({len(citation_norm)} chars vs {len(target_norm)} chars {scope})."
             ),
+            failed_check=3,
         )
 
     return AuditResult(
@@ -116,4 +119,5 @@ def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> Aud
         apartado_exists=apartado_exists,
         text_normalized_match=True,
         reason=None,
+        failed_check=None,
     )

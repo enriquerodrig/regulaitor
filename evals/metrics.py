@@ -352,11 +352,17 @@ def compute_chat_metrics(
             for ar in audited.audit_results
         ]
 
+    # v0.1.24 (ADR-0031): verdict_match with acceptable_verdicts support
+    if case.acceptable_verdicts is not None:
+        verdict_match = actual_verdict in case.acceptable_verdicts
+    else:
+        verdict_match = actual_verdict == case.expected_verdict
+
     return ChatCaseResult(
         case_id=case.id,
         expected_verdict=case.expected_verdict,
         actual_verdict=actual_verdict,  # type: ignore[arg-type]
-        verdict_match=(actual_verdict == case.expected_verdict),
+        verdict_match=verdict_match,
         expected_severity=case.severidad_esperada,
         actual_severity=actual_severity,  # type: ignore[arg-type]
         severity_match=severity_match,

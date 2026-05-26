@@ -712,3 +712,133 @@ def test_compute_citation_metrics_mixed_emitted_partial_coverage() -> None:
     )
     assert cm.precision == pytest.approx(2 / 3)  # 2 of 3 emitted hit something
     assert cm.recall == pytest.approx(2 / 3)  # 2 of 3 expected are covered
+
+
+# ---------------------------------------------------------------------------
+# v0.1.24 (ADR-0031): acceptable_verdicts field tests
+# ---------------------------------------------------------------------------
+
+
+def test_gold_case_chat_acceptable_verdicts_optional_field() -> None:
+    """GoldCaseChat.acceptable_verdicts defaults to None (backward-compat)."""
+    from evals.schemas import GoldCaseChat
+
+    case = GoldCaseChat(
+        id="chat-001",
+        tipo="chat",
+        entrada="test query",
+        corpus_esperado="ai_act",
+        articulos_esperados=[],
+        severidad_esperada=None,
+        criterios_evaluacion=["criterion 1"],
+        salida_esperada=None,
+        requiere_revision_humana=False,
+        expected_verdict="pass",
+    )
+    assert case.acceptable_verdicts is None
+
+
+def test_gold_case_chat_acceptable_verdicts_can_be_set() -> None:
+    """GoldCaseChat.acceptable_verdicts can be set to a list of verdicts."""
+    from evals.schemas import GoldCaseChat
+
+    case = GoldCaseChat(
+        id="chat-014",
+        tipo="chat",
+        entrada="test query",
+        corpus_esperado="ai_act",
+        articulos_esperados=[],
+        severidad_esperada=None,
+        criterios_evaluacion=["criterion 1"],
+        salida_esperada=None,
+        requiere_revision_humana=False,
+        expected_verdict="block",
+        acceptable_verdicts=["block", "requires_human_review", "pass"],
+    )
+    assert case.acceptable_verdicts == ["block", "requires_human_review", "pass"]
+
+
+def test_compute_chat_metrics_uses_acceptable_verdicts_logic() -> None:
+    """Verdict_match logic: acceptable_verdicts (if set) vs expected_verdict (if None)."""
+    from evals.schemas import GoldCaseChat
+
+    # Case 1: acceptable_verdicts set (multi-value)
+    case1 = GoldCaseChat(
+        id="chat-014",
+        tipo="chat",
+        entrada="test",
+        corpus_esperado="ai_act",
+        articulos_esperados=[],
+        severidad_esperada=None,
+        criterios_evaluacion=["c1"],
+        salida_esperada=None,
+        requiere_revision_humana=False,
+        expected_verdict="block",
+        acceptable_verdicts=["block", "pass", "requires_human_review"],
+    )
+    # Verify the case loaded correctly
+    assert case1.acceptable_verdicts == ["block", "pass", "requires_human_review"]
+    assert "pass" in case1.acceptable_verdicts  # should match
+
+    # Case 2: acceptable_verdicts is None (single-value logic)
+    case2 = GoldCaseChat(
+        id="chat-001",
+        tipo="chat",
+        entrada="test",
+        corpus_esperado="ai_act",
+        articulos_esperados=[],
+        severidad_esperada=None,
+        criterios_evaluacion=["c1"],
+        salida_esperada=None,
+        requiere_revision_humana=False,
+        expected_verdict="block",
+        acceptable_verdicts=None,
+    )
+    # Verify the case loaded correctly
+    assert case2.acceptable_verdicts is None
+    assert case2.expected_verdict == "block"
+
+
+def test_compute_chat_metrics_uses_expected_verdict_logic_when_none() -> None:
+    """When acceptable_verdicts is None, expected_verdict is the single authoritative target."""
+    from evals.schemas import GoldCaseChat
+
+    case = GoldCaseChat(
+        id="chat-001",
+        tipo="chat",
+        entrada="test",
+        corpus_esperado="ai_act",
+        articulos_esperados=[],
+        severidad_esperada=None,
+        criterios_evaluacion=["c1"],
+        salida_esperada=None,
+        requiere_revision_humana=False,
+        expected_verdict="block",
+        acceptable_verdicts=None,  # explicit None = single-value mode
+    )
+    # Backward-compat behavior: only expected_verdict matters
+    assert case.acceptable_verdicts is None
+    assert case.expected_verdict == "block"
+
+
+def test_compute_chat_metrics_acceptable_verdicts_provides_multi_value_flexibility() -> None:
+    """With acceptable_verdicts set, multiple verdicts can match (not just expected_verdict)."""
+    from evals.schemas import GoldCaseChat
+
+    case = GoldCaseChat(
+        id="chat-015",
+        tipo="chat",
+        entrada="test",
+        corpus_esperado="ai_act",
+        articulos_esperados=[],
+        severidad_esperada=None,
+        criterios_evaluacion=["c1"],
+        salida_esperada=None,
+        requiere_revision_humana=False,
+        expected_verdict="block",
+        acceptable_verdicts=["block", "pass", "requires_human_review"],
+    )
+    # Multi-value flexibility: pass OR block OR RHR should match
+    assert case.acceptable_verdicts == ["block", "pass", "requires_human_review"]
+    assert "pass" in case.acceptable_verdicts  # pass is now acceptable
+    assert "requires_human_review" in case.acceptable_verdicts  # RHR is now acceptable
