@@ -107,6 +107,11 @@ evals/reports/*
 # ($0 mini-milestone; cross-version comparison v0.1.22 vs v0.1.23; NO new ADR).
 !evals/reports/v0.1.24.1/
 !evals/reports/v0.1.24.1/*
+# v0.1.25 Auditor Strict-Answer partial-routing softening (Design H D2) paid
+# validation reports — tracked as TFM evidence. See ADR-0032 + spec
+# docs/superpowers/specs/2026-05-26-v0.1.25-auditor-partial-routing-design.md.
+!evals/reports/v0.1.25/
+!evals/reports/v0.1.25/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports

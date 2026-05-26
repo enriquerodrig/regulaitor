@@ -17,6 +17,33 @@ from regulaitor.citation.schemas import (
 )
 
 
+def _all_blocked_findings_paraphrase_only(
+    finding_verdicts: list[Literal["pass", "blocked"]],
+    per_finding_results: list[list[AuditResult]],
+) -> bool:
+    """v0.1.25 (ADR-0032 Design H D2): True iff every blocked Finding has
+    all its invalid citations with failed_check==3 (paraphrase mismatch only).
+    Used by partial-Findings routing to decide PASS vs RHR.
+
+    Returns False if ANY blocked Finding has ANY invalid citation with
+    failed_check==1 (article fabrication) or failed_check==2 (apartado
+    fabrication) — those indicate true §6-relevant fabrication and must
+    route to RHR per the pre-v0.1.25 behavior.
+
+    Pre-v0.1.24 cached AuditResults have failed_check=None (Pydantic v2
+    default); those are treated as 'unknown' and the function returns
+    False (conservative; preserves pre-v0.1.25 routing for legacy data).
+    """
+    blocked_indices = [i for i, v in enumerate(finding_verdicts) if v == "blocked"]
+    for i in blocked_indices:
+        for r in per_finding_results[i]:
+            if r.validated:
+                continue  # pass-citations don't count for blocked-Finding analysis
+            if r.failed_check != 3:
+                return False  # any non-Check-3 invalid → fabrication evidence
+    return True
+
+
 class AuditorAgent:
     """Validate every Citation in the Answer; aggregate verdict per Lenient-strict."""
 
@@ -68,14 +95,21 @@ class AuditorAgent:
             verdict = AuditVerdict.BLOCK
             reason = _aggregate_reason(answer, all_results, per_finding_results, "BLOCK")
         else:
-            # Partial case (some findings pass, some blocked): preserve the
-            # pre-existing Strict-Answer behavior of escalating to RHR.
-            # The quorum logic does not apply to partial cases; Finding-level
-            # aggregation is untouched per spec D1.
-            verdict = AuditVerdict.REQUIRES_HUMAN_REVIEW
-            reason = _aggregate_reason(
-                answer, all_results, per_finding_results, "REQUIRES_HUMAN_REVIEW"
-            )
+            # v0.1.25 (ADR-0032, Design H D2): partial-Findings routing softening.
+            # Relax partial → PASS only when ALL blocked Findings have all-invalid
+            # citations failed_check==3 (paraphrase mismatch only; ZERO fabrication
+            # evidence). Any blocked Finding with at least one Check 1 (article
+            # fab) or Check 2 (apartado fab) failure → preserve pre-v0.1.25
+            # partial→RHR routing. Targets v0.1.24.1 Path B DOMINANT finding
+            # (Strict-Answer routing is empirical gatekeeper for 8/10 H1.C cases).
+            if _all_blocked_findings_paraphrase_only(finding_verdicts, per_finding_results):
+                verdict = AuditVerdict.PASS
+                reason = None
+            else:
+                verdict = AuditVerdict.REQUIRES_HUMAN_REVIEW
+                reason = _aggregate_reason(
+                    answer, all_results, per_finding_results, "REQUIRES_HUMAN_REVIEW"
+                )
 
         return AuditedAnswer(
             answer=answer,

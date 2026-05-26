@@ -1,0 +1,9 @@
+# v0.1.25 probe allowlist — 5 cases (chat-001..005), deterministic H10 subset.
+# Generated 2026-05-26 per spec docs/superpowers/specs/2026-05-26-v0.1.25-auditor-partial-routing-design.md §D3.
+# Post-fix production state (env-unset = v1.5 + Tier 1 STRICT + Tier 2 Capa A+B+C
+# + retrieval defaults + Council binding ON + NEW D2 partial-routing softening).
+chat-001
+chat-002
+chat-003
+chat-004
+chat-005
