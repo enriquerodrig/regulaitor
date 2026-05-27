@@ -1,6 +1,6 @@
-# ADR-0033 — doc_analyst v1.6 Finding-based refusal + role-default flip v1.0→v1.6
+﻿# ADR-0033 — doc_analyst v1.6 Finding-based refusal + role-default flip v1.0→v1.6
 
-- **Status:** Accepted — 2026-05-27 — squash `<squash-sha>`, tag `v0.1.28-doc-analyst-v1-6`
+- **Status:** Accepted — 2026-05-27 — squash `d02336a`, tag `v0.1.28-doc-analyst-v1-6`
 - **Milestone:** v0.1.28 (doc-mode quality fix; mirror of v0.1.21 chat lineage ported to doc role)
 - **Spec/plan:** inline (no separate spec; pattern fully derived from ADR-0026 + ADR-0027 + ADR-0032 chat-role precedent)
 - **Companion ADRs:** [0026](0026-v0120-paid-validation.md) (chat role v1.0→v1.4 first flip), [0027](0027-v0121-auditor-quorum-hard-constraints.md) (Tier 2 Capa A+B+C + chat v1.5 Finding-based refusal C4), [0029](0029-v0122-paid-validation.md) (Capa A nested-schema recursive walker fix), [0032](0032-auditor-partial-routing.md) (Auditor THREE-layer architecture)
@@ -138,4 +138,4 @@ This ADR is the formal documentation; the design pattern is FULLY DERIVED from e
 - ADR-0029 (v0.1.22): Capa A nested-schema recursive walker — orthogonal Capa A fix that doc-mode now exercises.
 - ADR-0032 (v0.1.25): Auditor THREE-layer architecture — provides the §6 interpretive frame this ADR extends.
 - v0.1.27 closure (`evals/reports/v0.1.27/doc-probe.md` + commit `b3273a3`): the trigger evidence.
-- Future commits referenced from this ADR: T1+T2 (`4fa96a5`), T3 ADR-0033 (this commit), T4 pre-paid gate (TBD), T5 paid probe (TBD), T6 paid main (TBD), T7 diagnostic (TBD), T8 closure docs (TBD), T-final squash (`<squash-sha>`; populated at T-final).
+- Future commits referenced from this ADR: T1+T2 (`4fa96a5`), T3 ADR-0033 (this commit), T4 pre-paid gate (TBD), T5 paid probe (TBD), T6 paid main (TBD), T7 diagnostic (TBD), T8 closure docs (TBD), T-final squash (`d02336a`; populated at T-final).
