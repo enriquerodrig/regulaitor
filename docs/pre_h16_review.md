@@ -259,3 +259,70 @@ This pre-H16 review reinforces the methodology contribution narrative:
 ---
 
 **End of pre-H16 review.**
+
+---
+
+## §11 — Status update (2026-05-27, post v0.1.29 close)
+
+Backfill of the §6 action list — what shipped, what is pending, what is deferred.
+
+### §6 BLOCKING (must do before deploy) — ALL DONE
+
+| # | Item | Status | Shipped in |
+|---|---|---|---|
+| 1 | Dockerfile multi-stage | ✅ DONE | v0.1.26 squash `07dab21` |
+| 2 | docker-compose.yml | ✅ DONE | v0.1.26 |
+| 3 | truststore in pyproject.toml | ✅ DONE | v0.1.26 (commit `fefb6f2`) |
+| 4 | docs/H16_DEPLOY.md with cold-start SLA | ✅ DONE | v0.1.26 |
+
+### §6 IMPORTANT — MOSTLY DONE
+
+| # | Item | Status | Notes |
+|---|---|---|---|
+| 5 | CORSMiddleware | ✅ DONE | v0.1.26 |
+| 6 | Coverage gate (--cov-fail-under=85) | ✅ DONE | v0.1.26 |
+| 7 | pip-audit re-run on CI Linux | ⚠️ DEFERRED | needs CI run verification before H16 tag |
+| 8 | docs/H16_DEPLOY.md runbook | ✅ DONE | v0.1.26 |
+
+### §6 OPTIONAL — PENDING (Stage 3 pre-H16 polish per ordering doc)
+
+| # | Item | Status | Plan |
+|---|---|---|---|
+| 9 | Archive scripts/v012{0-4}_*.py | 🟡 PENDING | Stage 3 (~15 min, $0) |
+| 10 | Verify ragas + langchain-* dev deps | 🟡 PENDING | Stage 3 (~10 min, $0) |
+| 11 | Add §6 multi-layer summary to CLAUDE.md §6 | ✅ DONE | v0.1.29 Stage 1 cleanup (this commit batch) |
+| 12 | gitleaks local pre-commit | 🟡 PENDING | Stage 3 (~5 min, $0) |
+| 13 | Document Analyst prompt EOL timeline | 🟡 PENDING | Stage 3 / H17 |
+
+### §6 ACCEPT AS CARRY-FORWARD
+
+Items 14-17 (metric aspirational gaps, cost-overhead, all-blocked routing partial, cross-vendor judge) — all proceeded as planned. Item 16 (chat-016 all-blocked) was actually pursued AT v0.1.29 D Mirror and succeeded (PREDICTED win + 2 bonus flips, +0.08 verdict_match).
+
+### NEW items discovered post-review (not in original §6 list)
+
+| # | Item | Discovered | Status |
+|---|---|---|---|
+| N1 | LANCEDB_PATH config bug (.env value `./corpus/indexes` points at parent dir, not DB dir; created stray empty `chunks.lance/` table) | v0.1.29 T5 probe 1 (€0.14 sunk) | ✅ FIXED in v0.1.29 Stage 1 cleanup |
+| N2 | per_citation_audits trail drops `failed_check` field | v0.1.29 T8 review | ✅ FIXED in v0.1.29 Stage 1 cleanup (5 LOC in evals/metrics.py) |
+| N3 | inline ADR refs in auditor.py branches | A3 §3 recommended | ✅ DONE in v0.1.29 Stage 1 cleanup |
+| N4 | council.py module docstring v0.1.25/v0.1.29 note | A3 §3 recommended | ✅ DONE in v0.1.29 Stage 1 cleanup |
+
+### Stage execution (per agreed ordering)
+
+- ✅ Stage 1 — v0.1.29 close + docs $0 critical (this commit batch)
+- 🟡 Stage 2 — v0.1.30 title-augmented embeddings (~€2.00 expected)
+- 🟡 Stage 3 — Pre-H16 polish $0 (items 9, 10, 12, 13 + pip-audit CI verify)
+- 🟡 Stage 4 — H16 HF Spaces deploy
+- 🟡 Stage 5 — H17 TFM cierre académico (architecture.md / model_card / data_card / runbook / cost_analysis comprehensive refresh)
+
+### LANCEDB_PATH post-mortem (N1)
+
+**Root cause**: v0.1.26 H16 deploy-prep added `LANCEDB_PATH` env reading to `src/regulaitor/rag/store.py` (commit `33bd2b4`). The `.env` file had `LANCEDB_PATH=./corpus/indexes` (set 2026-05-16, pre-v0.1.26, dormant until v0.1.26 enabled the env-read). The value points at the PARENT DIRECTORY of the actual lance DB (`./corpus/indexes/regulaitor.lance/`). When `store.connect(./corpus/indexes)` runs, lancedb interprets the path as a DATABASE and looks for table `chunks` directly inside; not finding one, it CREATES an empty `chunks.lance/` table → retrieval queries return 0 rows → v1.5 Sonnet refuses every query with placeholder/article-only citations.
+
+**Why v0.1.27 + v0.1.28 paid runs evaded the bug** (uncertain): the empty `chunks.lance/` was first created today 2026-05-27 10:10 during v0.1.27 doc-probe paid run. v0.1.27 doc-probe and v0.1.28 doc-mode runs all happened after 10:10 but their reports show real citations recovered from corpus. Possible explanations: (a) earlier module-load timing meant `os.getenv` returned None for some runs; (b) the auto-corpus path in doc-mode initially found data in `regulaitor.lance` table-name-as-sibling listing before lancedb decided to create the empty `chunks` table; (c) we got lucky. The chat-mode v0.1.29 probe was the first to definitively hit the empty table.
+
+**Fix**: `.env` updated to `LANCEDB_PATH=./corpus/indexes/regulaitor.lance` (correct DB path); stray empty `chunks.lance/` deleted; T5 probe re-run with €0.31 → 5/5 PASS matching v0.1.25 baseline → confirmed fix.
+
+**§22.22 lesson**: env-config drift is silent. Future H16+ deploys should validate `LANCEDB_PATH` resolves to a directory containing a populated `chunks.lance/` subdir as part of health-check at startup. Carried forward as a Stage 4 H16 sanity-check requirement.
+
+**Regression test**: NOT added (would require fixture lancedb setup; cost vs benefit modest). Stage 4 H16 health-check is the proper canary.

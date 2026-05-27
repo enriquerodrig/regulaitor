@@ -4774,3 +4774,94 @@ The fabrication-detection chain through Layer (a) + Layer (b) is **UNBROKEN by c
 Next: **H16** (HF Spaces public deploy + foundation production-grade per "future product" preference; addresses v0.1.25 + v0.1.24 carry-forwards: truststore + coverage gate + cost attribution). **v0.1.26 (CONDITIONAL)** = all-blocked routing softening for chat-016-like cases ONLY if needed post-deploy (LOWER §6 risk surface than Designs A/C; HIGHER than D2 because no Finding-pass anchor). **H17** (TFM cierre académico: memoria + model card + data card + AI Act assessment + runbook + cost analysis + video demo + slide deck + evidence matrix completa + Product Roadmap appendix + §"v0.1.23 REVERT — methodology as contribution" subsection + §"v0.1.24 alignment + instrumentation" subsection + §"v0.1.25 CONFIRM — the diagnose-decompose-CONFIRM cycle closes the lineage" subsection + tag `v1.0.0`). **TFM defense framing**: the v0.1.22.1 → v0.1.23 (REVERT) → v0.1.24 (alignment + instrumentation) → v0.1.24.1 (layer attribution) → v0.1.25 (CONFIRM) sequence is the **complete diagnose-intervene-measure-refute-revert-decompose-CONFIRM science cycle**, vindicating the methodology across both REVERT and CONFIRM outcome directions. The methodology continues to be the contribution.
 
 Sin skills nuevas. Ver ADR-0032 + `evals/reports/v0.1.25/` (6 report files: probe + v0.1.25-prod + v0.1.25-prod-main + comparison + per-citation-mechanism + verdict-flip-review) + spec + plan.
+
+## §v0.1.29 — Auditor all-blocked routing softening (Design D Mirror; paid validation CONFIRM) (2026-05-27, squash `<squash-sha>`, tag `v0.1.29-chat-016-all-blocked-softening`)
+
+**Note on v0.1.26/v0.1.27/v0.1.28 doc-backfill**: per the deferred-batch-update pattern from v0.1.28 squash (`Decisions_log + evidence_matrix + CLAUDE.md §27 updates deferred to a post-v0.1.29 batch update`), this v0.1.29 entry ships standalone; v0.1.26-v0.1.28 backfill deferred to either a separate mini-doc-batch commit OR H17 cierre académico (comprehensive refresh per §16.3 H17 plan). The canonical sources for v0.1.26-v0.1.28 are squash commit messages (`07dab21` v0.1.26 + `b3273a3` v0.1.27 + `d02336a` v0.1.28) + ADR-0033 (v0.1.28) + memory files + CLAUDE.md §16.3 H15.X inline chain. Source-of-truth preserved; aggregator-doc gap acknowledged.
+
+### Scope
+
+Design D Mirror of v0.1.25 ADR-0032 D2 at the second Turn-level aggregation sub-route. v0.1.25 D2 softened the partial-Findings routing branch (mix of pass + blocked Findings) but explicitly LEFT the all-blocked routing branch UNCHANGED — every Finding blocked still routed unconditionally to BLOCK. v0.1.25 paid measurement surfaced 1 case (chat-016 gold=pass, actual=BLOCK) where all 3 emitted citations failed strict validator with `failed_check=3` (paraphrase-only mismatch; article + apartado exist in corpus). v0.1.29 closes the v0.1.25 CLAUDE.md §27 CONDITIONAL carry by REUSING the existing `_all_blocked_findings_paraphrase_only` helper at the all-blocked branch (1-branch wire-up).
+
+### Implementation (src/ scope = exactly 1 file)
+
+`src/regulaitor/agents/auditor.py`:
+- Helper docstring updated to mention both call sites (v0.1.25 partial route + v0.1.29 all-blocked route).
+- 1-branch conditional at `elif all(v == "blocked")`: `PASS if _all_blocked_findings_paraphrase_only(...) else BLOCK`.
+- Inline ADR refs added on 3 branches per pre-H16 review A3 §3 (Tier 1 quorum ADR-0027 D1, all-blocked ADR-0034 D Mirror, partial-Findings ADR-0032 D2).
+
+`tests/unit/agents/test_auditor.py`: +3 integration tests (all paraphrase-only → PASS; Check 1 fabrication → BLOCK; failed_check=None legacy → BLOCK conservative).
+
+### §6 invariant — Layer (c) modified at BOTH sub-routes
+
+Layer (a) per-citation validator + Layer (b) Finding-Lenient aggregation BYTE-UNCHANGED. Layer (c) Turn-level aggregation policy now MODIFIED at BOTH partial AND all-blocked sub-routes; both use the SAME `_all_blocked_findings_paraphrase_only` helper; both preserve fabrication blocking (any Check 1 or Check 2 failure → helper False → BLOCK by construction). Layer (d) prompt-level forbid (v0.1.28 ADR-0033) unchanged. §6 enforcement boundary preserved.
+
+§6 invariant statement at v0.1.29 (per CLAUDE.md §6.1 added in Stage 1 cleanup commit): validator + Finding-Lenient byte-unchanged; Turn-level aggregation policy modified at BOTH partial AND all-blocked sub-routes via shared helper; fabrication detection chain through Layer (a) Check 1 + Check 2 UNBROKEN by construction; only Check 3 paraphrase-only failures (where article + apartado exist in corpus) route PASS.
+
+### §6 risk: MEDIUM-HIGH (higher than v0.1.25 D2 LOW-MEDIUM)
+
+PASS routing now occurs when EVERY citation in answer failed strict (vs at-least-one passed under D2). Mitigation: Check 1/2 fabrication still routes BLOCK; only Check 3 paraphrase mismatches (where article + apartado exist) routes PASS. Acceptable trade-off per ADR-0034 D3.
+
+### Paid validation: 1-arm fresh (v0.1.29-prod-main) vs cached baseline (v0.1.25-prod-main)
+
+H10 main 25-case cohort chat-006..030 under env-unset production state.
+
+| Metric | v0.1.25-prod-main | v0.1.29-prod-main | Δ | v0.1.20-bar |
+|---|---|---|---|---|
+| faithfulness_mean | 0.68 | 0.72 | +0.04 | ≥0.65 ✅ |
+| answer_relevancy_mean | 0.65 | 0.70 | +0.05 | ≥0.55 ✅ |
+| context_precision_mean | 0.60 | 0.59 | -0.01 | ≥0.55 ✅ |
+| citation_precision_mean | 0.33 | 0.34 | +0.01 | ≥0.25 ✅ |
+| citation_recall_mean | 0.81 | 0.81 | flat | ≥0.60 + **≥0.80 ASP ✅** |
+| **verdict_match_rate** | **0.68** | **0.76** | **+0.08** | ≥0.35 ✅ |
+| severity_match_rate | 0.48 | 0.43 | -0.05 | ≥0.35 ✅ |
+| cost_per_chat_eur | 0.054 | 0.058 | +0.004 | ≤0.05 ❌ (+0.008) |
+
+**7/7 v0.1.20-bar PASS** preserved. **6 verdict flips**: 4 BLOCK→PASS (chat-016 PREDICTED + chat-020/027/028 bonus) + 1 BLOCK→RHR (chat-015 covered by O1 acceptable_verdicts) + 1 PASS→BLOCK (chat-029 correctly catches refusal). Net real wins: 3 unambiguous (chat-016 predicted + chat-020 + chat-029); 0 unambiguous losses. **chat-016 BLOCK→PASS as predicted ✅**.
+
+### §6 verification — D Mirror flips
+
+Per-citation audit trail evidence (per `evals/reports/v0.1.29/verdict-flip-review.md`): all 4 BLOCK→PASS flips show only `text_not_in_apartado` reasons (semantic Check 3 = paraphrase mismatch where article + apartado exist in corpus). No fabrication slipped through. redteam-smoke 0.92 carry preserved.
+
+### §22.22 honest disclosures (7)
+
+1. **Marginal expected lift confirmed** — ADR-0034 D4 predicted +0.033 to +0.10 (1-3 chat wins); actual +0.08 = 2-3 net real wins. ON-FORECAST.
+2. **LANCEDB_PATH config bug discovered during T5 probe 1** (€0.14 sunk) — pre-existing v0.1.26 deploy-prep drift; fixed in Stage 1 cleanup commit.
+3. **per_citation_audits trail `failed_check` always None** — `evals/metrics.py:337-353` predates v0.1.24 O2 schema addition; trail-fix bundled in Stage 1 cleanup commit (5-LOC addition).
+4. **2-day API drift acknowledged** — ~20% noise floor per v0.1.23 §REVERT root cause #1.
+5. **1-arm vs cached methodology trade-off** — carries from ADR-0029 + ADR-0032.
+6. **Cost overhead €0.004 vs v0.1.25** — Capa C retry overhead carry per ADR-0027 D4.
+7. **Cumulative state**, not isolated D Mirror — v0.1.29 = v0.1.25 D2 + v0.1.29 D Mirror + Tier 1 quorum + Tier 2 Capa A+B+C + v1.5 chat + Council binding + retrieval defaults. Factorial attribution NOT measured.
+
+### Spend + budget
+
+Total v0.1.29 paid: **€1.89** (€0.14 sunk probe 1 + €0.31 probe 2 + €1.44 main). Budget remaining ~$9.20 USD.
+
+### Stage 1 cleanup bundle (commit `6571569`)
+
+Bundles 6 small $0 items: CLAUDE.md §6.1 multi-layer summary + auditor.py inline ADR refs + council.py module docstring update + pre_h16_review.md §11 status update + LANCEDB_PATH post-mortem + evals/metrics.py trail-fix.
+
+### Gate authoritative
+
+`uv run pytest -m "not slow"` → **999 passed / 0 failed / 1 skipped** (= 996 v0.1.28 baseline + 3 new) + `uv run mypy src` → Success 71 source files exit 0 UNCHANGED + redteam-smoke 0.92 carry + coverage 88.62% ≥ 85%.
+
+### Decision
+
+**CONFIRM per ADR-0034 D4 first path**. v0.1.29 D Mirror ships in production state. Closes the v0.1.25 CLAUDE.md §27 CONDITIONAL carry-forward for "all-blocked routing softening targeting chat-016-like cases".
+
+### Plan progress
+
+**11 consecutive milestones with §22.22 honest framing pattern** (v0.1.19 / v0.1.20 / v0.1.21 / v0.1.21.2 / v0.1.22 / v0.1.22.1 / v0.1.23 / v0.1.24 / v0.1.24.1 / v0.1.25 / v0.1.29). The v0.1.25 (partial) + v0.1.29 (all-blocked) pair exhausts the LOW-MEDIUM §6 risk surface at the Auditor aggregation layer (Layer (c)).
+
+### Carry-forwards
+
+1. **Doc backfill v0.1.26/v0.1.27/v0.1.28** in decisions_log + evidence_matrix + CLAUDE.md §27 — deferred to next session OR H17 cierre.
+2. **v0.1.30 title-augmented embeddings** (user-approved): re-embed corpus with article-title prefix to bridge descriptive-doc-segment → obligation-corpus-article semantic gap. ~€2 expected. Stage 2 per agreed ordering.
+3. **Pre-H16 polish $0** (Stage 3): archive scripts/v012*.py + verify ragas/langchain-* unused + gitleaks local pre-commit + Analyst prompt EOL doc + README refresh.
+4. **H16 deploy** (Stage 4) + **H17 TFM cierre** (Stage 5).
+
+### TFM defense framing
+
+v0.1.29 D Mirror is the symmetric closure of v0.1.25 D2's lineage. Both ship the same helper at different sub-routes; both preserve §6 invariant via the same binary all-Check-3 condition; both deliver predicted verdict_match lifts (D2: +0.33 at partial; D Mirror: +0.08 at all-blocked). The asymmetric magnitudes reflect cohort-specific frequencies. **The methodology continues to be the contribution.**
+
+Sin skills nuevas. Ver ADR-0034 + `evals/reports/v0.1.29/` (4 reports: probe + v0.1.29-prod-main + comparison + verdict-flip-review).

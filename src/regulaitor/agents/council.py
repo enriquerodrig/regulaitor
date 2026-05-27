@@ -15,6 +15,16 @@ citation validator (``citation/validator.py``) and the Auditor's
 Lenient-Finding + Strict-Answer aggregation (``agents/auditor.py``) are
 byte-unchanged in v0.1.19; the §6 "no citation, no answer" invariant
 operates at those layers and is unaffected.
+
+Post-v0.1.25 / v0.1.29 note: the v0.1.25 D2 partial-routing softening and
+the v0.1.29 D Mirror all-blocked routing softening (both in ``auditor.py``)
+operate on the Auditor's Layer (c) turn-level aggregation policy and do
+NOT remove Council's binding role. The Council still escalates PASS → RHR
+on a unanimous (3/3 ok) BLOCK vote regardless of the partial / all-blocked
+sub-route Auditor took to reach its mechanical verdict. The two layers are
+orthogonal: aggregation softening (auditor.py) targets paraphrase-only
+false-RHR/BLOCK; Council binding (this file) targets Auditor-PASS cases
+that the panel unanimously disagrees with.
 """
 
 from __future__ import annotations

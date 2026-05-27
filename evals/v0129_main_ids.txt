@@ -1,0 +1,30 @@
+# v0.1.29 paid main allowlist (25 chat cases: chat-006..030).
+# Includes the headline chat-016 case (BLOCK at v0.1.25 with 3/3 citations Check 3
+# paraphrase-only → predicted to flip PASS under D Mirror).
+# Production state env-set: LANCEDB_PATH=./corpus/indexes/regulaitor.lance (fixed)
+# + v1.5 chat default + Auditor v0.1.29 D Mirror.
+chat-006
+chat-007
+chat-008
+chat-009
+chat-010
+chat-011
+chat-012
+chat-013
+chat-014
+chat-015
+chat-016
+chat-017
+chat-018
+chat-019
+chat-020
+chat-021
+chat-022
+chat-023
+chat-024
+chat-025
+chat-026
+chat-027
+chat-028
+chat-029
+chat-030

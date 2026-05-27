@@ -1,0 +1,8 @@
+# v0.1.29 paid probe allowlist (5 chat cases, N>=5 per cost-estimation discipline).
+# Plumbing sanity check before T7 paid main 25 cases (chat-006..030).
+# Production state env-unset (v1.5 chat default + Auditor v0.1.29 D Mirror).
+chat-001
+chat-002
+chat-003
+chat-004
+chat-005

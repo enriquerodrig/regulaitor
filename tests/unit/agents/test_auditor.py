@@ -520,3 +520,169 @@ def test_auditor_partial_routing_rhr_when_blocked_findings_failed_check_none(
     assert (
         audited.verdict == AuditVerdict.REQUIRES_HUMAN_REVIEW
     ), f"Expected RHR (failed_check=None conservative) but got {audited.verdict}"
+
+
+# v0.1.29 ADR-0034 Design D Mirror: all-blocked routing softening tests.
+# Mirror of v0.1.25 D2 partial-routing softening tests but for the all-blocked
+# sub-route. Reuses the same _all_blocked_findings_paraphrase_only helper.
+
+
+def test_auditor_all_blocked_routing_pass_when_all_findings_paraphrase_only(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """v0.1.29 D Mirror: all-blocked Findings, ALL citations failed_check==3
+    (paraphrase mismatch only; ZERO fabrication) → PASS (was BLOCK pre-v0.1.29).
+    Targets chat-016 pattern from v0.1.25 paid (gold=pass, actual=BLOCK)."""
+    from regulaitor.agents import auditor as auditor_module
+    from regulaitor.agents.auditor import AuditorAgent
+    from regulaitor.citation.schemas import (
+        Answer,
+        AuditResult,
+        AuditVerdict,
+        Citation,
+        Finding,
+    )
+
+    cite_a = Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="t_a")
+    cite_b = Citation(norma="ai_act", articulo="7", apartado="1", language="es", text="t_b")
+    cite_c = Citation(norma="ai_act", articulo="8", apartado="1", language="es", text="t_c")
+
+    def _result_check3(c: Citation) -> AuditResult:
+        return AuditResult(
+            citation=c,
+            validated=False,
+            article_exists=True,
+            apartado_exists=True,
+            text_normalized_match=False,
+            reason="text_not_in_apartado",
+            failed_check=3,
+        )
+
+    results_by_citation = {
+        id(cite_a): _result_check3(cite_a),
+        id(cite_b): _result_check3(cite_b),
+        id(cite_c): _result_check3(cite_c),
+    }
+
+    def mock_validate(citation: Citation, **kwargs: object) -> AuditResult:
+        return results_by_citation[id(citation)]
+
+    monkeypatch.setattr(auditor_module.validator, "validate", mock_validate)
+
+    # 2 Findings, both blocked (every citation Check 3 paraphrase mismatch).
+    finding_1 = Finding(text="claim_1", citations=[cite_a, cite_b], severity="info")
+    finding_2 = Finding(text="claim_2", citations=[cite_c], severity="info")
+    answer = Answer(query="q", language="es", text="t", findings=[finding_1, finding_2])
+
+    audited = AuditorAgent().audit(answer)
+
+    # v0.1.29 D Mirror expected: PASS (all-blocked + all paraphrase-only → PASS).
+    # Pre-v0.1.29: would be BLOCK (all-blocked → always BLOCK).
+    assert (
+        audited.verdict == AuditVerdict.PASS
+    ), f"Expected PASS post-v0.1.29 D Mirror all-blocked-routing but got {audited.verdict}"
+
+
+def test_auditor_all_blocked_routing_block_when_any_finding_has_fabrication(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """v0.1.29 D Mirror: all-blocked Findings with ANY Check 1 (article fab)
+    failure → preserve BLOCK (fabrication still caught by construction). §6
+    invariant defense: never route PASS when fabrication is evident."""
+    from regulaitor.agents import auditor as auditor_module
+    from regulaitor.agents.auditor import AuditorAgent
+    from regulaitor.citation.schemas import (
+        Answer,
+        AuditResult,
+        AuditVerdict,
+        Citation,
+        Finding,
+    )
+
+    cite_para = Citation(
+        norma="ai_act", articulo="6", apartado="1", language="es", text="t_paraphrase"
+    )
+    cite_fab = Citation(norma="ai_act", articulo="999", apartado="1", language="es", text="t_fab")
+
+    result_para = AuditResult(
+        citation=cite_para,
+        validated=False,
+        article_exists=True,
+        apartado_exists=True,
+        text_normalized_match=False,
+        reason="text_not_in_apartado",
+        failed_check=3,
+    )
+    result_fab = AuditResult(
+        citation=cite_fab,
+        validated=False,
+        article_exists=False,
+        apartado_exists=None,
+        text_normalized_match=False,
+        reason="article_not_found",
+        failed_check=1,  # Check 1 = article fabrication
+    )
+
+    results_by_citation = {id(cite_para): result_para, id(cite_fab): result_fab}
+
+    def mock_validate(citation: Citation, **kwargs: object) -> AuditResult:
+        return results_by_citation[id(citation)]
+
+    monkeypatch.setattr(auditor_module.validator, "validate", mock_validate)
+
+    finding_1 = Finding(text="claim_1", citations=[cite_para], severity="info")
+    finding_2 = Finding(text="claim_2", citations=[cite_fab], severity="info")
+    answer = Answer(query="q", language="es", text="t", findings=[finding_1, finding_2])
+
+    audited = AuditorAgent().audit(answer)
+
+    # v0.1.29 D Mirror: ANY Check 1/2 fabrication → preserve BLOCK (§6 defense).
+    assert (
+        audited.verdict == AuditVerdict.BLOCK
+    ), f"Expected BLOCK (fabrication evidence) but got {audited.verdict}"
+
+
+def test_auditor_all_blocked_routing_block_when_failed_check_none(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """v0.1.29 D Mirror: all-blocked Findings with failed_check=None (pre-v0.1.24
+    cached data with no decomposition) → preserve BLOCK conservatively.
+    Mirrors v0.1.25 D2 conservative-on-None behavior for the all-blocked route."""
+    from regulaitor.agents import auditor as auditor_module
+    from regulaitor.agents.auditor import AuditorAgent
+    from regulaitor.citation.schemas import (
+        Answer,
+        AuditResult,
+        AuditVerdict,
+        Citation,
+        Finding,
+    )
+
+    cite_unknown = Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="t_u")
+
+    result_unknown = AuditResult(
+        citation=cite_unknown,
+        validated=False,
+        article_exists=True,
+        apartado_exists=True,
+        text_normalized_match=False,
+        reason="text_not_in_apartado",
+        failed_check=None,  # None = pre-v0.1.24 cached
+    )
+
+    results_by_citation = {id(cite_unknown): result_unknown}
+
+    def mock_validate(citation: Citation, **kwargs: object) -> AuditResult:
+        return results_by_citation[id(citation)]
+
+    monkeypatch.setattr(auditor_module.validator, "validate", mock_validate)
+
+    finding = Finding(text="claim", citations=[cite_unknown], severity="info")
+    answer = Answer(query="q", language="es", text="t", findings=[finding])
+
+    audited = AuditorAgent().audit(answer)
+
+    # v0.1.29 D Mirror: failed_check=None → conservative preserves pre-v0.1.29 BLOCK.
+    assert (
+        audited.verdict == AuditVerdict.BLOCK
+    ), f"Expected BLOCK (failed_check=None conservative) but got {audited.verdict}"

@@ -117,6 +117,11 @@ evals/reports/*
 # H15.2 carry-forward "doc-mode never measured post-segmenter fix"). No new ADR.
 !evals/reports/v0.1.27/
 !evals/reports/v0.1.27/*
+# v0.1.29 chat-016 D Mirror paid validation reports — tracked as TFM evidence
+# (all-blocked routing softening; ADR-0034; +0.08 verdict_match on H10 25-case;
+# chat-016 BLOCK → PASS as predicted + 2 bonus flips).
+!evals/reports/v0.1.29/
+!evals/reports/v0.1.29/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports

@@ -21,14 +21,18 @@ def _all_blocked_findings_paraphrase_only(
     finding_verdicts: list[Literal["pass", "blocked"]],
     per_finding_results: list[list[AuditResult]],
 ) -> bool:
-    """v0.1.25 (ADR-0032 Design H D2): True iff every blocked Finding has
-    all its invalid citations with failed_check==3 (paraphrase mismatch only).
-    Used by partial-Findings routing to decide PASS vs RHR.
+    """v0.1.25 (ADR-0032 Design H D2) + v0.1.29 (ADR-0034 Design D Mirror):
+    True iff every blocked Finding has all its invalid citations with
+    failed_check==3 (paraphrase mismatch only). Used by BOTH:
+    - v0.1.25 partial-Findings routing (PASS-Finding + blocked-Finding mix):
+      PASS if True else RHR
+    - v0.1.29 all-blocked-Findings routing (every Finding blocked):
+      PASS if True else BLOCK
 
     Returns False if ANY blocked Finding has ANY invalid citation with
     failed_check==1 (article fabrication) or failed_check==2 (apartado
     fabrication) — those indicate true §6-relevant fabrication and must
-    route to RHR per the pre-v0.1.25 behavior.
+    preserve the original BLOCK/RHR routing.
 
     Pre-v0.1.24 cached AuditResults have failed_check=None (Pydantic v2
     default); those are treated as 'unknown' and the function returns
@@ -81,6 +85,7 @@ class AuditorAgent:
         verdict: AuditVerdict
         reason: str | None
         if not finding_verdicts or all(v == "pass" for v in finding_verdicts):
+            # Tier 1 quorum branch (ADR-0027 D1, v0.1.21).
             # All findings pass at the Finding level (Lenient-Finding was generous).
             # But if >=2 citations are invalid even within passing Findings,
             # escalate to RHR via quorum logic.
@@ -92,9 +97,27 @@ class AuditorAgent:
             else:
                 verdict, reason = AuditVerdict.PASS, None
         elif all(v == "blocked" for v in finding_verdicts):
-            verdict = AuditVerdict.BLOCK
-            reason = _aggregate_reason(answer, all_results, per_finding_results, "BLOCK")
+            # All-blocked routing branch (ADR-0034 D Mirror, v0.1.29).
+            # v0.1.29 (ADR-0034, Design D Mirror of v0.1.25 D2): all-blocked
+            # routing softening. Relax all-blocked → PASS only when ALL blocked
+            # Findings have all-invalid citations failed_check==3 (paraphrase
+            # mismatch only; ZERO fabrication evidence — article + apartado
+            # exist in corpus, only text-match differs). Any blocked Finding
+            # with at least one Check 1 (article fab) or Check 2 (apartado fab)
+            # failure → preserve pre-v0.1.29 all-blocked → BLOCK routing
+            # (fabrication still caught by construction). Targets v0.1.25 paid
+            # chat-016 pattern (gold=pass, actual=BLOCK; 3/3 citations failed
+            # validator with paraphrase-only Check 3 failures) + Bucket B
+            # similar cases. §6 invariant: validator + Finding-Lenient layers
+            # BYTE-UNCHANGED; only Turn-level all-blocked sub-route modified.
+            if _all_blocked_findings_paraphrase_only(finding_verdicts, per_finding_results):
+                verdict = AuditVerdict.PASS
+                reason = None
+            else:
+                verdict = AuditVerdict.BLOCK
+                reason = _aggregate_reason(answer, all_results, per_finding_results, "BLOCK")
         else:
+            # Partial-Findings routing branch (ADR-0032 D2, v0.1.25).
             # v0.1.25 (ADR-0032, Design H D2): partial-Findings routing softening.
             # Relax partial → PASS only when ALL blocked Findings have all-invalid
             # citations failed_check==3 (paraphrase mismatch only; ZERO fabrication

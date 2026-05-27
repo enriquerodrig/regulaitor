@@ -331,7 +331,10 @@ def compute_chat_metrics(
         expected_articles=case.articulos_esperados,
     )
 
-    # v0.1.21.1 D2: extract per-citation audit results from AuditedAnswer
+    # v0.1.21.1 D2: extract per-citation audit results from AuditedAnswer.
+    # v0.1.29 T8 trail-fix: include `failed_check` field (added to AuditResult
+    # at v0.1.24 ADR-0031 O2); previously dropped, causing post-v0.1.24 trails
+    # to show failed_check=None always despite live validator populating it.
     per_citation_audits = None
     if audited and audited.audit_results:
         per_citation_audits = [
@@ -341,6 +344,7 @@ def compute_chat_metrics(
                 "apartado_exists": ar.apartado_exists,
                 "text_normalized_match": ar.text_normalized_match,
                 "reason": ar.reason,
+                "failed_check": ar.failed_check,
                 "citation": {
                     "norma": ar.citation.norma,
                     "articulo": ar.citation.articulo,
