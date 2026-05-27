@@ -66,7 +66,8 @@ jobs:
         # Slow tests (BGE-M3 / bge-reranker-v2-m3 + live LanceDB index) require
         # `make ingest && make rag-build` to populate state that's gitignored;
         # they're local-only per spec H3 §11.3 and H2 §11.3.
-        run: uv run pytest -m "not slow"
+        # Coverage gate 85% enforced; measured baseline 88.55% (v0.1.21.3 hotfix).
+        run: uv run pytest -m "not slow" --cov=src --cov-report=xml --cov-fail-under=85
 
   redteam-smoke:
     name: Red Team Smoke

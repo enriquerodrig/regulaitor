@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import re
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -14,12 +15,13 @@ from regulaitor.rag.schemas import ChunkRecord
 if TYPE_CHECKING:
     import lancedb.table
 
-# Default LanceDB store directory, relative to the current working directory
-# at call time. Production callers (rag.build.run, scripts.rag_build) run from
-# the repo root, so this resolves to <repo>/corpus/indexes/regulaitor.lance.
-# Future H7 FastAPI / scripts.serve callers should pass an explicit absolute
-# path resolved at startup.
-DEFAULT_PATH = Path("corpus/indexes/regulaitor.lance")
+# Default LanceDB store directory. Resolution order (v0.1.26 H16 deploy-prep):
+# 1. LANCEDB_PATH env (absolute path; HF Spaces / Render / Fly.io persistent volume)
+# 2. fallback to <cwd>/corpus/indexes/regulaitor.lance (dev + CI)
+# Production callers (rag.build.run, scripts.rag_build) run from the repo root,
+# so the fallback resolves to <repo>/corpus/indexes/regulaitor.lance.
+_LANCEDB_ENV = os.getenv("LANCEDB_PATH", "").strip()
+DEFAULT_PATH = Path(_LANCEDB_ENV) if _LANCEDB_ENV else Path("corpus/indexes/regulaitor.lance")
 TABLE_NAME = "chunks"
 
 # Allowlist for path-segment characters in chunk IDs and language codes.

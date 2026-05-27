@@ -25,7 +25,9 @@ logger = logging.getLogger("regulaitor.rag.build")
 CORPUS_ROOT = Path("corpus")
 MANIFEST_DIR = CORPUS_ROOT / "manifests"
 PROCESSED_DIR = CORPUS_ROOT / "processed"
-INDEX_PATH = CORPUS_ROOT / "indexes" / "regulaitor.lance"
+# INDEX_PATH honors LANCEDB_PATH env (v0.1.26 H16 deploy-prep) via store.DEFAULT_PATH;
+# falls back to corpus/indexes/regulaitor.lance when env is unset (dev + CI).
+INDEX_PATH = store.DEFAULT_PATH
 
 
 def run(

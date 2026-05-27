@@ -1,0 +1,15 @@
+[server]
+port = 7860
+address = "0.0.0.0"
+headless = true
+runOnSave = false
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = false
+toolbarMode = "minimal"
+
+[theme]
+base = "light"

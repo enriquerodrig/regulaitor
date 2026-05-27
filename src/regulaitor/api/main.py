@@ -7,11 +7,13 @@ plus a generic catch-all that redacts the original message.
 
 from __future__ import annotations
 
+import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from slowapi.errors import RateLimitExceeded
 
@@ -79,3 +81,18 @@ app.add_exception_handler(Exception, errors.generic_handler)
 app.include_router(health_router)
 app.include_router(ask_router)
 app.include_router(analyze_router)
+
+# CORS — env-configurable allowlist. Empty value (default) = no CORS headers emitted
+# (safe-by-default for non-browser API consumers). For browser deploy (Streamlit
+# external, Next.js HX2 future), set REGULAITOR_CORS_ORIGINS to comma-separated list.
+_cors_origins_raw = os.getenv("REGULAITOR_CORS_ORIGINS", "").strip()
+if _cors_origins_raw:
+    _cors_origins = [o.strip() for o in _cors_origins_raw.split(",") if o.strip()]
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=_cors_origins,
+        allow_credentials=True,
+        allow_methods=["GET", "POST", "OPTIONS"],
+        allow_headers=["Authorization", "Content-Type"],
+        max_age=3600,
+    )

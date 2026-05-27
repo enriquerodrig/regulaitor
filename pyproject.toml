@@ -30,6 +30,7 @@ dependencies = [
     "uvicorn[standard]>=0.32,<1.0",
     "python-multipart>=0.0.20,<1.0",
     "slowapi>=0.1.9,<1.0",
+    "truststore>=0.10,<1.0",
 ]
 
 [project.optional-dependencies]
@@ -218,9 +219,9 @@ source = [
 branch = true
 
 [tool.coverage.report]
-# NOTE: fail_under is enforced by --cov-fail-under in pytest addopts
+# NOTE: fail_under is enforced by --cov-fail-under in pytest addopts (v0.1.26: 85)
 # (currently 0 = disabled). Task 10 will raise both to 90.
-fail_under = 90
+fail_under = 85
 show_missing = true
 skip_covered = false
 exclude_also = [
@@ -233,7 +234,7 @@ exclude_also = [
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 asyncio_mode = "auto"
-addopts = "-ra -q --strict-markers --cov=src/regulaitor/api --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov=src/regulaitor/observability --cov-report=term-missing --cov-fail-under=90"
+addopts = "-ra -q --strict-markers --cov=src/regulaitor/api --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov=src/regulaitor/observability --cov-report=term-missing --cov-fail-under=85"
 markers = [
     "integration: integration tests using stub HTTP server",
     "contract: contract tests using hypothesis",

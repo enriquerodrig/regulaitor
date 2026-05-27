@@ -1,0 +1,248 @@
+# H16 Deployment Runbook
+
+**Status:** Ready (post v0.1.26 deploy-prep).
+**Scope:** Public-demo deploy of RegulAItor MVP via 1+ of: HF Spaces · Render · Fly.io · local Docker.
+**Audience:** TFM defender + (future) anyone reproducing the project.
+
+---
+
+## §1 — Choose your platform
+
+| Platform | Best for | Cost | Native? | Cold-start |
+|---|---|---|---|---|
+| **HF Spaces (Streamlit SDK)** | TFM demo (free, instant URL, public) | Free | ✅ | ~5 min first build (no Docker overhead) |
+| **HF Spaces (Docker SDK)** | TFM demo + API endpoint exposed | Free | ✅ | ~15-20 min first build |
+| **Render** | Foundation production-grade | Free tier (sleeps after 15 min idle) | Docker | ~20 min first build + ~30 s wake-from-sleep |
+| **Fly.io** | Foundation production-grade + custom domain | Free tier (3 shared-cpu-1x VMs) | Docker | ~10 min first build |
+| **Local Docker** | Dev / staging / pre-prod test | Free | Native (docker compose) | ~15-20 min first up |
+
+**Recommendation for TFM defense:** HF Spaces Streamlit SDK (§3.1) for the demo URL + local Docker (§6) for reviewer reproducibility.
+
+---
+
+## §2 — Secrets you must inject (any platform)
+
+| Env var | Purpose | Where to get |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | Sonnet 4.6 (production) + Haiku 4.5 (judge) | console.anthropic.com → API keys |
+| `REGULAITOR_API_TOKEN` | Bearer auth for `/ask` + `/analyze` | Generate: `python -c "import secrets; print(secrets.token_urlsafe(32))"` |
+| `OPENAI_API_KEY` | (optional) Router fallback path | platform.openai.com |
+| `GROQ_API_KEY` | (optional) Llama-3.3-70b for council judge | console.groq.com |
+| `LANGFUSE_PUBLIC_KEY` + `LANGFUSE_SECRET_KEY` + `LANGFUSE_HOST` | (optional) Observability tracing | langfuse.com or self-hosted |
+| `REGULAITOR_CORS_ORIGINS` | (browser deploy) e.g. `https://yourapp.example.com` | Set if exposing API to a web frontend |
+
+**Never commit `.env` to git** (it's gitignored). For each platform §3-§6, the secrets injection is platform-specific (see each).
+
+---
+
+## §3 — HF Spaces
+
+### §3.1 — Streamlit SDK variant (recommended for TFM)
+
+1. Create a new Space at https://huggingface.co/new-space.
+2. Choose **Streamlit SDK** + Python 3.11.
+3. Connect to this GitHub repo OR upload via git push to the Space remote.
+4. In the Space → **Settings → Repository secrets**, add each var from §2.
+5. The Space auto-detects `src/regulaitor/ui_streamlit/app.py` and uses `.streamlit/config.toml` (port 7860).
+6. First build: ~5 min (pip install + cold-start corpus rebuild ~15 min on first request).
+7. Subsequent: ~5s cold + <1s warm.
+
+### §3.2 — Docker SDK variant
+
+1. Create Space → **Docker SDK**.
+2. Add a `Dockerfile.huggingface` (HF expects port 7860 ENTRYPOINT):
+   ```dockerfile
+   FROM regulaitor:dev
+   ENV APP_MODE=streamlit PORT=7860
+   EXPOSE 7860
+   ```
+3. Push image to Docker Hub (or build in-Space using the project's `Dockerfile`).
+4. Secrets same as §3.1.
+
+### §3.3 — Persistent volume on HF
+
+HF Spaces grants 16 GB persistent storage per Space. Mount path varies by plan:
+- Free: `/data` writable; persists across restarts.
+- Set `LANCEDB_PATH=/data/indexes` + `HF_HOME=/data/hf_cache` in Space secrets.
+- First request triggers corpus build (~15-20 min); subsequent <5s.
+
+---
+
+## §4 — Render
+
+1. Render → New → Web Service → Build from `Dockerfile`.
+2. Choose Free plan (sleeps after 15 min idle).
+3. Environment: add each var from §2.
+4. Persistent disk: attach 10 GB at `/data`.
+5. Healthcheck path: `/health`.
+6. First build: ~20 min. Wake-from-sleep: ~30 s.
+
+`render.yaml` (commit to repo for IaC):
+```yaml
+services:
+  - type: web
+    name: regulaitor-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: APP_MODE
+        value: api
+      - key: LANCEDB_PATH
+        value: /data/indexes
+      - key: HF_HOME
+        value: /data/hf_cache
+      - fromGroup: regulaitor-secrets
+    disk:
+      name: regulaitor-data
+      mountPath: /data
+      sizeGB: 10
+```
+
+---
+
+## §5 — Fly.io
+
+1. Install flyctl: `iwr https://fly.io/install.ps1 -useb | iex` (Windows).
+2. `fly launch --no-deploy` (auto-generates `fly.toml` from Dockerfile).
+3. Edit `fly.toml`:
+   ```toml
+   app = "regulaitor"
+   primary_region = "mad"  # Madrid
+
+   [build]
+     dockerfile = "Dockerfile"
+
+   [env]
+     APP_MODE = "api"
+     LANCEDB_PATH = "/data/indexes"
+     HF_HOME = "/data/hf_cache"
+
+   [[services]]
+     internal_port = 8000
+     protocol = "tcp"
+     [[services.ports]]
+       handlers = ["http"]
+       port = 80
+     [[services.ports]]
+       handlers = ["tls", "http"]
+       port = 443
+     [services.http_checks]
+       interval = "30s"
+       method = "get"
+       path = "/health"
+       protocol = "http"
+
+   [mounts]
+     source = "regulaitor_data"
+     destination = "/data"
+   ```
+4. Create volume: `fly volumes create regulaitor_data --size 10 --region mad`.
+5. Set secrets: `fly secrets set ANTHROPIC_API_KEY=sk-... REGULAITOR_API_TOKEN=...`.
+6. Deploy: `fly deploy`.
+
+---
+
+## §6 — Local Docker (dev / staging / reproducibility)
+
+```bash
+cp .env.example .env  # then edit with real keys
+make docker-build
+make docker-up
+# API:       http://localhost:8000/health
+# Streamlit: http://localhost:8501
+```
+
+Cold-start: 15-20 min on first up (entrypoint auto-runs `scripts.ingest --use-local-only` + `scripts.rag_build` + BGE-M3 + reranker download). See §7 for the exact phases.
+Warm-start: <5s (volume `regulaitor-data` persists models + indexes; entrypoint detects existing `chunks.lance/` table dir and skips the build).
+
+Tear down (keep data):
+```bash
+make docker-down
+```
+
+Tear down (delete corpus indexes — NUCLEAR):
+```bash
+make docker-clean
+```
+
+---
+
+## §7 — Cold-start SLA + warm performance
+
+| Phase | First time | Subsequent |
+|---|---|---|
+| Image build | 3-5 min | cached layers |
+| Container startup | <5s | <5s |
+| BGE-M3 download | 2-3 min (~2 GB to `/data/hf_cache`) | cached |
+| Reranker download | 1-2 min (~600 MB) | cached |
+| LanceDB corpus build | 10-15 min (4 corpora × ~250 chunks/corpus) | cached |
+| `/health` first response | 15-20 min | <1s |
+| `/ask` query (warm) | 15-60 s | varies by retrieval+LLM |
+
+**How the cold-start corpus build is triggered** (v0.1.26): `docker-entrypoint.sh` checks for `${LANCEDB_PATH:-/data/indexes}/chunks.lance/` (LanceDB's actual table dir for table `chunks`, per `src/regulaitor/rag/store.py::TABLE_NAME`) at container start; if absent, it runs `scripts.ingest --use-local-only` + `scripts.rag_build` BEFORE exec'ing uvicorn/streamlit. This is idempotent: subsequent restarts find the existing table dir and skip the build (the v0.1.26 entrypoint marker uses the LanceDB-table-name suffix so it works under both the prod `LANCEDB_PATH=/data/indexes` and the dev fallback `corpus/indexes/regulaitor.lance`). The Dockerfile bakes `corpus/processed/` (parsed JSON inputs) + `scripts/` into the image, so the build needs no network beyond the BGE-M3 + reranker downloads to `${HF_HOME:-/data/hf_cache}` (use a persistent volume to cache these).
+
+**Implication for HF Spaces / Render:** First user request will block for the full cold-start window (~15-20 min). The container does NOT serve `/health` 200 until uvicorn starts, which is AFTER the cold-start build completes. For platforms with HTTP-readiness timeouts (Render's default is 5 min), pre-warm the volume by running `docker run --rm -v regulaitor-data:/data regulaitor:dev /bin/bash -c "/usr/local/bin/docker-entrypoint.sh && exit 0"` locally OR use a longer health-check `start_period` (compose: 1200s; Render: configurable).
+
+---
+
+## §8 — Monitoring (optional)
+
+- **LangFuse** (free SaaS): set `LANGFUSE_*` envs; traces appear in dashboard with case_id + latency p50/p95 + cost per case.
+- **External watchdog**: GitHub Action cron pings `/health` every 15 min; alerts on failure to your email.
+- **Streamlit access logs**: HF Spaces / Render / Fly.io all surface stdout in their dashboards.
+
+---
+
+## §9 — Rollback
+
+If a deploy regresses behavior:
+
+```bash
+# Local: revert to prior tag
+git checkout v0.1.25-auditor-partial-routing
+make docker-build && make docker-up
+```
+
+```bash
+# HF Spaces: redeploy from the prior commit via the Space's UI
+```
+
+```bash
+# Render: redeploy from prior commit via dashboard
+```
+
+```bash
+# Fly.io: roll back image
+fly releases  # list
+fly deploy --image <prior-image-id>
+```
+
+---
+
+## §10 — Verification checklist (use before public announce)
+
+- [ ] `/health` returns 200 with valid `case_id` echoed back
+- [ ] `/ask` returns a citation-validated response for a known-good query (e.g., "¿Cuáles son las obligaciones del RGPD para PYMEs?")
+- [ ] CORS headers present if `REGULAITOR_CORS_ORIGINS` is set
+- [ ] Streamlit UI loads both tabs (Pregunta / Analiza documento) + disclaimer banner visible
+- [ ] LangFuse dashboard shows the test query (if observability enabled)
+- [ ] Cold-start SLA matches §7 expectations (no surprises)
+- [ ] No `.env` accidentally pushed to platform (verify in platform UI)
+- [ ] Rate limit triggers on >30 requests/min/token (per slowapi config)
+
+---
+
+## §11 — Carry-forwards from v0.1.25 close
+
+- chat-016 all-blocked routing edge case (1/30 cohort) — Design D HX-deferred per CLAUDE.md §27.
+- Citation_precision (-0.63 aspirational) — HIGH §6 risk; HX post-TFM only.
+- Severity_match (-0.40 aspirational) — Analyst v1.6 calibration if user feedback shows it matters in production; HX otherwise.
+- Cross-vendor judge migration (Haiku → GPT-4o-mini or Llama-3.3-70b) — HX per ADR-0021 D3.
+
+These do NOT block H16 deploy.
+
+---
+
+**End of H16 Deployment Runbook.**

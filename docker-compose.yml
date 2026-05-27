@@ -1,0 +1,65 @@
+# docker-compose.yml — local dev / staging for RegulAItor
+# Usage:
+#   docker compose up -d api          # FastAPI on http://localhost:8000
+#   docker compose up -d streamlit    # Streamlit on http://localhost:8501
+#   docker compose up -d              # both
+#
+# Persistent volumes:
+#   regulaitor-data: corpus/indexes (LanceDB) + HF model cache
+#   Cold-start: ~15-20 min on first up (LanceDB build + BGE-M3 + reranker download)
+#   Warm-start: <5s
+#
+# Secrets: copy .env.example to .env (gitignored); compose loads via env_file
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: regulaitor:dev
+    container_name: regulaitor-api
+    restart: unless-stopped
+    environment:
+      APP_MODE: api
+      PORT: "8000"
+      LANCEDB_PATH: /data/indexes
+      HF_HOME: /data/hf_cache
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - regulaitor-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      # start_period generous to cover cold-start corpus build (~15-20 min) on
+      # first up; subsequent restarts find the cached index and start <5s.
+      start_period: 1200s
+      retries: 3
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: regulaitor:dev
+    container_name: regulaitor-streamlit
+    restart: unless-stopped
+    environment:
+      APP_MODE: streamlit
+      PORT: "8501"
+      LANCEDB_PATH: /data/indexes
+      HF_HOME: /data/hf_cache
+    env_file:
+      - .env
+    ports:
+      - "8501:8501"
+    volumes:
+      - regulaitor-data:/data
+    depends_on:
+      - api
+
+volumes:
+  regulaitor-data:
+    name: regulaitor-data

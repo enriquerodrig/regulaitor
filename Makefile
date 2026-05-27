@@ -1,4 +1,4 @@
-.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve serve-api eval eval-subset eval-from-cache redteam redteam-smoke docker deploy clean regenerate-fixtures smoke-document
+.PHONY: help setup lint test test-cov precommit ingest rag-build mcp-server serve serve-api eval eval-subset eval-from-cache redteam redteam-smoke docker docker-build docker-up docker-down docker-clean deploy clean regenerate-fixtures smoke-document
 
 UV ?= uv
 
@@ -20,8 +20,12 @@ help:
 	@echo "  eval-from-cache   Regenerate report from cached responses (free; fails on miss)"
 	@echo "  redteam    Run full red team suite (50 attacks, ~$2.35 Anthropic credit)"
 	@echo "  redteam-smoke     Run deterministic-only attacks (no LLM, $0, ~30s)"
-	@echo "  docker     Build docker image (TODO H16)"
-	@echo "  deploy     Deploy to HF Spaces (TODO H16)"
+	@echo "  docker     Build the Docker image (alias for docker-build)"
+	@echo "  docker-build      Build regulaitor:dev image"
+	@echo "  docker-up         Start API + Streamlit via docker compose"
+	@echo "  docker-down       Stop containers (volume preserved)"
+	@echo "  docker-clean      Stop + remove volumes + image (NUCLEAR)"
+	@echo "  deploy     Deploy to HF Spaces / Render / Fly.io (see docs/H16_DEPLOY.md)"
 	@echo "  clean      Remove caches and build artifacts"
 
 setup:
@@ -73,11 +77,31 @@ redteam: ## Run full red team suite (50 attacks, ~$2.35 Anthropic credit)
 redteam-smoke: ## Run deterministic-only attacks (no LLM, $0, ~30s)
 	$(UV) run python -m scripts.redteam --smoke
 
-docker:
-	@echo "TODO: implementar en H16"
+docker: docker-build ## Build the Docker image
 
-deploy:
-	@echo "TODO: implementar en H16"
+docker-build: ## Build the regulaitor:dev Docker image
+	docker build -t regulaitor:dev .
+
+docker-up: ## Start API + Streamlit via docker compose
+	docker compose up -d
+	@echo ""
+	@echo "API:       http://localhost:8000/health"
+	@echo "Streamlit: http://localhost:8501"
+	@echo ""
+	@echo "Cold-start: first run takes ~15-20 min (model download + LanceDB build)."
+
+docker-down: ## Stop containers (keeps regulaitor-data volume)
+	docker compose down
+
+docker-clean: ## Stop + remove volumes (NUCLEAR — corpus indexes deleted)
+	docker compose down -v
+	docker rmi regulaitor:dev || true
+
+deploy: ## H16 deploy — see docs/H16_DEPLOY.md for HF Spaces / Render / Fly.io steps
+	@echo "Deployment is configured per platform; see docs/H16_DEPLOY.md"
+	@echo "  HF Spaces:  follow §3 of the runbook (Streamlit SDK variant)"
+	@echo "  Render:     follow §4 (Dockerfile + render.yaml)"
+	@echo "  Fly.io:     follow §5 (fly.toml from Dockerfile)"
 
 clean:
 	rm -rf .pytest_cache .mypy_cache .ruff_cache build dist

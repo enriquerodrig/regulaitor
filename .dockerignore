@@ -1,0 +1,60 @@
+# Source control
+.git
+.gitignore
+.gitattributes
+.gitleaks.toml
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.egg-info
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.coverage
+.coverage.*
+htmlcov
+coverage.xml
+.hypothesis
+
+# Virtual env
+.venv
+venv
+env
+
+# IDE
+.vscode
+.idea
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets (defense-in-depth; .env should never be in image regardless)
+.env
+.env.local
+.env.*.local
+
+# Project: local caches + heavy artifacts
+corpus/indexes/
+*.lance
+evals/cache/
+evals/checkpoints/
+evals/reports/v0.*/
+evals/reports/archive/
+docs/superpowers/
+redteam/reports/v0.*/
+notebooks/outputs/
+.claude/
+.superpowers/
+
+# Tooling configs Docker doesn't need
+.pre-commit-config.yaml
+.github/
+
+# Documentation (kept in repo, not in image)
+docs/
