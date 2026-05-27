@@ -1,6 +1,6 @@
 # ADR-0034 — All-blocked Findings routing softening (Design D Mirror)
 
-- **Status:** Accepted — 2026-05-27 — squash `<squash-sha>`, tag `v0.1.29-chat-016-all-blocked-softening`
+- **Status:** Accepted — 2026-05-27 — squash `0378f4e`, tag `v0.1.29-chat-016-all-blocked-softening`
 - **Milestone:** v0.1.29 (chat-016 all-blocked routing softening; mirror of v0.1.25 D2 at the second Turn-level aggregation sub-route)
 - **Spec/plan:** inline (light pattern; fully derived from ADR-0032 precedent)
 - **Companion ADRs:** [0027](0027-v0121-auditor-quorum-hard-constraints.md) (Tier 1 quorum + Capa A+B+C); [0030](0030-auditor-lenient-quorum.md) (Design B REVERTED — different lever, same goal); [0031](0031-gold-alignment-audit-decomposition.md) (failed_check field this design consumes); [0032](0032-auditor-partial-routing.md) (Design H D2 — the partial-routing twin this design mirrors at all-blocked branch)
@@ -137,4 +137,4 @@ Per established mini-milestone pattern (v0.1.21.1, v0.1.21.2, v0.1.24, v0.1.24.1
 - ADR-0031 (v0.1.24): failed_check field on AuditResult (this design consumes it).
 - ADR-0032 (v0.1.25): Design H D2 — partial-routing softening (this design mirrors at all-blocked sub-route).
 - v0.1.25 paid measurement: chat-016 case at `evals/reports/v0.1.25/v0.1.25-prod-main.md`.
-- Future commits referenced from this ADR: T1+T2 (helper docstring + 1-branch edit + 3 tests; same commit), T3 ADR-0034 (this commit), T4 pre-paid gate, T5 paid probe, T6 paid main, T7 verdict-flip review, T8 closure docs, T-final squash (`<squash-sha>`; populated at T-final).
+- Future commits referenced from this ADR: T1+T2 (helper docstring + 1-branch edit + 3 tests; same commit), T3 ADR-0034 (this commit), T4 pre-paid gate, T5 paid probe, T6 paid main, T7 verdict-flip review, T8 closure docs, T-final squash (`0378f4e`; populated at T-final).

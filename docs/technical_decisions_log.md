@@ -4775,7 +4775,7 @@ Next: **H16** (HF Spaces public deploy + foundation production-grade per "future
 
 Sin skills nuevas. Ver ADR-0032 + `evals/reports/v0.1.25/` (6 report files: probe + v0.1.25-prod + v0.1.25-prod-main + comparison + per-citation-mechanism + verdict-flip-review) + spec + plan.
 
-## §v0.1.29 — Auditor all-blocked routing softening (Design D Mirror; paid validation CONFIRM) (2026-05-27, squash `<squash-sha>`, tag `v0.1.29-chat-016-all-blocked-softening`)
+## §v0.1.29 — Auditor all-blocked routing softening (Design D Mirror; paid validation CONFIRM) (2026-05-27, squash `0378f4e`, tag `v0.1.29-chat-016-all-blocked-softening`)
 
 **Note on v0.1.26/v0.1.27/v0.1.28 doc-backfill**: per the deferred-batch-update pattern from v0.1.28 squash (`Decisions_log + evidence_matrix + CLAUDE.md §27 updates deferred to a post-v0.1.29 batch update`), this v0.1.29 entry ships standalone; v0.1.26-v0.1.28 backfill deferred to either a separate mini-doc-batch commit OR H17 cierre académico (comprehensive refresh per §16.3 H17 plan). The canonical sources for v0.1.26-v0.1.28 are squash commit messages (`07dab21` v0.1.26 + `b3273a3` v0.1.27 + `d02336a` v0.1.28) + ADR-0033 (v0.1.28) + memory files + CLAUDE.md §16.3 H15.X inline chain. Source-of-truth preserved; aggregator-doc gap acknowledged.
 
