@@ -16,19 +16,40 @@ import streamlit as st
 from regulaitor.ui_streamlit import tab_analyze, tab_ask
 
 DISCLAIMER = (
-    "⚠️ **Aviso:** esta herramienta no sustituye asesoría jurídica. "
+    "**Aviso.** Esta herramienta no sustituye asesoría jurídica. "
     "Las respuestas están respaldadas por citas validadas pero pueden "
     "contener errores. Consulta a un profesional para decisiones vinculantes."
 )
+
+# Vercel Web Interface Guidelines: tabular-nums for numeric columns
+# (regulatory reporting, metrics, audit-result tables). Applied to common
+# Streamlit selectors via single small <style> block; no web-font fetched.
+_GLOBAL_STYLES = """
+<style>
+  [data-testid="stMetricValue"],
+  [data-testid="stMetricDelta"],
+  table, .stCode, code {
+    font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+</style>
+"""
 
 
 def main() -> None:
     st.set_page_config(
         page_title="RegulAItor — Cumplimiento normativo asistido",
-        page_icon="⚖️",
         layout="wide",
     )
-    st.warning(DISCLAIMER)
+    st.markdown(_GLOBAL_STYLES, unsafe_allow_html=True)
+    st.markdown(
+        f"""<div style="padding: 12px 16px; background: #F8FAFC; border-left: 3px solid #94A3B8;
+        border-radius: 4px; color: #475569; font-size: 14px; margin-bottom: 16px;">
+        {DISCLAIMER}</div>""",
+        unsafe_allow_html=True,
+    )
 
     if not os.getenv("ANTHROPIC_API_KEY"):
         st.error(

@@ -18,14 +18,18 @@ APP_PATH = str(
 
 
 def test_app_renders_disclaimer_banner_always(monkeypatch):
-    """The disclaimer st.warning must always be present, regardless of API key."""
+    """The disclaimer must always be present, regardless of API key.
+
+    R3 polish: disclaimer rendered as subtle st.markdown HTML box (not the
+    loud st.warning yellow alert it used to be); check app.markdown bodies.
+    """
     monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-stub-for-smoke")
     # Cold-start imports (tab_analyze pulls the document pipeline) can take
     # ~20s on Windows; use 60s to absorb that without flakiness.
     app = AppTest.from_file(APP_PATH).run(timeout=60)
     assert any(
-        "no sustituye asesoría jurídica" in w.value for w in app.warning
-    ), f"disclaimer missing; warnings: {[w.value for w in app.warning]}"
+        "no sustituye asesoría jurídica" in m.value for m in app.markdown
+    ), f"disclaimer missing; markdown bodies: {[m.value for m in app.markdown]}"
 
 
 def test_app_blocks_when_api_key_missing(monkeypatch):

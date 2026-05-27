@@ -51,15 +51,37 @@ def _council_judge_rows(cr: CouncilReview) -> list[dict[str, object]]:
     ]
 
 
+# Verdict badge colors — semantic Tailwind palette (NOT theme primaryColor).
+# emerald-700 / rose-700 / amber-700 chosen for ≥4.5:1 contrast vs the *-50
+# tinted backgrounds; matches the Vercel/shadcn alert pattern (subtle pill,
+# border-left, never a full-width loud st.success/error/warning block).
+_VERDICT_STYLE: dict[AuditVerdict, tuple[str, str, str]] = {
+    AuditVerdict.PASS: ("PASS", "#047857", "#ECFDF5"),  # emerald-700, emerald-50
+    AuditVerdict.BLOCK: ("BLOCK", "#BE123C", "#FFF1F2"),  # rose-700, rose-50
+    AuditVerdict.REQUIRES_HUMAN_REVIEW: (
+        "REQUIRES HUMAN REVIEW",
+        "#B45309",  # amber-700
+        "#FFFBEB",  # amber-50
+    ),
+}
+
+
 def verdict_badge(verdict: AuditVerdict, reason: str | None = None) -> None:
-    """Render the global verdict as a colored Streamlit alert."""
-    suffix = f" — {reason}" if reason else ""
-    if verdict == AuditVerdict.PASS:
-        st.success(f"✓ PASS{suffix}")
-    elif verdict == AuditVerdict.BLOCK:
-        st.error(f"✗ BLOCK{suffix}")
-    else:  # REQUIRES_HUMAN_REVIEW
-        st.warning(f"⚠ REQUIRES HUMAN REVIEW{suffix}")
+    """Render the global verdict as a subtle pill (border-left + tinted bg).
+
+    Replaces the H6 st.success/st.error/st.warning loud blocks with a Vercel-
+    style restrained badge appropriate for a regulatory/compliance product
+    (no emojis; semantic color used only as accent, not as full background).
+    """
+    label, color, bg = _VERDICT_STYLE[verdict]
+    suffix = f" &middot; {reason}" if reason else ""
+    st.markdown(
+        f"""<div role="status" aria-live="polite" style="padding: 8px 14px;
+        border-left: 3px solid {color}; background: {bg}; color: {color};
+        font-weight: 600; font-size: 13px; letter-spacing: 0.4px;
+        border-radius: 4px; margin-bottom: 12px;">{label}{suffix}</div>""",
+        unsafe_allow_html=True,
+    )
 
 
 def finding(f: Finding) -> None:

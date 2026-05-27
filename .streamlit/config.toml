@@ -12,4 +12,16 @@ showErrorDetails = false
 toolbarMode = "minimal"
 
 [theme]
+# Recipe "Legal Navy" — deep navy accent for regulatory/compliance trust signal.
+# Palette restricted to neutral + 1 accent + 3 semantic (emerald PASS, rose BLOCK,
+# amber RHR — applied per-component in _render.py, NOT in theme). System fonts
+# only (Streamlit's "sans serif" uses Source Sans 3 bundled — no web-font fetch).
 base = "light"
+primaryColor = "#1E40AF"            # blue-800 (deep navy)
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F8FAFC" # slate-50
+textColor = "#1E293B"               # slate-800 (contrast 14:1 vs white — AAA)
+font = "sans serif"
+headingFont = "sans serif"
+codeFont = "monospace"
+baseRadius = "small"                # 4px (tight, modern)

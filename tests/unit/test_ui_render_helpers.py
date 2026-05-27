@@ -130,23 +130,32 @@ def _chat_state(verdict: AuditVerdict = AuditVerdict.PASS, blocked: bool = False
 def test_verdict_badge_pass(streamlit_recorder):
     _render.verdict_badge(AuditVerdict.PASS)
     methods = [c[0] for c in streamlit_recorder]
-    assert "success" in methods
-    msg = next(args[0] for m, args, _ in streamlit_recorder if m == "success")
-    assert "✓" in msg or "PASS" in msg.upper()
+    # R3 polish: verdict_badge now emits subtle pill via st.markdown (HTML),
+    # NOT st.success/error/warning. No emojis. Color encoded via inline style.
+    assert "markdown" in methods
+    msg = next(args[0] for m, args, _ in streamlit_recorder if m == "markdown")
+    assert "PASS" in msg
+    assert "✓" not in msg  # no-emoji guarantee
+    assert "aria-live" in msg  # accessibility — async status update
 
 
 def test_verdict_badge_block_with_reason(streamlit_recorder):
     _render.verdict_badge(AuditVerdict.BLOCK, reason="block_in_segments:[2]")
     methods = [c[0] for c in streamlit_recorder]
-    assert "error" in methods
-    msg = next(args[0] for m, args, _ in streamlit_recorder if m == "error")
+    assert "markdown" in methods
+    msg = next(args[0] for m, args, _ in streamlit_recorder if m == "markdown")
+    assert "BLOCK" in msg
     assert "block_in_segments" in msg
+    assert "✗" not in msg
 
 
 def test_verdict_badge_review(streamlit_recorder):
     _render.verdict_badge(AuditVerdict.REQUIRES_HUMAN_REVIEW)
     methods = [c[0] for c in streamlit_recorder]
-    assert "warning" in methods
+    assert "markdown" in methods
+    msg = next(args[0] for m, args, _ in streamlit_recorder if m == "markdown")
+    assert "REQUIRES HUMAN REVIEW" in msg
+    assert "⚠" not in msg
 
 
 # ---------- finding ----------
@@ -267,8 +276,13 @@ def test_chat_state_pass_renders_full_output(streamlit_recorder):
     state = _chat_state(AuditVerdict.PASS)
     _render.chat_state(state)
     methods = [c[0] for c in streamlit_recorder]
-    assert "success" in methods
+    # R3 polish: verdict_badge uses st.markdown (not st.success); so check that
+    # PASS appears somewhere in any markdown call rather than checking for st.success.
     assert "markdown" in methods
+    pass_in_markdown = any(
+        m == "markdown" and "PASS" in str(args[0]) for m, args, _ in streamlit_recorder
+    )
+    assert pass_in_markdown, "expected PASS badge rendered via st.markdown"
     assert "expander_open" in methods
 
 
@@ -345,7 +359,13 @@ def test_document_report_pass_renders_metrics_and_segments(streamlit_recorder):
     report = _document_report(AuditVerdict.PASS)
     _render.document_report(report)
     methods = [c[0] for c in streamlit_recorder]
-    assert "success" in methods
+    # R3 polish: verdict_badge → st.markdown. document_report still uses
+    # st.metric for the top-of-page metric strip + st.expander for segments.
+    assert "markdown" in methods
+    pass_in_markdown = any(
+        m == "markdown" and "PASS" in str(args[0]) for m, args, _ in streamlit_recorder
+    )
+    assert pass_in_markdown, "expected PASS badge rendered via st.markdown"
     assert "metric" in methods
     assert "expander_open" in methods
 
