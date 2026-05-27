@@ -150,7 +150,16 @@ def _process_segment(
             latency_ms=latency,
             cost_eur=0.0,
         )
-    ctx = _retriever().retrieve(seg.text, corpus, language)
+    # v0.1.28 T4-bis (Option B): if segmenter v0.1.14 detected a title for this
+    # segment, prepend it to the retrieval query. Hypothesis: section titles
+    # ("Supervisión Humana", "Gestión de Riesgos") bridge the doc-segment →
+    # corpus-article semantic gap that BGE-M3 embeddings of segment-body-only
+    # cannot bridge (descriptive segment text rarely matches obligation-article
+    # text semantically). Chat-mode retriever calls unchanged; this only fires
+    # for doc-mode segments with non-None title (cheap fallback to body-only
+    # when no title detected).
+    query = f"{seg.title}\n{seg.text}" if seg.title else seg.text
+    ctx = _retriever().retrieve(query, corpus, language)
     answer: Answer = _analyst_doc().analyze(seg.text, ctx)
     audited: AuditedAnswer = _auditor().audit(answer)
     latency = int((time.monotonic() - t0) * 1000)

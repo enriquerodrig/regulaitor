@@ -41,8 +41,12 @@ def test_path_traversal_via_role_rejected():
 
 
 def test_resolved_path_inside_prompts_dir():
+    # v0.1.28 ADR-0033 flipped env-unset doc default v1.0 → v1.6 (Finding-based
+    # refusal pattern). v1.0 still loadable via explicit env (see
+    # test_v1_0_doc_analyst_still_loadable_via_explicit_env in
+    # test_analyst_v1_6_doc_loads.py).
     a = AnalystAgent(prompt_role="document_analyst")
-    expected = PROMPTS_DIR.parent / "document_analyst" / "system.v1.0.md"
+    expected = PROMPTS_DIR.parent / "document_analyst" / "system.v1.6.md"
     assert expected.exists()
     assert a._system_prompt == expected.read_text(encoding="utf-8")
 

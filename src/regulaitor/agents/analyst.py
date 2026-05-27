@@ -111,15 +111,18 @@ class AnalystAgent:
             # v0.1.21 Tier 2 Capa A+B hard constraints on findings non-empty;
             # v1.5 ships Finding-based refusal that satisfies the schema
             # while preserving §6 "no citation, no answer" via corpus-grounded
-            # refusal). The `document_analyst` role keeps v1.0 default (no
-            # v1.5 was authored for doc-mode; doc-mode A/B + refusal coherence
-            # carried forward as future work per ADR-0027 amendment).
+            # refusal). v0.1.28 flipped the `document_analyst` role default
+            # v1.0 -> v1.6 per ADR-0033 (v0.1.27 probe revealed v1.0 doc_analyst
+            # emits placeholder citation strings <UNKNOWN>/N/A/... when context
+            # insufficient → all-blocked → 3/3 BLOCK verdicts; v1.6 = v1.5
+            # doc-mode adaptation with Finding-based refusal pattern citing
+            # corpus scope article when segment cannot be analyzed).
             # Invalid env still falls back to v1.0 (known-safe baseline;
-            # never crashes on a bad env value). Opt-in to v1.0 for chat via
-            # REGULAITOR_ANALYST_PROMPT_VERSION=v1.0; v1.4 still loadable via
-            # the same env (for retrospective comparison with the v0.1.20
-            # paid A/B).
-            default_version = "v1.5" if prompt_role == "analyst" else "v1.0"
+            # never crashes on a bad env value). Opt-in to v1.0 for either
+            # role via REGULAITOR_ANALYST_PROMPT_VERSION=v1.0; v1.4 still
+            # loadable via the same env (for retrospective comparison with
+            # the v0.1.20 paid A/B).
+            default_version = "v1.5" if prompt_role == "analyst" else "v1.6"
             env_v = os.environ.get("REGULAITOR_ANALYST_PROMPT_VERSION")
             if env_v is None:
                 prompt_version = default_version

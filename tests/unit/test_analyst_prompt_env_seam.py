@@ -42,16 +42,16 @@ def test_invalid_env_falls_back_to_v1_0(monkeypatch: pytest.MonkeyPatch) -> None
     assert a.prompt_version == "v1.0"  # invalid env ignored with WARNING, never crashes
 
 
-def test_document_analyst_role_defaults_to_v1_0_when_env_unset(
+def test_document_analyst_role_defaults_to_v1_6_when_env_unset(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """v0.1.20 / ADR-0026 role-aware default: the FLIP only applies to the
-    chat `analyst` role; `document_analyst` still defaults to v1.0 because
-    v1.4 was authored for chat role only (doc-mode A/B carried forward as
-    future work). Regression-pin so a future "uniform default" refactor
-    doesn't silently break doc-mode by trying to load a non-existent
-    document_analyst/system.v1.4.md."""
+    """v0.1.28 / ADR-0033 doc-role default flip v1.0 → v1.6: doc_analyst now
+    defaults to v1.6 (Finding-based refusal pattern; mirror of v0.1.21 chat
+    v1.5 ADR-0027 ported to doc role). v0.1.27 probe revealed v1.0 doc_analyst
+    emits placeholder citation strings <UNKNOWN>/N/A/... when context
+    insufficient → all-blocked → 3/3 BLOCK verdicts; v1.6 fixes this by
+    emitting Finding-based refusal citing real corpus scope article."""
     monkeypatch.delenv("REGULAITOR_ANALYST_PROMPT_VERSION", raising=False)
     a = AnalystAgent(prompt_role="document_analyst")
     assert a.prompt_role == "document_analyst"
-    assert a.prompt_version == "v1.0"
+    assert a.prompt_version == "v1.6"
