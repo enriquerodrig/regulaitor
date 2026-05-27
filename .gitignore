@@ -112,6 +112,11 @@ evals/reports/*
 # docs/superpowers/specs/2026-05-26-v0.1.25-auditor-partial-routing-design.md.
 !evals/reports/v0.1.25/
 !evals/reports/v0.1.25/*
+# v0.1.27 doc-mode paid validation reports — tracked as TFM evidence
+# (cost_per_doc_eur measurement + segmenter v0.1.14 efficacy at scale; closes
+# H15.2 carry-forward "doc-mode never measured post-segmenter fix"). No new ADR.
+!evals/reports/v0.1.27/
+!evals/reports/v0.1.27/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports
@@ -133,4 +138,8 @@ AGENTS.md
 .agents/
 .github/agents/
 .n8nac/
+# Vercel/npx-installed external skills (v0.1.27+): managed per-machine via
+# `npx skills add ...`; reproducible from skills-lock.json (committed).
+# Project-own skills under .claude/skills/{citation-validator,...} stay tracked.
+.claude/skills/web-design-guidelines/
 evals/_skeleton.jsonl

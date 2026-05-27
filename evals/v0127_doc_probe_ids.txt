@@ -1,0 +1,7 @@
+# v0.1.27 doc-mode probe allowlist — 3 cases (doc-001..003).
+# Generated 2026-05-27. Covers AI Act-only docs (ai_act corpus single).
+# Expected segments: 15 total (5 + 4 + 6).
+# Expected paid cost at €0.054/segment: €0.81 (high €1.22).
+doc-001
+doc-002
+doc-003

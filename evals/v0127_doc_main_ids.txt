@@ -1,0 +1,11 @@
+# v0.1.27 doc-mode main allowlist — 7 cases (doc-004..010).
+# Generated 2026-05-27. Covers AI Act (doc-004), GDPR (doc-005..008), cross-corpus (doc-009..010).
+# Expected segments: 36 total (3 + 5 + 5 + 6 + 4 + 7 + 6).
+# Expected paid cost at €0.054/segment: €1.94 (high €2.92).
+doc-004
+doc-005
+doc-006
+doc-007
+doc-008
+doc-009
+doc-010
