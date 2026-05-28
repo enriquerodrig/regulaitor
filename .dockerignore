@@ -40,8 +40,15 @@ Thumbs.db
 .env.*.local
 
 # Project: local caches + heavy artifacts
+# H16 deploy: ship pre-built LanceDB index via LFS (see .gitattributes).
+# Allowlist regulaitor.lance/ so it lands in the Docker build context for
+# HF Spaces Docker SDK deploy. Other lance dirs (snapshots) stay excluded.
 corpus/indexes/
+!corpus/indexes/regulaitor.lance/
+!corpus/indexes/regulaitor.lance/**
 *.lance
+!corpus/indexes/regulaitor.lance/chunks.lance/
+!corpus/indexes/regulaitor.lance/chunks.lance/**
 evals/cache/
 evals/checkpoints/
 evals/reports/v0.*/

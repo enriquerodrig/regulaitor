@@ -53,6 +53,13 @@ COPY --chown=appuser:appuser docker-entrypoint.sh /usr/local/bin/docker-entrypoi
 COPY --chown=appuser:appuser scripts/ ./scripts/
 COPY --chown=appuser:appuser corpus/manifests/ ./corpus/manifests/
 COPY --chown=appuser:appuser corpus/processed/ ./corpus/processed/
+# H16 deploy: ship pre-built LanceDB index in image (~76 MB) for HF Spaces
+# Docker SDK cold-start reduction. Eliminates the entrypoint's `scripts.rag_build`
+# step (10-15 min CPU on first request). Operator must override LANCEDB_PATH
+# to point at this baked-in location for the runtime to use it; otherwise the
+# default LANCEDB_PATH=/data/indexes wins and the entrypoint rebuilds.
+# Set in HF Space env: LANCEDB_PATH=/app/corpus/indexes/regulaitor.lance.
+COPY --chown=appuser:appuser corpus/indexes/regulaitor.lance/ ./corpus/indexes/regulaitor.lance/
 
 # uv must be in PATH for entrypoint (consolidated PATH set in next ENV block)
 RUN pip install --no-cache-dir uv==0.4.18
@@ -68,6 +75,12 @@ RUN mkdir -p /data/hf_cache /data/indexes && chown -R appuser:appuser /data
 USER appuser
 
 # Default to API mode; override with -e APP_MODE=streamlit
+# H16 HF Spaces deploy expects port 7860 + APP_MODE=streamlit; override
+# both via Space env vars (Settings → Variables and secrets):
+#   APP_MODE=streamlit
+#   PORT=7860
+#   LANCEDB_PATH=/app/corpus/indexes/regulaitor.lance  (use baked-in v0.1.30 index)
+#   ANTHROPIC_API_KEY=<your key>
 ENV APP_MODE=api \
     PORT=8000
 
