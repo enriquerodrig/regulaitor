@@ -1,3 +1,15 @@
+---
+title: RegulAItor
+emoji: ⚖️
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+license: other
+short_description: EU regulatory compliance multi-agent demo (TFM)
+---
+
 # RegulAItor
 
 > "RegulAItor no responde sin cita verificable: convierte la consulta normativa rutinaria y la revisión documental en un acto auditable, en minutos y por céntimos."
