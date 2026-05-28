@@ -31,6 +31,11 @@ dependencies = [
     "python-multipart>=0.0.20,<1.0",
     "slowapi>=0.1.9,<1.0",
     "truststore>=0.10,<1.0",
+    # Multi-LLM router (ADR-0013 H12): production runtime imports these at
+    # module load in src/regulaitor/models/router.py. Moved from dev section
+    # to main dependencies for H16 deploy (Docker --no-dev install).
+    "openai>=1.40,<2.0",
+    "groq>=0.11,<1.0",
 ]
 
 [project.optional-dependencies]
@@ -51,8 +56,6 @@ dev = [
     "langchain-anthropic>=0.3,<1.0",
     "langchain-huggingface>=1.0,<2.0",
     "langfuse>=2,<3",
-    "openai>=1.40,<2.0",
-    "groq>=0.11,<1.0",
 ]
 
 [build-system]
