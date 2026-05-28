@@ -3,7 +3,13 @@ repos:
     rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
+        # H16 carry: lance binary files (Protobuf manifests + data fragments)
+        # get corrupted if end-of-file-fixer appends a newline. .gitattributes
+        # marks them as binary but the hook doesn't always respect that.
+        # Belt-and-suspenders exclude pattern.
+        exclude: '^corpus/indexes/regulaitor\.lance/.*'
       - id: trailing-whitespace
+        exclude: '^corpus/indexes/regulaitor\.lance/.*'
       - id: check-yaml
       - id: check-toml
       - id: check-merge-conflict
