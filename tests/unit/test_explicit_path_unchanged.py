@@ -4,6 +4,7 @@
 This is the no-leakage-critical line (§22.18 / H14). The full _enrich path
 and RetrievedChunk construction are covered by test_retrieval_run_branches.py
 and tests/unit/rag/test_retrieval.py."""
+
 from __future__ import annotations
 
 from regulaitor.rag import retrieval

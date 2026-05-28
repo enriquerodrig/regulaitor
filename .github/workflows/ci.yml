@@ -226,4 +226,13 @@ jobs:
         #   No patched 1.1.x release exists on PyPI (fix version 1.1.14 is not published yet).
         #   Re-evaluate when langchain-openai 1.1.14+ appears on PyPI or when openai pin is
         #   relaxed to >=2.0. See docs/technical_decisions_log.md §H12.
-        run: uv run pip-audit --skip-editable --ignore-vuln CVE-2026-1839 --ignore-vuln CVE-2025-69872 --ignore-vuln CVE-2026-6587 --ignore-vuln CVE-2026-41488
+        # --ignore-vuln PYSEC-2025-217 (alias CVE-2025-14929): transformers X-CLIP checkpoint
+        #   deserialization → arbitrary code execution. Affects all transformers ≤5.0.0-rc0;
+        #   no patched 4.x release. RegulAItor uses transformers ONLY transitively via
+        #   FlagEmbedding (BGE-M3 embeddings) + sentence-transformers (bge-reranker-v2-m3).
+        #   X-CLIP is NOT used; we do NOT load arbitrary user-provided checkpoints (only
+        #   pinned models from HuggingFace Hub). Code path unreachable. Mirror precedent
+        #   of CVE-2026-1839 (transformers Trainer load, also unreachable). Re-evaluate
+        #   when transformers 5.x ships with the fix and our FlagEmbedding/sentence-transformers
+        #   pins permit the upgrade.
+        run: uv run pip-audit --skip-editable --ignore-vuln CVE-2026-1839 --ignore-vuln CVE-2025-69872 --ignore-vuln CVE-2026-6587 --ignore-vuln CVE-2026-41488 --ignore-vuln PYSEC-2025-217

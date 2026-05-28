@@ -12,6 +12,7 @@ about cross-corpus contamination (the where-clause), NOT about specific
 top_k/pre_rerank values — H15.2 corrects the H15.1 implementation's
 conservative interpretation of T6 at the architecturally-correct narrower scope.
 """
+
 from __future__ import annotations
 
 from regulaitor.rag import retrieval
