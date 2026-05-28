@@ -3,6 +3,11 @@ port = 7860
 address = "0.0.0.0"
 headless = true
 runOnSave = false
+# HF Spaces requires CORS + XSRF disabled to work behind their reverse proxy
+# (the proxy rewrites Origin headers; Streamlit's default XSRF check fails
+# returning 404/403 if these are not disabled). Safe for HF embed iframe.
+enableCORS = false
+enableXsrfProtection = false
 
 [browser]
 gatherUsageStats = false
