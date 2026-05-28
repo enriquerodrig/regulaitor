@@ -42,7 +42,7 @@ def render() -> None:
             corpus = st.selectbox("Corpus", _CORPUS_CHOICES, index=0)
         with col_lang:
             language = st.selectbox("Idioma", _LANGUAGE_CHOICES, index=0)
-        submitted = st.form_submit_button("Analizar")
+        submitted = st.form_submit_button("Analizar", type="primary")
 
     if submitted:
         if not query.strip():

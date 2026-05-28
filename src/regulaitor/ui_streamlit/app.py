@@ -13,6 +13,7 @@ import os
 
 import streamlit as st
 
+from regulaitor.corpus import loader as corpus_loader
 from regulaitor.ui_streamlit import tab_analyze, tab_ask
 
 DISCLAIMER = (
@@ -43,6 +44,7 @@ def main() -> None:
         page_title="RegulAItor — Cumplimiento normativo asistido",
         layout="wide",
     )
+    corpus_loader.warmup()
     st.markdown(_GLOBAL_STYLES, unsafe_allow_html=True)
     st.markdown(
         f"""<div style="padding: 12px 16px; background: #F8FAFC; border-left: 3px solid #94A3B8;

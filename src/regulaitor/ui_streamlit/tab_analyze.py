@@ -56,7 +56,7 @@ def render() -> None:
             corpus = st.multiselect("Corpus", _CORPUS_CHOICES, default=_CORPUS_CHOICES)
         with col_lang:
             language = st.selectbox("Idioma", _LANGUAGE_CHOICES, index=0)
-        submitted = st.form_submit_button("Analizar documento")
+        submitted = st.form_submit_button("Analizar documento", type="primary")
 
     if submitted:
         if uploaded is None:
