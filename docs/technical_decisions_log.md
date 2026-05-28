@@ -4775,6 +4775,237 @@ Next: **H16** (HF Spaces public deploy + foundation production-grade per "future
 
 Sin skills nuevas. Ver ADR-0032 + `evals/reports/v0.1.25/` (6 report files: probe + v0.1.25-prod + v0.1.25-prod-main + comparison + per-citation-mechanism + verdict-flip-review) + spec + plan.
 
+## §v0.1.26 — H16 deploy-prep (Docker + CORS + truststore + cov gate + runbook) (2026-05-27, squash `07dab21`, no tag — $0 infra-only)
+
+**Note**: backfilled at Stage 3 pre-H16 polish (2026-05-28) per user-flagged deferral concern; canonical source is the squash commit `07dab21` (comprehensive payload) + `docs/superpowers/plans/2026-05-26-v0.1.26-h16-deploy-prep.md` + `docs/pre_h16_review.md` (the spec-equivalent).
+
+### Scope
+
+H16 deploy-prep $0 infra milestone derived from `docs/pre_h16_review.md` 4 BLOCKING + 3 IMPORTANT items. NO ADR (pure infrastructure; no architectural decision). NO paid LLM run.
+
+Files shipped (4 commits squashed; ~600 LOC net add):
+
+- **Dockerfile** — multi-stage (python:3.11-slim-bookworm builder + slim runtime); non-root `appuser`; healthcheck wrapper for `/health` endpoint; entrypoint dispatcher (`APP_MODE=api|streamlit`).
+- **.dockerignore** (60 lines) — exclude `.venv`, `corpus/raw`, `evals/cache`, `evals/reports`, `redteam/reports`, `.git`, `node_modules`, etc.
+- **docker-entrypoint.sh** — `APP_MODE` dispatcher (api → uvicorn; streamlit → streamlit run) with cold-start corpus build path (rebuild lance index from baked `corpus/processed/` if absent on first cold start; idempotent on warm restart).
+- **docker-compose.yml** — `api` service (:8000 with healthcheck) + `streamlit` service (:8501 depends_on=api healthy). Volume mounts for `corpus/indexes` + HF cache.
+- **.streamlit/config.toml** — port 8501 headless, server.runOnSave=false, browser.gatherUsageStats=false (HF Spaces compat).
+- **Makefile** — added `docker-build`, `docker-up`, `docker-down`, `docker-logs` targets.
+- **src/regulaitor/api/main.py** — `CORSMiddleware` added with `REGULAITOR_API_CORS_ORIGINS` env (comma-separated allowlist; empty = no CORS; production deploy populates).
+- **pyproject.toml** — `truststore>=0.10` promoted from `.venv`-only to project dependency (closes ADR-0029 §22.22 #2 carry-forward) + `--cov-fail-under=85` added to pytest config (was advisory; now CI gate).
+- **src/regulaitor/rag/store.py** + **rag/build.py** — `LANCEDB_PATH` env support for persistent volume mounting (HF Spaces / Render / Fly.io; `DEFAULT_PATH` resolution prioritizes env over hardcoded `corpus/indexes/regulaitor.lance`).
+- **docs/H16_DEPLOY.md** (NEW; 246 lines) — 11-section runbook covering HF Spaces (Streamlit SDK, §3.1) + Render + Fly.io + local Docker compose + secrets management + cold-start SLA + health checks + log analysis + rollback procedure.
+
+### §6 invariant — UNAFFECTED
+
+Pure infra changes: NO `src/regulaitor/citation/` modifications, NO `agents/auditor.py` modifications, NO `agents/analyst.py` modifications, NO prompts changes, NO eval pipeline changes, NO gold set changes. The `LANCEDB_PATH` env addition modifies store.py to READ env at module-load but does NOT change the connect/upsert/delete semantics. CORS adds an HTTP middleware orthogonal to citation enforcement.
+
+### Code review catches (4 Criticals fixed pre-squash)
+
+The pre-merge whole-branch review (Opus subagents) caught 4 Critical items:
+
+- **C1 (cold-start corpus build path)** — entrypoint rebuild logic had wrong path resolution; fixed to honor `LANCEDB_PATH` env first, then fall back to baked `corpus/processed/` (commit `e405186`).
+- **C2 (LANCEDB_PATH orphaned)** — store.py read env but rag/build.py hardcoded path; fixed to share `INDEX_PATH = store.DEFAULT_PATH` (commit `33bd2b4`).
+- **C3 (cov gate split)** — `--cov-fail-under=85` was added to one pytest invocation but missing from CI workflow; fixed to centralize in `pyproject.toml [tool.pytest.ini_options]` (commit `33bd2b4`).
+- **C4 (entrypoint marker mismatch)** — entrypoint checked for `regulaitor.lance` (DB dir) but the LanceDB index marker is `chunks.lance` (table subdir); fixed entrypoint to test for `chunks.lance/` existence (commit `b57ec9e`).
+
+### §22.22 honest framing (4 disclosures)
+
+1. **NOT measured at H16 deploy time** — v0.1.26 is infra-only; the deploy itself happens at H16 Stage 4. v0.1.26 just ships the deployable artifacts + runbook. The actual HF Spaces upload + smoke test 24h uptime + URL publication is H16 work.
+
+2. **No paid LLM run** — $0 throughout; CI gate verifies the Dockerfile builds, but the running container is NOT exercised end-to-end with paid Anthropic calls in this milestone.
+
+3. **LANCEDB_PATH operator-side bug** — `.env` value `./corpus/indexes` (pointing at parent dir, not DB dir) was DORMANT until v0.1.26 enabled env-reading. The bug only surfaced at v0.1.29 T5 probe 1 (€0.14 sunk). v0.1.26 itself shipped with this latent infrastructure misalignment in operator .env; FIXED at v0.1.29 Stage 1 cleanup (`.env` → `./corpus/indexes/regulaitor.lance`). LESSON: env-config changes need integration smoke-test before merge, not just unit tests of the env-read logic.
+
+4. **Cov gate inheritance** — gate was set to 85% but pre-v0.1.26 baseline was 87-88%. Setting to 85% gives 2-3pp safety margin for marginal coverage drops; honest disclosure that this is below the (formal) §17 ≥80% gate-MVP carry per CLAUDE.md §16.2 #2 (which was 80% for `citation/agents/rag/`). The 85% global gate is STRICTER than the §17 carry-forward but LOOSER than the v0.1.21.3 inherited 88.55%; choice was operator-side trade-off acknowledging the offline-SSL test path that can't be exercised in CI.
+
+### Gate authoritative
+
+- pytest -m "not slow" → 893 passed / 0 failed / 1 skipped (was 892 at v0.1.25 close; +1 for `--cov-fail-under` self-test).
+- mypy src → Success 71 source files exit 0 UNCHANGED.
+- coverage 87.87% ≥ 85% gate.
+- redteam-smoke 0.92 carry (= v0.1.14-v0.1.25 frozen).
+
+### Plan progress
+
+Bridges v0.1.25 CONFIRM (last optimization milestone) to the v0.1.27-v0.1.28 doc-mode work (validation + fix). NOT counted as a §22.22 milestone (no measurable outcome; infra only); the §22.22 lineage stays at 10 through v0.1.25 (resumes counting at v0.1.27 doc-mode work + v0.1.28 + v0.1.29 + v0.1.30).
+
+### Carry-forwards consumed/created
+
+- Consumed: pre_h16_review.md 4 BLOCKING items (DONE) + 3 of 4 IMPORTANT (CORS + cov gate + runbook DONE; pip-audit CI verify deferred and FIXED at Stage 3 pre-H16 polish 2026-05-28 after CI failure discovered).
+- Created (latent): LANCEDB_PATH .env misalignment (surfaced + fixed at v0.1.29 T5 probe 1).
+
+Sin skills nuevas. Ver squash `07dab21` + `docs/H16_DEPLOY.md` + `docs/pre_h16_review.md`.
+
+---
+
+## §v0.1.27 — Doc-mode paid measurement baseline + placeholder citation bug discovery (2026-05-27, squash `b3273a3`, no tag — light pattern)
+
+**Note**: backfilled at Stage 3 pre-H16 polish (2026-05-28); canonical source is squash commit `b3273a3` + the 1 paid measurement report under `evals/reports/v0.1.27/v0.1.27-doc-prod-probe.md` (later joined by 5 more reports at v0.1.28).
+
+### Scope
+
+Doc-mode paid measurement baseline ($0.16 paid) under env-unset production state pre-v0.1.28 (doc default = v1.0 doc_analyst per ADR-0007 H5; segmenter v0.1.14 per ADR-0019). NO ADR (light pattern; mirrors v0.1.21.1 + v0.1.24.1 + v0.1.22.1 mini-milestone-without-ADR precedent). NO src/ touch. Only operational artifacts: `scripts/v0127_run.py` (paid run runner) + `evals/v0127_doc_probe_ids.txt` + 1 report.
+
+### §22.22 headline payload — NEW finding: doc_analyst placeholder citation bug
+
+Probe ran 3 docs (doc-001..003). Results:
+
+- doc-001: actual_document_verdict=`block` (gold expected=`requires_human_review`); 2 emitted citations (article-level)
+- doc-002: actual=`block` (gold=`pass`); 2 emitted citations
+- doc-003: actual=`block` (gold=`pass`); 1 emitted citation
+
+**All 3 docs verdict=BLOCK** despite different gold expectations. cost_per_doc €0.053 (matches H5 estimate; soft bar ≤€0.50 satisfied).
+
+**Per-citation inspection (this is the headline)**: v1.0 doc_analyst prompt when context is insufficient emits Findings with `articulo="<UNKNOWN>"` or `articulo="N/A"` or `articulo="TBD"` placeholder strings → validator rejects (article_not_found, Check 1) → ALL Findings strict-invalid → Finding-Lenient flags all blocked → all-blocked routing → BLOCK verdict. The bug is STRUCTURAL: v1.0 doc_analyst lacks the equivalent of v1.5 chat's Finding-based refusal pattern (ADR-0027 C4) which forbids placeholder citations and instead cites the corpus scope article when context is insufficient.
+
+### §6 invariant — INTACT but exposes a model-side discipline gap
+
+The validator BLOCKED the placeholder citations correctly (Check 1 fabrication rejection). The §6 enforcement boundary held. But the model-side prompt v1.0 doc_analyst was emitting fabrication-shaped output, which would have been caught at runtime by users seeing "all docs return BLOCK". The intervention at v0.1.28 ADR-0033 ships a v1.6 doc_analyst with Hard Rule 4 "Never emit placeholder citation strings (UNKNOWN/N/A/TBD)" — defense-in-depth at the prompt layer to complement the validator.
+
+This finding evolves §6 to a FOURTH-layer architecture at v0.1.28 (validator + Finding-Lenient + Turn-level aggregation + prompt-level explicit forbid).
+
+### Cost + budget
+
+- Total v0.1.27 paid: **€0.16** (1 probe run; 3 docs × €0.053 + judge overhead).
+- Budget at start: ~$11.18 USD; budget post: ~$11.02 USD.
+
+### Gate authoritative
+
+- pytest -m "not slow" → 893 passed / 0 failed / 1 skipped UNCHANGED.
+- mypy src → Success 71 source files exit 0 UNCHANGED.
+- coverage 87.87% UNCHANGED.
+- redteam-smoke 0.92 carry.
+
+### §22.22 honest framing (3 disclosures)
+
+1. **N=3 doc probe** — small sample but the structural bug is DETERMINISTIC (v1.0 prompt emits placeholders when context insufficient; 3/3 docs reproduced the pattern). Probe was sufficient for diagnosis; main N=10 would have just reproduced the same all-BLOCK outcome at 3x cost.
+
+2. **Diagnostic vs intervention** — v0.1.27 SHIPS only the measurement + diagnosis; intervention is v0.1.28 (ADR-0033 + v1.6 prompt). Mirrors v0.1.17 → v0.1.17.1 pattern (diagnose-first; intervene next milestone).
+
+3. **Placeholder citation pattern is NOT covered by H8 gold annotations** — gold annotations were written assuming v1.0 doc_analyst would produce real citations (Sonnet's general behavior); the placeholder-when-uncertain failure mode emerged because v1.0 prompt doesn't explicitly forbid it. Gold set N=10 stays valid for measuring post-v0.1.28 lift.
+
+### Carry-forwards consumed/created
+
+- Consumed: H10 doc-mode cost_per_doc target ≤€0.50 (RESOLVED at €0.053; well under).
+- Created: v1.6 doc_analyst Finding-based refusal pattern intervention (v0.1.28 ADR-0033) + 5 more paid runs at v0.1.28 across v1.6 + α+β retrieval + title-prepend.
+
+Sin skills nuevas. Ver squash `b3273a3` + `evals/reports/v0.1.27/v0.1.27-doc-prod-probe.md`.
+
+---
+
+## §v0.1.28 — Doc-mode fix: v1.6 doc_analyst Finding-based refusal + title-prepend retrieval + triple-iteration (1 SHIP + 2 REVERTs) (2026-05-27, squash `d02336a`, tag `v0.1.28-doc-analyst-v1-6-refusal`, ADR-0033)
+
+**Note**: backfilled at Stage 3 pre-H16 polish (2026-05-28); canonical source is squash commit `d02336a` + ADR-0033 (141 lines, D1-D5 + 4 alternatives + 5 §22.22 disclosures) + 5 paid measurement reports in `evals/reports/v0.1.27/v0.1.28-doc-prod-{probe,probe-alphabeta,probe-title,probe-title-clean,prod-main}.md`.
+
+### Scope
+
+Doc-mode equivalent of chat v0.1.17 → v0.1.17.1 → v0.1.21 lineage applied to the `document_analyst` role: structural §6 fix (placeholder citation bug eliminated per v0.1.27 finding) + retrieval engineering attempt (title-prepend query construction). **Triple-iteration cycle (1 SHIP + 2 REVERTs)** per v0.1.23 methodology discipline.
+
+### Files shipped (3 src/ files; +6 tests; ADR-0033)
+
+- **src/regulaitor/agents/prompts/document_analyst/system.v1.6.md** (NEW ~250 lines) — Mirror of v1.5 chat ADR-0027 ported to doc role:
+  - Hard rule 4 inviolable: "Never emit placeholder citation strings (UNKNOWN/N/A/TBD)" (defense-in-depth at Layer (d) complementing Layer (a) validator catch).
+  - Rule 2 Finding-based refusal: when segment cannot be analyzed (context insufficient OR adversarial OR ambiguous), emit ONE Finding citing the corpus SCOPE article (e.g. AI Act art. 2 "Scope" or GDPR art. 2 "Material scope") with severity=high and explanatory text. Preserves §6 via corpus-grounded refusal instead of placeholder fabrication.
+  - All anti-injection rules + sanitizer trust contract carried verbatim from v1.0.
+- **src/regulaitor/agents/analyst.py:122** — `default_version = "v1.5" if prompt_role == "analyst" else "v1.6"` (was `"v1.0"` for doc); ternary role-aware default flip.
+- **src/regulaitor/orchestration/document_graph.py** — 1-line title-prepend at retrieval query construction: `query = f"{seg.title}\n{seg.text}" if seg.title else seg.text` passed to retriever.retrieve(). Bridges descriptive-doc-segment → obligation-corpus-article semantic gap at the QUERY side (the v0.1.30 corpus-side mirror REVERTED later).
+
+### Triple-iteration cycle (per ADR-0033)
+
+| Iteration | Lever | Decision | Cost | Mechanism |
+|---|---|---|---|---|
+| T1+T2 | v1.6 prompt + role flip | **SHIPPED** | €0.28 probe + €0.55 T6 main | Structural §6 placeholder bug ELIMINATED |
+| T4-extra α+β | top_k=15 + max_chunks_per_norma=5 retrieval breadth | **REVERTED** | €0.28 probe | Context dilution; citation_precision 0.17 → 0.00 |
+| T4-bis simple | Title-prepend query-side (1-line) | **SHIPPED** | €0.16 probe | citation_precision 0.17 → 0.33; doc-002 50.1 + doc-003 14.1 surfaced |
+| T4-bis-v2 cleanup | strip-number + skip-dup title processing | **REVERTED** | €0.29 probe | Over-engineering; lost doc-002 50.1 hit; citation_precision back to 0.17 |
+
+### §22.22 headline empirical payload (N=10 doc main)
+
+| Metric | v0.1.27 baseline (v1.0; N=3 probe) | **v0.1.28 final (N=10 main)** | Δ |
+|---|---|---|---|
+| §6 placeholder citation bug | active (3/3 docs all-blocked-block-by-placeholder) | **ELIMINATED** | structural fix ✅ |
+| citation_precision | 0.00 | **0.15** (N=10 main) / 0.33 (N=3 probe) | +0.15 ✅ |
+| citation_recall | 0.00 | **0.33** (N=10 main) | +0.33 ✅ |
+| verdict_match_rate | 0/3 = 0.00 | **2/7 = 0.29** (main; doc-004 + doc-010 sanitizer LEGIT) | +0.29 ✅ |
+| faithfulness_mean | 0.17 | 0.22 (main) / 0.54 (probe) | mixed |
+| cost_per_doc_eur | 0.053 | 0.078 (main, +47%) | Capa C retry overhead |
+
+**§22.22 important nuance: verdict_match 2/7 is REAL safety-floor win, NOT inflated by segmenter failures**:
+
+doc-004 + doc-010 contain JavaScript embedded in PDFs. Sanitizer (per §18 SSDLC + H5 ADR-0007) correctly blocks both with `DocumentBlockedError("javascript_blocked")` → 0 segments → verdict=RHR. Gold expects EXACTLY this:
+
+- doc-004 + doc-010 gold `expected_document_verdict: requires_human_review`
+- Criteria: "sanitizer detecta contenido crítico (prompt injection / instrucciones maliciosas embebidas)"
+
+These are designed adversarial test cases. The 2/7 verdict_match wins = **legit safety-floor empirical validation of the doc-mode sanitizer pipeline**, NOT inflated by segmenter failures. (Initially mis-framed as "inflated"; corrected per $0 segmenter diagnostic confirming sanitizer blocks BEFORE segmenter runs.)
+
+### §6 invariant — FOURTH-layer architecture (per ADR-0033 D4)
+
+v0.1.25 ADR-0032 established THREE-layer Auditor architecture (validator + Finding-Lenient + Turn-level aggregation). v0.1.28 ADR-0033 ADDS:
+
+- **Layer (d) prompt-level explicit forbid** — NEW: v1.6 doc_analyst Hard rule 4 inviolable "Never emit placeholder citation strings" complements layer (a) validator-side enforcement. Defense-in-depth: model output discipline + validator catch.
+
+§6 enforcement boundary preserved at Layer (a) validator + Layer (b) Finding-Lenient; only model-side behavior strengthened. chat role v1.5 + v1.4 + v1.3 + v1.2 + v1.1 + v1.0 ALL BYTE-UNCHANGED (only doc role default flipped).
+
+### HARD invariants intact (pre-closure verified, 6/6)
+
+- §6 `src/regulaitor/citation/` BYTE-UNCHANGED ✅
+- `src/regulaitor/agents/auditor.py` BYTE-UNCHANGED ✅
+- `src/regulaitor/agents/council.py` BYTE-UNCHANGED ✅
+- `src/regulaitor/agents/prompts/analyst/` v1.0-v1.5 BYTE-UNCHANGED (chat role) ✅
+- `src/regulaitor/rag/` BYTE-UNCHANGED (α+β REVERTED) ✅
+- `evals/` BYTE-UNCHANGED (only new reports added) ✅
+- **src/ scope = EXACTLY 3 expected files**: analyst.py (1-line role-ternary flip) + document_graph.py (1-line title-prepend) + prompts/document_analyst/system.v1.6.md (NEW ~250 lines)
+
+### §22.22 honest disclosures (7 in ADR-0033)
+
+1. **Triple-iteration cycle**: 4 retrieval/prompt levers attempted; 2 SHIPPED (v1.6 + T4-bis simple); 2 REVERTED (α+β + cleanup). Methodology discipline per v0.1.23 vindicated.
+2. **Cost overhead +47%**: €0.053 (v1.0 placeholder bug) → €0.078 (v1.6 + title-prepend). Capa C retry overhead. Acceptable for the structural §6 fix.
+3. **Substantive verdict_match 0/5**: removing the 2 sanitizer safety wins (doc-004 + doc-010), the analyzed-content verdict_match is 0/5. v1.6 + title-prepend lifts CITATIONS but not VERDICT (doc-aggregation conservatism per ADR-0007 H5 strict-PASS-requires-all-PASS-segments).
+4. **Retrieval semantic-gap unresolved**: 3/5 production-compliance docs (doc-006/008/009) missed gold articles even with title-prepend. The descriptive-doc-segment → obligation-corpus-article semantic gap is fundamental; HX engineering needed (HyDE OR title-augmented embeddings OR hybrid BM25+dense).
+5. **Cleanup hurt** (§22.22 lesson): T4-bis-v2 cleanup intuitively "cleaner" but EMPIRICALLY regressed. The "noise" in T4-bis simple (2x title with number) ACCIDENTALLY helped BGE-M3 surface art 50. Over-engineering anti-pattern.
+6. **N=3 probe → N=10 main lift direction CONFIRMED but magnitude differs**: probe citation_precision 0.33 → main 0.15 (regression in mean due to cross-corpus docs 009/010 dragging down; per-doc analysis shows the title-prepend mechanism works on 4-5 of the 10 docs).
+7. **doc-006/008/009 cross-corpus + non-numbered-heading docs**: future retrieval work should address heading-format variation post-v0.1.14 + cross-corpus query construction + descriptive→obligation embedding bridge.
+
+### Cost + budget
+
+- Total v0.1.28 paid: **€1.55** (€0.28 v1.6 probe + €0.28 α+β REVERTED + €0.16 T4-bis simple probe + €0.29 T4-bis-v2 REVERTED probe + €0.55 T6 main = €1.56 ≈ €1.55).
+- Combined v0.1.27 + v0.1.28: €1.71 / ~$1.85 USD.
+- Budget post: ~$9.97 USD.
+
+### Gate authoritative
+
+- pytest -m "not slow" → **996 passed / 0 failed / 1 skipped** (= 994 v0.1.27 baseline + 2 T4-bis simple tests; v1.6 frontmatter tests pass; T4-bis-v2 tests removed via revert).
+- mypy src → Success 71 source files exit 0 UNCHANGED.
+- coverage 87.87% ≥ 85% gate carry.
+- redteam-smoke 0.92 carry (= v0.1.14-v0.1.27 frozen).
+
+### Plan progress
+
+**13 consecutive milestones with §22.22 honest framing pattern** (v0.1.19 / v0.1.20 / v0.1.21 / v0.1.21.2 / v0.1.22 / v0.1.22.1 / v0.1.23 [REVERT] / v0.1.24 / v0.1.24.1 / v0.1.25 [CONFIRM partial] / v0.1.26 [deploy-prep — counted retrospectively as §22.22 disclosure of LANCEDB env latent bug, although primary §22.22 entry was v0.1.27] / v0.1.27 [doc-mode measurement + bug discovery] / **v0.1.28 [doc-fix SHIP + 2 REVERTs]**).
+
+### Carry-forwards to v0.1.29 + H16 + HX
+
+- **v0.1.29 chat-016 Design D** (immediate next): closes the v0.1.25 CONDITIONAL all-blocked routing carry; mirror of v0.1.25 D2 at the all-blocked sub-route. EXECUTED at v0.1.29 with CONFIRM outcome.
+- **v0.1.30 title-augmented corpus embeddings** (Stage 2 post-v0.1.29): symmetric corpus-side mirror of v0.1.28 T4-bis title-prepend query-side. EXECUTED at v0.1.30 with REVERT outcome (over-citation pattern matched v0.1.28 T4-extra α+β; structural to BGE-M3 + v1.6 combo).
+- **HX retrieval engineering for doc-mode**: HyDE / title-augmented embeddings / hybrid BM25+dense. The descriptive-doc-segment → obligation-corpus-article semantic gap is the fundamental retrieval problem this milestone did NOT fully solve.
+- **HX doc_analyst v1.7 Rule 2 calibration**: v1.6 may over-default to Rule 2 refusal citing scope when context is imperfect-but-present. LOW priority unless real-world traffic shows it matters.
+- **HX segmenter v1.15** for non-numbered-heading PDF formats: v0.1.28 main showed 5/7 docs matched expected segments; doc-004 + doc-010 BLOCKED by sanitizer (legit) so not a segmenter regression but post-deploy real-traffic may surface other heading-format cases.
+
+### TFM defense framing
+
+v0.1.28 closes the doc-mode equivalent of the chat v0.1.17 → v0.1.21 lineage:
+- v0.1.17 discovered chat no-Answer residual + diagnosed mechanism
+- v0.1.17.1 shipped v1.4 force-Finding-emission fix
+- v0.1.21 Tier 2 Capa A+B+C + v1.5 Finding-based refusal closed the loop
+- v0.1.27 discovered doc placeholder citation bug + diagnosed mechanism
+- v0.1.28 shipped v1.6 Finding-based refusal + title-prepend (1 SHIP + 2 REVERTs)
+
+The methodology (diagnose-first → SHIP via discipline → REVERT promptly when refuted) applies across both chat and doc roles. v1.5 chat + v1.6 doc are now both Finding-based-refusal aware.
+
+Sin skills nuevas. Ver ADR-0033 + `evals/reports/v0.1.27/v0.1.28-doc-*.md` (5 reports) + `docs/superpowers/specs/2026-05-26-v0.1.28-doc-mode-fix-design.md` + `docs/superpowers/plans/2026-05-26-v0.1.28-doc-mode-fix.md`.
+
 ## §v0.1.29 — Auditor all-blocked routing softening (Design D Mirror; paid validation CONFIRM) (2026-05-27, squash `0378f4e`, tag `v0.1.29-chat-016-all-blocked-softening`)
 
 **Note on v0.1.26/v0.1.27/v0.1.28 doc-backfill**: per the deferred-batch-update pattern from v0.1.28 squash (`Decisions_log + evidence_matrix + CLAUDE.md §27 updates deferred to a post-v0.1.29 batch update`), this v0.1.29 entry ships standalone; v0.1.26-v0.1.28 backfill deferred to either a separate mini-doc-batch commit OR H17 cierre académico (comprehensive refresh per §16.3 H17 plan). The canonical sources for v0.1.26-v0.1.28 are squash commit messages (`07dab21` v0.1.26 + `b3273a3` v0.1.27 + `d02336a` v0.1.28) + ADR-0033 (v0.1.28) + memory files + CLAUDE.md §16.3 H15.X inline chain. Source-of-truth preserved; aggregator-doc gap acknowledged.
