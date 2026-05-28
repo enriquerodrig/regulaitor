@@ -1,6 +1,6 @@
 # ADR-0035 — Title-augmented corpus embeddings
 
-- **Status:** ACCEPTED then REVERTED per T6 empirical refutation — 2026-05-28 — squash `<squash-sha>`, tag `v0.1.30-title-augmented-embeddings` (retained as scientific record per ADR-0030 §REVERT precedent)
+- **Status:** ACCEPTED then REVERTED per T6 empirical refutation — 2026-05-28 — squash `c398c85`, tag `v0.1.30-title-augmented-embeddings` (retained as scientific record per ADR-0030 §REVERT precedent)
 - **Milestone:** v0.1.30 (Stage 2 per agreed post-v0.1.29 ordering; bridges descriptive-doc-segment → obligation-corpus-article semantic gap)
 - **Spec/plan:** inline (light pattern; ADR-0034 / ADR-0033 precedent)
 - **Companion ADRs:** [0004](0004-rag-architecture.md) (H2 RAG base — BGE-M3 + reranker + LanceDB); [0019](0019-segmenter-numbered-section-heading-detection.md) (segmenter detects Spanish numbered headings; supplies titles for the v0.1.28 query-side prepend); [0017](0017-retriever-cross-corpus-auto.md) (RetrievalConfig palancas; auto-path); [0033](0033-doc-analyst-v1-6-refusal.md) (v0.1.28 SHIPPED title-prepend query-side at `document_graph._build_doc_retrieval_query` — this ADR mirrors symmetrically at the corpus-side); [0024](0024-citation-granularity.md) (eval-side hierarchical containment; reference for "what changes vs what stays byte-equivalent" framing).
@@ -116,7 +116,7 @@ Honest framing: if doc-mode citation_recall lift is small (e.g., +0.03) but chat
 - v0.1.28 paid measurement: doc-mode N=10 main at `evals/reports/v0.1.27/v0.1.28-doc-prod-main.md`.
 - v0.1.29 paid measurement: chat-mode N=25 main at `evals/reports/v0.1.29/v0.1.29-prod-main.md` (chat baseline pre-v0.1.30).
 - Snapshot index: `corpus/indexes/regulaitor.lance.pre-v0.1.30/` (1569 rows; preserved for atomic revert).
-- Future commits referenced from this ADR: T1+T2 (helper + 1-line edit + 5 tests; same commit `0afe9d1`), T3 rebuild $0 (re-embed 1569 chunks via `python -m scripts.rag_build --corpus all --lang all --force-rebuild`), T4 ADR-0035 (this commit), T5 paid probe (~€0.65 actual / €0.40 expected; over by €0.25 due to higher doc-mode cost), T6 REVERT decision after probe (T7 main SKIPPED per §REVERT empirical refutation pattern; see below), T-revert (code + index atomic restoration; this commit), T-final squash (`<squash-sha>`; populated at T-final).
+- Future commits referenced from this ADR: T1+T2 (helper + 1-line edit + 5 tests; same commit `0afe9d1`), T3 rebuild $0 (re-embed 1569 chunks via `python -m scripts.rag_build --corpus all --lang all --force-rebuild`), T4 ADR-0035 (this commit), T5 paid probe (~€0.65 actual / €0.40 expected; over by €0.25 due to higher doc-mode cost), T6 REVERT decision after probe (T7 main SKIPPED per §REVERT empirical refutation pattern; see below), T-revert (code + index atomic restoration; this commit), T-final squash (`c398c85`; populated at T-final).
 
 ---
 

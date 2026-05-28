@@ -198,7 +198,7 @@ Each closed milestone has its own §HX section in
 | **v0.1.27** | `v0.1.27-doc-mode-validation` | (no spec; light pattern per v0.1.21.1) | (mini-plan in commit body) | (no ADR; placeholder bug discovery only) | `b3273a3` |
 | **v0.1.28** | `v0.1.28-doc-analyst-v1-6-refusal` | [spec](superpowers/specs/2026-05-26-v0.1.28-doc-mode-fix-design.md) | [plan](superpowers/plans/2026-05-26-v0.1.28-doc-mode-fix.md) | [0033](adr/0033-doc-analyst-v1-6-refusal.md) | `d02336a` |
 | **v0.1.29** | `v0.1.29-chat-016-all-blocked-softening` | (no spec; light pattern per v0.1.24.1; fully derived from ADR-0032) | (no plan; mini-plan in commit body) | [0034](adr/0034-all-blocked-routing-softening.md) | `0378f4e` |
-| **v0.1.30** | `v0.1.30-title-augmented-embeddings` | (no spec; light pattern per v0.1.24.1; fully derived from ADR-0035) | (no plan; mini-plan in commit body) | [0035](adr/0035-title-augmented-corpus-embeddings.md) (status: ACCEPTED then REVERTED) | `<squash-sha>` |
+| **v0.1.30** | `v0.1.30-title-augmented-embeddings` | (no spec; light pattern per v0.1.24.1; fully derived from ADR-0035) | (no plan; mini-plan in commit body) | [0035](adr/0035-title-augmented-corpus-embeddings.md) (status: ACCEPTED then REVERTED) | `c398c85` |
 
 Scope summary for v0.1.22 row: Cumulative paid validation (v0.1.19→v0.1.21.2 package on H10 30-case + 2 ad-hoc safety) vs v0.1.20 ARM B cached baseline; Capa A schema fix (spec amendment per §22.22 #4); decision **CONDITIONAL CONFIRM** per spec D4. Gate: 962/0/1 + mypy 71 Success + redteam-smoke 0.92 + coverage 88.55% (pre-existing inherited from v0.1.21.3 `@slow` hotfix; v0.1.22 IMPROVES by +0.72pp via Capa A regression tests).
 

@@ -4866,7 +4866,7 @@ v0.1.29 D Mirror is the symmetric closure of v0.1.25 D2's lineage. Both ship the
 
 Sin skills nuevas. Ver ADR-0034 + `evals/reports/v0.1.29/` (4 reports: probe + v0.1.29-prod-main + comparison + verdict-flip-review).
 
-## §v0.1.30 — Title-augmented corpus embeddings (Stage 2; ACCEPTED then REVERTED per T6 probe empirical refutation) (2026-05-28, squash `<squash-sha>`, tag `v0.1.30-title-augmented-embeddings`)
+## §v0.1.30 — Title-augmented corpus embeddings (Stage 2; ACCEPTED then REVERTED per T6 probe empirical refutation) (2026-05-28, squash `c398c85`, tag `v0.1.30-title-augmented-embeddings`)
 
 Paid milestone €0.65 (T5 probe; T7 main SKIPPED per cost-discipline + structurally-clear probe). Mirror at corpus-side of v0.1.28 ADR-0033 title-prepend query-side. Attempted to bridge the descriptive-doc-segment → obligation-corpus-article semantic gap by re-embedding the 1569-chunk corpus with article-title prefix (`f"Artículo {articulo} - {title}\n\n{text}"`).
 
