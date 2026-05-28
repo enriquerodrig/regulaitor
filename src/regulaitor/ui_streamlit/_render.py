@@ -11,6 +11,8 @@ Defense rules per spec §8:
 
 from __future__ import annotations
 
+import os
+
 import streamlit as st
 
 from regulaitor.api.schemas import _council_notice
@@ -67,19 +69,27 @@ _VERDICT_STYLE: dict[AuditVerdict, tuple[str, str, str]] = {
 
 
 def verdict_badge(verdict: AuditVerdict, reason: str | None = None) -> None:
-    """Render the global verdict as a subtle pill (border-left + tinted bg).
+    """Render the global verdict as a prominent pill with strong color accent.
 
-    Replaces the H6 st.success/st.error/st.warning loud blocks with a Vercel-
-    style restrained badge appropriate for a regulatory/compliance product
-    (no emojis; semantic color used only as accent, not as full background).
+    Structure: solid color pill on the left (label only) + tinted background
+    panel on the right (reason text). Pill stays restrained per Vercel guideline
+    (no emojis; semantic color used only as accent) but gains visual weight
+    appropriate for the most important signal on the page.
     """
     label, color, bg = _VERDICT_STYLE[verdict]
-    suffix = f" &middot; {reason}" if reason else ""
+    suffix_html = (
+        f"""<span style="color: #475569; font-weight: 500; font-size: 13px;
+        margin-left: 12px;">{reason}</span>"""
+        if reason
+        else ""
+    )
     st.markdown(
-        f"""<div role="status" aria-live="polite" style="padding: 8px 14px;
-        border-left: 3px solid {color}; background: {bg}; color: {color};
-        font-weight: 600; font-size: 13px; letter-spacing: 0.4px;
-        border-radius: 4px; margin-bottom: 12px;">{label}{suffix}</div>""",
+        f"""<div role="status" aria-live="polite" style="display: flex;
+        align-items: center; padding: 12px 16px; background: {bg};
+        border-left: 4px solid {color}; border-radius: 6px; margin-bottom: 16px;">
+        <span style="background: {color}; color: #FFFFFF; padding: 4px 12px;
+        border-radius: 12px; font-weight: 700; font-size: 13px;
+        letter-spacing: 0.6px;">{label}</span>{suffix_html}</div>""",
         unsafe_allow_html=True,
     )
 
@@ -175,8 +185,12 @@ def chat_state(state: ChatState) -> None:
     st.markdown(audited.answer.text)
     for f in audited.answer.findings:
         finding(f)
-    with st.expander("Detalles del Auditor (audit_results)"):
-        st.dataframe(_audit_results_table(audited))
+    # Auditor details: gated by REGULAITOR_SHOW_AUDIT_DETAILS env (default true).
+    # TFM/HF Space demo leaves visible — shows §6 invariant working;
+    # production deploy can flip to false to hide internal validation flags.
+    if os.getenv("REGULAITOR_SHOW_AUDIT_DETAILS", "true").lower() != "false":
+        with st.expander("Detalles del Auditor (audit_results)"):
+            st.dataframe(_audit_results_table(audited))
 
 
 def document_report(report: DocumentReport) -> None:
