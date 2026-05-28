@@ -33,6 +33,45 @@ _SEVERITY_LABEL_COLOR = {
     "high": "red",
 }
 
+# Corpus chip palette — one accent color per norma, distinct enough to scan
+# at a glance but all desaturated to stay subordinate to the verdict badge.
+# Labels are the human-readable forms (uppercase, official acronyms).
+_NORMA_STYLE: dict[str, tuple[str, str]] = {
+    "ai_act": ("AI Act", "#1E40AF"),  # blue-800 (matches theme primaryColor)
+    "gdpr": ("GDPR", "#047857"),  # emerald-700
+    "nis2": ("NIS2", "#6D28D9"),  # violet-700
+    "dora": ("DORA", "#B45309"),  # amber-700
+}
+
+
+def _norma_chip(norma: str) -> str:
+    """Return HTML for a small colored corpus chip (e.g. "AI Act"). Inline."""
+    label, color = _NORMA_STYLE.get(norma, (norma.upper(), "#475569"))
+    return (
+        f'<span style="background: {color}; color: #FFFFFF; padding: 2px 8px; '
+        f"border-radius: 10px; font-size: 11px; font-weight: 700; "
+        f'letter-spacing: 0.4px; vertical-align: middle;">{label}</span>'
+    )
+
+
+def _sources_summary(audited: AuditedAnswer) -> None:
+    """Render small "Fuentes consultadas" line with corpus chips above the
+    findings block. Surfaces multi-corpus reach (cross-corpus intelligence)
+    automatically: 1 chip if single norma, N chips if auto resolved to many.
+    """
+    seen: list[str] = []
+    for r in audited.audit_results:
+        if r.citation.norma not in seen:
+            seen.append(r.citation.norma)
+    if not seen:
+        return
+    chips = " ".join(_norma_chip(n) for n in seen)
+    st.markdown(
+        f'<div style="margin: 4px 0 16px 0; font-size: 12px; color: #64748B;">'
+        f"Fuentes consultadas: {chips}</div>",
+        unsafe_allow_html=True,
+    )
+
 
 def _council_judge_rows(cr: CouncilReview) -> list[dict[str, object]]:
     """Per-judge projection shown in the Council expander. Redacted subset of
@@ -95,14 +134,25 @@ def verdict_badge(verdict: AuditVerdict, reason: str | None = None) -> None:
 
 
 def finding(f: Finding) -> None:
-    """Render a Finding with severity badge and inline literal-text citations."""
+    """Render a Finding with severity badge and inline literal-text citations.
+
+    Each citation is prefixed with a colored corpus chip (AI Act / GDPR / NIS2
+    / DORA) for instant scanability and visual hierarchy. The chip uses HTML
+    + unsafe_allow_html (markdown `:color[...]` can't render rounded pills).
+    """
     color = _SEVERITY_LABEL_COLOR.get(f.severity, "gray")
     st.markdown(f"**{f.text}** &nbsp;:{color}[**{f.severity.upper()}**]")
     for c in f.citations:
-        loc = f"{c.norma} art. {c.articulo}"
-        if c.apartado is not None:
-            loc += f".{c.apartado}"
-        st.markdown(f"> _{c.text}_\n>\n> — **{loc}** ({c.language})")
+        apartado = f".{c.apartado}" if c.apartado is not None else ""
+        # Quote first (literal text), then attribution line with corpus chip.
+        st.markdown(f"> _{c.text}_", unsafe_allow_html=True)
+        st.markdown(
+            f'<div style="margin: -8px 0 12px 14px; font-size: 13px; color: #475569;">'
+            f"{_norma_chip(c.norma)} &nbsp; "
+            f'<span style="font-weight: 600;">art. {c.articulo}{apartado}</span> '
+            f'<span style="color: #94A3B8;">({c.language})</span></div>',
+            unsafe_allow_html=True,
+        )
 
 
 def sanitizer_log_expander(log: list[SanitizerEvent], expanded: bool = False) -> None:
@@ -173,6 +223,7 @@ def chat_state(state: ChatState) -> None:
         return
 
     verdict_badge(audited.verdict, reason=audited.reason)
+    _sources_summary(audited)
 
     # Advisory Council notice (H13): show prominently if diverges from Auditor
     notice = _council_notice(state.council_review, state.audited_answer)

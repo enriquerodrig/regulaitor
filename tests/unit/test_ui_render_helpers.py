@@ -165,11 +165,13 @@ def test_finding_renders_text_severity_and_citations(streamlit_recorder):
     f = _finding(text="hallazgo X", sev="medium")
     _render.finding(f)
     md_calls = [args[0] for m, args, _ in streamlit_recorder if m == "markdown"]
-    assert len(md_calls) == 2
+    # 1 header (text+severity) + 2 per citation (literal quote + attribution chip)
+    assert len(md_calls) == 3
     assert "hallazgo X" in md_calls[0]
     assert "MEDIUM" in md_calls[0].upper()
     assert "texto literal del corpus" in md_calls[1]
-    assert "ai_act art. 6.1" in md_calls[1]
+    assert "art. 6.1" in md_calls[2]
+    assert "AI Act" in md_calls[2]  # corpus chip label, not raw "ai_act"
 
 
 def test_finding_with_multiple_citations(streamlit_recorder):
@@ -177,7 +179,8 @@ def test_finding_with_multiple_citations(streamlit_recorder):
     f = Finding(text="x", citations=citations, severity="info")
     _render.finding(f)
     md_calls = [args[0] for m, args, _ in streamlit_recorder if m == "markdown"]
-    assert len(md_calls) == 1 + len(citations)
+    # 1 header + 2 per citation (literal + attribution)
+    assert len(md_calls) == 1 + 2 * len(citations)
 
 
 # ---------- error_message ----------
