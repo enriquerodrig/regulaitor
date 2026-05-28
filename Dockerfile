@@ -52,10 +52,13 @@ COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
 COPY --from=builder --chown=appuser:appuser /app/src /app/src
 COPY --chown=appuser:appuser pyproject.toml uv.lock ./
 COPY --chown=appuser:appuser docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-# Explicit chmod +x: git mode bits don't survive cross-platform uploads
-# (e.g. Windows → HF Spaces). Without this, container init fails with
-# 'permission denied' on the entrypoint exec.
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Explicit chmod +x + line-ending normalization: git mode bits don't survive
+# cross-platform uploads (e.g. Windows → HF Spaces), AND Windows authors may
+# write CRLF line endings which Linux misinterprets (#!/usr/bin/env bash\r
+# → exec failure "No such file or directory" because bash\r ≠ bash).
+# Belt-and-suspenders: sed strips trailing \r from each line, then chmod.
+RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
 COPY --chown=appuser:appuser scripts/ ./scripts/
 COPY --chown=appuser:appuser corpus/manifests/ ./corpus/manifests/
 COPY --chown=appuser:appuser corpus/processed/ ./corpus/processed/
