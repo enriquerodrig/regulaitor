@@ -1,0 +1,10 @@
+# v0.1.30 paid probe allowlist (3 doc + 3 chat = 6 cases).
+# Plumbing sanity check before T7 paid main.
+# Production state env-unset (v1.5 chat + v1.6 doc + Auditor v0.1.29 D Mirror
+# + corpus index re-embedded with v0.1.30 title-augmented helper).
+doc-001
+doc-002
+doc-003
+chat-001
+chat-002
+chat-003

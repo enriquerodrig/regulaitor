@@ -4865,3 +4865,75 @@ Bundles 6 small $0 items: CLAUDE.md §6.1 multi-layer summary + auditor.py inlin
 v0.1.29 D Mirror is the symmetric closure of v0.1.25 D2's lineage. Both ship the same helper at different sub-routes; both preserve §6 invariant via the same binary all-Check-3 condition; both deliver predicted verdict_match lifts (D2: +0.33 at partial; D Mirror: +0.08 at all-blocked). The asymmetric magnitudes reflect cohort-specific frequencies. **The methodology continues to be the contribution.**
 
 Sin skills nuevas. Ver ADR-0034 + `evals/reports/v0.1.29/` (4 reports: probe + v0.1.29-prod-main + comparison + verdict-flip-review).
+
+## §v0.1.30 — Title-augmented corpus embeddings (Stage 2; ACCEPTED then REVERTED per T6 probe empirical refutation) (2026-05-28, squash `<squash-sha>`, tag `v0.1.30-title-augmented-embeddings`)
+
+Paid milestone €0.65 (T5 probe; T7 main SKIPPED per cost-discipline + structurally-clear probe). Mirror at corpus-side of v0.1.28 ADR-0033 title-prepend query-side. Attempted to bridge the descriptive-doc-segment → obligation-corpus-article semantic gap by re-embedding the 1569-chunk corpus with article-title prefix (`f"Artículo {articulo} - {title}\n\n{text}"`).
+
+### Scope (1 src/ file at activation; ALL REVERTED at T-revert)
+
+`src/regulaitor/rag/build.py`: NEW `_text_to_embed(chunk, parsed)` helper + 1-line modification at line ~123 (`embed([_text_to_embed(ch, parsed) for ch in chunks])` was `embed([ch.text for ch in chunks])`). +5 unit tests in `tests/unit/rag/test_build_title_augmented.py`.
+
+T-revert atomic: snapshot mv-back of `regulaitor.lance.pre-v0.1.30/` to live index + `git checkout HEAD -- corpus/manifests/` to restore pre-v0.1.30 `embedded_at` timestamps + code restoration in `build.py` (helper removed; embed line restored; Chunk import removed) + 5 tests removed. Live index verified cosine sim 0.97 (NOT 1.0) vs discarded v0.1.30 index on ai_act.1.en sample → confirms atomic restoration is real.
+
+### §22.22 headline payload — probe empirical refutation
+
+**T5 paid probe (6 cases: doc-001..003 + chat-001..003)**:
+
+- **Doc-mode citation_recall 0.33 mean** — equals v0.1.28 baseline; **FAILS SHIP criterion D5 "≥+0.05 lift"**.
+- **doc-001 REGRESSED**: precision 0.50 → 0.00; recall 0.33 → 0.00.
+- **doc-002 + doc-003 flat outcomes** (0/0 → 0/0) but emitted dramatically more citations (doc-003: 1 emitted → 19 emitted; **19x expansion**).
+- **Chat-mode chat-001..003 essentially unchanged** (3/3 verdict_match preserved; chat-002 slightly improved citations).
+
+**Mechanism (§22.22 honest)**: Over-citation pattern matches v0.1.28 T4-extra α+β REVERT (ADR-0033 §22.22 #5). Title-augmented embeddings surface significantly more topic-related corpus articles per doc segment → v1.6 doc_analyst emits Findings citing all surfaced articles → precision tanks because gold-specific articles still don't dominate the surfaced set + the over-emission dilutes the signal. Structural to BGE-M3 + v1.6 doc_analyst combination, not stochastic to the specific intervention.
+
+**T7 main (~€1.40) SKIPPED**: structurally clear probe evidence + matches a prior REVERT mechanism + cost discipline (~12% of remaining budget saved). Same outcome expected with high confidence (~85%).
+
+### §6 invariant — HELD throughout
+
+`citation/validator.py` + `citation/schemas.py` + `agents/auditor.py` + `agents/analyst.py` + `prompts/` + `rag/chunking.py` + `rag/retrieval.py` + `rag/schemas.py` + `rag/store.py` + `evals/` pipeline + gold set ALL BYTE-UNCHANGED across both T1+T2 (activation) and T-revert (restoration). 0 fabrications detected at probe (per-citation reasons all valid). redteam-smoke 0.92 carry preserved by construction (retrieval-layer index change does not affect deterministic sanitizer/injection code paths).
+
+### Decision: REVERT per ADR-0035 D5
+
+ADR-0035 retained as scientific record with §REVERT section appended (~70 lines). Prospective D1-D5 + Alternatives A-D retained verbatim. Precedent: ADR-0030 §REVERT (v0.1.23 Auditor lenient quorum Design B REVERT).
+
+### Lessons learned (5 carry-forwards)
+
+1. **Over-citation pattern is structural to BGE-M3 + v1.6 doc_analyst combo** when retrieval breadth expands (whether via top_k, max_chunks_per_norma, OR vector-similarity broadening from title-augmented embeddings).
+2. **Descriptive-doc-segment → obligation-corpus-article semantic gap is fundamental** at embedding level — CANNOT be closed by title prefix alone. HyDE (Alternative A) more theoretically grounded; HX post-deploy work.
+3. **v0.1.28 T4-bis title-prepend QUERY-side STAYS** (proven helpful at v0.1.28 main; citation_recall 0 → 0.33). The v0.1.30 REVERT does NOT revert v0.1.28's query-side prepend.
+4. **Doc gold set N=10 too small for high-confidence retrieval decisions** — HX retrieval work needs N≥30 doc cases OR real production traffic, neither available pre-H17.
+5. **Methodology vindication**: v0.1.30 is the **2nd REVERT outcome** in the §22.22 lineage (after v0.1.23). The methodology applies across retrieval-layer (v0.1.30) and Auditor-layer (v0.1.23) interventions. The §6 invariant held throughout both REVERTs.
+
+### Gate authoritative (post-revert)
+
+`uv run pytest -m "not slow"` → **999 passed / 0 failed / 1 skipped** (back to v0.1.29 baseline; -5 tests removed at T-revert; net delta vs main = 0 src/ changes).
+`uv run mypy src` → Success 71 source files exit 0 UNCHANGED.
+coverage 88.62% ≥ 85% gate.
+redteam-smoke 0.92 carry preserved.
+
+### Cost + budget
+
+Total v0.1.30 paid: **€0.65** (T5 probe; T7 main skipped). Budget remaining ~$8.50 USD (sufficient for H17 emergencies). Sunk vs budget: ~6.5% (vs alternative ~20% if main proceeded).
+
+### Plan progress
+
+**12 consecutive milestones with §22.22 honest framing pattern** (v0.1.19 / v0.1.20 / v0.1.21 / v0.1.21.2 / v0.1.22 / v0.1.22.1 / v0.1.23 [REVERT] / v0.1.24 / v0.1.24.1 / v0.1.25 [CONFIRM partial] / v0.1.29 [CONFIRM all-blocked] / v0.1.30 [REVERT title-augmented]). 2 REVERTs in the lineage (v0.1.23 + v0.1.30); both shipped honestly with §REVERT sections + atomic restoration. The methodology continues to be the contribution.
+
+### Carry-forwards
+
+1. **Stage 3 pre-H16 polish $0** (next): archive scripts/v012*.py + verify ragas/langchain-* dev deps + gitleaks local + README refresh + Analyst prompt EOL doc + pip-audit CI re-run.
+2. **Stage 4 H16 HF Spaces deploy** (~1 día).
+3. **Stage 5 H17 TFM cierre académico** (1-2 semanas; architecture.md + model_card + data_card + ai_act_assessment + runbook + cost_analysis comprehensive refresh + memoria + slide deck + video demo + tag v1.0.0).
+4. **Doc-mode retrieval engineering** carry-forward to HX post-deploy: HyDE / hybrid BM25 / custom legal reranker per ADR-0035 §Alternatives.
+5. **Doc-backfill v0.1.26/v0.1.27/v0.1.28/v0.1.29/v0.1.30** in decisions_log + evidence_matrix + CLAUDE.md §27 still partially deferred — this entry adds v0.1.30; v0.1.26-v0.1.28 still pending H17 batch.
+
+### TFM defense framing
+
+v0.1.30 REVERT is the **2nd empirical refutation** in the §22.22 lineage (after v0.1.23). Both shipped per the **diagnose → intervene → measure → refute → revert → document** science cycle. v0.1.30 specifically:
+- v0.1.28 query-side title-prepend (T4-bis SHIPPED): bridged the gap PARTIALLY at query side (citation_recall 0 → 0.33).
+- v0.1.30 corpus-side title-augmented (REVERTED): hypothesis was symmetric counterpart would compound the lift; empirical reality was over-citation dilution at the v1.6 doc_analyst layer. The hypothesis was reasonable, the implementation was correct, the §6 invariant held — but the downstream consequence refuted the SHIP criterion.
+
+The asymmetry (query-side prepend helps; corpus-side prepend hurts) is the substantive scientific finding of v0.1.30. Worth documenting in H17 memoria as a non-obvious empirical insight about retrieval-vs-emission dynamics in v1.6 doc_analyst.
+
+Sin skills nuevas. Ver ADR-0035 (with §REVERT section) + `evals/reports/v0.1.30/probe.md` (sunk €0.65 evidence) + `scripts/v0130_run.py` + `evals/v0130_probe_ids.txt`.

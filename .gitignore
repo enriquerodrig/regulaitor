@@ -122,6 +122,11 @@ evals/reports/*
 # chat-016 BLOCK → PASS as predicted + 2 bonus flips).
 !evals/reports/v0.1.29/
 !evals/reports/v0.1.29/*
+# v0.1.30 title-augmented embeddings paid probe — tracked as REVERT evidence
+# (ADR-0035 §REVERT; €0.65 sunk probe; over-citation pattern matches v0.1.28
+# T4-extra α+β REVERT mechanism; T7 main skipped per cost-discipline).
+!evals/reports/v0.1.30/
+!evals/reports/v0.1.30/*
 evals/cache/
 evals/reports/archive/
 # v0.1.8 — per-case JSONL checkpoints (runtime artifacts; correlated to reports
