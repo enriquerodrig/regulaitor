@@ -12,6 +12,7 @@ import time
 from datetime import UTC, datetime
 from functools import partial
 from pathlib import Path
+from typing import Any
 
 from evals import checkpoint
 from evals.cache import cache_call
@@ -86,7 +87,7 @@ def load_gold_set(
     return chat_cases, doc_cases
 
 
-def _anthropic_client_factory() -> object:
+def _anthropic_client_factory() -> Any:
     """Return a live anthropic.Anthropic() client.
 
     Defined as a module-level function so tests can monkeypatch it

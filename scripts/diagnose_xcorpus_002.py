@@ -31,7 +31,7 @@ from __future__ import annotations
 
 from collections import Counter
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from regulaitor.corpus import loader
 from regulaitor.rag import embeddings, reranker, retrieval, store
@@ -43,7 +43,7 @@ QUERY = (
     "¿Debemos notificarlo solo al CSIRT según NIS2 o también a la autoridad "
     "de protección de datos según el RGPD?"
 )
-LANGUAGE = "es"
+LANGUAGE: Literal["es", "en"] = "es"
 EXPECTED: list[tuple[str, str]] = [("nis2", "23"), ("nis2", "35"), ("gdpr", "33")]
 REPORT_PATH = Path("docs/xcorpus_002_investigation.md")
 

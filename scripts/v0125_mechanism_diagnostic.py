@@ -151,7 +151,8 @@ class PerCitationDiagnostic:
             "|--------|-------|-----------|",
         ]
 
-        for bucket_letter in ["A", "B", "C", "D", "E"]:
+        bucket_letters: tuple[BucketType, ...] = ("A", "B", "C", "D", "E")
+        for bucket_letter in bucket_letters:
             count = len(self.buckets[bucket_letter])
             pct = 100.0 * count / total if total > 0 else 0.0
             lines.append(f"| {bucket_letter} | {count} | {pct:.1f}% |")
@@ -173,7 +174,7 @@ class PerCitationDiagnostic:
             ]
         )
 
-        for bucket_letter in ["A", "B", "C", "D", "E"]:
+        for bucket_letter in bucket_letters:
             if not self.buckets[bucket_letter]:
                 continue
             lines.append(f"### Bucket {bucket_letter}")
