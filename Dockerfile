@@ -51,6 +51,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
 COPY --from=builder --chown=appuser:appuser /app/src /app/src
 COPY --chown=appuser:appuser pyproject.toml uv.lock ./
+# README.md is referenced by pyproject.toml hatchling metadata; uv run
+# re-validates the editable install at startup → needs README.md in CWD
+# or hatchling fails. Copy in runtime stage too (was only in builder before).
+COPY --chown=appuser:appuser README.md ./
 COPY --chown=appuser:appuser docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 # Explicit chmod +x + line-ending normalization: git mode bits don't survive
 # cross-platform uploads (e.g. Windows → HF Spaces), AND Windows authors may
