@@ -22,7 +22,13 @@ if [ ! -d "${INDEX_MARKER}" ]; then
   echo "[entrypoint] Cold-start: corpus index not found at ${INDEX_MARKER}; building (~15-20 min)..."
   uv run python -m scripts.ingest --corpus all --lang all --use-local-only || \
     { echo "[entrypoint] ERROR: ingest failed; container will start without corpus." >&2; }
-  uv run python -m scripts.rag_build --corpus all --lang all || \
+  # --force-rebuild required: the baked-in corpus/manifests/ have chunks
+  # already listed (from the original build that produced the now-missing
+  # LFS lance index), so rag_build's default skip-if-manifest-shows-chunks
+  # logic would SKIP all 1569 articles and leave /data/indexes empty.
+  # Force-rebuild ensures the manifest-vs-index inconsistency is resolved
+  # by actually re-chunking + re-embedding into the empty LANCEDB_PATH.
+  uv run python -m scripts.rag_build --corpus all --lang all --force-rebuild || \
     { echo "[entrypoint] ERROR: rag-build failed; container will start without corpus." >&2; }
   echo "[entrypoint] Cold-start build complete; proceeding to serve."
 else

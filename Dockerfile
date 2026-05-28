@@ -64,6 +64,10 @@ COPY --chown=appuser:appuser docker-entrypoint.sh /usr/local/bin/docker-entrypoi
 RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 COPY --chown=appuser:appuser scripts/ ./scripts/
+# .streamlit/config.toml: theme + CORS/XSRF settings live here. Without
+# COPY, Streamlit falls back to default theme (no Legal Navy R3 polish)
+# and HF reverse proxy needs the enableCORS/enableXsrfProtection flags.
+COPY --chown=appuser:appuser .streamlit/ ./.streamlit/
 COPY --chown=appuser:appuser corpus/manifests/ ./corpus/manifests/
 COPY --chown=appuser:appuser corpus/processed/ ./corpus/processed/
 # H16 deploy: ship pre-built LanceDB index in image (~76 MB) for HF Spaces
