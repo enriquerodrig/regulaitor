@@ -45,6 +45,16 @@ def render() -> None:
     """Render the Analiza documento tab: form + last result."""
     st.header("Analiza documento")
 
+    # Demo-public latency advisory: HF Spaces free tier runs on CPU (cpu-basic
+    # = 2 vCPU, no GPU). BGE-M3 reranker takes ~15-30s per segment query;
+    # a doc with 80 segments can take ~1h. For real workloads use GPU deploy
+    # or local. Frontend-only note, no backend behavior change.
+    st.info(
+        "**Demo público (HF Spaces CPU)**: el análisis documental tarda "
+        "~30-60s por sección. Recomendado: PDFs ≤ 5 páginas para esta demo. "
+        "Documentos extensos: deploy GPU o ejecutar localmente."
+    )
+
     with st.form("doc_form", clear_on_submit=False):
         uploaded = st.file_uploader(
             "Documento (PDF o Markdown)",
