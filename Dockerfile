@@ -24,8 +24,10 @@ COPY pyproject.toml uv.lock ./
 # --frozen: don't update uv.lock; --no-install-project: deps only, not the package itself yet
 RUN uv sync --frozen --no-install-project --no-dev
 
-# Now copy source + install project
+# Now copy source + README (needed by hatchling for pyproject metadata
+# validation: `readme = "README.md"` in pyproject.toml) + install project
 COPY src/ ./src/
+COPY README.md ./
 RUN uv sync --frozen --no-dev
 
 # ============================================================
