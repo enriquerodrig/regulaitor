@@ -63,9 +63,17 @@ Thumbs.db
 
 # Project: corpus and outputs (corpus/manifests/ IS tracked)
 # corpus/raw and corpus/processed are tracked via Git-LFS (see .gitattributes)
-# corpus/indexes is the LanceDB store, kept local per machine
+# corpus/indexes is the LanceDB store, kept local per machine — EXCEPT the
+# canonical regulaitor.lance which is tracked via LFS for H16 deploy
+# cold-start reduction (see .gitattributes + docs/H16_DEPLOY.md §3.1 + §7).
+# Other lance dirs (e.g., temporary snapshots, experimental indexes) stay
+# gitignored.
 corpus/indexes/
+!corpus/indexes/regulaitor.lance/
+!corpus/indexes/regulaitor.lance/**
 *.lance
+!corpus/indexes/regulaitor.lance/chunks.lance/
+!corpus/indexes/regulaitor.lance/chunks.lance/**
 evals/reports/*
 !evals/reports/latest.md
 # H12 A/B arm reports — tracked as TFM evidence (contaminated/partial; see

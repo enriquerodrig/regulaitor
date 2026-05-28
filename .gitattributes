@@ -1,6 +1,14 @@
 # Git-LFS for corpus binaries
 corpus/raw/** filter=lfs diff=lfs merge=lfs -text
 corpus/processed/** filter=lfs diff=lfs merge=lfs -text
+# H16 deploy: ship pre-built LanceDB index to HF Spaces for cold-start
+# reduction (eliminates 10-15 min corpus build on first request). ~76 MB.
+# See docs/H16_DEPLOY.md §3.1 + §7.
+# Explicit `binary` first to prevent text/line-ending detection by Git
+# before the LFS filter takes over (binary lance fragments must not be
+# normalized; embeddings would corrupt).
+corpus/indexes/regulaitor.lance/** binary
+corpus/indexes/regulaitor.lance/** filter=lfs diff=lfs merge=lfs -text
 
 # Normalise line endings on text files (avoid LF-CRLF warnings on Windows)
 * text=auto
