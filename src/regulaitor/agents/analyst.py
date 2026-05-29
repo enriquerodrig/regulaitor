@@ -207,19 +207,15 @@ class AnalystAgent:
                 last_error = e
                 if attempt == max_attempts:
                     break
-                # Capa C: build failure-specific feedback and retry.
+                # Capa C: build failure-specific feedback and retry (deep-review
+                # I2 fix: branch on actual error shape vs hardcoded empty-findings
+                # variant; honors ADR-0027 D4 "failure-specific feedback" mandate).
                 offending_text = ""
                 if isinstance(result.tool_use_input, dict):
                     raw_text = result.tool_use_input.get("text")
                     if isinstance(raw_text, str):
                         offending_text = raw_text[:200]
-                feedback = (
-                    "Your previous response had `findings=[]`. Your text claimed: "
-                    f"'{offending_text}'. Map each substantive claim to a "
-                    "Finding with citations. If you cannot find a citation in "
-                    "the retrieved context to support a claim, remove that "
-                    "claim from text."
-                )
+                feedback = _build_retry_feedback(e, offending_text)
                 tool_use_id = f"retry_v0121_attempt{attempt}"
                 messages = messages + [
                     {
@@ -264,3 +260,60 @@ def _is_findings_missing(e: ValidationError) -> bool:
     if not errors:
         return False
     return all(err.get("loc") == ("findings",) and err.get("type") == "missing" for err in errors)
+
+
+def _build_retry_feedback(e: ValidationError, offending_text: str) -> str:
+    """Map a ValidationError to a failure-specific retry feedback string.
+
+    Per ADR-0027 D4: feedback should describe WHICH field failed and HOW to
+    fix it, not a generic "fix your response" message. Deep-review I2 fix:
+    previously hardcoded to the empty-findings variant; now branches on the
+    actual error shape (findings missing/empty, findings citations malformed,
+    text empty/missing, language invalid, severity invalid, or generic fallback).
+    """
+    errors = e.errors()
+    if not errors:
+        return "Your response had no validation errors but Answer.model_validate failed. Retry."
+
+    # Categorize: empty/missing findings (most common path; Capa B min_length=1).
+    if _is_findings_missing(e) or all(
+        err.get("loc") in (("findings",), ("findings", 0)) for err in errors
+    ):
+        return (
+            "Your previous response had `findings=[]` or `findings` missing. "
+            f"Your text claimed: '{offending_text}'. Map each substantive claim "
+            "to a Finding with citations. If you cannot find a citation in the "
+            "retrieved context to support a claim, remove that claim from text."
+        )
+
+    # Categorize: malformed citations inside findings (e.g. invalid norma,
+    # missing apartado, whitespace-only text per v0.1.32-post).
+    if any(
+        isinstance(err.get("loc"), tuple)
+        and len(err["loc"]) >= 3
+        and err["loc"][0] == "findings"
+        and err["loc"][2] == "citations"
+        for err in errors
+    ):
+        first = errors[0]
+        return (
+            f"Your previous response had malformed citations: {first.get('msg', '')}. "
+            "Every Finding must have ≥1 valid Citation with non-empty norma, "
+            "articulo, language, and non-whitespace text quoted literally from "
+            "the retrieved context. Re-emit emit_answer with valid citations."
+        )
+
+    # Categorize: text field empty or missing.
+    if any(err.get("loc") == ("text",) for err in errors):
+        return (
+            "Your previous response had an empty or missing `text` field. "
+            "Emit a non-empty `text` summarizing the answer (≥1 char)."
+        )
+
+    # Generic fallback: cite the first error verbatim so Sonnet can self-correct.
+    first = errors[0]
+    return (
+        f"Your previous response had {len(errors)} validation error(s). First: "
+        f"location={first.get('loc')} type={first.get('type')} msg={first.get('msg', '')}. "
+        "Re-emit emit_answer with a valid Answer schema."
+    )

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import os
 import time
 from datetime import UTC, datetime
@@ -38,7 +39,11 @@ async def ask(
     case_id = _generate_case_id()
     request.state.case_id = case_id
     t0 = time.monotonic()
-    state = run(
+    # Deep-review I1: offload sync run() to thread so event loop stays free for
+    # concurrent traffic. Without this, all /ask requests serialize end-to-end
+    # because run() blocks on Sonnet calls (5-40s typical).
+    state = await asyncio.to_thread(
+        run,
         query=payload.query,
         corpus=payload.corpus,
         language=payload.language,

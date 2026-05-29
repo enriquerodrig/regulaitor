@@ -1,8 +1,14 @@
 ---
 agent: document_analyst
+role: system
 version: v1.0
 purpose: Analyze a sanitized document segment against an EU regulatory corpus and produce Findings with literal citations.
 created: 2026-05-07
+author: enriquerodrig
+model_compatibility: [claude-sonnet-4-6]
+changelog:
+  - 2026-05-07: initial v1.0 for H5 doc-mode (empty findings allowed when segment lacks analyzable content).
+  - 2026-05-27: SUPERSEDED by v1.6 (default) for v0.1.28 — see system.v1.6.md frontmatter for the placeholder-citation regression fix. v1.0 retained for env-override fallback only.
 ---
 
 # Document Analyst — system prompt v1.0

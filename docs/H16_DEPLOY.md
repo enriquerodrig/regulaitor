@@ -59,12 +59,20 @@
 3. Push image to Docker Hub (or build in-Space using the project's `Dockerfile`).
 4. Secrets same as §3.1.
 
-### §3.3 — Persistent volume on HF
+### §3.3 — Persistent volume on HF + cold-start strategy
 
 HF Spaces grants 16 GB persistent storage per Space. Mount path varies by plan:
 - Free: `/data` writable; persists across restarts.
-- Set `LANCEDB_PATH=/data/indexes` + `HF_HOME=/data/hf_cache` in Space secrets.
-- First request triggers corpus build (~15-20 min); subsequent <5s.
+- Set `HF_HOME=/data/hf_cache` in Space secrets (BGE-M3 + reranker cache).
+
+**LANCEDB_PATH — two valid strategies (pick ONE)**:
+
+| Strategy | `LANCEDB_PATH` value | Cold-start | When |
+|---|---|---|---|
+| **Baked-in (recommended for TFM demo)** | `/app/corpus/indexes/regulaitor.lance` | ~5 min (image pull + warmup + BGE-M3 load) | Ship pre-built LanceDB in Docker image via Git LFS. v0.1.32 default. |
+| **Build-on-first-run** | `/data/indexes` | ~15-30 min (often timeout on HF cpu-basic free tier) | Persistent volume; corpus re-builds on first cold-start, persists to `/data/indexes/chunks.lance/` for future restarts. |
+
+The Dockerfile sets `LANCEDB_PATH=/data/indexes` as the ENV default (build-on-first-run). For the v0.1.32 H16 deploy, the HF Space env var **overrides** to `/app/corpus/indexes/regulaitor.lance` so the entrypoint detects the baked-in `chunks.lance/` and skips `rag_build`. **Use baked-in if you can ship the index via LFS**; otherwise the build-on-first-run path risks the 30-min HF Spaces hard limit.
 
 ---
 
@@ -146,8 +154,22 @@ services:
 
 ## §6 — Local Docker (dev / staging / reproducibility)
 
+This project does NOT ship a `.env.example` (per user rule overriding CLAUDE.md §22.6). Create `.env` inline:
+
 ```bash
-cp .env.example .env  # then edit with real keys
+cat > .env <<'EOF'
+ANTHROPIC_API_KEY=sk-ant-...
+REGULAITOR_API_TOKEN=replace-with-token-urlsafe-32
+# Optional:
+# OPENAI_API_KEY=...
+# GROQ_API_KEY=...
+# LANGFUSE_PUBLIC_KEY=...
+# LANGFUSE_SECRET_KEY=...
+# LANGFUSE_HOST=...
+# REGULAITOR_CORS_ORIGINS=https://yourapp.example.com
+# LANCEDB_PATH=/data/indexes  # or /app/corpus/indexes/regulaitor.lance per §3.3
+EOF
+
 make docker-build
 make docker-up
 # API:       http://localhost:8000/health

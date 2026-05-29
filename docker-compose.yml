@@ -9,7 +9,13 @@
 #   Cold-start: ~15-20 min on first up (LanceDB build + BGE-M3 + reranker download)
 #   Warm-start: <5s
 #
-# Secrets: copy .env.example to .env (gitignored); compose loads via env_file
+# Secrets: create a `.env` file in repo root (gitignored). The project does NOT
+# ship a `.env.example` (per user rule overriding CLAUDE.md §22.6). Minimum:
+#   ANTHROPIC_API_KEY=sk-ant-...
+#   REGULAITOR_API_TOKEN=<32+ random bytes for Bearer auth>
+# Optional: OPENAI_API_KEY, GROQ_API_KEY, LANGFUSE_*, REGULAITOR_CORS_ORIGINS,
+# REGULAITOR_RATE_LIMIT_ASK, REGULAITOR_RATE_LIMIT_ANALYZE, LANCEDB_PATH.
+# See docs/H16_DEPLOY.md §2 "Env vars" for the full reference.
 
 services:
   api:

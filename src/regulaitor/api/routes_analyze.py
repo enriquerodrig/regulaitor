@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import os
 import time
 from datetime import UTC, datetime
@@ -68,7 +69,11 @@ async def analyze(
         raise UnsupportedMediaType(reason="unsupported corpus member")
 
     t0 = time.monotonic()
-    report = run_document(
+    # Deep-review I1: offload sync run_document() to thread so event loop stays
+    # free for concurrent traffic. Doc-mode wallclock is multi-minute; without
+    # this, all /analyze requests serialize and /ask is blocked too.
+    report = await asyncio.to_thread(
+        run_document,
         file_bytes=body,
         mime_type=mime_type,
         language=language,  # type: ignore[arg-type]

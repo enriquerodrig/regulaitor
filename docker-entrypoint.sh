@@ -20,16 +20,25 @@ cd /app
 
 if [ ! -d "${INDEX_MARKER}" ]; then
   echo "[entrypoint] Cold-start: corpus index not found at ${INDEX_MARKER}; building (~15-20 min)..."
-  uv run python -m scripts.ingest --corpus all --lang all --use-local-only || \
-    { echo "[entrypoint] ERROR: ingest failed; container will start without corpus." >&2; }
+  # Deep-review I7 fix: fail-fast on cold-start build errors. Previous version
+  # used `|| { echo ...; }` which swallowed the exit code → container started
+  # with empty LanceDB + /health returned 503 with no upstream signal to
+  # debug. Orchestrators (HF Spaces, docker-compose, k8s) now get a failed-
+  # start event and the traceback stays visible.
+  uv run python -m scripts.ingest --corpus all --lang all --use-local-only || {
+    echo "[entrypoint] FATAL: ingest failed during cold-start; aborting container." >&2
+    exit 1
+  }
   # --force-rebuild required: the baked-in corpus/manifests/ have chunks
   # already listed (from the original build that produced the now-missing
   # LFS lance index), so rag_build's default skip-if-manifest-shows-chunks
   # logic would SKIP all 1569 articles and leave /data/indexes empty.
   # Force-rebuild ensures the manifest-vs-index inconsistency is resolved
   # by actually re-chunking + re-embedding into the empty LANCEDB_PATH.
-  uv run python -m scripts.rag_build --corpus all --lang all --force-rebuild || \
-    { echo "[entrypoint] ERROR: rag-build failed; container will start without corpus." >&2; }
+  uv run python -m scripts.rag_build --corpus all --lang all --force-rebuild || {
+    echo "[entrypoint] FATAL: rag-build failed during cold-start; aborting container." >&2
+    exit 1
+  }
   echo "[entrypoint] Cold-start build complete; proceeding to serve."
 else
   echo "[entrypoint] Warm-start: existing corpus index found at ${INDEX_MARKER}."
