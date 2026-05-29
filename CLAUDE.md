@@ -87,7 +87,7 @@ Si falla cualquier validación crítica, la salida se bloquea o se marca como "r
 El invariante §6 se ha refinado en capas explícitas (cada cambio documentado en su ADR + decisions_log; **el enforcement boundary se preserva en TODAS las capas a y b**):
 
 - **Capa (a) per-citation validator** — `src/regulaitor/citation/validator.py`. Validación estricta 3-checks (article_exists / apartado_exists / text_normalized_match). BYTE-EQUIVALENT desde H4; v0.1.24 ADR-0031 añadió `failed_check: Literal[1,2,3] | None` como observabilidad aditiva (NO está en el decision path).
-- **Capa (b) Finding-Lenient aggregation** — `auditor.py` línea ~61 `any(r.validated for r in this_finding_results)`. BYTE-UNCHANGED desde v0.1.21.
+- **Capa (b) Finding-Lenient aggregation** — `auditor.py` línea 65 `any(r.validated for r in this_finding_results)`. BYTE-UNCHANGED desde v0.1.21.
 - **Capa (c) Turn-level aggregation policy** — `auditor.py` branches del `audit()`. Modificada en (1) v0.1.21 ADR-0027 D1 Tier 1 quorum `n_invalid_citations >= 2` → RHR; (2) v0.1.25 ADR-0032 D2 partial-Findings routing softening cuando helper True; (3) v0.1.29 ADR-0034 D Mirror all-blocked routing softening con la MISMA condición helper.
 - **Capa (d) prompt-level explicit forbid** — `agents/prompts/analyst/system.v1.5.md` + `agents/prompts/document_analyst/system.v1.6.md`. Hard rule 4 inviolable "Never emit placeholder citation strings (UNKNOWN/N/A/TBD)" + Rule 2 Finding-based refusal cuando contexto insuficiente. NUEVA en v0.1.28 ADR-0033 (defense-in-depth model-side; complementa enforcement validator-side).
 

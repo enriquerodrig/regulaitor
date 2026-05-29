@@ -174,3 +174,32 @@ def test_council_node_swallows_exceptions_unchanged() -> None:
         assert result == {}
     finally:
         graph._council = original_council
+
+
+def test_council_node_swallows_bind_verdict_exception() -> None:
+    """Deep-review minor: if a future custom AggregationPolicy raises inside
+    bind_verdict (e.g. buggy would_escalate implementation), _council_node
+    must still return {} not propagate to the turn. The broad try/except in
+    graph._council_node (lines 143-147) covers Council.review AND bind_verdict;
+    the existing test covers only Council.review.
+    """
+    from unittest.mock import patch
+
+    from regulaitor.orchestration import graph
+
+    state = _make_state(_make_audited(P))
+    # Council.review succeeds (returns a real-shaped review); bind_verdict raises.
+    fake_agent = MagicMock()
+    fake_review = MagicMock()
+    fake_agent.review.return_value = fake_review
+
+    original_council = graph._council
+    graph._council = lambda: fake_agent
+    try:
+        with patch.object(
+            graph, "bind_verdict", side_effect=RuntimeError("simulated bind_verdict bug")
+        ):
+            result = graph._council_node(state)
+        assert result == {}
+    finally:
+        graph._council = original_council

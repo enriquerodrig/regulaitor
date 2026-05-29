@@ -229,7 +229,11 @@ class CouncilAgent:
                 error_category=None,
             )
         except Exception as e:  # advisory: never break the turn
-            logger.warning("council judge %s failed: %s", mode, type(e).__name__)
+            # Deep-review minor (code-quality): logger.exception() preserves the
+            # full traceback (vs warning(type(e).__name__) which dropped both
+            # the message and traceback). error_category in the returned JudgeVote
+            # keeps the class name available for downstream callers.
+            logger.exception("council judge %s failed", mode)
             return JudgeVote(
                 model_id=target.model_id,
                 provider=target.provider,

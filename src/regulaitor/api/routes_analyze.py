@@ -65,6 +65,12 @@ async def analyze(
 
     if language not in ("es", "en"):
         raise UnsupportedMediaType(reason=f"unsupported language: {language}")
+    # Deep-review minor (§6 defense-in-depth): reject empty corpus list early.
+    # Without this, run_document downstream hit IndexError on corpus[0] in
+    # document_graph._aggregate (the v0.1.28 corpus-collapse-to-first-element
+    # path). Return 415 here for a clean operator signal.
+    if not corpus:
+        raise UnsupportedMediaType(reason="corpus list cannot be empty")
     if not all(c in ("ai_act", "gdpr", "nis2", "dora") for c in corpus):
         raise UnsupportedMediaType(reason="unsupported corpus member")
 

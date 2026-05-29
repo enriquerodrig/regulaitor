@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 import pytest
-from hypothesis import given, settings
+from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
 from regulaitor.citation.schemas import (
@@ -21,7 +21,14 @@ pytestmark = pytest.mark.contract
 
 _NORMA = st.sampled_from(["ai_act", "gdpr", "nis2", "dora"])
 _LANG = st.sampled_from(["es", "en"])
-_NON_EMPTY = st.text(min_size=1, max_size=200)
+# ASCII-printable alphabet (codepoints 33-126) to satisfy v0.1.32-post §6
+# tightening: Citation.text rejects whitespace-only via field_validator.
+# Same pattern as tests/contract/test_h4_schemas.py.
+_NON_EMPTY = st.text(
+    alphabet=st.characters(min_codepoint=33, max_codepoint=126),
+    min_size=1,
+    max_size=200,
+)
 
 
 @given(
@@ -31,7 +38,7 @@ _NON_EMPTY = st.text(min_size=1, max_size=200)
     language=_LANG,
     text=_NON_EMPTY,
 )
-@settings(max_examples=50)
+@settings(max_examples=50, suppress_health_check=[HealthCheck.too_slow])
 def test_citation_round_trip(
     norma: str, articulo: str, apartado: str | None, language: str, text: str
 ) -> None:
@@ -57,7 +64,7 @@ def test_citation_round_trip(
     version=_NON_EMPTY,
     source_url=_NON_EMPTY,
 )
-@settings(max_examples=50)
+@settings(max_examples=50, suppress_health_check=[HealthCheck.too_slow])
 def test_retrieved_chunk_round_trip(
     chunk_id: str,
     norma: str,

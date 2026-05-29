@@ -140,8 +140,11 @@ def _council_node(state: ChatState) -> dict[str, Any]:
         if new_audited is not None:
             return {"council_review": review, "audited_answer": new_audited}
         return {"council_review": review}
-    except Exception as e:  # noqa: BLE001 advisory layer must not break the turn
-        logger.warning("council_node failed (swallowed): %s", type(e).__name__)
+    except Exception:  # noqa: BLE001 advisory layer must not break the turn
+        # Deep-review minor (code-quality): use logger.exception() to preserve
+        # full traceback (was logger.warning(type(e).__name__) which dropped
+        # the message + traceback, making debugging swallowed bugs impossible).
+        logger.exception("council_node failed (swallowed)")
         return {}
 
 

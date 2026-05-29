@@ -61,3 +61,21 @@ def test_cors_simple_request_no_origin_header(monkeypatch):
     )
     # Without an Origin header, CORS middleware doesn't emit CORS response headers
     assert "access-control-allow-origin" not in response.headers
+
+
+def test_cors_env_var_literal_pinned():
+    """Deep-review I5 regression anchor: api/main.py reads the env var name
+    EXACTLY `REGULAITOR_CORS_ORIGINS` (NOT `_API_CORS_ORIGINS`). Docs drift
+    twice (v0.1.26 + post-h16 deploy); this test pins the literal so a future
+    rename forces an explicit refactor across docs + code together.
+    """
+    from pathlib import Path
+
+    main_py = Path("src/regulaitor/api/main.py").read_text(encoding="utf-8")
+    assert 'os.getenv("REGULAITOR_CORS_ORIGINS"' in main_py, (
+        "api/main.py must read the CORS env via the canonical name "
+        "REGULAITOR_CORS_ORIGINS (not REGULAITOR_API_CORS_ORIGINS). If you "
+        "rename the env, update README.md + CLAUDE.md §27 + "
+        "docs/technical_decisions_log.md + docs/H16_DEPLOY.md §2 + .env in "
+        "the same commit to keep operators in sync."
+    )
