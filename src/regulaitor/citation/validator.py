@@ -93,6 +93,27 @@ def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> Aud
     # Check 3: text_normalized_match
     citation_norm = _normalize(citation.text)
     target_norm = _normalize(target_text)
+    # v0.1.32-post §6 defense-in-depth: schema Citation rejects whitespace-only
+    # text, but if a future caller bypasses the schema (e.g. test injection,
+    # downstream mutation, deserialization edge case) and citation_norm collapses
+    # to empty, "" in target_norm is unconditionally True → §6 bypass. Reject
+    # here too; treat as text_not_match (failed_check=3).
+    if len(citation_norm) == 0:
+        scope = "apartado" if citation.apartado is not None else "article"
+        return AuditResult(
+            citation=citation,
+            validated=False,
+            article_exists=True,
+            apartado_exists=apartado_exists,
+            text_normalized_match=False,
+            reason=(
+                f"empty_citation_text_after_normalization: {citation.norma} art. "
+                f"{citation.articulo}{('.' + citation.apartado) if citation.apartado else ''} "
+                f"{citation.language}; cited text is empty after Unicode normalization "
+                f"(input was whitespace-only or zero-width sequence)."
+            ),
+            failed_check=3,
+        )
     text_match = citation_norm in target_norm
 
     if not text_match:

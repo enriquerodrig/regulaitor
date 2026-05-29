@@ -9,7 +9,7 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from regulaitor.corpus.schemas import CorpusSelector, Language, Norma
 
@@ -24,6 +24,17 @@ class Citation(BaseModel):
     apartado: str | None = None
     language: Language
     text: str = Field(min_length=1)
+
+    @field_validator("text")
+    @classmethod
+    def _reject_whitespace_only(cls, v: str) -> str:
+        # v0.1.32-post: §6 invariant tightening. min_length=1 accepts " " or "\t",
+        # which _normalize(text) collapses to "" → "" in target == True → validated.
+        # End-to-end §6 bypass empirically reproduced post-H16. Reject at schema layer
+        # so the validator never sees an empty-after-normalization Citation.
+        if not v.strip():
+            raise ValueError("Citation.text cannot be whitespace-only (§6 invariant)")
+        return v
 
 
 class AuditResult(BaseModel):

@@ -312,3 +312,69 @@ def test_validator_failed_check_none_when_all_checks_pass(
     r = validate(c, loader=loader_with_data)
     assert r.validated is True
     assert r.failed_check is None
+
+
+# ---------------------------------------------------------------------------
+# v0.1.32-post §6 invariant tightening: whitespace-only Citation.text bypass
+# ---------------------------------------------------------------------------
+# H17 deep-review finding C1: Pydantic Field(min_length=1) on Citation.text
+# accepts " ", "\t", "\n", " ". _normalize collapses these to "" and
+# "" in any_string == True. Result: AuditResult(validated=True), §6 PASS.
+# Reproducible end-to-end against the live corpus. Two-layer fix:
+#  (a) schema: @field_validator on Citation.text rejects whitespace-only;
+#  (b) defense-in-depth in validator.py: if citation_norm == "" treat as
+#      Check 3 failure (failed_check=3) so a future schema bypass still
+#      cannot route to PASS.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize("ws_text", [" ", "  ", "\t", "\n", "\t \n ", "\xa0"])
+def test_citation_schema_rejects_whitespace_only_text(ws_text: str) -> None:
+    """Layer (a) — schema validator rejects whitespace-only text at construction."""
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError, match="whitespace-only"):
+        Citation(
+            norma="ai_act",
+            articulo="1",
+            apartado="1",
+            language="es",
+            text=ws_text,
+        )
+
+
+def test_validator_rejects_empty_after_normalization_defense_in_depth(
+    loader_with_data: _FakeLoader,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Layer (b) — even if a Citation with whitespace text bypasses the schema
+    (Pydantic field_validator), validator.py defense-in-depth catches the
+    empty-after-normalization case and returns failed_check=3.
+    """
+    # Construct a valid Citation, then mutate-bypass to whitespace via
+    # model_copy + frozen-bypass. Use object.__setattr__ to skip the schema.
+    c = Citation(
+        norma="ai_act",
+        articulo="6",
+        apartado="1",
+        language="es",
+        text="real text",
+    )
+    object.__setattr__(c, "text", "   ")
+    r = validate(c, loader=loader_with_data)
+    assert r.validated is False
+    assert r.failed_check == 3
+    assert r.text_normalized_match is False
+    assert "empty_citation_text_after_normalization" in (r.reason or "")
+
+
+def test_citation_schema_accepts_legitimate_text() -> None:
+    """Regression anchor: legitimate non-empty text remains valid post-fix."""
+    c = Citation(
+        norma="ai_act",
+        articulo="1",
+        apartado="1",
+        language="es",
+        text="el presente Reglamento es mejorar el funcionamiento",
+    )
+    assert c.text == "el presente Reglamento es mejorar el funcionamiento"

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pytest
-from hypothesis import given, settings
+from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
 from regulaitor.citation.schemas import (
@@ -20,7 +20,14 @@ pytestmark = pytest.mark.contract
 
 _NORMA = st.sampled_from(["ai_act", "gdpr", "nis2", "dora"])
 _LANG = st.sampled_from(["es", "en"])
-_NON_EMPTY = st.text(min_size=1, max_size=200)
+# ASCII printable, excluding whitespace, to satisfy v0.1.32-post §6 tightening
+# (Citation.text rejects whitespace-only via field_validator in citation/schemas.py).
+# ASCII-printable alphabet keeps Hypothesis generation fast and round-trip-safe.
+_NON_EMPTY = st.text(
+    alphabet=st.characters(min_codepoint=33, max_codepoint=126),
+    min_size=1,
+    max_size=200,
+)
 _SEVERITY = st.sampled_from(["info", "low", "medium", "high"])
 
 
@@ -45,7 +52,7 @@ def _finding_strategy() -> st.SearchStrategy[Finding]:
 
 
 @given(finding=_finding_strategy())
-@settings(max_examples=50)
+@settings(max_examples=50, suppress_health_check=[HealthCheck.too_slow])
 def test_finding_round_trip(finding: Finding) -> None:
     parsed = Finding.model_validate_json(finding.model_dump_json())
     assert parsed == finding
@@ -57,7 +64,7 @@ def test_finding_round_trip(finding: Finding) -> None:
     text=_NON_EMPTY,
     findings=st.lists(_finding_strategy(), min_size=1, max_size=3),  # v0.1.21: min_size=1
 )
-@settings(max_examples=30)
+@settings(max_examples=30, suppress_health_check=[HealthCheck.too_slow])
 def test_answer_round_trip(query: str, language: str, text: str, findings: list[Finding]) -> None:
     a = Answer(query=query, language=language, text=text, findings=findings)  # type: ignore[arg-type]
     parsed = Answer.model_validate_json(a.model_dump_json())
