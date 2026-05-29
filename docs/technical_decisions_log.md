@@ -4791,7 +4791,7 @@ Files shipped (4 commits squashed; ~600 LOC net add):
 - **docker-compose.yml** — `api` service (:8000 with healthcheck) + `streamlit` service (:8501 depends_on=api healthy). Volume mounts for `corpus/indexes` + HF cache.
 - **.streamlit/config.toml** — port 8501 headless, server.runOnSave=false, browser.gatherUsageStats=false (HF Spaces compat).
 - **Makefile** — added `docker-build`, `docker-up`, `docker-down`, `docker-logs` targets.
-- **src/regulaitor/api/main.py** — `CORSMiddleware` added with `REGULAITOR_API_CORS_ORIGINS` env (comma-separated allowlist; empty = no CORS; production deploy populates).
+- **src/regulaitor/api/main.py** — `CORSMiddleware` added with `REGULAITOR_CORS_ORIGINS` env (comma-separated allowlist; empty = no CORS; production deploy populates).
 - **pyproject.toml** — `truststore>=0.10` promoted from `.venv`-only to project dependency (closes ADR-0029 §22.22 #2 carry-forward) + `--cov-fail-under=85` added to pytest config (was advisory; now CI gate).
 - **src/regulaitor/rag/store.py** + **rag/build.py** — `LANCEDB_PATH` env support for persistent volume mounting (HF Spaces / Render / Fly.io; `DEFAULT_PATH` resolution prioritizes env over hardcoded `corpus/indexes/regulaitor.lance`).
 - **docs/H16_DEPLOY.md** (NEW; 246 lines) — 11-section runbook covering HF Spaces (Streamlit SDK, §3.1) + Render + Fly.io + local Docker compose + secrets management + cold-start SLA + health checks + log analysis + rollback procedure.

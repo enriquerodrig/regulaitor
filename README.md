@@ -18,7 +18,7 @@ Multi-agent regulatory compliance service with strict citation verification. TFM
 
 ## Status
 
-**v0.1.30 closed (2026-05-28) — title-augmented corpus embeddings (ACCEPTED then REVERTED per probe).** Tag `v0.1.30-title-augmented-embeddings`. Advanced track post-MVP wrapped; Stage 4 H16 (public HF Spaces deploy) next.
+**v0.1.32 closed (2026-05-28) — H16 public deploy.** Tag `v0.1.32-h16-deploy`. Live demo: **https://huggingface.co/spaces/enriro00/regulaitor**. Plus v0.1.32-post (commit `549b718`, 2026-05-29) §6 invariant whitespace bypass fix from deep-review C1. Next: H17 TFM cierre académico.
 
 ### Lineage at a glance
 
@@ -27,8 +27,8 @@ Multi-agent regulatory compliance service with strict citation verification. TFM
 | **MVP** (H0-H10) | `v0.0.1-h0.1` → `v0.1.0-mvp` | corpus + RAG + 3 agents + Streamlit + FastAPI + eval harness + red team + docs freeze |
 | **Advanced** (H11-H15.2) | `v0.1.1-h11` → `v0.1.7-h15.2` | LangFuse + multi-LLM router + Council of Judges + NIS2/DORA corpus + Auditor calibration study |
 | **Optimization micro-milestones** (v0.1.8-v0.1.30) | `v0.1.8` → `v0.1.30-title-augmented-embeddings` | 23 micro-milestones; 12 consecutive §22.22-honest closures with **2 documented REVERTs** (v0.1.23 + v0.1.30) — methodology contribution |
-| **H16** | (next) | HF Spaces public deploy |
-| **H17** | (post-deploy) | TFM cierre académico (memoria + model card + data card + video demo) |
+| **H16** | `v0.1.31-h16-deploy` + `v0.1.32-h16-deploy` | HF Spaces public deploy: 12 fix rounds (R1-R12) + tag; demo live |
+| **H17** | (next) | TFM cierre académico (memoria + model card + data card + video demo) |
 
 ### Recent advanced-track headlines
 
@@ -43,10 +43,13 @@ Multi-agent regulatory compliance service with strict citation verification. TFM
 | v0.1.24 | `v0.1.24-gold-alignment-decomposition` | 2026-05-26 | $0 gold alignment + AuditResult `failed_check` instrumentation; +0.10 lift via re-aggregation |
 | v0.1.25 | `v0.1.25-auditor-partial-routing` | 2026-05-26 | Auditor partial-routing softening (Design H D2): **verdict_match +0.33** (largest single-milestone lift) |
 | v0.1.26 | `v0.1.26-h16-deploy-prep` | 2026-05-27 | $0 Docker + CORS + truststore + cov gate + H16 runbook |
-| v0.1.27 | `v0.1.27-doc-mode-validation` | 2026-05-27 | Doc-mode baseline measurement (€0.16) + NEW doc_analyst placeholder citation bug found |
+| v0.1.27 | `v0.1.27-doc-mode-measurement` | 2026-05-27 | Doc-mode baseline measurement (€0.16) + NEW doc_analyst placeholder citation bug found |
 | v0.1.28 | `v0.1.28-doc-analyst-v1-6-refusal` | 2026-05-27 | Doc fix: v1.6 Finding-based refusal + title-prepend query-side; citation_recall 0→0.33; FOURTH-layer §6 architecture |
 | v0.1.29 | `v0.1.29-chat-016-all-blocked-softening` | 2026-05-27 | Auditor all-blocked routing softening (D Mirror): verdict_match +0.08; chat-016 BLOCK→PASS as predicted |
 | v0.1.30 | `v0.1.30-title-augmented-embeddings` | 2026-05-28 | **REVERT** — title-augmented corpus embeddings (corpus-side mirror); over-citation 5x; v0.1.28 query-side prepend stays |
+| v0.1.31 | `v0.1.31-h16-deploy` | 2026-05-28 | $0 Stage 3 pre-H16 polish: archive diagnostics + README refresh + CI mypy debt cleanup + cov gate 90→85% |
+| v0.1.32 | `v0.1.32-h16-deploy` | 2026-05-28 | **H16 deploy live**: 12 fix rounds (R1-R12) + R13 corpus chips + R14 doc latency advisory; demo at huggingface.co/spaces/enriro00/regulaitor |
+| v0.1.32-post | (no tag, commit `549b718`) | 2026-05-29 | **§6 invariant tightening**: deep-review C1 whitespace bypass fixed (schema + defense-in-depth); THIRD §6 interpretive evolution |
 
 Full milestone log in `CLAUDE.md` §16.3 + `docs/technical_decisions_log.md`.
 
@@ -58,7 +61,7 @@ Full milestone log in `CLAUDE.md` §16.3 + `docs/technical_decisions_log.md`.
 
 ## Methodology contribution (§22.22 honest framing)
 
-The TFM defense rests on the **diagnose → intervene → measure → refute → revert → document** science cycle. 12 consecutive milestones (v0.1.19 → v0.1.30) have been closed with §22.22-honest framing — every empirical refutation shipped as REVERT (v0.1.23 Auditor lenient quorum; v0.1.30 title-augmented embeddings) was documented with full §REVERT section in its ADR, atomic restoration to pre-intervention state, and prospective design retained as scientific record. Both REVERTs preserved the §6 "no citation, no answer" invariant throughout. The methodology applies across Auditor-layer interventions (v0.1.23) and retrieval-layer interventions (v0.1.30) — vindicated as cross-cutting discipline, not single-layer luck.
+The TFM defense rests on the **diagnose → intervene → measure → refute → revert → document** science cycle. **13 consecutive milestones (v0.1.19 → v0.1.32)** have been closed with §22.22-honest framing — every empirical refutation shipped as REVERT (v0.1.23 Auditor lenient quorum; v0.1.30 title-augmented embeddings) was documented with full §REVERT section in its ADR, atomic restoration to pre-intervention state, and prospective design retained as scientific record. Both REVERTs preserved the §6 "no citation, no answer" invariant throughout. The methodology applies across Auditor-layer interventions (v0.1.23) and retrieval-layer interventions (v0.1.30) — vindicated as cross-cutting discipline, not single-layer luck. The deep-review C1 whitespace-bypass fix (v0.1.32-post) demonstrates the discipline self-applies: an externally-discovered §6 risk was confirmed empirically, fixed in two layers, and documented as the THIRD §6 interpretive evolution within hours.
 
 The asymmetric finding of v0.1.30 — query-side title-prepend HELPS (v0.1.28), corpus-side title-augmented HURTS — is the substantive scientific contribution about retrieval-vs-emission dynamics in v1.6 doc_analyst, worth highlighting in H17 memoria.
 
@@ -150,7 +153,7 @@ curl -X POST http://localhost:8000/analyze \
 | `REGULAITOR_RATE_LIMIT_ANALYZE` | `5/minute` | per-token quota for `/analyze` |
 | `REGULAITOR_MAX_UPLOAD_BYTES` | `10485760` (10 MB) | max upload size for `/analyze` |
 | `REGULAITOR_RATE_LIMIT_DISABLED` | (unset) | set to `1` to disable rate limiting (tests) |
-| `REGULAITOR_API_CORS_ORIGINS` | (empty) | comma-separated allowlist for CORS (v0.1.26) |
+| `REGULAITOR_CORS_ORIGINS` | (empty) | comma-separated allowlist for CORS (v0.1.26) |
 | `LANCEDB_PATH` | `./corpus/indexes/regulaitor.lance` | persistent volume for HF Spaces / Render / Fly.io |
 | `REGULAITOR_ANALYST_PROMPT_VERSION` | (unset → role-aware default) | env seam for retrospective Analyst prompt A/B |
 
