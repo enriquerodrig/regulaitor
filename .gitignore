@@ -159,3 +159,11 @@ AGENTS.md
 # Project-own skills under .claude/skills/{citation-validator,...} stay tracked.
 .claude/skills/web-design-guidelines/
 evals/_skeleton.jsonl
+
+# H17 — preparación personal de defensa que NO debe ser visible en el repo
+# público (el profesor sólo ve el sistema + ADRs + decisions_log + section
+# drafts + supporting docs; la memoria final va aparte como entregable Word/PDF,
+# y los materiales internos de defensa quedan locales):
+docs/memoria.md
+docs/slide_deck_outline.md
+docs/video_demo_script.md
