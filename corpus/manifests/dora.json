@@ -37,7 +37,7 @@
           "chunks": [
             "dora.1.es"
           ],
-          "embedded_at": "2026-05-18T09:40:57.100281Z",
+          "embedded_at": "2026-05-28T15:46:56.454574Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -48,7 +48,7 @@
           "chunks": [
             "dora.1.en"
           ],
-          "embedded_at": "2026-05-18T09:41:07.181416Z",
+          "embedded_at": "2026-05-28T15:47:05.524115Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -67,7 +67,7 @@
           "chunks": [
             "dora.2.es"
           ],
-          "embedded_at": "2026-05-18T09:41:14.090207Z",
+          "embedded_at": "2026-05-28T15:47:14.711281Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -78,7 +78,7 @@
           "chunks": [
             "dora.2.en"
           ],
-          "embedded_at": "2026-05-18T09:41:22.195846Z",
+          "embedded_at": "2026-05-28T15:47:25.582197Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -97,7 +97,7 @@
           "chunks": [
             "dora.3.1.es"
           ],
-          "embedded_at": "2026-05-18T09:41:30.743521Z",
+          "embedded_at": "2026-05-28T15:47:35.308259Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -108,7 +108,7 @@
           "chunks": [
             "dora.3.1.en"
           ],
-          "embedded_at": "2026-05-18T09:41:39.119011Z",
+          "embedded_at": "2026-05-28T15:47:44.434648Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -127,7 +127,7 @@
           "chunks": [
             "dora.4.es"
           ],
-          "embedded_at": "2026-05-18T09:41:42.252926Z",
+          "embedded_at": "2026-05-28T15:47:48.781516Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -138,7 +138,7 @@
           "chunks": [
             "dora.4.en"
           ],
-          "embedded_at": "2026-05-18T09:41:44.913632Z",
+          "embedded_at": "2026-05-28T15:47:52.840930Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -157,7 +157,7 @@
           "chunks": [
             "dora.5.es"
           ],
-          "embedded_at": "2026-05-18T09:41:52.307506Z",
+          "embedded_at": "2026-05-28T15:48:02.667892Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -168,7 +168,7 @@
           "chunks": [
             "dora.5.en"
           ],
-          "embedded_at": "2026-05-18T09:41:59.555576Z",
+          "embedded_at": "2026-05-28T15:48:11.754006Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -196,7 +196,7 @@
             "dora.6.9.es",
             "dora.6.10.es"
           ],
-          "embedded_at": "2026-05-18T09:42:40.684450Z",
+          "embedded_at": "2026-05-28T15:49:00.797486Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -216,7 +216,7 @@
             "dora.6.9.en",
             "dora.6.10.en"
           ],
-          "embedded_at": "2026-05-18T09:43:18.930518Z",
+          "embedded_at": "2026-05-28T15:49:41.197479Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -235,7 +235,7 @@
           "chunks": [
             "dora.7.es"
           ],
-          "embedded_at": "2026-05-18T09:43:22.637692Z",
+          "embedded_at": "2026-05-28T15:49:45.420709Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -246,7 +246,7 @@
           "chunks": [
             "dora.7.en"
           ],
-          "embedded_at": "2026-05-18T09:43:25.333681Z",
+          "embedded_at": "2026-05-28T15:49:49.100483Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -265,7 +265,7 @@
           "chunks": [
             "dora.8.es"
           ],
-          "embedded_at": "2026-05-18T09:43:33.491971Z",
+          "embedded_at": "2026-05-28T15:49:58.454167Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -276,7 +276,7 @@
           "chunks": [
             "dora.8.en"
           ],
-          "embedded_at": "2026-05-18T09:43:40.944255Z",
+          "embedded_at": "2026-05-28T15:50:06.688620Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -295,7 +295,7 @@
           "chunks": [
             "dora.9.es"
           ],
-          "embedded_at": "2026-05-18T09:43:48.984779Z",
+          "embedded_at": "2026-05-28T15:50:17.768018Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -306,7 +306,7 @@
           "chunks": [
             "dora.9.en"
           ],
-          "embedded_at": "2026-05-18T09:43:57.333378Z",
+          "embedded_at": "2026-05-28T15:50:26.961648Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -325,7 +325,7 @@
           "chunks": [
             "dora.10.es"
           ],
-          "embedded_at": "2026-05-18T09:44:01.728246Z",
+          "embedded_at": "2026-05-28T15:50:32.320440Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -336,7 +336,7 @@
           "chunks": [
             "dora.10.en"
           ],
-          "embedded_at": "2026-05-18T09:44:05.121528Z",
+          "embedded_at": "2026-05-28T15:50:36.877682Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -365,7 +365,7 @@
             "dora.11.10.es",
             "dora.11.11.es"
           ],
-          "embedded_at": "2026-05-18T09:44:42.386040Z",
+          "embedded_at": "2026-05-28T15:51:21.227587Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -386,7 +386,7 @@
             "dora.11.10.en",
             "dora.11.11.en"
           ],
-          "embedded_at": "2026-05-18T09:45:14.738010Z",
+          "embedded_at": "2026-05-28T15:51:56.903863Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -405,7 +405,7 @@
           "chunks": [
             "dora.12.es"
           ],
-          "embedded_at": "2026-05-18T09:45:22.427465Z",
+          "embedded_at": "2026-05-28T15:52:06.108553Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -416,7 +416,7 @@
           "chunks": [
             "dora.12.en"
           ],
-          "embedded_at": "2026-05-18T09:45:30.059939Z",
+          "embedded_at": "2026-05-28T15:52:17.286470Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -435,7 +435,7 @@
           "chunks": [
             "dora.13.es"
           ],
-          "embedded_at": "2026-05-18T09:45:37.891425Z",
+          "embedded_at": "2026-05-28T15:52:26.406629Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -446,7 +446,7 @@
           "chunks": [
             "dora.13.en"
           ],
-          "embedded_at": "2026-05-18T09:45:46.190401Z",
+          "embedded_at": "2026-05-28T15:52:35.538881Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -465,7 +465,7 @@
           "chunks": [
             "dora.14.es"
           ],
-          "embedded_at": "2026-05-18T09:45:49.365850Z",
+          "embedded_at": "2026-05-28T15:52:39.765042Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -476,7 +476,7 @@
           "chunks": [
             "dora.14.en"
           ],
-          "embedded_at": "2026-05-18T09:45:52.230878Z",
+          "embedded_at": "2026-05-28T15:52:43.778023Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -495,7 +495,7 @@
           "chunks": [
             "dora.15.es"
           ],
-          "embedded_at": "2026-05-18T09:45:59.731433Z",
+          "embedded_at": "2026-05-28T15:52:52.787902Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -506,7 +506,7 @@
           "chunks": [
             "dora.15.en"
           ],
-          "embedded_at": "2026-05-18T09:46:07.365902Z",
+          "embedded_at": "2026-05-28T15:53:01.707958Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -527,7 +527,7 @@
             "dora.16.2.es",
             "dora.16.3.es"
           ],
-          "embedded_at": "2026-05-18T09:46:28.379522Z",
+          "embedded_at": "2026-05-28T15:53:27.435308Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -540,7 +540,7 @@
             "dora.16.2.en",
             "dora.16.3.en"
           ],
-          "embedded_at": "2026-05-18T09:46:51.765632Z",
+          "embedded_at": "2026-05-28T15:53:50.589929Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -559,7 +559,7 @@
           "chunks": [
             "dora.17.es"
           ],
-          "embedded_at": "2026-05-18T09:47:01.473648Z",
+          "embedded_at": "2026-05-28T15:53:59.843780Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -570,7 +570,7 @@
           "chunks": [
             "dora.17.en"
           ],
-          "embedded_at": "2026-05-18T09:47:08.618591Z",
+          "embedded_at": "2026-05-28T15:54:07.418792Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -589,7 +589,7 @@
           "chunks": [
             "dora.18.es"
           ],
-          "embedded_at": "2026-05-18T09:47:17.552077Z",
+          "embedded_at": "2026-05-28T15:54:16.660769Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -600,7 +600,7 @@
           "chunks": [
             "dora.18.en"
           ],
-          "embedded_at": "2026-05-18T09:47:27.239369Z",
+          "embedded_at": "2026-05-28T15:54:25.773203Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -626,7 +626,7 @@
             "dora.19.7.es",
             "dora.19.8.es"
           ],
-          "embedded_at": "2026-05-18T09:48:13.253223Z",
+          "embedded_at": "2026-05-28T15:55:19.506679Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -644,7 +644,7 @@
             "dora.19.7.en",
             "dora.19.8.en"
           ],
-          "embedded_at": "2026-05-18T09:48:56.368898Z",
+          "embedded_at": "2026-05-28T15:56:06.525257Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -663,7 +663,7 @@
           "chunks": [
             "dora.20.es"
           ],
-          "embedded_at": "2026-05-18T09:49:03.491822Z",
+          "embedded_at": "2026-05-28T15:56:15.837725Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -674,7 +674,7 @@
           "chunks": [
             "dora.20.en"
           ],
-          "embedded_at": "2026-05-18T09:49:11.376573Z",
+          "embedded_at": "2026-05-28T15:56:25.022277Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -693,7 +693,7 @@
           "chunks": [
             "dora.21.es"
           ],
-          "embedded_at": "2026-05-18T09:49:17.279935Z",
+          "embedded_at": "2026-05-28T15:56:31.189244Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -704,7 +704,7 @@
           "chunks": [
             "dora.21.en"
           ],
-          "embedded_at": "2026-05-18T09:49:23.739011Z",
+          "embedded_at": "2026-05-28T15:56:37.126600Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -723,7 +723,7 @@
           "chunks": [
             "dora.22.es"
           ],
-          "embedded_at": "2026-05-18T09:49:29.015308Z",
+          "embedded_at": "2026-05-28T15:56:44.417126Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -734,7 +734,7 @@
           "chunks": [
             "dora.22.en"
           ],
-          "embedded_at": "2026-05-18T09:49:33.747431Z",
+          "embedded_at": "2026-05-28T15:56:52.179587Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -753,7 +753,7 @@
           "chunks": [
             "dora.23.es"
           ],
-          "embedded_at": "2026-05-18T09:49:35.813901Z",
+          "embedded_at": "2026-05-28T15:56:55.237275Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -764,7 +764,7 @@
           "chunks": [
             "dora.23.en"
           ],
-          "embedded_at": "2026-05-18T09:49:37.640916Z",
+          "embedded_at": "2026-05-28T15:56:58.393628Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -783,7 +783,7 @@
           "chunks": [
             "dora.24.es"
           ],
-          "embedded_at": "2026-05-18T09:49:45.481451Z",
+          "embedded_at": "2026-05-28T15:57:08.197610Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -794,7 +794,7 @@
           "chunks": [
             "dora.24.en"
           ],
-          "embedded_at": "2026-05-18T09:49:52.495309Z",
+          "embedded_at": "2026-05-28T15:57:16.433424Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -813,7 +813,7 @@
           "chunks": [
             "dora.25.es"
           ],
-          "embedded_at": "2026-05-18T09:49:57.604769Z",
+          "embedded_at": "2026-05-28T15:57:23.148312Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -824,7 +824,7 @@
           "chunks": [
             "dora.25.en"
           ],
-          "embedded_at": "2026-05-18T09:50:02.116035Z",
+          "embedded_at": "2026-05-28T15:57:28.690269Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -853,7 +853,7 @@
             "dora.26.10.es",
             "dora.26.11.es"
           ],
-          "embedded_at": "2026-05-18T09:51:08.452085Z",
+          "embedded_at": "2026-05-28T15:58:43.128303Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -874,7 +874,7 @@
             "dora.26.10.en",
             "dora.26.11.en"
           ],
-          "embedded_at": "2026-05-18T09:51:59.504508Z",
+          "embedded_at": "2026-05-28T15:59:41.923354Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -893,7 +893,7 @@
           "chunks": [
             "dora.27.es"
           ],
-          "embedded_at": "2026-05-18T09:52:06.157497Z",
+          "embedded_at": "2026-05-28T15:59:50.785370Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -904,7 +904,7 @@
           "chunks": [
             "dora.27.en"
           ],
-          "embedded_at": "2026-05-18T09:52:13.051066Z",
+          "embedded_at": "2026-05-28T15:59:58.569337Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -932,7 +932,7 @@
             "dora.28.9.es",
             "dora.28.10.es"
           ],
-          "embedded_at": "2026-05-18T09:52:59.358031Z",
+          "embedded_at": "2026-05-28T16:00:51.932174Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -952,7 +952,7 @@
             "dora.28.9.en",
             "dora.28.10.en"
           ],
-          "embedded_at": "2026-05-18T09:53:39.282248Z",
+          "embedded_at": "2026-05-28T16:01:37.015475Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -971,7 +971,7 @@
           "chunks": [
             "dora.29.es"
           ],
-          "embedded_at": "2026-05-18T09:53:47.654772Z",
+          "embedded_at": "2026-05-28T16:01:48.118611Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -982,7 +982,7 @@
           "chunks": [
             "dora.29.en"
           ],
-          "embedded_at": "2026-05-18T09:53:55.045089Z",
+          "embedded_at": "2026-05-28T16:01:57.399113Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1005,7 +1005,7 @@
             "dora.30.4.es",
             "dora.30.5.es"
           ],
-          "embedded_at": "2026-05-18T09:54:28.519884Z",
+          "embedded_at": "2026-05-28T16:02:35.947015Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1020,7 +1020,7 @@
             "dora.30.4.en",
             "dora.30.5.en"
           ],
-          "embedded_at": "2026-05-18T09:55:02.667758Z",
+          "embedded_at": "2026-05-28T16:03:15.411758Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1051,7 +1051,7 @@
             "dora.31.12.es",
             "dora.31.13.es"
           ],
-          "embedded_at": "2026-05-18T09:56:24.603508Z",
+          "embedded_at": "2026-05-28T16:04:52.149862Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1074,7 +1074,7 @@
             "dora.31.12.en",
             "dora.31.13.en"
           ],
-          "embedded_at": "2026-05-18T09:57:49.260459Z",
+          "embedded_at": "2026-05-28T16:06:29.545938Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1101,7 +1101,7 @@
             "dora.32.8.es",
             "dora.32.9.es"
           ],
-          "embedded_at": "2026-05-18T09:58:15.848955Z",
+          "embedded_at": "2026-05-28T16:06:58.400813Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1120,7 +1120,7 @@
             "dora.32.8.en",
             "dora.32.9.en"
           ],
-          "embedded_at": "2026-05-18T09:58:39.376824Z",
+          "embedded_at": "2026-05-28T16:07:27.854693Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1139,7 +1139,7 @@
           "chunks": [
             "dora.33.es"
           ],
-          "embedded_at": "2026-05-18T09:58:48.816355Z",
+          "embedded_at": "2026-05-28T16:07:37.053339Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1150,7 +1150,7 @@
           "chunks": [
             "dora.33.en"
           ],
-          "embedded_at": "2026-05-18T09:58:56.144555Z",
+          "embedded_at": "2026-05-28T16:07:46.222373Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1169,7 +1169,7 @@
           "chunks": [
             "dora.34.es"
           ],
-          "embedded_at": "2026-05-18T09:59:00.222404Z",
+          "embedded_at": "2026-05-28T16:07:51.432886Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1180,7 +1180,7 @@
           "chunks": [
             "dora.34.en"
           ],
-          "embedded_at": "2026-05-18T09:59:03.683911Z",
+          "embedded_at": "2026-05-28T16:07:56.579583Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1209,7 +1209,7 @@
             "dora.35.10.es",
             "dora.35.11.es"
           ],
-          "embedded_at": "2026-05-18T10:00:14.481275Z",
+          "embedded_at": "2026-05-28T16:09:19.331852Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1230,7 +1230,7 @@
             "dora.35.10.en",
             "dora.35.11.en"
           ],
-          "embedded_at": "2026-05-18T10:01:26.015530Z",
+          "embedded_at": "2026-05-28T16:10:41.621423Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1251,7 +1251,7 @@
             "dora.36.2.es",
             "dora.36.3.es"
           ],
-          "embedded_at": "2026-05-18T10:01:48.593321Z",
+          "embedded_at": "2026-05-28T16:11:07.736724Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1264,7 +1264,7 @@
             "dora.36.2.en",
             "dora.36.3.en"
           ],
-          "embedded_at": "2026-05-18T10:02:11.464492Z",
+          "embedded_at": "2026-05-28T16:11:31.874884Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1283,7 +1283,7 @@
           "chunks": [
             "dora.37.es"
           ],
-          "embedded_at": "2026-05-18T10:02:19.769653Z",
+          "embedded_at": "2026-05-28T16:11:41.145079Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1294,7 +1294,7 @@
           "chunks": [
             "dora.37.en"
           ],
-          "embedded_at": "2026-05-18T10:02:27.571849Z",
+          "embedded_at": "2026-05-28T16:11:50.459961Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1313,7 +1313,7 @@
           "chunks": [
             "dora.38.es"
           ],
-          "embedded_at": "2026-05-18T10:02:35.074324Z",
+          "embedded_at": "2026-05-28T16:12:00.116538Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1324,7 +1324,7 @@
           "chunks": [
             "dora.38.en"
           ],
-          "embedded_at": "2026-05-18T10:02:42.385236Z",
+          "embedded_at": "2026-05-28T16:12:09.497048Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1343,7 +1343,7 @@
           "chunks": [
             "dora.39.es"
           ],
-          "embedded_at": "2026-05-18T10:02:49.879768Z",
+          "embedded_at": "2026-05-28T16:12:20.819029Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1354,7 +1354,7 @@
           "chunks": [
             "dora.39.en"
           ],
-          "embedded_at": "2026-05-18T10:02:57.905770Z",
+          "embedded_at": "2026-05-28T16:12:30.064133Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1373,7 +1373,7 @@
           "chunks": [
             "dora.40.es"
           ],
-          "embedded_at": "2026-05-18T10:03:04.198504Z",
+          "embedded_at": "2026-05-28T16:12:37.830324Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1384,7 +1384,7 @@
           "chunks": [
             "dora.40.en"
           ],
-          "embedded_at": "2026-05-18T10:03:09.646744Z",
+          "embedded_at": "2026-05-28T16:12:44.616544Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1403,7 +1403,7 @@
           "chunks": [
             "dora.41.es"
           ],
-          "embedded_at": "2026-05-18T10:03:14.876817Z",
+          "embedded_at": "2026-05-28T16:12:51.298524Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1414,7 +1414,7 @@
           "chunks": [
             "dora.41.en"
           ],
-          "embedded_at": "2026-05-18T10:03:21.306673Z",
+          "embedded_at": "2026-05-28T16:12:57.368916Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1443,7 +1443,7 @@
             "dora.42.10.es",
             "dora.42.11.es"
           ],
-          "embedded_at": "2026-05-18T10:04:21.017177Z",
+          "embedded_at": "2026-05-28T16:14:05.017176Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1464,7 +1464,7 @@
             "dora.42.10.en",
             "dora.42.11.en"
           ],
-          "embedded_at": "2026-05-18T10:05:16.076358Z",
+          "embedded_at": "2026-05-28T16:15:12.476750Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1483,7 +1483,7 @@
           "chunks": [
             "dora.43.es"
           ],
-          "embedded_at": "2026-05-18T10:05:20.307660Z",
+          "embedded_at": "2026-05-28T16:15:18.011591Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1494,7 +1494,7 @@
           "chunks": [
             "dora.43.en"
           ],
-          "embedded_at": "2026-05-18T10:05:24.090481Z",
+          "embedded_at": "2026-05-28T16:15:23.005104Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1513,7 +1513,7 @@
           "chunks": [
             "dora.44.es"
           ],
-          "embedded_at": "2026-05-18T10:05:28.324093Z",
+          "embedded_at": "2026-05-28T16:15:28.716329Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1524,7 +1524,7 @@
           "chunks": [
             "dora.44.en"
           ],
-          "embedded_at": "2026-05-18T10:05:31.833627Z",
+          "embedded_at": "2026-05-28T16:15:33.198770Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1543,7 +1543,7 @@
           "chunks": [
             "dora.45.es"
           ],
-          "embedded_at": "2026-05-18T10:05:38.786896Z",
+          "embedded_at": "2026-05-28T16:15:40.969382Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1554,7 +1554,7 @@
           "chunks": [
             "dora.45.en"
           ],
-          "embedded_at": "2026-05-18T10:05:43.925301Z",
+          "embedded_at": "2026-05-28T16:15:47.942699Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1573,7 +1573,7 @@
           "chunks": [
             "dora.46.1.es"
           ],
-          "embedded_at": "2026-05-18T10:05:52.384277Z",
+          "embedded_at": "2026-05-28T16:15:59.353367Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1584,7 +1584,7 @@
           "chunks": [
             "dora.46.en"
           ],
-          "embedded_at": "2026-05-18T10:06:02.059758Z",
+          "embedded_at": "2026-05-28T16:16:08.410994Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1603,7 +1603,7 @@
           "chunks": [
             "dora.47.es"
           ],
-          "embedded_at": "2026-05-18T10:06:08.509154Z",
+          "embedded_at": "2026-05-28T16:16:16.671792Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1614,7 +1614,7 @@
           "chunks": [
             "dora.47.en"
           ],
-          "embedded_at": "2026-05-18T10:06:14.359722Z",
+          "embedded_at": "2026-05-28T16:16:24.152152Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1633,7 +1633,7 @@
           "chunks": [
             "dora.48.es"
           ],
-          "embedded_at": "2026-05-18T10:06:17.174808Z",
+          "embedded_at": "2026-05-28T16:16:27.184465Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1644,7 +1644,7 @@
           "chunks": [
             "dora.48.en"
           ],
-          "embedded_at": "2026-05-18T10:06:19.378454Z",
+          "embedded_at": "2026-05-28T16:16:30.195190Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1663,7 +1663,7 @@
           "chunks": [
             "dora.49.es"
           ],
-          "embedded_at": "2026-05-18T10:06:26.460860Z",
+          "embedded_at": "2026-05-28T16:16:39.892599Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1674,7 +1674,7 @@
           "chunks": [
             "dora.49.en"
           ],
-          "embedded_at": "2026-05-18T10:06:31.459032Z",
+          "embedded_at": "2026-05-28T16:16:46.130308Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1693,7 +1693,7 @@
           "chunks": [
             "dora.50.es"
           ],
-          "embedded_at": "2026-05-18T10:06:38.874625Z",
+          "embedded_at": "2026-05-28T16:16:55.340066Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1704,7 +1704,7 @@
           "chunks": [
             "dora.50.en"
           ],
-          "embedded_at": "2026-05-18T10:06:46.077854Z",
+          "embedded_at": "2026-05-28T16:17:04.567400Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1723,7 +1723,7 @@
           "chunks": [
             "dora.51.es"
           ],
-          "embedded_at": "2026-05-18T10:06:50.902501Z",
+          "embedded_at": "2026-05-28T16:17:10.623125Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1734,7 +1734,7 @@
           "chunks": [
             "dora.51.en"
           ],
-          "embedded_at": "2026-05-18T10:06:58.758811Z",
+          "embedded_at": "2026-05-28T16:17:17.044570Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1753,7 +1753,7 @@
           "chunks": [
             "dora.52.es"
           ],
-          "embedded_at": "2026-05-18T10:07:02.194555Z",
+          "embedded_at": "2026-05-28T16:17:21.384968Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1764,7 +1764,7 @@
           "chunks": [
             "dora.52.en"
           ],
-          "embedded_at": "2026-05-18T10:07:05.517762Z",
+          "embedded_at": "2026-05-28T16:17:27.950908Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1783,7 +1783,7 @@
           "chunks": [
             "dora.53.es"
           ],
-          "embedded_at": "2026-05-18T10:07:07.569137Z",
+          "embedded_at": "2026-05-28T16:17:30.866971Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1794,7 +1794,7 @@
           "chunks": [
             "dora.53.en"
           ],
-          "embedded_at": "2026-05-18T10:07:09.220174Z",
+          "embedded_at": "2026-05-28T16:17:33.407781Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1813,7 +1813,7 @@
           "chunks": [
             "dora.54.es"
           ],
-          "embedded_at": "2026-05-18T10:07:16.742672Z",
+          "embedded_at": "2026-05-28T16:17:42.754930Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1824,7 +1824,7 @@
           "chunks": [
             "dora.54.en"
           ],
-          "embedded_at": "2026-05-18T10:07:23.814710Z",
+          "embedded_at": "2026-05-28T16:17:51.912249Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1843,7 +1843,7 @@
           "chunks": [
             "dora.55.es"
           ],
-          "embedded_at": "2026-05-18T10:07:28.132876Z",
+          "embedded_at": "2026-05-28T16:17:57.898233Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1854,7 +1854,7 @@
           "chunks": [
             "dora.55.en"
           ],
-          "embedded_at": "2026-05-18T10:07:32.971521Z",
+          "embedded_at": "2026-05-28T16:18:03.610883Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1873,7 +1873,7 @@
           "chunks": [
             "dora.56.es"
           ],
-          "embedded_at": "2026-05-18T10:07:36.691580Z",
+          "embedded_at": "2026-05-28T16:18:10.164816Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1884,7 +1884,7 @@
           "chunks": [
             "dora.56.en"
           ],
-          "embedded_at": "2026-05-18T10:07:41.459802Z",
+          "embedded_at": "2026-05-28T16:18:14.394097Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1903,7 +1903,7 @@
           "chunks": [
             "dora.57.es"
           ],
-          "embedded_at": "2026-05-18T10:07:48.409497Z",
+          "embedded_at": "2026-05-28T16:18:23.195191Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1914,7 +1914,7 @@
           "chunks": [
             "dora.57.en"
           ],
-          "embedded_at": "2026-05-18T10:07:54.961566Z",
+          "embedded_at": "2026-05-28T16:18:31.705439Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1933,7 +1933,7 @@
           "chunks": [
             "dora.58.es"
           ],
-          "embedded_at": "2026-05-18T10:08:02.859304Z",
+          "embedded_at": "2026-05-28T16:18:41.097128Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1944,7 +1944,7 @@
           "chunks": [
             "dora.58.en"
           ],
-          "embedded_at": "2026-05-18T10:08:11.390084Z",
+          "embedded_at": "2026-05-28T16:18:50.360631Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1963,7 +1963,7 @@
           "chunks": [
             "dora.59.es"
           ],
-          "embedded_at": "2026-05-18T10:08:17.025358Z",
+          "embedded_at": "2026-05-28T16:18:59.739948Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -1974,7 +1974,7 @@
           "chunks": [
             "dora.59.en"
           ],
-          "embedded_at": "2026-05-18T10:08:21.543740Z",
+          "embedded_at": "2026-05-28T16:19:05.859368Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -1993,7 +1993,7 @@
           "chunks": [
             "dora.60.2.es"
           ],
-          "embedded_at": "2026-05-18T10:08:29.319187Z",
+          "embedded_at": "2026-05-28T16:19:15.089503Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -2004,7 +2004,7 @@
           "chunks": [
             "dora.60.2.en"
           ],
-          "embedded_at": "2026-05-18T10:08:37.937772Z",
+          "embedded_at": "2026-05-28T16:19:24.425752Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -2023,7 +2023,7 @@
           "chunks": [
             "dora.61.es"
           ],
-          "embedded_at": "2026-05-18T10:08:47.432610Z",
+          "embedded_at": "2026-05-28T16:19:33.716227Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -2034,7 +2034,7 @@
           "chunks": [
             "dora.61.en"
           ],
-          "embedded_at": "2026-05-18T10:08:56.654626Z",
+          "embedded_at": "2026-05-28T16:19:43.130680Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -2053,7 +2053,7 @@
           "chunks": [
             "dora.62.es"
           ],
-          "embedded_at": "2026-05-18T10:09:03.540622Z",
+          "embedded_at": "2026-05-28T16:19:51.224924Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -2064,7 +2064,7 @@
           "chunks": [
             "dora.62.en"
           ],
-          "embedded_at": "2026-05-18T10:09:09.923551Z",
+          "embedded_at": "2026-05-28T16:20:01.421105Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -2083,7 +2083,7 @@
           "chunks": [
             "dora.63.es"
           ],
-          "embedded_at": "2026-05-18T10:09:13.255647Z",
+          "embedded_at": "2026-05-28T16:20:06.217787Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -2094,7 +2094,7 @@
           "chunks": [
             "dora.63.en"
           ],
-          "embedded_at": "2026-05-18T10:09:16.667223Z",
+          "embedded_at": "2026-05-28T16:20:10.542950Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"
@@ -2113,7 +2113,7 @@
           "chunks": [
             "dora.64.es"
           ],
-          "embedded_at": "2026-05-18T10:09:18.893055Z",
+          "embedded_at": "2026-05-28T16:20:13.229196Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_es.pdf"
@@ -2124,7 +2124,7 @@
           "chunks": [
             "dora.64.en"
           ],
-          "embedded_at": "2026-05-18T10:09:21.183152Z",
+          "embedded_at": "2026-05-28T16:20:16.164344Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:27:59.620490Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_en.pdf"

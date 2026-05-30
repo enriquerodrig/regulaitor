@@ -37,7 +37,7 @@
           "chunks": [
             "nis2.1.es"
           ],
-          "embedded_at": "2026-05-18T09:16:28.097448Z",
+          "embedded_at": "2026-05-28T15:21:08.240800Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -48,7 +48,7 @@
           "chunks": [
             "nis2.1.en"
           ],
-          "embedded_at": "2026-05-18T09:16:34.749897Z",
+          "embedded_at": "2026-05-28T15:21:12.082341Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -80,7 +80,7 @@
             "nis2.2.13.es",
             "nis2.2.14.es"
           ],
-          "embedded_at": "2026-05-18T09:18:22.060315Z",
+          "embedded_at": "2026-05-28T15:22:21.390273Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -104,7 +104,7 @@
             "nis2.2.13.en",
             "nis2.2.14.en"
           ],
-          "embedded_at": "2026-05-18T09:20:11.702636Z",
+          "embedded_at": "2026-05-28T15:23:25.285112Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -123,7 +123,7 @@
           "chunks": [
             "nis2.3.es"
           ],
-          "embedded_at": "2026-05-18T09:20:28.177480Z",
+          "embedded_at": "2026-05-28T15:23:34.134021Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -134,7 +134,7 @@
           "chunks": [
             "nis2.3.en"
           ],
-          "embedded_at": "2026-05-18T09:20:42.091447Z",
+          "embedded_at": "2026-05-28T15:23:42.930422Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -153,7 +153,7 @@
           "chunks": [
             "nis2.4.es"
           ],
-          "embedded_at": "2026-05-18T09:20:52.628031Z",
+          "embedded_at": "2026-05-28T15:23:50.184426Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -164,7 +164,7 @@
           "chunks": [
             "nis2.4.en"
           ],
-          "embedded_at": "2026-05-18T09:20:59.695565Z",
+          "embedded_at": "2026-05-28T15:23:56.921029Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -183,7 +183,7 @@
           "chunks": [
             "nis2.5.es"
           ],
-          "embedded_at": "2026-05-18T09:21:01.540860Z",
+          "embedded_at": "2026-05-28T15:24:01.324880Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -194,7 +194,7 @@
           "chunks": [
             "nis2.5.en"
           ],
-          "embedded_at": "2026-05-18T09:21:03.371308Z",
+          "embedded_at": "2026-05-28T15:24:03.624011Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -213,7 +213,7 @@
           "chunks": [
             "nis2.6.1.es"
           ],
-          "embedded_at": "2026-05-18T09:21:10.574913Z",
+          "embedded_at": "2026-05-28T15:24:12.517935Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -224,7 +224,7 @@
           "chunks": [
             "nis2.6.1.en"
           ],
-          "embedded_at": "2026-05-18T09:21:18.792667Z",
+          "embedded_at": "2026-05-28T15:24:21.532210Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -246,7 +246,7 @@
             "nis2.7.3.es",
             "nis2.7.4.es"
           ],
-          "embedded_at": "2026-05-18T09:21:44.184338Z",
+          "embedded_at": "2026-05-28T15:24:51.055712Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -257,7 +257,7 @@
           "chunks": [
             "nis2.7.en"
           ],
-          "embedded_at": "2026-05-18T09:21:53.000767Z",
+          "embedded_at": "2026-05-28T15:24:59.968233Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -276,7 +276,7 @@
           "chunks": [
             "nis2.8.es"
           ],
-          "embedded_at": "2026-05-18T09:21:57.624386Z",
+          "embedded_at": "2026-05-28T15:25:05.675568Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -287,7 +287,7 @@
           "chunks": [
             "nis2.8.en"
           ],
-          "embedded_at": "2026-05-18T09:22:02.431405Z",
+          "embedded_at": "2026-05-28T15:25:13.101892Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -306,7 +306,7 @@
           "chunks": [
             "nis2.9.es"
           ],
-          "embedded_at": "2026-05-18T09:22:10.547419Z",
+          "embedded_at": "2026-05-28T15:25:22.075198Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -317,7 +317,7 @@
           "chunks": [
             "nis2.9.en"
           ],
-          "embedded_at": "2026-05-18T09:22:17.550450Z",
+          "embedded_at": "2026-05-28T15:25:31.299888Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -336,7 +336,7 @@
           "chunks": [
             "nis2.10.es"
           ],
-          "embedded_at": "2026-05-18T09:22:25.061681Z",
+          "embedded_at": "2026-05-28T15:25:40.150619Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -347,7 +347,7 @@
           "chunks": [
             "nis2.10.en"
           ],
-          "embedded_at": "2026-05-18T09:22:32.997568Z",
+          "embedded_at": "2026-05-28T15:25:49.281275Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -366,7 +366,7 @@
           "chunks": [
             "nis2.11.es"
           ],
-          "embedded_at": "2026-05-18T09:22:40.895252Z",
+          "embedded_at": "2026-05-28T15:25:58.370943Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -377,7 +377,7 @@
           "chunks": [
             "nis2.11.en"
           ],
-          "embedded_at": "2026-05-18T09:22:48.647590Z",
+          "embedded_at": "2026-05-28T15:26:07.365896Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -396,7 +396,7 @@
           "chunks": [
             "nis2.12.es"
           ],
-          "embedded_at": "2026-05-18T09:22:56.515619Z",
+          "embedded_at": "2026-05-28T15:26:17.670846Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -407,7 +407,7 @@
           "chunks": [
             "nis2.12.en"
           ],
-          "embedded_at": "2026-05-18T09:23:05.707622Z",
+          "embedded_at": "2026-05-28T15:26:26.744722Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -426,7 +426,7 @@
           "chunks": [
             "nis2.13.es"
           ],
-          "embedded_at": "2026-05-18T09:23:12.845964Z",
+          "embedded_at": "2026-05-28T15:26:35.859406Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -437,7 +437,7 @@
           "chunks": [
             "nis2.13.en"
           ],
-          "embedded_at": "2026-05-18T09:23:21.112606Z",
+          "embedded_at": "2026-05-28T15:26:44.947567Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -464,7 +464,7 @@
             "nis2.14.8.es",
             "nis2.14.9.es"
           ],
-          "embedded_at": "2026-05-18T09:24:20.482131Z",
+          "embedded_at": "2026-05-28T15:27:54.831215Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -483,7 +483,7 @@
             "nis2.14.8.en",
             "nis2.14.9.en"
           ],
-          "embedded_at": "2026-05-18T09:25:18.935159Z",
+          "embedded_at": "2026-05-28T15:29:02.618222Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -507,7 +507,7 @@
             "nis2.15.5.es",
             "nis2.15.6.es"
           ],
-          "embedded_at": "2026-05-18T09:25:58.137839Z",
+          "embedded_at": "2026-05-28T15:29:50.508249Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -518,7 +518,7 @@
           "chunks": [
             "nis2.15.en"
           ],
-          "embedded_at": "2026-05-18T09:26:06.098302Z",
+          "embedded_at": "2026-05-28T15:30:00.210969Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -537,7 +537,7 @@
           "chunks": [
             "nis2.16.es"
           ],
-          "embedded_at": "2026-05-18T09:26:15.477481Z",
+          "embedded_at": "2026-05-28T15:30:09.470133Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -548,7 +548,7 @@
           "chunks": [
             "nis2.16.en"
           ],
-          "embedded_at": "2026-05-18T09:26:23.734721Z",
+          "embedded_at": "2026-05-28T15:30:18.798467Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -567,7 +567,7 @@
           "chunks": [
             "nis2.17.es"
           ],
-          "embedded_at": "2026-05-18T09:26:25.608936Z",
+          "embedded_at": "2026-05-28T15:30:22.184522Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -578,7 +578,7 @@
           "chunks": [
             "nis2.17.en"
           ],
-          "embedded_at": "2026-05-18T09:26:28.905511Z",
+          "embedded_at": "2026-05-28T15:30:24.552027Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -597,7 +597,7 @@
           "chunks": [
             "nis2.18.es"
           ],
-          "embedded_at": "2026-05-18T09:26:35.099504Z",
+          "embedded_at": "2026-05-28T15:30:32.317774Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -608,7 +608,7 @@
           "chunks": [
             "nis2.18.en"
           ],
-          "embedded_at": "2026-05-18T09:26:40.320377Z",
+          "embedded_at": "2026-05-28T15:30:40.499627Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -635,7 +635,7 @@
             "nis2.19.8.es",
             "nis2.19.9.es"
           ],
-          "embedded_at": "2026-05-18T09:27:20.528707Z",
+          "embedded_at": "2026-05-28T15:31:26.527627Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -654,7 +654,7 @@
             "nis2.19.8.en",
             "nis2.19.9.en"
           ],
-          "embedded_at": "2026-05-18T09:27:53.141674Z",
+          "embedded_at": "2026-05-28T15:32:04.216932Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -673,7 +673,7 @@
           "chunks": [
             "nis2.20.es"
           ],
-          "embedded_at": "2026-05-18T09:27:56.570873Z",
+          "embedded_at": "2026-05-28T15:32:08.537549Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -684,7 +684,7 @@
           "chunks": [
             "nis2.20.en"
           ],
-          "embedded_at": "2026-05-18T09:28:00.350965Z",
+          "embedded_at": "2026-05-28T15:32:12.798581Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -707,7 +707,7 @@
             "nis2.21.4.es",
             "nis2.21.5.es"
           ],
-          "embedded_at": "2026-05-18T09:28:23.267676Z",
+          "embedded_at": "2026-05-28T15:32:38.120257Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -718,7 +718,7 @@
           "chunks": [
             "nis2.21.en"
           ],
-          "embedded_at": "2026-05-18T09:28:30.833118Z",
+          "embedded_at": "2026-05-28T15:32:47.261639Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -737,7 +737,7 @@
           "chunks": [
             "nis2.22.es"
           ],
-          "embedded_at": "2026-05-18T09:28:33.953310Z",
+          "embedded_at": "2026-05-28T15:32:52.010445Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -748,7 +748,7 @@
           "chunks": [
             "nis2.22.en"
           ],
-          "embedded_at": "2026-05-18T09:28:38.219333Z",
+          "embedded_at": "2026-05-28T15:32:55.103880Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -777,7 +777,7 @@
             "nis2.23.10.es",
             "nis2.23.11.es"
           ],
-          "embedded_at": "2026-05-18T09:29:50.873849Z",
+          "embedded_at": "2026-05-28T15:34:17.945190Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -798,7 +798,7 @@
             "nis2.23.10.en",
             "nis2.23.11.en"
           ],
-          "embedded_at": "2026-05-18T09:30:49.849080Z",
+          "embedded_at": "2026-05-28T15:35:28.379990Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -817,7 +817,7 @@
           "chunks": [
             "nis2.24.es"
           ],
-          "embedded_at": "2026-05-18T09:30:56.882802Z",
+          "embedded_at": "2026-05-28T15:35:35.550482Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -828,7 +828,7 @@
           "chunks": [
             "nis2.24.en"
           ],
-          "embedded_at": "2026-05-18T09:31:02.424932Z",
+          "embedded_at": "2026-05-28T15:35:41.459376Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -847,7 +847,7 @@
           "chunks": [
             "nis2.25.es"
           ],
-          "embedded_at": "2026-05-18T09:31:05.059524Z",
+          "embedded_at": "2026-05-28T15:35:46.575563Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -858,7 +858,7 @@
           "chunks": [
             "nis2.25.en"
           ],
-          "embedded_at": "2026-05-18T09:31:08.116336Z",
+          "embedded_at": "2026-05-28T15:35:49.740597Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -877,7 +877,7 @@
           "chunks": [
             "nis2.26.es"
           ],
-          "embedded_at": "2026-05-18T09:31:15.187564Z",
+          "embedded_at": "2026-05-28T15:35:59.298646Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -888,7 +888,7 @@
           "chunks": [
             "nis2.26.en"
           ],
-          "embedded_at": "2026-05-18T09:31:22.852383Z",
+          "embedded_at": "2026-05-28T15:36:08.683357Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -907,7 +907,7 @@
           "chunks": [
             "nis2.27.es"
           ],
-          "embedded_at": "2026-05-18T09:31:30.514272Z",
+          "embedded_at": "2026-05-28T15:36:17.616000Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -918,7 +918,7 @@
           "chunks": [
             "nis2.27.en"
           ],
-          "embedded_at": "2026-05-18T09:31:39.500116Z",
+          "embedded_at": "2026-05-28T15:36:26.042516Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -937,7 +937,7 @@
           "chunks": [
             "nis2.28.es"
           ],
-          "embedded_at": "2026-05-18T09:31:47.118723Z",
+          "embedded_at": "2026-05-28T15:36:35.115418Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -948,7 +948,7 @@
           "chunks": [
             "nis2.28.en"
           ],
-          "embedded_at": "2026-05-18T09:31:54.261755Z",
+          "embedded_at": "2026-05-28T15:36:45.529269Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -967,7 +967,7 @@
           "chunks": [
             "nis2.29.es"
           ],
-          "embedded_at": "2026-05-18T09:32:02.152338Z",
+          "embedded_at": "2026-05-28T15:36:54.390364Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -978,7 +978,7 @@
           "chunks": [
             "nis2.29.en"
           ],
-          "embedded_at": "2026-05-18T09:32:10.207596Z",
+          "embedded_at": "2026-05-28T15:37:03.398448Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -997,7 +997,7 @@
           "chunks": [
             "nis2.30.es"
           ],
-          "embedded_at": "2026-05-18T09:32:14.878388Z",
+          "embedded_at": "2026-05-28T15:37:09.453401Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1008,7 +1008,7 @@
           "chunks": [
             "nis2.30.en"
           ],
-          "embedded_at": "2026-05-18T09:32:19.363262Z",
+          "embedded_at": "2026-05-28T15:37:15.203419Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1027,7 +1027,7 @@
           "chunks": [
             "nis2.31.es"
           ],
-          "embedded_at": "2026-05-18T09:32:23.954517Z",
+          "embedded_at": "2026-05-28T15:37:21.118286Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1038,7 +1038,7 @@
           "chunks": [
             "nis2.31.en"
           ],
-          "embedded_at": "2026-05-18T09:32:28.727835Z",
+          "embedded_at": "2026-05-28T15:37:27.003437Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1066,7 +1066,7 @@
             "nis2.32.9.es",
             "nis2.32.10.es"
           ],
-          "embedded_at": "2026-05-18T09:33:30.991324Z",
+          "embedded_at": "2026-05-28T15:38:40.925427Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1086,7 +1086,7 @@
             "nis2.32.9.en",
             "nis2.32.10.en"
           ],
-          "embedded_at": "2026-05-18T09:34:30.118593Z",
+          "embedded_at": "2026-05-28T15:39:46.461461Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1110,7 +1110,7 @@
             "nis2.33.5.es",
             "nis2.33.6.es"
           ],
-          "embedded_at": "2026-05-18T09:34:59.537094Z",
+          "embedded_at": "2026-05-28T15:40:21.816445Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1126,7 +1126,7 @@
             "nis2.33.5.en",
             "nis2.33.6.en"
           ],
-          "embedded_at": "2026-05-18T09:35:28.357648Z",
+          "embedded_at": "2026-05-28T15:40:53.722195Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1145,7 +1145,7 @@
           "chunks": [
             "nis2.34.es"
           ],
-          "embedded_at": "2026-05-18T09:35:36.452746Z",
+          "embedded_at": "2026-05-28T15:41:02.754775Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1156,7 +1156,7 @@
           "chunks": [
             "nis2.34.en"
           ],
-          "embedded_at": "2026-05-18T09:35:44.777112Z",
+          "embedded_at": "2026-05-28T15:41:11.914689Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1175,7 +1175,7 @@
           "chunks": [
             "nis2.35.es"
           ],
-          "embedded_at": "2026-05-18T09:35:50.412459Z",
+          "embedded_at": "2026-05-28T15:41:22.246048Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1186,7 +1186,7 @@
           "chunks": [
             "nis2.35.en"
           ],
-          "embedded_at": "2026-05-18T09:35:55.480508Z",
+          "embedded_at": "2026-05-28T15:41:29.003518Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1205,7 +1205,7 @@
           "chunks": [
             "nis2.36.es"
           ],
-          "embedded_at": "2026-05-18T09:35:57.578312Z",
+          "embedded_at": "2026-05-28T15:41:32.746263Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1216,7 +1216,7 @@
           "chunks": [
             "nis2.36.en"
           ],
-          "embedded_at": "2026-05-18T09:35:59.475558Z",
+          "embedded_at": "2026-05-28T15:41:36.663543Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1235,7 +1235,7 @@
           "chunks": [
             "nis2.37.es"
           ],
-          "embedded_at": "2026-05-18T09:36:06.271288Z",
+          "embedded_at": "2026-05-28T15:41:47.687618Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1246,7 +1246,7 @@
           "chunks": [
             "nis2.37.en"
           ],
-          "embedded_at": "2026-05-18T09:36:15.736165Z",
+          "embedded_at": "2026-05-28T15:41:56.653090Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1265,7 +1265,7 @@
           "chunks": [
             "nis2.38.es"
           ],
-          "embedded_at": "2026-05-18T09:36:21.180723Z",
+          "embedded_at": "2026-05-28T15:42:03.737816Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1276,7 +1276,7 @@
           "chunks": [
             "nis2.38.en"
           ],
-          "embedded_at": "2026-05-18T09:36:26.315115Z",
+          "embedded_at": "2026-05-28T15:42:11.622001Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1295,7 +1295,7 @@
           "chunks": [
             "nis2.39.es"
           ],
-          "embedded_at": "2026-05-18T09:36:28.686300Z",
+          "embedded_at": "2026-05-28T15:42:14.740382Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1306,7 +1306,7 @@
           "chunks": [
             "nis2.39.en"
           ],
-          "embedded_at": "2026-05-18T09:36:31.034069Z",
+          "embedded_at": "2026-05-28T15:42:17.519888Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1325,7 +1325,7 @@
           "chunks": [
             "nis2.40.es"
           ],
-          "embedded_at": "2026-05-18T09:36:34.151714Z",
+          "embedded_at": "2026-05-28T15:42:21.198401Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1336,7 +1336,7 @@
           "chunks": [
             "nis2.40.en"
           ],
-          "embedded_at": "2026-05-18T09:36:36.942834Z",
+          "embedded_at": "2026-05-28T15:42:25.124248Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1355,7 +1355,7 @@
           "chunks": [
             "nis2.41.es"
           ],
-          "embedded_at": "2026-05-18T09:36:39.293713Z",
+          "embedded_at": "2026-05-28T15:42:27.894896Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1366,7 +1366,7 @@
           "chunks": [
             "nis2.41.en"
           ],
-          "embedded_at": "2026-05-18T09:36:41.596240Z",
+          "embedded_at": "2026-05-28T15:42:30.623033Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1385,7 +1385,7 @@
           "chunks": [
             "nis2.42.es"
           ],
-          "embedded_at": "2026-05-18T09:36:43.177482Z",
+          "embedded_at": "2026-05-28T15:42:34.176296Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1396,7 +1396,7 @@
           "chunks": [
             "nis2.42.en"
           ],
-          "embedded_at": "2026-05-18T09:36:45.658477Z",
+          "embedded_at": "2026-05-28T15:42:35.813441Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1415,7 +1415,7 @@
           "chunks": [
             "nis2.43.es"
           ],
-          "embedded_at": "2026-05-18T09:36:46.863632Z",
+          "embedded_at": "2026-05-28T15:42:37.672291Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1426,7 +1426,7 @@
           "chunks": [
             "nis2.43.en"
           ],
-          "embedded_at": "2026-05-18T09:36:48.375510Z",
+          "embedded_at": "2026-05-28T15:42:39.272743Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1445,7 +1445,7 @@
           "chunks": [
             "nis2.44.es"
           ],
-          "embedded_at": "2026-05-18T09:36:50.428343Z",
+          "embedded_at": "2026-05-28T15:42:41.490524Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1456,7 +1456,7 @@
           "chunks": [
             "nis2.44.en"
           ],
-          "embedded_at": "2026-05-18T09:36:52.610375Z",
+          "embedded_at": "2026-05-28T15:42:43.822714Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1475,7 +1475,7 @@
           "chunks": [
             "nis2.45.es"
           ],
-          "embedded_at": "2026-05-18T09:36:53.953922Z",
+          "embedded_at": "2026-05-28T15:42:47.128481Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1486,7 +1486,7 @@
           "chunks": [
             "nis2.45.en"
           ],
-          "embedded_at": "2026-05-18T09:36:55.123374Z",
+          "embedded_at": "2026-05-28T15:42:48.793031Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"
@@ -1522,7 +1522,7 @@
             "nis2.46.6.es",
             "nis2.46.7.es"
           ],
-          "embedded_at": "2026-05-18T09:38:39.902899Z",
+          "embedded_at": "2026-05-28T15:44:47.703265Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_es.pdf"
@@ -1550,7 +1550,7 @@
             "nis2.46.6.en",
             "nis2.46.7.en"
           ],
-          "embedded_at": "2026-05-18T09:40:24.154810Z",
+          "embedded_at": "2026-05-28T15:46:47.127940Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-18T08:14:27.181750Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/nis2_en.pdf"

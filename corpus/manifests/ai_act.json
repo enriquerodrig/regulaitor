@@ -37,7 +37,7 @@
           "chunks": [
             "ai_act.1.es"
           ],
-          "embedded_at": "2026-05-04T22:32:14.246111Z",
+          "embedded_at": "2026-05-28T14:00:43.959725Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -48,7 +48,7 @@
           "chunks": [
             "ai_act.1.en"
           ],
-          "embedded_at": "2026-05-04T22:32:18.914090Z",
+          "embedded_at": "2026-05-28T14:00:48.682550Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -78,7 +78,7 @@
             "ai_act.2.11.es",
             "ai_act.2.12.es"
           ],
-          "embedded_at": "2026-05-04T22:32:58.023896Z",
+          "embedded_at": "2026-05-28T14:01:26.854405Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -100,7 +100,7 @@
             "ai_act.2.11.en",
             "ai_act.2.12.en"
           ],
-          "embedded_at": "2026-05-04T22:33:31.991126Z",
+          "embedded_at": "2026-05-28T14:02:00.797022Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -119,7 +119,7 @@
           "chunks": [
             "ai_act.3.1.es"
           ],
-          "embedded_at": "2026-05-04T22:33:40.866362Z",
+          "embedded_at": "2026-05-28T14:02:09.243155Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -130,7 +130,7 @@
           "chunks": [
             "ai_act.3.1.en"
           ],
-          "embedded_at": "2026-05-04T22:33:49.456758Z",
+          "embedded_at": "2026-05-28T14:02:17.786625Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -149,7 +149,7 @@
           "chunks": [
             "ai_act.4.es"
           ],
-          "embedded_at": "2026-05-04T22:33:52.003229Z",
+          "embedded_at": "2026-05-28T14:02:20.129034Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -160,7 +160,7 @@
           "chunks": [
             "ai_act.4.en"
           ],
-          "embedded_at": "2026-05-04T22:33:54.260989Z",
+          "embedded_at": "2026-05-28T14:02:22.132979Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -186,7 +186,7 @@
             "ai_act.5.7.es",
             "ai_act.5.8.es"
           ],
-          "embedded_at": "2026-05-04T22:34:55.180596Z",
+          "embedded_at": "2026-05-28T14:03:22.834809Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -204,7 +204,7 @@
             "ai_act.5.7.en",
             "ai_act.5.8.en"
           ],
-          "embedded_at": "2026-05-04T22:36:06.518978Z",
+          "embedded_at": "2026-05-28T14:04:22.550516Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -230,7 +230,7 @@
             "ai_act.6.7.es",
             "ai_act.6.8.es"
           ],
-          "embedded_at": "2026-05-04T22:36:38.394650Z",
+          "embedded_at": "2026-05-28T14:04:53.509925Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -241,7 +241,7 @@
           "chunks": [
             "ai_act.6.en"
           ],
-          "embedded_at": "2026-05-04T22:36:46.854432Z",
+          "embedded_at": "2026-05-28T14:05:01.886986Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -260,7 +260,7 @@
           "chunks": [
             "ai_act.7.es"
           ],
-          "embedded_at": "2026-05-04T22:36:55.378104Z",
+          "embedded_at": "2026-05-28T14:05:10.557339Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -271,7 +271,7 @@
           "chunks": [
             "ai_act.7.en"
           ],
-          "embedded_at": "2026-05-04T22:37:03.864299Z",
+          "embedded_at": "2026-05-28T14:05:19.023310Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -290,7 +290,7 @@
           "chunks": [
             "ai_act.8.es"
           ],
-          "embedded_at": "2026-05-04T22:37:09.460053Z",
+          "embedded_at": "2026-05-28T14:05:24.036500Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -301,7 +301,7 @@
           "chunks": [
             "ai_act.8.en"
           ],
-          "embedded_at": "2026-05-04T22:37:14.561004Z",
+          "embedded_at": "2026-05-28T14:05:28.693072Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -329,7 +329,7 @@
             "ai_act.9.9.es",
             "ai_act.9.10.es"
           ],
-          "embedded_at": "2026-05-04T22:37:55.314965Z",
+          "embedded_at": "2026-05-28T14:06:10.148360Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -340,7 +340,7 @@
           "chunks": [
             "ai_act.9.en"
           ],
-          "embedded_at": "2026-05-04T22:38:04.172279Z",
+          "embedded_at": "2026-05-28T14:06:18.784620Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -364,7 +364,7 @@
             "ai_act.10.5.es",
             "ai_act.10.6.es"
           ],
-          "embedded_at": "2026-05-04T22:38:45.964937Z",
+          "embedded_at": "2026-05-28T14:07:00.001341Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -380,7 +380,7 @@
             "ai_act.10.5.en",
             "ai_act.10.6.en"
           ],
-          "embedded_at": "2026-05-04T22:39:24.529017Z",
+          "embedded_at": "2026-05-28T14:07:38.079850Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -399,7 +399,7 @@
           "chunks": [
             "ai_act.11.es"
           ],
-          "embedded_at": "2026-05-04T22:39:32.236806Z",
+          "embedded_at": "2026-05-28T14:07:45.196503Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -410,7 +410,7 @@
           "chunks": [
             "ai_act.11.en"
           ],
-          "embedded_at": "2026-05-04T22:39:39.708615Z",
+          "embedded_at": "2026-05-28T14:07:52.157175Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -429,7 +429,7 @@
           "chunks": [
             "ai_act.12.es"
           ],
-          "embedded_at": "2026-05-04T22:39:45.009766Z",
+          "embedded_at": "2026-05-28T14:07:57.244489Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -440,7 +440,7 @@
           "chunks": [
             "ai_act.12.en"
           ],
-          "embedded_at": "2026-05-04T22:39:49.598948Z",
+          "embedded_at": "2026-05-28T14:08:01.577434Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -459,7 +459,7 @@
           "chunks": [
             "ai_act.13.es"
           ],
-          "embedded_at": "2026-05-04T22:39:57.940285Z",
+          "embedded_at": "2026-05-28T14:08:10.289411Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -470,7 +470,7 @@
           "chunks": [
             "ai_act.13.en"
           ],
-          "embedded_at": "2026-05-04T22:40:06.464491Z",
+          "embedded_at": "2026-05-28T14:08:18.776252Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -489,7 +489,7 @@
           "chunks": [
             "ai_act.14.es"
           ],
-          "embedded_at": "2026-05-04T22:40:15.811214Z",
+          "embedded_at": "2026-05-28T14:08:27.218689Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -500,7 +500,7 @@
           "chunks": [
             "ai_act.14.en"
           ],
-          "embedded_at": "2026-05-04T22:40:24.338011Z",
+          "embedded_at": "2026-05-28T14:08:35.556982Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -519,7 +519,7 @@
           "chunks": [
             "ai_act.15.es"
           ],
-          "embedded_at": "2026-05-04T22:40:33.062195Z",
+          "embedded_at": "2026-05-28T14:08:43.881716Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -530,7 +530,7 @@
           "chunks": [
             "ai_act.15.en"
           ],
-          "embedded_at": "2026-05-04T22:40:41.671657Z",
+          "embedded_at": "2026-05-28T14:08:52.475069Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -549,7 +549,7 @@
           "chunks": [
             "ai_act.16.es"
           ],
-          "embedded_at": "2026-05-04T22:40:49.267395Z",
+          "embedded_at": "2026-05-28T14:08:59.870063Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -560,7 +560,7 @@
           "chunks": [
             "ai_act.16.en"
           ],
-          "embedded_at": "2026-05-04T22:40:55.424088Z",
+          "embedded_at": "2026-05-28T14:09:05.843461Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -579,7 +579,7 @@
           "chunks": [
             "ai_act.17.es"
           ],
-          "embedded_at": "2026-05-04T22:41:03.846395Z",
+          "embedded_at": "2026-05-28T14:09:14.284275Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -590,7 +590,7 @@
           "chunks": [
             "ai_act.17.en"
           ],
-          "embedded_at": "2026-05-04T22:41:12.452678Z",
+          "embedded_at": "2026-05-28T14:09:22.609527Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -609,7 +609,7 @@
           "chunks": [
             "ai_act.18.es"
           ],
-          "embedded_at": "2026-05-04T22:41:17.587032Z",
+          "embedded_at": "2026-05-28T14:09:27.650605Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -620,7 +620,7 @@
           "chunks": [
             "ai_act.18.en"
           ],
-          "embedded_at": "2026-05-04T22:41:22.655373Z",
+          "embedded_at": "2026-05-28T14:09:32.184014Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -639,7 +639,7 @@
           "chunks": [
             "ai_act.19.es"
           ],
-          "embedded_at": "2026-05-04T22:41:27.212714Z",
+          "embedded_at": "2026-05-28T14:09:35.832319Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -650,7 +650,7 @@
           "chunks": [
             "ai_act.19.en"
           ],
-          "embedded_at": "2026-05-04T22:41:30.671232Z",
+          "embedded_at": "2026-05-28T14:09:38.831488Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -669,7 +669,7 @@
           "chunks": [
             "ai_act.20.es"
           ],
-          "embedded_at": "2026-05-04T22:41:34.918578Z",
+          "embedded_at": "2026-05-28T14:09:43.040608Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -680,7 +680,7 @@
           "chunks": [
             "ai_act.20.en"
           ],
-          "embedded_at": "2026-05-04T22:41:39.044702Z",
+          "embedded_at": "2026-05-28T14:09:47.122824Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -699,7 +699,7 @@
           "chunks": [
             "ai_act.21.es"
           ],
-          "embedded_at": "2026-05-04T22:41:43.058464Z",
+          "embedded_at": "2026-05-28T14:09:50.899365Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -710,7 +710,7 @@
           "chunks": [
             "ai_act.21.en"
           ],
-          "embedded_at": "2026-05-04T22:41:46.863233Z",
+          "embedded_at": "2026-05-28T14:09:54.450250Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -729,7 +729,7 @@
           "chunks": [
             "ai_act.22.es"
           ],
-          "embedded_at": "2026-05-04T22:41:56.111782Z",
+          "embedded_at": "2026-05-28T14:10:02.863261Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -740,7 +740,7 @@
           "chunks": [
             "ai_act.22.en"
           ],
-          "embedded_at": "2026-05-04T22:42:04.823712Z",
+          "embedded_at": "2026-05-28T14:10:12.236317Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -759,7 +759,7 @@
           "chunks": [
             "ai_act.23.es"
           ],
-          "embedded_at": "2026-05-04T22:42:13.181581Z",
+          "embedded_at": "2026-05-28T14:10:20.777009Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -770,7 +770,7 @@
           "chunks": [
             "ai_act.23.en"
           ],
-          "embedded_at": "2026-05-04T22:42:21.323760Z",
+          "embedded_at": "2026-05-28T14:10:28.997911Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -789,7 +789,7 @@
           "chunks": [
             "ai_act.24.es"
           ],
-          "embedded_at": "2026-05-04T22:42:29.713992Z",
+          "embedded_at": "2026-05-28T14:10:37.349335Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -800,7 +800,7 @@
           "chunks": [
             "ai_act.24.en"
           ],
-          "embedded_at": "2026-05-04T22:42:38.452273Z",
+          "embedded_at": "2026-05-28T14:10:46.140908Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -819,7 +819,7 @@
           "chunks": [
             "ai_act.25.es"
           ],
-          "embedded_at": "2026-05-04T22:42:46.643306Z",
+          "embedded_at": "2026-05-28T14:10:54.279402Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -830,7 +830,7 @@
           "chunks": [
             "ai_act.25.en"
           ],
-          "embedded_at": "2026-05-04T22:42:54.920436Z",
+          "embedded_at": "2026-05-28T14:11:02.579614Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -860,7 +860,7 @@
             "ai_act.26.11.es",
             "ai_act.26.12.es"
           ],
-          "embedded_at": "2026-05-04T22:44:22.281667Z",
+          "embedded_at": "2026-05-28T14:12:34.307391Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -882,7 +882,7 @@
             "ai_act.26.11.en",
             "ai_act.26.12.en"
           ],
-          "embedded_at": "2026-05-04T22:45:50.231933Z",
+          "embedded_at": "2026-05-28T14:14:03.159571Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -901,7 +901,7 @@
           "chunks": [
             "ai_act.27.es"
           ],
-          "embedded_at": "2026-05-04T22:45:58.411345Z",
+          "embedded_at": "2026-05-28T14:14:11.908100Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -912,7 +912,7 @@
           "chunks": [
             "ai_act.27.en"
           ],
-          "embedded_at": "2026-05-04T22:46:07.005480Z",
+          "embedded_at": "2026-05-28T14:14:20.424547Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -931,7 +931,7 @@
           "chunks": [
             "ai_act.28.es"
           ],
-          "embedded_at": "2026-05-04T22:46:13.203521Z",
+          "embedded_at": "2026-05-28T14:14:26.364862Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -942,7 +942,7 @@
           "chunks": [
             "ai_act.28.en"
           ],
-          "embedded_at": "2026-05-04T22:46:18.401858Z",
+          "embedded_at": "2026-05-28T14:14:31.767464Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -961,7 +961,7 @@
           "chunks": [
             "ai_act.29.es"
           ],
-          "embedded_at": "2026-05-04T22:46:25.068845Z",
+          "embedded_at": "2026-05-28T14:14:38.509535Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -972,7 +972,7 @@
           "chunks": [
             "ai_act.29.en"
           ],
-          "embedded_at": "2026-05-04T22:46:30.493703Z",
+          "embedded_at": "2026-05-28T14:14:43.790833Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -991,7 +991,7 @@
           "chunks": [
             "ai_act.30.es"
           ],
-          "embedded_at": "2026-05-04T22:46:37.031268Z",
+          "embedded_at": "2026-05-28T14:14:50.479961Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1002,7 +1002,7 @@
           "chunks": [
             "ai_act.30.en"
           ],
-          "embedded_at": "2026-05-04T22:46:42.892046Z",
+          "embedded_at": "2026-05-28T14:14:56.636733Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1021,7 +1021,7 @@
           "chunks": [
             "ai_act.31.es"
           ],
-          "embedded_at": "2026-05-04T22:46:51.511684Z",
+          "embedded_at": "2026-05-28T14:15:05.247223Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1032,7 +1032,7 @@
           "chunks": [
             "ai_act.31.en"
           ],
-          "embedded_at": "2026-05-04T22:46:59.732415Z",
+          "embedded_at": "2026-05-28T14:15:14.830717Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1051,7 +1051,7 @@
           "chunks": [
             "ai_act.32.es"
           ],
-          "embedded_at": "2026-05-04T22:47:02.060453Z",
+          "embedded_at": "2026-05-28T14:15:17.274842Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1062,7 +1062,7 @@
           "chunks": [
             "ai_act.32.en"
           ],
-          "embedded_at": "2026-05-04T22:47:04.108307Z",
+          "embedded_at": "2026-05-28T14:15:19.494488Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1081,7 +1081,7 @@
           "chunks": [
             "ai_act.33.es"
           ],
-          "embedded_at": "2026-05-04T22:47:07.468264Z",
+          "embedded_at": "2026-05-28T14:15:22.750542Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1092,7 +1092,7 @@
           "chunks": [
             "ai_act.33.en"
           ],
-          "embedded_at": "2026-05-04T22:47:10.556037Z",
+          "embedded_at": "2026-05-28T14:15:26.097408Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1111,7 +1111,7 @@
           "chunks": [
             "ai_act.34.es"
           ],
-          "embedded_at": "2026-05-04T22:47:15.274365Z",
+          "embedded_at": "2026-05-28T14:15:30.766490Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1122,7 +1122,7 @@
           "chunks": [
             "ai_act.34.en"
           ],
-          "embedded_at": "2026-05-04T22:47:19.544413Z",
+          "embedded_at": "2026-05-28T14:15:34.673159Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1141,7 +1141,7 @@
           "chunks": [
             "ai_act.35.es"
           ],
-          "embedded_at": "2026-05-04T22:47:21.376901Z",
+          "embedded_at": "2026-05-28T14:15:36.681690Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1152,7 +1152,7 @@
           "chunks": [
             "ai_act.35.en"
           ],
-          "embedded_at": "2026-05-04T22:47:23.452538Z",
+          "embedded_at": "2026-05-28T14:15:38.762604Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1179,7 +1179,7 @@
             "ai_act.36.8.es",
             "ai_act.36.9.es"
           ],
-          "embedded_at": "2026-05-04T22:48:06.398534Z",
+          "embedded_at": "2026-05-28T14:16:21.839828Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1198,7 +1198,7 @@
             "ai_act.36.8.en",
             "ai_act.36.9.en"
           ],
-          "embedded_at": "2026-05-04T22:48:47.657028Z",
+          "embedded_at": "2026-05-28T14:17:03.476702Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1217,7 +1217,7 @@
           "chunks": [
             "ai_act.37.es"
           ],
-          "embedded_at": "2026-05-04T22:48:51.936110Z",
+          "embedded_at": "2026-05-28T14:17:08.121765Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1228,7 +1228,7 @@
           "chunks": [
             "ai_act.37.en"
           ],
-          "embedded_at": "2026-05-04T22:48:56.379239Z",
+          "embedded_at": "2026-05-28T14:17:12.247003Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1247,7 +1247,7 @@
           "chunks": [
             "ai_act.38.es"
           ],
-          "embedded_at": "2026-05-04T22:48:59.242987Z",
+          "embedded_at": "2026-05-28T14:17:15.173729Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1258,7 +1258,7 @@
           "chunks": [
             "ai_act.38.en"
           ],
-          "embedded_at": "2026-05-04T22:49:02.176337Z",
+          "embedded_at": "2026-05-28T14:17:18.051160Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1277,7 +1277,7 @@
           "chunks": [
             "ai_act.39.es"
           ],
-          "embedded_at": "2026-05-04T22:49:04.023740Z",
+          "embedded_at": "2026-05-28T14:17:19.942181Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1288,7 +1288,7 @@
           "chunks": [
             "ai_act.39.en"
           ],
-          "embedded_at": "2026-05-04T22:49:06.013740Z",
+          "embedded_at": "2026-05-28T14:17:21.670954Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1307,7 +1307,7 @@
           "chunks": [
             "ai_act.40.es"
           ],
-          "embedded_at": "2026-05-04T22:49:14.806101Z",
+          "embedded_at": "2026-05-28T14:17:30.318684Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1318,7 +1318,7 @@
           "chunks": [
             "ai_act.40.en"
           ],
-          "embedded_at": "2026-05-04T22:49:23.327378Z",
+          "embedded_at": "2026-05-28T14:17:39.087980Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1337,7 +1337,7 @@
           "chunks": [
             "ai_act.41.es"
           ],
-          "embedded_at": "2026-05-04T22:49:31.848821Z",
+          "embedded_at": "2026-05-28T14:17:47.541052Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1348,7 +1348,7 @@
           "chunks": [
             "ai_act.41.en"
           ],
-          "embedded_at": "2026-05-04T22:49:40.071935Z",
+          "embedded_at": "2026-05-28T14:17:56.276994Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1367,7 +1367,7 @@
           "chunks": [
             "ai_act.42.es"
           ],
-          "embedded_at": "2026-05-04T22:49:44.028663Z",
+          "embedded_at": "2026-05-28T14:18:00.688673Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1378,7 +1378,7 @@
           "chunks": [
             "ai_act.42.en"
           ],
-          "embedded_at": "2026-05-04T22:49:47.528129Z",
+          "embedded_at": "2026-05-28T14:18:04.307379Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1402,7 +1402,7 @@
             "ai_act.43.5.es",
             "ai_act.43.6.es"
           ],
-          "embedded_at": "2026-05-04T22:50:26.167566Z",
+          "embedded_at": "2026-05-28T14:18:43.625225Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1418,7 +1418,7 @@
             "ai_act.43.5.en",
             "ai_act.43.6.en"
           ],
-          "embedded_at": "2026-05-04T22:50:59.852026Z",
+          "embedded_at": "2026-05-28T14:19:17.665115Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1437,7 +1437,7 @@
           "chunks": [
             "ai_act.44.es"
           ],
-          "embedded_at": "2026-05-04T22:51:05.156300Z",
+          "embedded_at": "2026-05-28T14:19:23.060371Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1448,7 +1448,7 @@
           "chunks": [
             "ai_act.44.en"
           ],
-          "embedded_at": "2026-05-04T22:51:10.047175Z",
+          "embedded_at": "2026-05-28T14:19:28.239754Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1467,7 +1467,7 @@
           "chunks": [
             "ai_act.45.es"
           ],
-          "embedded_at": "2026-05-04T22:51:17.595780Z",
+          "embedded_at": "2026-05-28T14:19:35.504483Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1478,7 +1478,7 @@
           "chunks": [
             "ai_act.45.en"
           ],
-          "embedded_at": "2026-05-04T22:51:24.001050Z",
+          "embedded_at": "2026-05-28T14:19:41.883152Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1497,7 +1497,7 @@
           "chunks": [
             "ai_act.46.es"
           ],
-          "embedded_at": "2026-05-04T22:51:32.863130Z",
+          "embedded_at": "2026-05-28T14:19:50.425155Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1508,7 +1508,7 @@
           "chunks": [
             "ai_act.46.en"
           ],
-          "embedded_at": "2026-05-04T22:51:41.120196Z",
+          "embedded_at": "2026-05-28T14:19:58.648167Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1527,7 +1527,7 @@
           "chunks": [
             "ai_act.47.es"
           ],
-          "embedded_at": "2026-05-04T22:51:48.771690Z",
+          "embedded_at": "2026-05-28T14:20:06.396796Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1538,7 +1538,7 @@
           "chunks": [
             "ai_act.47.en"
           ],
-          "embedded_at": "2026-05-04T22:51:55.876534Z",
+          "embedded_at": "2026-05-28T14:20:13.972322Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1557,7 +1557,7 @@
           "chunks": [
             "ai_act.48.es"
           ],
-          "embedded_at": "2026-05-04T22:52:01.061926Z",
+          "embedded_at": "2026-05-28T14:20:19.218560Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1568,7 +1568,7 @@
           "chunks": [
             "ai_act.48.en"
           ],
-          "embedded_at": "2026-05-04T22:52:06.514933Z",
+          "embedded_at": "2026-05-28T14:20:24.100653Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1587,7 +1587,7 @@
           "chunks": [
             "ai_act.49.es"
           ],
-          "embedded_at": "2026-05-04T22:52:15.101008Z",
+          "embedded_at": "2026-05-28T14:20:32.522059Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1598,7 +1598,7 @@
           "chunks": [
             "ai_act.49.en"
           ],
-          "embedded_at": "2026-05-04T22:52:23.314071Z",
+          "embedded_at": "2026-05-28T14:20:41.116687Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1623,7 +1623,7 @@
             "ai_act.50.6.es",
             "ai_act.50.7.es"
           ],
-          "embedded_at": "2026-05-04T22:52:54.753184Z",
+          "embedded_at": "2026-05-28T14:21:15.161356Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1634,7 +1634,7 @@
           "chunks": [
             "ai_act.50.en"
           ],
-          "embedded_at": "2026-05-04T22:53:03.488578Z",
+          "embedded_at": "2026-05-28T14:21:23.854580Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1653,7 +1653,7 @@
           "chunks": [
             "ai_act.51.es"
           ],
-          "embedded_at": "2026-05-04T22:53:08.055790Z",
+          "embedded_at": "2026-05-28T14:21:28.490002Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1664,7 +1664,7 @@
           "chunks": [
             "ai_act.51.en"
           ],
-          "embedded_at": "2026-05-04T22:53:12.403830Z",
+          "embedded_at": "2026-05-28T14:21:32.726965Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1683,7 +1683,7 @@
           "chunks": [
             "ai_act.52.es"
           ],
-          "embedded_at": "2026-05-04T22:53:21.383020Z",
+          "embedded_at": "2026-05-28T14:21:42.058545Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1694,7 +1694,7 @@
           "chunks": [
             "ai_act.52.en"
           ],
-          "embedded_at": "2026-05-04T22:53:29.876296Z",
+          "embedded_at": "2026-05-28T14:21:50.755861Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1713,7 +1713,7 @@
           "chunks": [
             "ai_act.53.es"
           ],
-          "embedded_at": "2026-05-04T22:53:38.180232Z",
+          "embedded_at": "2026-05-28T14:21:59.628587Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1724,7 +1724,7 @@
           "chunks": [
             "ai_act.53.en"
           ],
-          "embedded_at": "2026-05-04T22:53:46.444316Z",
+          "embedded_at": "2026-05-28T14:22:08.041312Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1743,7 +1743,7 @@
           "chunks": [
             "ai_act.54.es"
           ],
-          "embedded_at": "2026-05-04T22:53:55.527987Z",
+          "embedded_at": "2026-05-28T14:22:16.830728Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1754,7 +1754,7 @@
           "chunks": [
             "ai_act.54.en"
           ],
-          "embedded_at": "2026-05-04T22:54:04.057127Z",
+          "embedded_at": "2026-05-28T14:22:25.302809Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1773,7 +1773,7 @@
           "chunks": [
             "ai_act.55.es"
           ],
-          "embedded_at": "2026-05-04T22:54:11.588114Z",
+          "embedded_at": "2026-05-28T14:22:32.987649Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1784,7 +1784,7 @@
           "chunks": [
             "ai_act.55.en"
           ],
-          "embedded_at": "2026-05-04T22:54:18.400193Z",
+          "embedded_at": "2026-05-28T14:22:39.757405Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1811,7 +1811,7 @@
             "ai_act.56.8.es",
             "ai_act.56.9.es"
           ],
-          "embedded_at": "2026-05-04T22:54:52.189080Z",
+          "embedded_at": "2026-05-28T14:23:13.812397Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1822,7 +1822,7 @@
           "chunks": [
             "ai_act.56.en"
           ],
-          "embedded_at": "2026-05-04T22:55:00.424587Z",
+          "embedded_at": "2026-05-28T14:23:22.497179Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1857,7 +1857,7 @@
             "ai_act.57.16.es",
             "ai_act.57.17.es"
           ],
-          "embedded_at": "2026-05-04T22:55:53.767918Z",
+          "embedded_at": "2026-05-28T14:24:15.113421Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1884,7 +1884,7 @@
             "ai_act.57.16.en",
             "ai_act.57.17.en"
           ],
-          "embedded_at": "2026-05-04T22:56:37.301869Z",
+          "embedded_at": "2026-05-28T14:25:00.886613Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1906,7 +1906,7 @@
             "ai_act.58.3.es",
             "ai_act.58.4.es"
           ],
-          "embedded_at": "2026-05-04T22:57:07.937343Z",
+          "embedded_at": "2026-05-28T14:25:33.840838Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1917,7 +1917,7 @@
           "chunks": [
             "ai_act.58.en"
           ],
-          "embedded_at": "2026-05-04T22:57:16.307446Z",
+          "embedded_at": "2026-05-28T14:25:42.521621Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1938,7 +1938,7 @@
             "ai_act.59.2.es",
             "ai_act.59.3.es"
           ],
-          "embedded_at": "2026-05-04T22:57:39.726251Z",
+          "embedded_at": "2026-05-28T14:26:06.866589Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1949,7 +1949,7 @@
           "chunks": [
             "ai_act.59.en"
           ],
-          "embedded_at": "2026-05-04T22:57:48.215735Z",
+          "embedded_at": "2026-05-28T14:26:15.519860Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -1976,7 +1976,7 @@
             "ai_act.60.8.es",
             "ai_act.60.9.es"
           ],
-          "embedded_at": "2026-05-04T22:58:54.463761Z",
+          "embedded_at": "2026-05-28T14:27:25.279644Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -1995,7 +1995,7 @@
             "ai_act.60.8.en",
             "ai_act.60.9.en"
           ],
-          "embedded_at": "2026-05-04T23:00:01.107448Z",
+          "embedded_at": "2026-05-28T14:28:32.805134Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2014,7 +2014,7 @@
           "chunks": [
             "ai_act.61.es"
           ],
-          "embedded_at": "2026-05-04T23:00:06.085222Z",
+          "embedded_at": "2026-05-28T14:28:37.880235Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2025,7 +2025,7 @@
           "chunks": [
             "ai_act.61.en"
           ],
-          "embedded_at": "2026-05-04T23:00:11.073877Z",
+          "embedded_at": "2026-05-28T14:28:42.844141Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2044,7 +2044,7 @@
           "chunks": [
             "ai_act.62.es"
           ],
-          "embedded_at": "2026-05-04T23:00:20.541363Z",
+          "embedded_at": "2026-05-28T14:28:51.441196Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2055,7 +2055,7 @@
           "chunks": [
             "ai_act.62.en"
           ],
-          "embedded_at": "2026-05-04T23:00:29.349421Z",
+          "embedded_at": "2026-05-28T14:28:59.258638Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2074,7 +2074,7 @@
           "chunks": [
             "ai_act.63.es"
           ],
-          "embedded_at": "2026-05-04T23:00:33.234711Z",
+          "embedded_at": "2026-05-28T14:29:02.924751Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2085,7 +2085,7 @@
           "chunks": [
             "ai_act.63.en"
           ],
-          "embedded_at": "2026-05-04T23:00:37.092384Z",
+          "embedded_at": "2026-05-28T14:29:06.695094Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2104,7 +2104,7 @@
           "chunks": [
             "ai_act.64.es"
           ],
-          "embedded_at": "2026-05-04T23:00:38.581019Z",
+          "embedded_at": "2026-05-28T14:29:08.651825Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2115,7 +2115,7 @@
           "chunks": [
             "ai_act.64.en"
           ],
-          "embedded_at": "2026-05-04T23:00:39.782283Z",
+          "embedded_at": "2026-05-28T14:29:10.135058Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2134,7 +2134,7 @@
           "chunks": [
             "ai_act.65.es"
           ],
-          "embedded_at": "2026-05-04T23:00:48.141588Z",
+          "embedded_at": "2026-05-28T14:29:18.812464Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2145,7 +2145,7 @@
           "chunks": [
             "ai_act.65.en"
           ],
-          "embedded_at": "2026-05-04T23:00:56.665421Z",
+          "embedded_at": "2026-05-28T14:29:27.613156Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2164,7 +2164,7 @@
           "chunks": [
             "ai_act.66.1.es"
           ],
-          "embedded_at": "2026-05-04T23:01:05.492661Z",
+          "embedded_at": "2026-05-28T14:29:36.527184Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2175,7 +2175,7 @@
           "chunks": [
             "ai_act.66.en"
           ],
-          "embedded_at": "2026-05-04T23:01:13.863195Z",
+          "embedded_at": "2026-05-28T14:29:45.978505Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2194,7 +2194,7 @@
           "chunks": [
             "ai_act.67.es"
           ],
-          "embedded_at": "2026-05-04T23:01:21.892869Z",
+          "embedded_at": "2026-05-28T14:29:55.119946Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2205,7 +2205,7 @@
           "chunks": [
             "ai_act.67.en"
           ],
-          "embedded_at": "2026-05-04T23:01:29.545771Z",
+          "embedded_at": "2026-05-28T14:30:04.890131Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2224,7 +2224,7 @@
           "chunks": [
             "ai_act.68.es"
           ],
-          "embedded_at": "2026-05-04T23:01:38.373879Z",
+          "embedded_at": "2026-05-28T14:30:13.821849Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2235,7 +2235,7 @@
           "chunks": [
             "ai_act.68.en"
           ],
-          "embedded_at": "2026-05-04T23:01:46.983767Z",
+          "embedded_at": "2026-05-28T14:30:22.557248Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2254,7 +2254,7 @@
           "chunks": [
             "ai_act.69.es"
           ],
-          "embedded_at": "2026-05-04T23:01:50.844621Z",
+          "embedded_at": "2026-05-28T14:30:26.628219Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2265,7 +2265,7 @@
           "chunks": [
             "ai_act.69.en"
           ],
-          "embedded_at": "2026-05-04T23:01:54.340229Z",
+          "embedded_at": "2026-05-28T14:30:30.147209Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2284,7 +2284,7 @@
           "chunks": [
             "ai_act.70.es"
           ],
-          "embedded_at": "2026-05-04T23:02:02.567398Z",
+          "embedded_at": "2026-05-28T14:30:38.790568Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2295,7 +2295,7 @@
           "chunks": [
             "ai_act.70.en"
           ],
-          "embedded_at": "2026-05-04T23:02:11.318185Z",
+          "embedded_at": "2026-05-28T14:30:47.747596Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2314,7 +2314,7 @@
           "chunks": [
             "ai_act.71.es"
           ],
-          "embedded_at": "2026-05-04T23:02:20.253809Z",
+          "embedded_at": "2026-05-28T14:30:56.138458Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2325,7 +2325,7 @@
           "chunks": [
             "ai_act.71.en"
           ],
-          "embedded_at": "2026-05-04T23:02:28.544543Z",
+          "embedded_at": "2026-05-28T14:31:04.698517Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2344,7 +2344,7 @@
           "chunks": [
             "ai_act.72.es"
           ],
-          "embedded_at": "2026-05-04T23:02:36.857114Z",
+          "embedded_at": "2026-05-28T14:31:13.401552Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2355,7 +2355,7 @@
           "chunks": [
             "ai_act.72.en"
           ],
-          "embedded_at": "2026-05-04T23:02:44.231421Z",
+          "embedded_at": "2026-05-28T14:31:21.224414Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2374,7 +2374,7 @@
           "chunks": [
             "ai_act.73.es"
           ],
-          "embedded_at": "2026-05-04T23:02:53.278538Z",
+          "embedded_at": "2026-05-28T14:31:29.722218Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2385,7 +2385,7 @@
           "chunks": [
             "ai_act.73.en"
           ],
-          "embedded_at": "2026-05-04T23:03:01.957409Z",
+          "embedded_at": "2026-05-28T14:31:38.271677Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2417,7 +2417,7 @@
             "ai_act.74.13.es",
             "ai_act.74.14.es"
           ],
-          "embedded_at": "2026-05-04T23:03:44.085518Z",
+          "embedded_at": "2026-05-28T14:32:21.666832Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2441,7 +2441,7 @@
             "ai_act.74.13.en",
             "ai_act.74.14.en"
           ],
-          "embedded_at": "2026-05-04T23:04:18.350483Z",
+          "embedded_at": "2026-05-28T14:32:57.171531Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2460,7 +2460,7 @@
           "chunks": [
             "ai_act.75.es"
           ],
-          "embedded_at": "2026-05-04T23:04:25.391018Z",
+          "embedded_at": "2026-05-28T14:33:05.033748Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2471,7 +2471,7 @@
           "chunks": [
             "ai_act.75.en"
           ],
-          "embedded_at": "2026-05-04T23:04:32.172211Z",
+          "embedded_at": "2026-05-28T14:33:11.501615Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2490,7 +2490,7 @@
           "chunks": [
             "ai_act.76.es"
           ],
-          "embedded_at": "2026-05-04T23:04:40.367997Z",
+          "embedded_at": "2026-05-28T14:33:19.320852Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2501,7 +2501,7 @@
           "chunks": [
             "ai_act.76.en"
           ],
-          "embedded_at": "2026-05-04T23:04:47.522077Z",
+          "embedded_at": "2026-05-28T14:33:26.662569Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2520,7 +2520,7 @@
           "chunks": [
             "ai_act.77.es"
           ],
-          "embedded_at": "2026-05-04T23:04:54.480052Z",
+          "embedded_at": "2026-05-28T14:33:34.027293Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2531,7 +2531,7 @@
           "chunks": [
             "ai_act.77.en"
           ],
-          "embedded_at": "2026-05-04T23:05:00.002079Z",
+          "embedded_at": "2026-05-28T14:33:39.966785Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2550,7 +2550,7 @@
           "chunks": [
             "ai_act.78.es"
           ],
-          "embedded_at": "2026-05-04T23:05:08.692781Z",
+          "embedded_at": "2026-05-28T14:33:48.718547Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2561,7 +2561,7 @@
           "chunks": [
             "ai_act.78.en"
           ],
-          "embedded_at": "2026-05-04T23:05:18.271980Z",
+          "embedded_at": "2026-05-28T14:33:57.333321Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2588,7 +2588,7 @@
             "ai_act.79.8.es",
             "ai_act.79.9.es"
           ],
-          "embedded_at": "2026-05-04T23:06:22.286846Z",
+          "embedded_at": "2026-05-28T14:35:02.076899Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2607,7 +2607,7 @@
             "ai_act.79.8.en",
             "ai_act.79.9.en"
           ],
-          "embedded_at": "2026-05-04T23:07:21.522246Z",
+          "embedded_at": "2026-05-28T14:36:04.855083Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2626,7 +2626,7 @@
           "chunks": [
             "ai_act.80.es"
           ],
-          "embedded_at": "2026-05-04T23:07:30.225372Z",
+          "embedded_at": "2026-05-28T14:36:13.733699Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2637,7 +2637,7 @@
           "chunks": [
             "ai_act.80.en"
           ],
-          "embedded_at": "2026-05-04T23:07:39.478821Z",
+          "embedded_at": "2026-05-28T14:36:22.918697Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2656,7 +2656,7 @@
           "chunks": [
             "ai_act.81.es"
           ],
-          "embedded_at": "2026-05-04T23:07:46.975032Z",
+          "embedded_at": "2026-05-28T14:36:30.790982Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2667,7 +2667,7 @@
           "chunks": [
             "ai_act.81.en"
           ],
-          "embedded_at": "2026-05-04T23:07:53.858300Z",
+          "embedded_at": "2026-05-28T14:36:37.616190Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2686,7 +2686,7 @@
           "chunks": [
             "ai_act.82.es"
           ],
-          "embedded_at": "2026-05-04T23:08:01.182905Z",
+          "embedded_at": "2026-05-28T14:36:45.184805Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2697,7 +2697,7 @@
           "chunks": [
             "ai_act.82.en"
           ],
-          "embedded_at": "2026-05-04T23:08:08.304180Z",
+          "embedded_at": "2026-05-28T14:36:52.174628Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2716,7 +2716,7 @@
           "chunks": [
             "ai_act.83.es"
           ],
-          "embedded_at": "2026-05-04T23:08:12.529758Z",
+          "embedded_at": "2026-05-28T14:36:56.185248Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2727,7 +2727,7 @@
           "chunks": [
             "ai_act.83.en"
           ],
-          "embedded_at": "2026-05-04T23:08:16.821047Z",
+          "embedded_at": "2026-05-28T14:37:00.929921Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2746,7 +2746,7 @@
           "chunks": [
             "ai_act.84.es"
           ],
-          "embedded_at": "2026-05-04T23:08:19.496008Z",
+          "embedded_at": "2026-05-28T14:37:04.017530Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2757,7 +2757,7 @@
           "chunks": [
             "ai_act.84.en"
           ],
-          "embedded_at": "2026-05-04T23:08:22.078556Z",
+          "embedded_at": "2026-05-28T14:37:06.502326Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2776,7 +2776,7 @@
           "chunks": [
             "ai_act.85.es"
           ],
-          "embedded_at": "2026-05-04T23:08:24.241524Z",
+          "embedded_at": "2026-05-28T14:37:09.223499Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2787,7 +2787,7 @@
           "chunks": [
             "ai_act.85.en"
           ],
-          "embedded_at": "2026-05-04T23:08:27.090142Z",
+          "embedded_at": "2026-05-28T14:37:11.561542Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2806,7 +2806,7 @@
           "chunks": [
             "ai_act.86.es"
           ],
-          "embedded_at": "2026-05-04T23:08:30.840565Z",
+          "embedded_at": "2026-05-28T14:37:15.552406Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2817,7 +2817,7 @@
           "chunks": [
             "ai_act.86.en"
           ],
-          "embedded_at": "2026-05-04T23:08:34.463614Z",
+          "embedded_at": "2026-05-28T14:37:19.086553Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2836,7 +2836,7 @@
           "chunks": [
             "ai_act.87.es"
           ],
-          "embedded_at": "2026-05-04T23:08:35.879030Z",
+          "embedded_at": "2026-05-28T14:37:21.117447Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2847,7 +2847,7 @@
           "chunks": [
             "ai_act.87.en"
           ],
-          "embedded_at": "2026-05-04T23:08:37.584919Z",
+          "embedded_at": "2026-05-28T14:37:22.796514Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2866,7 +2866,7 @@
           "chunks": [
             "ai_act.88.es"
           ],
-          "embedded_at": "2026-05-04T23:08:40.650811Z",
+          "embedded_at": "2026-05-28T14:37:26.093195Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2877,7 +2877,7 @@
           "chunks": [
             "ai_act.88.en"
           ],
-          "embedded_at": "2026-05-04T23:08:44.051349Z",
+          "embedded_at": "2026-05-28T14:37:29.402830Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2896,7 +2896,7 @@
           "chunks": [
             "ai_act.89.es"
           ],
-          "embedded_at": "2026-05-04T23:08:48.229979Z",
+          "embedded_at": "2026-05-28T14:37:33.509536Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2907,7 +2907,7 @@
           "chunks": [
             "ai_act.89.en"
           ],
-          "embedded_at": "2026-05-04T23:08:51.586520Z",
+          "embedded_at": "2026-05-28T14:37:37.088568Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2926,7 +2926,7 @@
           "chunks": [
             "ai_act.90.es"
           ],
-          "embedded_at": "2026-05-04T23:08:56.107390Z",
+          "embedded_at": "2026-05-28T14:37:41.626770Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2937,7 +2937,7 @@
           "chunks": [
             "ai_act.90.en"
           ],
-          "embedded_at": "2026-05-04T23:09:00.353572Z",
+          "embedded_at": "2026-05-28T14:37:45.715082Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2956,7 +2956,7 @@
           "chunks": [
             "ai_act.91.es"
           ],
-          "embedded_at": "2026-05-04T23:09:06.870933Z",
+          "embedded_at": "2026-05-28T14:37:52.526042Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2967,7 +2967,7 @@
           "chunks": [
             "ai_act.91.en"
           ],
-          "embedded_at": "2026-05-04T23:09:13.082081Z",
+          "embedded_at": "2026-05-28T14:37:58.933393Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -2986,7 +2986,7 @@
           "chunks": [
             "ai_act.92.es"
           ],
-          "embedded_at": "2026-05-04T23:09:22.079643Z",
+          "embedded_at": "2026-05-28T14:38:07.450780Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -2997,7 +2997,7 @@
           "chunks": [
             "ai_act.92.en"
           ],
-          "embedded_at": "2026-05-04T23:09:30.231932Z",
+          "embedded_at": "2026-05-28T14:38:15.635953Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3016,7 +3016,7 @@
           "chunks": [
             "ai_act.93.es"
           ],
-          "embedded_at": "2026-05-04T23:09:34.626207Z",
+          "embedded_at": "2026-05-28T14:38:20.217366Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3027,7 +3027,7 @@
           "chunks": [
             "ai_act.93.en"
           ],
-          "embedded_at": "2026-05-04T23:09:38.644758Z",
+          "embedded_at": "2026-05-28T14:38:24.223672Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3046,7 +3046,7 @@
           "chunks": [
             "ai_act.94.es"
           ],
-          "embedded_at": "2026-05-04T23:09:40.247320Z",
+          "embedded_at": "2026-05-28T14:38:26.346646Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3057,7 +3057,7 @@
           "chunks": [
             "ai_act.94.en"
           ],
-          "embedded_at": "2026-05-04T23:09:41.673152Z",
+          "embedded_at": "2026-05-28T14:38:28.021283Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3076,7 +3076,7 @@
           "chunks": [
             "ai_act.95.es"
           ],
-          "embedded_at": "2026-05-04T23:09:50.255915Z",
+          "embedded_at": "2026-05-28T14:38:36.516812Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3087,7 +3087,7 @@
           "chunks": [
             "ai_act.95.en"
           ],
-          "embedded_at": "2026-05-04T23:09:59.231638Z",
+          "embedded_at": "2026-05-28T14:38:44.969070Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3106,7 +3106,7 @@
           "chunks": [
             "ai_act.96.es"
           ],
-          "embedded_at": "2026-05-04T23:10:05.336995Z",
+          "embedded_at": "2026-05-28T14:38:51.468858Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3117,7 +3117,7 @@
           "chunks": [
             "ai_act.96.en"
           ],
-          "embedded_at": "2026-05-04T23:10:11.017590Z",
+          "embedded_at": "2026-05-28T14:38:57.713270Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3136,7 +3136,7 @@
           "chunks": [
             "ai_act.97.es"
           ],
-          "embedded_at": "2026-05-04T23:10:19.612222Z",
+          "embedded_at": "2026-05-28T14:39:06.778074Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3147,7 +3147,7 @@
           "chunks": [
             "ai_act.97.en"
           ],
-          "embedded_at": "2026-05-04T23:10:28.461754Z",
+          "embedded_at": "2026-05-28T14:39:15.504382Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3166,7 +3166,7 @@
           "chunks": [
             "ai_act.98.es"
           ],
-          "embedded_at": "2026-05-04T23:10:30.433051Z",
+          "embedded_at": "2026-05-28T14:39:17.248699Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3177,7 +3177,7 @@
           "chunks": [
             "ai_act.98.en"
           ],
-          "embedded_at": "2026-05-04T23:10:32.117222Z",
+          "embedded_at": "2026-05-28T14:39:19.089378Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3206,7 +3206,7 @@
             "ai_act.99.10.es",
             "ai_act.99.11.es"
           ],
-          "embedded_at": "2026-05-04T23:11:33.663221Z",
+          "embedded_at": "2026-05-28T14:40:22.693302Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3227,7 +3227,7 @@
             "ai_act.99.10.en",
             "ai_act.99.11.en"
           ],
-          "embedded_at": "2026-05-04T23:12:36.190470Z",
+          "embedded_at": "2026-05-28T14:41:26.255766Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3246,7 +3246,7 @@
           "chunks": [
             "ai_act.100.es"
           ],
-          "embedded_at": "2026-05-04T23:12:44.710187Z",
+          "embedded_at": "2026-05-28T14:41:34.988135Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3257,7 +3257,7 @@
           "chunks": [
             "ai_act.100.en"
           ],
-          "embedded_at": "2026-05-04T23:12:53.997367Z",
+          "embedded_at": "2026-05-28T14:41:44.194388Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3276,7 +3276,7 @@
           "chunks": [
             "ai_act.101.es"
           ],
-          "embedded_at": "2026-05-04T23:13:02.852752Z",
+          "embedded_at": "2026-05-28T14:41:53.191948Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3287,7 +3287,7 @@
           "chunks": [
             "ai_act.101.en"
           ],
-          "embedded_at": "2026-05-04T23:13:10.891258Z",
+          "embedded_at": "2026-05-28T14:42:02.751235Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3306,7 +3306,7 @@
           "chunks": [
             "ai_act.102.es"
           ],
-          "embedded_at": "2026-05-04T23:13:15.481885Z",
+          "embedded_at": "2026-05-28T14:42:07.715154Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3317,7 +3317,7 @@
           "chunks": [
             "ai_act.102.en"
           ],
-          "embedded_at": "2026-05-04T23:13:19.803607Z",
+          "embedded_at": "2026-05-28T14:42:12.058239Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3336,7 +3336,7 @@
           "chunks": [
             "ai_act.103.es"
           ],
-          "embedded_at": "2026-05-04T23:13:24.973748Z",
+          "embedded_at": "2026-05-28T14:42:17.082208Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3347,7 +3347,7 @@
           "chunks": [
             "ai_act.103.en"
           ],
-          "embedded_at": "2026-05-04T23:13:30.054165Z",
+          "embedded_at": "2026-05-28T14:42:22.118725Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3366,7 +3366,7 @@
           "chunks": [
             "ai_act.104.es"
           ],
-          "embedded_at": "2026-05-04T23:13:34.567362Z",
+          "embedded_at": "2026-05-28T14:42:27.225463Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3377,7 +3377,7 @@
           "chunks": [
             "ai_act.104.en"
           ],
-          "embedded_at": "2026-05-04T23:13:38.542466Z",
+          "embedded_at": "2026-05-28T14:42:31.539335Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3396,7 +3396,7 @@
           "chunks": [
             "ai_act.105.es"
           ],
-          "embedded_at": "2026-05-04T23:13:43.248827Z",
+          "embedded_at": "2026-05-28T14:42:36.260504Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3407,7 +3407,7 @@
           "chunks": [
             "ai_act.105.en"
           ],
-          "embedded_at": "2026-05-04T23:13:47.932703Z",
+          "embedded_at": "2026-05-28T14:42:40.987421Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3426,7 +3426,7 @@
           "chunks": [
             "ai_act.106.es"
           ],
-          "embedded_at": "2026-05-04T23:13:52.921092Z",
+          "embedded_at": "2026-05-28T14:42:46.007211Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3437,7 +3437,7 @@
           "chunks": [
             "ai_act.106.en"
           ],
-          "embedded_at": "2026-05-04T23:13:57.602544Z",
+          "embedded_at": "2026-05-28T14:42:50.784741Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3456,7 +3456,7 @@
           "chunks": [
             "ai_act.107.es"
           ],
-          "embedded_at": "2026-05-04T23:14:02.399340Z",
+          "embedded_at": "2026-05-28T14:42:55.681622Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3467,7 +3467,7 @@
           "chunks": [
             "ai_act.107.en"
           ],
-          "embedded_at": "2026-05-04T23:14:06.348186Z",
+          "embedded_at": "2026-05-28T14:43:00.031563Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3486,7 +3486,7 @@
           "chunks": [
             "ai_act.108.es"
           ],
-          "embedded_at": "2026-05-04T23:14:14.849201Z",
+          "embedded_at": "2026-05-28T14:43:08.682480Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3497,7 +3497,7 @@
           "chunks": [
             "ai_act.108.en"
           ],
-          "embedded_at": "2026-05-04T23:14:23.321170Z",
+          "embedded_at": "2026-05-28T14:43:17.242938Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3516,7 +3516,7 @@
           "chunks": [
             "ai_act.109.es"
           ],
-          "embedded_at": "2026-05-04T23:14:28.176445Z",
+          "embedded_at": "2026-05-28T14:43:22.109532Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3527,7 +3527,7 @@
           "chunks": [
             "ai_act.109.en"
           ],
-          "embedded_at": "2026-05-04T23:14:32.316797Z",
+          "embedded_at": "2026-05-28T14:43:26.446195Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3546,7 +3546,7 @@
           "chunks": [
             "ai_act.110.es"
           ],
-          "embedded_at": "2026-05-04T23:14:36.023050Z",
+          "embedded_at": "2026-05-28T14:43:30.330491Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3557,7 +3557,7 @@
           "chunks": [
             "ai_act.110.en"
           ],
-          "embedded_at": "2026-05-04T23:14:40.061690Z",
+          "embedded_at": "2026-05-28T14:43:34.075389Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3576,7 +3576,7 @@
           "chunks": [
             "ai_act.111.es"
           ],
-          "embedded_at": "2026-05-04T23:14:48.691144Z",
+          "embedded_at": "2026-05-28T14:43:42.537208Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3587,7 +3587,7 @@
           "chunks": [
             "ai_act.111.en"
           ],
-          "embedded_at": "2026-05-04T23:14:56.144203Z",
+          "embedded_at": "2026-05-28T14:43:50.086429Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3618,7 +3618,7 @@
             "ai_act.112.12.es",
             "ai_act.112.13.es"
           ],
-          "embedded_at": "2026-05-04T23:15:27.363706Z",
+          "embedded_at": "2026-05-28T14:44:21.120425Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3641,7 +3641,7 @@
             "ai_act.112.12.en",
             "ai_act.112.13.en"
           ],
-          "embedded_at": "2026-05-04T23:15:52.371914Z",
+          "embedded_at": "2026-05-28T14:44:46.375242Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
@@ -3759,7 +3759,7 @@
             "ai_act.113.1.es",
             "ai_act.113.2.es"
           ],
-          "embedded_at": "2026-05-04T23:18:39.117729Z",
+          "embedded_at": "2026-05-28T14:47:39.104053Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_es.pdf"
@@ -3869,7 +3869,7 @@
             "ai_act.113.1.en",
             "ai_act.113.2.en"
           ],
-          "embedded_at": "2026-05-04T23:21:20.255749Z",
+          "embedded_at": "2026-05-28T14:50:23.676523Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-05-04T21:59:00.656060Z",
           "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/ai_act_en.pdf"
