@@ -18,7 +18,15 @@ Multi-agent regulatory compliance service with strict citation verification. TFM
 
 ## Status
 
-**v0.1.32 closed (2026-05-28) — H16 public deploy.** Tag `v0.1.32-h16-deploy`. Live demo: **https://huggingface.co/spaces/enriro00/regulaitor**. Plus v0.1.32-post (commit `549b718`, 2026-05-29) §6 invariant whitespace bypass fix from deep-review C1. Next: H17 TFM cierre académico.
+**TFM cerrado** — tag `v1.0.0` (2026-05-30).
+
+[![Demo público](https://img.shields.io/badge/demo-HF%20Spaces-blue)](https://huggingface.co/spaces/enriro00/regulaitor) [![Release](https://img.shields.io/badge/release-v1.0.0-success)](https://github.com/enriquerodrig/regulaitor/releases/tag/v1.0.0) [![Tests](https://img.shields.io/badge/tests-1000%20passed-success)](#) [![Coverage](https://img.shields.io/badge/coverage-%E2%89%A585%25-success)](#) [![§6 invariant](https://img.shields.io/badge/%C2%A76%20invariant-rock--solid-blue)](CLAUDE.md) [![§22.22 milestones](https://img.shields.io/badge/%C2%A722.22%20milestones-13%20consecutive-blue)](docs/technical_decisions_log.md)
+
+**Demo público vivo**: https://huggingface.co/spaces/enriro00/regulaitor
+
+**Linaje H0 → v1.0.0**: 30 días · ~280 commits · 35 ADRs · 13 consecutive §22.22 milestones · 2 REVERTs documentados (v0.1.23 Auditor lenient quorum + v0.1.30 title-augmented embeddings) · §6 4-layer architecture (3 evoluciones interpretativas) · ~$40 USD paid LLM budget total · ~60k palabras académicas (memoria + 8 supporting docs).
+
+**La metodología es la contribución** — el sistema es la evidencia de que la metodología funciona. Ver [docs/technical_decisions_log.md](docs/technical_decisions_log.md) (5335+ líneas) + [35 ADRs](docs/adr/) + [evidence matrix](docs/evidence_matrix.md).
 
 ### Lineage at a glance
 
@@ -26,9 +34,9 @@ Multi-agent regulatory compliance service with strict citation verification. TFM
 |---|---|---|
 | **MVP** (H0-H10) | `v0.0.1-h0.1` → `v0.1.0-mvp` | corpus + RAG + 3 agents + Streamlit + FastAPI + eval harness + red team + docs freeze |
 | **Advanced** (H11-H15.2) | `v0.1.1-h11` → `v0.1.7-h15.2` | LangFuse + multi-LLM router + Council of Judges + NIS2/DORA corpus + Auditor calibration study |
-| **Optimization micro-milestones** (v0.1.8-v0.1.30) | `v0.1.8` → `v0.1.30-title-augmented-embeddings` | 23 micro-milestones; 12 consecutive §22.22-honest closures with **2 documented REVERTs** (v0.1.23 + v0.1.30) — methodology contribution |
+| **Optimization micro-milestones** (v0.1.8-v0.1.30) | `v0.1.8` → `v0.1.30-title-augmented-embeddings` | 23 micro-milestones; **13 consecutive §22.22-honest closures** with **2 documented REVERTs** (v0.1.23 + v0.1.30) — methodology contribution |
 | **H16** | `v0.1.31-h16-deploy` + `v0.1.32-h16-deploy` | HF Spaces public deploy: 12 fix rounds (R1-R12) + tag; demo live |
-| **H17** | (next) | TFM cierre académico (memoria + model card + data card + video demo) |
+| **H17** | `v1.0.0` (2026-05-30) | TFM cierre académico: memoria + 8 supporting docs + 35 ADRs + 5335-line decisions_log + 20 section drafts — **cerrado** |
 
 ### Recent advanced-track headlines
 
