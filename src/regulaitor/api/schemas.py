@@ -321,6 +321,12 @@ def _council_notice(
     """
     if cr is None or not cr.diverges_from_auditor:
         return None
+    # Council unavailable: no judge responded (e.g. no judge API keys in a fully
+    # self-hosted / sovereign deploy where the US-hosted judges have no keys).
+    # It did NOT diverge — it could not run. Suppress the misleading "judges
+    # diverged" notice; the deterministic Auditor verdict stands on its own.
+    if not any(j.ok for j in cr.judges):
+        return None
     if (
         audited is not None
         and audited.reason is not None

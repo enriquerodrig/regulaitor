@@ -44,6 +44,40 @@ def test_notice_present_only_when_diverges():
     assert _council_notice(None) is None
 
 
+def test_council_notice_suppressed_when_unavailable_no_judge_ok():
+    """Sovereign deploy: when NO judge responded (all ok=False — e.g. no judge
+    API keys, since Haiku/GPT-4o/Llama are all US-hosted and their keys are
+    removed), the Council could not run. It did NOT 'diverge'; suppress the
+    misleading notice so the deterministic Auditor verdict stands alone."""
+    cr = CouncilReview(
+        triggered=True,
+        trigger_reason="high_severity",
+        judges=[
+            JudgeVote(
+                model_id="claude-haiku-4-5-20251001",
+                provider="anthropic",
+                vote=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+                reason="judge_failed",
+                ok=False,
+                error_category="RuntimeError",
+            ),
+            JudgeVote(
+                model_id="gpt-4o",
+                provider="openai",
+                vote=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+                reason="judge_failed",
+                ok=False,
+                error_category="RuntimeError",
+            ),
+        ],
+        council_verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+        agreement="degraded",
+        diverges_from_auditor=True,  # policy may still flag divergence when unavailable
+        reason="council_unavailable: 0/2 judges responded",
+    )
+    assert _council_notice(cr) is None
+
+
 def test_dto_redacts_to_allowlisted_fields():
     dto = _council_review_to_dto(_cr(True))
     assert dto.council_verdict == "block"
