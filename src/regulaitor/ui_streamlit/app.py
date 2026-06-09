@@ -39,6 +39,31 @@ _GLOBAL_STYLES = """
 """
 
 
+def _missing_key_error() -> str | None:
+    """Return a config error message if the configured Analyst backend lacks its
+    key, else None. Model-choice-aware: the self_hosted (sovereign open-model)
+    path needs REGULAITOR_SELFHOST_BASE_URL + REGULAITOR_SELFHOST_API_KEY; the
+    default Anthropic path needs ANTHROPIC_API_KEY. Pre-sovereign-demo this guard
+    only checked ANTHROPIC_API_KEY, which blocked a fully self-hosted deploy
+    (no US key) from ever rendering the UI.
+    """
+    if os.getenv("REGULAITOR_ANALYST_MODEL_CHOICE", "default") == "self_hosted":
+        if not os.getenv("REGULAITOR_SELFHOST_BASE_URL") or not os.getenv(
+            "REGULAITOR_SELFHOST_API_KEY"
+        ):
+            return (
+                "Modo self-hosted: configura REGULAITOR_SELFHOST_BASE_URL + "
+                "REGULAITOR_SELFHOST_API_KEY (endpoint open-source soberano)."
+            )
+        return None
+    if not os.getenv("ANTHROPIC_API_KEY"):
+        return (
+            "ANTHROPIC_API_KEY no configurada. "
+            "Añade ANTHROPIC_API_KEY=sk-ant-... al archivo `.env` del proyecto."
+        )
+    return None
+
+
 def main() -> None:
     st.set_page_config(
         page_title="RegulAItor — Cumplimiento normativo asistido",
@@ -53,11 +78,9 @@ def main() -> None:
         unsafe_allow_html=True,
     )
 
-    if not os.getenv("ANTHROPIC_API_KEY"):
-        st.error(
-            "ANTHROPIC_API_KEY no configurada. "
-            "Añade ANTHROPIC_API_KEY=sk-ant-... al archivo `.env` del proyecto."
-        )
+    _key_error = _missing_key_error()
+    if _key_error:
+        st.error(_key_error)
         st.stop()
 
     tab_ask_view, tab_analyze_view = st.tabs(["Pregunta normativa", "Analiza documento"])

@@ -11,7 +11,7 @@ import logging
 import os
 import re
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from pydantic import ValidationError
 
@@ -79,6 +79,30 @@ def _strip_unsupported_schema_fields(schema: dict[str, Any]) -> dict[str, Any]:
         props["findings"] = findings_schema
         cleaned["properties"] = props
     return cleaned
+
+
+def _analyst_model_choice() -> router.ModelChoice:
+    """Probe/eval seam: override ONLY the Analyst's router mode.
+
+    The global REGULAITOR_ROUTER_MODE (ADR-0013) overrides EVERY router call,
+    including the Auditor/Council judge — useless for an A/B that must keep the
+    judge constant while swapping the Analyst's model. This Analyst-scoped seam
+    (mirrors REGULAITOR_ANALYST_PROMPT_VERSION) does exactly that. Env unset =>
+    'default' (Sonnet, prod byte-identical); invalid value => 'default' +
+    WARNING (never crashes on a bad env). Set REGULAITOR_ANALYST_MODEL_CHOICE=
+    self_hosted for the open-model probe R1.
+    """
+    v = os.environ.get("REGULAITOR_ANALYST_MODEL_CHOICE")
+    if v is None:
+        return "default"
+    if v in router._VALID_MODES:
+        return cast("router.ModelChoice", v)
+    logger.warning(
+        "REGULAITOR_ANALYST_MODEL_CHOICE=%r invalid (valid: %s); using 'default'",
+        v,
+        sorted(router._VALID_MODES),
+    )
+    return "default"
 
 
 def _render_user_message(query: str, context: Context) -> str:
@@ -194,7 +218,7 @@ class AnalystAgent:
                 system=self._system_prompt,
                 tools=tools_spec,
                 tool_choice={"type": "tool", "name": "emit_answer"},
-                model_choice="default",
+                model_choice=_analyst_model_choice(),
                 max_tokens=2000,
             )
             if result.tool_use_input is None:

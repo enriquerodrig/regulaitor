@@ -49,3 +49,29 @@ def test_app_renders_two_tabs_when_api_key_present(monkeypatch):
     tab_labels = [t.label for t in app.tabs]
     assert "Pregunta normativa" in tab_labels
     assert "Analiza documento" in tab_labels
+
+
+def test_app_renders_when_self_hosted_keys_present_no_anthropic(monkeypatch):
+    """Sovereign demo: self_hosted + SELFHOST endpoint/key render the UI WITHOUT
+    ANTHROPIC_API_KEY (the H6 guard wrongly hard-required it; sovereign-demo fix)."""
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setenv("REGULAITOR_ANALYST_MODEL_CHOICE", "self_hosted")
+    monkeypatch.setenv("REGULAITOR_SELFHOST_BASE_URL", "https://api.mistral.ai/v1")
+    monkeypatch.setenv("REGULAITOR_SELFHOST_API_KEY", "stub-mistral-key")
+    app = AppTest.from_file(APP_PATH).run(timeout=60)
+    tab_labels = [t.label for t in app.tabs]
+    assert "Pregunta normativa" in tab_labels
+    assert not app.error, f"unexpected error: {[e.value for e in app.error]}"
+
+
+def test_app_blocks_when_self_hosted_endpoint_missing(monkeypatch):
+    """self_hosted mode without the SELFHOST endpoint/key -> sovereign config
+    error, no tabs (and it must NOT fall back to demanding ANTHROPIC_API_KEY)."""
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setenv("REGULAITOR_ANALYST_MODEL_CHOICE", "self_hosted")
+    monkeypatch.delenv("REGULAITOR_SELFHOST_BASE_URL", raising=False)
+    monkeypatch.delenv("REGULAITOR_SELFHOST_API_KEY", raising=False)
+    app = AppTest.from_file(APP_PATH).run(timeout=60)
+    assert any(
+        "self-hosted" in e.value.lower() for e in app.error
+    ), f"expected self-hosted config error; errors: {[e.value for e in app.error]}"

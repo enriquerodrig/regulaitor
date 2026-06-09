@@ -40,6 +40,7 @@ from regulaitor.models.config import (
     ANTHROPIC_HAIKU_4_5,
     ANTHROPIC_SONNET_4_6,
     GROQ_LLAMA_70B,
+    MISTRAL_SMALL,
     OPENAI_GPT_4O,
     OPENAI_GPT_4O_MINI,
     cost_eur,
@@ -47,7 +48,13 @@ from regulaitor.models.config import (
 
 logger = logging.getLogger("regulaitor.models.router")
 
-ModelChoice = Literal["default", "quality", "cost", "evaluation", "fallback", "judge"]
+# "self_hosted" (probe R1) routes the Analyst to an open-source model served on
+# an OpenAI-compatible endpoint (Mistral La Plateforme now; OVH/Scaleway/vLLM
+# later) via REGULAITOR_SELFHOST_BASE_URL. It is NOT a controlled-fallback
+# target and never falls back to a US model (see _NO_FALLBACK_MODES).
+ModelChoice = Literal[
+    "default", "quality", "cost", "evaluation", "fallback", "judge", "self_hosted"
+]
 # Single source of truth: derived from the Literal (no duplicated string set).
 _VALID_MODES: frozenset[str] = frozenset(get_args(ModelChoice))
 
@@ -66,6 +73,7 @@ class ProviderModel(NamedTuple):
 PROVIDER_ANTHROPIC = "anthropic"
 PROVIDER_OPENAI = "openai"
 PROVIDER_GROQ = "groq"
+PROVIDER_SELFHOST = "selfhost"
 
 # Controlled fallback fires ONLY on a true transport/availability failure that
 # survived a provider's own tenacity retries (spec §3/§4/§5: "terminal
@@ -90,6 +98,8 @@ _FALLBACKABLE_ERRORS: tuple[type[BaseException], ...] = (
 )
 
 # mode -> routing target. "fallback" is also the controlled-fallback target.
+# self_hosted's model_id is the DEFAULT; _call_selfhost lets
+# REGULAITOR_SELFHOST_MODEL override it at call time.
 _MODE_MAP: dict[str, ProviderModel] = {
     "default": ProviderModel(PROVIDER_ANTHROPIC, ANTHROPIC_SONNET_4_6),
     "quality": ProviderModel(PROVIDER_ANTHROPIC, ANTHROPIC_SONNET_4_6),
@@ -97,7 +107,15 @@ _MODE_MAP: dict[str, ProviderModel] = {
     "evaluation": ProviderModel(PROVIDER_OPENAI, OPENAI_GPT_4O),
     "fallback": ProviderModel(PROVIDER_OPENAI, OPENAI_GPT_4O_MINI),
     "judge": ProviderModel(PROVIDER_ANTHROPIC, ANTHROPIC_HAIKU_4_5),
+    "self_hosted": ProviderModel(PROVIDER_SELFHOST, MISTRAL_SMALL),
 }
+
+# Modes that must NEVER fall back to the (US-hosted) GPT-4o-mini fallback model.
+# "fallback" because it IS the fallback (no recursion); "self_hosted" because a
+# sovereign run must surface its own failure, not be silently answered by a US
+# model — that would both contaminate the probe and break the sovereignty
+# guarantee the mode exists to provide.
+_NO_FALLBACK_MODES: frozenset[str] = frozenset({"fallback", "self_hosted"})
 
 
 def _resolve_mode(model_choice: ModelChoice) -> str:
@@ -217,7 +235,7 @@ def complete(
             max_tokens=max_tokens,
         )
     except _FALLBACKABLE_ERRORS as primary_exc:
-        if mode == "fallback":
+        if mode in _NO_FALLBACK_MODES:
             raise
         logger.warning("router fallback_triggered=true primary_mode=%s error=%s", mode, primary_exc)
         try:
@@ -257,6 +275,7 @@ def _dispatch(
         PROVIDER_ANTHROPIC: _call_anthropic,
         PROVIDER_OPENAI: _call_openai,
         PROVIDER_GROQ: _call_groq,
+        PROVIDER_SELFHOST: _call_selfhost,
     }[target.provider]
     return fn(
         model_id=target.model_id,
@@ -506,6 +525,67 @@ def _call_groq(
         client=_groq_client(),
         provider_label=PROVIDER_GROQ,
         model_id=model_id,
+        messages=messages,
+        system=system,
+        tools=tools,
+        tool_choice=tool_choice,
+        max_tokens=max_tokens,
+    )
+
+
+def _selfhost_client() -> openai.OpenAI:
+    """OpenAI-compatible client for the self-hosted / open-model endpoint.
+
+    Reads REGULAITOR_SELFHOST_BASE_URL (e.g. https://api.mistral.ai/v1 now, an
+    OVH/Scaleway/vLLM URL later) and REGULAITOR_SELFHOST_API_KEY from env.
+    Fail-fast at construction if either is missing (prod default never calls
+    this — only the 'self_hosted' mode does). Uses the openai SDK because the
+    endpoint is OpenAI-compatible; this reuses _call_openai_compatible verbatim.
+    """
+    base_url = os.environ.get("REGULAITOR_SELFHOST_BASE_URL")
+    if not base_url:
+        raise RuntimeError(
+            "REGULAITOR_SELFHOST_BASE_URL not set; required for router "
+            "'self_hosted' mode. Set it to an OpenAI-compatible endpoint."
+        )
+    key = os.environ.get("REGULAITOR_SELFHOST_API_KEY")
+    if not key:
+        raise RuntimeError(
+            "REGULAITOR_SELFHOST_API_KEY not set; required for router " "'self_hosted' mode."
+        )
+    return openai.OpenAI(base_url=base_url, api_key=key)
+
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=1, max=10),
+    retry=retry_if_exception_type(
+        (OpenAIRateErr, OpenAIConnErr, OpenAITimeoutErr, OpenAIServerErr)
+    ),
+    reraise=True,
+)
+def _call_selfhost(
+    *,
+    model_id: str,
+    messages: list[dict[str, Any]],
+    system: str,
+    tools: list[dict[str, Any]] | None,
+    tool_choice: dict[str, Any] | None,
+    max_tokens: int,
+) -> CompletionResult:
+    """Self-hosted / open model via the shared OpenAI-compatible path.
+
+    REGULAITOR_SELFHOST_MODEL overrides the served model id at call time
+    (default = the _MODE_MAP target, MISTRAL_SMALL). cost_eur reports 0.0 for a
+    model id absent from PRICING (open/self-hosted list price unknown), so the
+    cost accumulator never crashes. The shared path carries the I1/I2 malformed
+    tool-call guards — exactly the structured-output failures probe R1 measures.
+    """
+    resolved_model = os.environ.get("REGULAITOR_SELFHOST_MODEL") or model_id
+    return _call_openai_compatible(
+        client=_selfhost_client(),
+        provider_label=PROVIDER_SELFHOST,
+        model_id=resolved_model,
         messages=messages,
         system=system,
         tools=tools,
