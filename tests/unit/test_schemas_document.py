@@ -12,12 +12,35 @@ from regulaitor.citation.schemas import (
     FontInfo,
     OutlineEntry,
     Page,
+    PIISummary,
     RawDocument,
     SanitizedDocument,
     SanitizerEvent,
     Segment,
     SegmentResult,
 )
+
+
+def _minimal_report(**overrides: object) -> DocumentReport:
+    base: dict[str, object] = {
+        "case_id": "doc-20260506-aaaa1111",
+        "document_hash": "sha256:f",
+        "language": "es",
+        "corpus": ["ai_act"],
+        "sanitizer_log": [],
+        "segments": [],
+        "document_verdict": "pass",
+        "document_reason": None,
+        "n_segments_total": 0,
+        "n_segments_blocked_by_injection": 0,
+        "n_segments_pass": 0,
+        "n_segments_block": 0,
+        "n_segments_review": 0,
+        "latency_ms_total": 0,
+        "cost_eur_total": 0.0,
+    }
+    base.update(overrides)
+    return DocumentReport(**base)  # type: ignore[arg-type]
 
 
 def test_font_info_frozen():
@@ -161,6 +184,45 @@ def test_document_report_count_invariants_via_construction():
         cost_eur_total=0.0,
     )
     assert rep.case_id.startswith("doc-")
+
+
+# ---------- PIISummary (Fase 2.1, §18.5/§18.8) ----------
+
+
+def test_pii_summary_valid():
+    s = PIISummary(total=3, counts={"email": 2, "dni_nif": 1})
+    assert s.total == 3
+    assert s.counts == {"email": 2, "dni_nif": 1}
+
+
+def test_pii_summary_total_must_match_counts():
+    with pytest.raises(ValidationError):
+        PIISummary(total=5, counts={"email": 2})
+
+
+def test_pii_summary_rejects_empty_counts():
+    """A PIISummary only exists when PII was found — None means no PII."""
+    with pytest.raises(ValidationError):
+        PIISummary(total=0, counts={})
+
+
+def test_pii_summary_frozen_and_extra_forbid():
+    with pytest.raises(ValidationError):
+        PIISummary(total=1, counts={"email": 1}, foo="bar")  # type: ignore[call-arg]
+    s = PIISummary(total=1, counts={"email": 1})
+    with pytest.raises(ValidationError):
+        s.total = 2  # type: ignore[misc]
+
+
+def test_document_report_pii_summary_defaults_none():
+    rep = _minimal_report()
+    assert rep.pii_summary is None
+
+
+def test_document_report_accepts_pii_summary():
+    rep = _minimal_report(pii_summary=PIISummary(total=2, counts={"email": 2}))
+    assert rep.pii_summary is not None
+    assert rep.pii_summary.total == 2
 
 
 def test_document_blocked_error_carries_log():

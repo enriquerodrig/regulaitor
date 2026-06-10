@@ -56,7 +56,7 @@ def render() -> None:
     )
     st.caption(
         "Privacidad: anonimiza los datos personales antes de subir un documento; "
-        "los registros internos se redactan automáticamente."
+        "los registros internos solo guardan recuentos, nunca los valores detectados."
     )
 
     with st.form("doc_form", clear_on_submit=False):

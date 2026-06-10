@@ -155,6 +155,16 @@ class SegmentResultDTO(BaseModel):
     cost_eur: float = Field(ge=0)
 
 
+class PIISummaryDTO(BaseModel):
+    """Advisory PII signal exposed on /analyze. Counts + kinds only — never raw
+    values (§18.8). Surfaced to the authenticated client as a warning, like the
+    UI banner; the document is analyzed regardless (§18.5)."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+    total: int = Field(ge=1)
+    counts: dict[str, int]
+
+
 class AnalyzeResponse(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
     case_id: str
@@ -170,6 +180,7 @@ class AnalyzeResponse(BaseModel):
     latency_ms_total: int = Field(ge=0)
     cost_eur_total: float = Field(ge=0)
     response_time_ms: int = Field(ge=0)
+    pii_summary: PIISummaryDTO | None = None
 
 
 class HealthCheck(BaseModel):
@@ -390,4 +401,13 @@ def to_analyze_response(report: DocumentReport, response_time_ms: int) -> Analyz
         latency_ms_total=report.latency_ms_total,
         cost_eur_total=report.cost_eur_total,
         response_time_ms=response_time_ms,
+        # Fase 2.1 (§18.5): expose the advisory PII summary (counts only, §18.8).
+        pii_summary=(
+            PIISummaryDTO(
+                total=report.pii_summary.total,
+                counts=dict(report.pii_summary.counts),
+            )
+            if report.pii_summary is not None
+            else None
+        ),
     )

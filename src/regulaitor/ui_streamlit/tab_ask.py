@@ -112,8 +112,8 @@ def render() -> None:
         st.warning(
             "Posibles datos personales detectados en tu consulta "
             f"({', '.join(pending['kinds'])}). Por privacidad, considera "
-            "anonimizar antes de enviar; los registros internos se redactan "
-            "automáticamente."
+            "anonimizar antes de enviar; los registros internos solo guardan "
+            "recuentos, nunca los valores detectados."
         )
         col_continue, col_cancel = st.columns(2)
         if col_continue.button("Continuar de todos modos", type="primary", key="pii_continue"):

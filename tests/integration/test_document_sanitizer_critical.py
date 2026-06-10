@@ -39,3 +39,6 @@ def test_sanitizer_critical_short_circuits() -> None:
         for e in report.sanitizer_log
     )
     assert "sanitizer_critical:javascript_blocked" in (report.document_reason or "")
+    # Fase 2.1: the critical-block early-return builds the report before any
+    # clean_text exists, so it must leave pii_summary None (no PII scan runs).
+    assert report.pii_summary is None

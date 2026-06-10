@@ -22,6 +22,7 @@ from regulaitor.citation.schemas import (
     CouncilReview,
     DocumentReport,
     Finding,
+    PIISummary,
     SanitizerEvent,
 )
 from regulaitor.orchestration.state import ChatState
@@ -155,6 +156,34 @@ def finding(f: Finding) -> None:
         )
 
 
+# Human-readable Spanish labels for the PII kinds emitted by security.pii.
+_PII_KIND_LABEL = {
+    "email": "email",
+    "phone": "teléfono",
+    "dni_nif": "DNI/NIF",
+    "nie": "NIE",
+    "iban": "IBAN",
+    "card": "tarjeta",
+}
+
+
+def pii_banner(summary: PIISummary) -> None:
+    """Advisory banner: personal data detected in the document (counts only).
+
+    The document is analyzed regardless — this only warns the user (§18.5). No
+    raw values are ever shown (the summary carries counts/kinds only, §18.8).
+    """
+    kinds_label = ", ".join(
+        f"{_PII_KIND_LABEL.get(kind, kind)} ({n})" for kind, n in summary.counts.items()
+    )
+    st.warning(
+        f"Se detectaron datos personales en el documento "
+        f"({summary.total}: {kinds_label}). El análisis se realiza igualmente; "
+        "los registros internos solo guardan recuentos, nunca los valores "
+        "detectados. Anonimiza antes de compartir el informe."
+    )
+
+
 def sanitizer_log_expander(log: list[SanitizerEvent], expanded: bool = False) -> None:
     """Render the sanitizer log as a collapsible dataframe (skipped if empty)."""
     if not log:
@@ -253,6 +282,10 @@ def document_report(report: DocumentReport) -> None:
         st.error(f"Documento bloqueado: {category}. Revisión humana requerida.")
         sanitizer_log_expander(report.sanitizer_log, expanded=True)
         return
+
+    # Fase 2.1 (§18.5): advisory PII banner when the document carries personal data.
+    if report.pii_summary is not None:
+        pii_banner(report.pii_summary)
 
     cols = st.columns(6)
     metrics: list[tuple[str, str]] = [

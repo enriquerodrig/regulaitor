@@ -13,6 +13,7 @@ the §6 citation pipeline — it is a pre-pipeline / logging-egress security lay
 from __future__ import annotations
 
 import re
+from collections import Counter
 from typing import NamedTuple
 
 
@@ -100,3 +101,14 @@ def pii_kinds(text: str) -> list[str]:
 
 def has_pii(text: str) -> bool:
     return bool(detect_pii(text))
+
+
+def count_pii(text: str) -> dict[str, int]:
+    """Occurrences per PII kind in *text*, sorted by kind for deterministic
+    output. Counts only — NEVER raw values (§18.8). Empty dict if no PII.
+
+    Used by the document pipeline to build an advisory PIISummary without ever
+    storing or logging the detected values themselves.
+    """
+    counter = Counter(m.kind for m in detect_pii(text))
+    return {kind: counter[kind] for kind in sorted(counter)}

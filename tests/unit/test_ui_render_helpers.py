@@ -373,6 +373,29 @@ def test_document_report_pass_renders_metrics_and_segments(streamlit_recorder):
     assert "expander_open" in methods
 
 
+def test_document_report_pii_banner_when_present(streamlit_recorder):
+    """Fase 2.1: an advisory PII banner renders when the report carries a summary."""
+    from regulaitor.citation.schemas import PIISummary
+
+    report = _document_report(AuditVerdict.PASS).model_copy(
+        update={"pii_summary": PIISummary(total=3, counts={"email": 2, "dni_nif": 1})}
+    )
+    _render.document_report(report)
+    warnings = [args[0] for m, args, _ in streamlit_recorder if m == "warning"]
+    assert any("datos personales" in w.lower() for w in warnings)
+    joined = " ".join(warnings).lower()
+    # kind labels + count surfaced; document still analyzed (not blocked)
+    assert "email" in joined
+    assert "3" in joined
+
+
+def test_document_report_no_pii_banner_when_absent(streamlit_recorder):
+    report = _document_report(AuditVerdict.PASS)  # pii_summary defaults None
+    _render.document_report(report)
+    warnings = [args[0] for m, args, _ in streamlit_recorder if m == "warning"]
+    assert not any("datos personales" in w.lower() for w in warnings)
+
+
 def test_document_report_sanitizer_critical_short_circuits(streamlit_recorder):
     report = _document_report(
         AuditVerdict.REQUIRES_HUMAN_REVIEW,

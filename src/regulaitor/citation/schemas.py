@@ -310,6 +310,30 @@ class SegmentResult(BaseModel):
     cost_eur: float = Field(ge=0)
 
 
+class PIISummary(BaseModel):
+    """Advisory PII signal scanned from a document's sanitized text (Fase 2.1, §18.5).
+
+    Counts + kinds ONLY — never raw values (§18.8 logs/output without sensitive
+    data). A PIISummary exists only when PII was found; ``None`` on a
+    DocumentReport means no PII was detected (or a pre-Fase-2.1 cached report).
+    The signal is advisory: the document is analyzed regardless, the user is
+    warned, never blocked.
+    """
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    total: int = Field(ge=1)
+    counts: dict[str, int]  # kind -> occurrences, e.g. {"email": 3, "dni_nif": 1}
+
+    @model_validator(mode="after")
+    def _total_matches_counts(self) -> PIISummary:
+        if not self.counts:
+            raise ValueError("PIISummary.counts cannot be empty (use None for no PII)")
+        if self.total != sum(self.counts.values()):
+            raise ValueError("PIISummary.total must equal sum(counts.values())")
+        return self
+
+
 class DocumentReport(BaseModel):
     """End-to-end output of orchestration.document_graph.run_document."""
 
@@ -330,6 +354,9 @@ class DocumentReport(BaseModel):
     n_segments_review: int = Field(ge=0)
     latency_ms_total: int = Field(ge=0)
     cost_eur_total: float = Field(ge=0)
+    # Fase 2.1 (§18.5): advisory PII signal scanned from the sanitized text.
+    # Counts only (§18.8). None = no PII detected (or pre-Fase-2.1 cached report).
+    pii_summary: PIISummary | None = None
 
 
 class DocumentBlockedError(Exception):

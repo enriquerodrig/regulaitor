@@ -27,6 +27,7 @@ from regulaitor.citation.schemas import (
     AuditVerdict,
     DocumentBlockedError,
     DocumentReport,
+    PIISummary,
     SanitizedDocument,
     SanitizerEvent,
     Segment,
@@ -35,7 +36,7 @@ from regulaitor.citation.schemas import (
 from regulaitor.corpus.schemas import Language, Norma
 from regulaitor.document import extractor, sanitizer, segmenter
 from regulaitor.observability.langfuse_client import trace_turn
-from regulaitor.security import injection
+from regulaitor.security import injection, pii
 
 logger = logging.getLogger("regulaitor.orchestration.document_graph")
 
@@ -56,6 +57,20 @@ def _analyst_doc() -> AnalystAgent:
 @functools.lru_cache(maxsize=1)
 def _auditor() -> AuditorAgent:
     return AuditorAgent()
+
+
+def _summarize_pii(text: str) -> PIISummary | None:
+    """Scan sanitized document text for PII and return a counts-only summary.
+
+    §18.5: advisory — the document is analyzed regardless; this only feeds the
+    UI/API warning. §18.8: counts/kinds only, the raw values never leave
+    ``security.pii``. Returns ``None`` when no PII is found (so the report's
+    ``pii_summary`` stays None and the UI shows no banner).
+    """
+    counts = pii.count_pii(text)
+    if not counts:
+        return None
+    return PIISummary(total=sum(counts.values()), counts=counts)
 
 
 def _generate_case_id() -> str:
@@ -188,6 +203,9 @@ def _log_document_turn(report: DocumentReport) -> None:
         "n_segments_review": report.n_segments_review,
         "n_segments_blocked_by_injection": report.n_segments_blocked_by_injection,
         "sanitizer_event_categories": dict(cats),
+        # Fase 2.1: PII counts only (§18.8) — never the detected values.
+        "pii_total": report.pii_summary.total if report.pii_summary else 0,
+        "pii_kinds": dict(report.pii_summary.counts) if report.pii_summary else {},
         "latency_ms_total": report.latency_ms_total,
         "cost_eur_total": report.cost_eur_total,
     }
@@ -212,6 +230,10 @@ def _doc_trace_record(report: DocumentReport) -> dict[str, object]:
         "n_segments_block": report.n_segments_block,
         "n_segments_review": report.n_segments_review,
         "n_segments_blocked_by_injection": report.n_segments_blocked_by_injection,
+        # Fase 2.1: total PII count only. `n_` prefix keeps it allowlist-safe
+        # for the 3rd-party egress (langfuse_client._assert_safe_keys); the
+        # per-kind breakdown stays in the local JSON log, never on egress.
+        "n_pii_total": report.pii_summary.total if report.pii_summary else 0,
         "latency_ms_total": report.latency_ms_total,
         "cost_eur_total": report.cost_eur_total,
     }
@@ -298,6 +320,10 @@ def run_document(
             n_segments_review=n_review,
             latency_ms_total=latency,
             cost_eur_total=sum(sr.cost_eur for sr in segment_results),
+            # Fase 2.1 (§18.5): scan the sanitized text once for an advisory PII
+            # signal. Counts only (§18.8); None when clean. The sanitizer-critical
+            # branch above leaves this None (no clean_text exists; doc is RHR).
+            pii_summary=_summarize_pii(sanitized.clean_text),
         )
         _log_document_turn(report)
         tt.set_root(**_doc_trace_record(report))

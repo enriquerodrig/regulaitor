@@ -19,6 +19,7 @@ from regulaitor.citation.schemas import (
     Citation,
     DocumentReport,
     Finding,
+    PIISummary,
     SanitizerEvent,
     Segment,
     SegmentResult,
@@ -229,6 +230,33 @@ def test_to_analyze_response_translates_pass() -> None:
     assert len(response.segments) == 1
     assert response.segments[0].skip_category == "clean"
     assert response.response_time_ms == 999
+
+
+def test_to_analyze_response_maps_pii_summary_when_present() -> None:
+    """Fase 2.1: the PII summary (counts only) is exposed on the API DTO, and
+    §18.8 — no raw PII value reaches the serialized response (SSDLC parity with
+    the other redaction tests in this file)."""
+    from regulaitor.security.pii import count_pii
+
+    raw = "maria.lopez@empresa.es y DNI 12345678Z"
+    counts = count_pii(raw)  # {"dni_nif": 1, "email": 1}
+    total = sum(counts.values())
+    report = _make_document_report(with_skip=False).model_copy(
+        update={"pii_summary": PIISummary(total=total, counts=counts)}
+    )
+    response = to_analyze_response(report, response_time_ms=0)
+    assert response.pii_summary is not None
+    assert response.pii_summary.total == total
+    assert response.pii_summary.counts == counts
+    serialized = response.model_dump_json()
+    assert "maria.lopez@empresa.es" not in serialized
+    assert "12345678Z" not in serialized
+
+
+def test_to_analyze_response_pii_summary_none_by_default() -> None:
+    report = _make_document_report(with_skip=False)  # pii_summary None
+    response = to_analyze_response(report, response_time_ms=0)
+    assert response.pii_summary is None
 
 
 def test_to_analyze_response_redacts_skip_reason_to_injection_blocked() -> None:
