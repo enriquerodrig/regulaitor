@@ -37,7 +37,10 @@ hex_hash = st.text(alphabet="0123456789abcdef", min_size=64, max_size=64).map(
     # tmp_path is not reset between Hypothesis examples, but that is intentional:
     # each run overwrites the same file path, which correctly tests the atomic
     # write + load round-trip without needing a fresh directory per example.
-    suppress_health_check=[HealthCheck.function_scoped_fixture],
+    # too_slow: the first draw can coincide with a cold lazy import (BGE-M3
+    # tokenizer pulled in transitively), tripping the input-generation health
+    # check in isolation; it is unrelated to the strategy or the assertion.
+    suppress_health_check=[HealthCheck.function_scoped_fixture, HealthCheck.too_slow],
 )
 def test_manifest_roundtrip(tmp_path: Path, n_articles: int, article_hashes: list[str]) -> None:
     article_hashes = (article_hashes + [f"sha256:{'0' * 64}"] * n_articles)[:n_articles]
