@@ -12,6 +12,8 @@ EXPECTED_ARTICLE_COUNTS: dict[Norma, int] = {
     "gdpr": 99,
     "nis2": 46,  # pinned from real manifest: corpus/manifests/nis2.json (H14)
     "dora": 64,  # pinned from real manifest: corpus/manifests/dora.json (H14)
+    "dora_rts_incident": 7,  # Commission Delegated Reg (EU) 2025/301 (Fase 3)
+    "dora_rts_class": 13,  # Commission Delegated Reg (EU) 2024/1772 (Fase 3)
 }
 
 

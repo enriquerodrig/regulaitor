@@ -1,0 +1,419 @@
+{
+  "corpus": "dora_rts_class",
+  "celex": "32024R1772",
+  "version": "2024-06-25",
+  "source_format": "html",
+  "fetched_at": "2026-06-10T11:22:45.517220Z",
+  "languages": [
+    "es",
+    "en"
+  ],
+  "http_cache": {
+    "es": {
+      "etag": null,
+      "last_modified": null
+    },
+    "en": {
+      "etag": null,
+      "last_modified": null
+    }
+  },
+  "stats": {
+    "articles_total": 13,
+    "chunks_total": 26,
+    "embedded_total": 26,
+    "raw_size_bytes": 191450
+  },
+  "articles": [
+    {
+      "article_id": "dora_rts_class.1",
+      "articulo": "1",
+      "title_es": "Clientes, contrapartes financieras y transacciones",
+      "title_en": "Clients, financial counterparts and transactions",
+      "languages": {
+        "es": {
+          "hash": "sha256:a0f661dfaf606429aaeb9699e0991936f94e29ad404e849ea870e945a457ce59",
+          "tokens": 422,
+          "chunks": [
+            "dora_rts_class.1.es"
+          ],
+          "embedded_at": "2026-06-10T11:25:41.254249Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:97c5525ab9bf9747cc3496df8e02a8baf9fdba8eb5ce1dfed4d6b7cbd400d917",
+          "tokens": 381,
+          "chunks": [
+            "dora_rts_class.1.en"
+          ],
+          "embedded_at": "2026-06-10T11:25:47.219145Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.2",
+      "articulo": "2",
+      "title_es": "Repercusión en la reputación",
+      "title_en": "Reputational impact",
+      "languages": {
+        "es": {
+          "hash": "sha256:1d946ab60528c12715f8f7a021e3446d71a7d06856cadd29fb7b6d188e1afbcd",
+          "tokens": 232,
+          "chunks": [
+            "dora_rts_class.2.es"
+          ],
+          "embedded_at": "2026-06-10T11:25:51.483707Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:463644bea9aa53cbd77754e1cb8e7f1275b6fce90a0bd5ec82625da6cbcc495d",
+          "tokens": 218,
+          "chunks": [
+            "dora_rts_class.2.en"
+          ],
+          "embedded_at": "2026-06-10T11:25:54.826954Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.3",
+      "articulo": "3",
+      "title_es": "Duración del incidente y duración de la interrupción del servicio",
+      "title_en": "Duration and service downtime",
+      "languages": {
+        "es": {
+          "hash": "sha256:57b01ae59b3486ee1ea75c8148a8a78d4440be1b1bb16c52b6f3486685b9934d",
+          "tokens": 398,
+          "chunks": [
+            "dora_rts_class.3.es"
+          ],
+          "embedded_at": "2026-06-10T11:26:01.390260Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:fb78ce6fbf3b82dd3957c70210de391c46767c48652b098543d3b2874e2376a5",
+          "tokens": 337,
+          "chunks": [
+            "dora_rts_class.3.en"
+          ],
+          "embedded_at": "2026-06-10T11:26:06.615099Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.4",
+      "articulo": "4",
+      "title_es": "Extensión geográfica",
+      "title_en": "Geographical spread",
+      "languages": {
+        "es": {
+          "hash": "sha256:b30a73edb88c93e3c6b1060374233822469e46d580e7e6ddc68fad69eafac509",
+          "tokens": 164,
+          "chunks": [
+            "dora_rts_class.4.es"
+          ],
+          "embedded_at": "2026-06-10T11:26:09.693912Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:6ce5aab3a5cd1d5b6ac21df94bdc138b11f6558d3cf42c5099d618e644de3d7e",
+          "tokens": 152,
+          "chunks": [
+            "dora_rts_class.4.en"
+          ],
+          "embedded_at": "2026-06-10T11:26:12.493075Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.5",
+      "articulo": "5",
+      "title_es": "Pérdidas de datos",
+      "title_en": "Data losses",
+      "languages": {
+        "es": {
+          "hash": "sha256:09b3852154d7cd0ba7005934164e16f3f2e0dbc4096c02bf194e0a0c511abdc5",
+          "tokens": 210,
+          "chunks": [
+            "dora_rts_class.5.es"
+          ],
+          "embedded_at": "2026-06-10T11:26:16.223147Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:07f697ce80bfe89d0215b1421ff203d450c934e0b37a34e8d9fa7b0f56fafded",
+          "tokens": 207,
+          "chunks": [
+            "dora_rts_class.5.en"
+          ],
+          "embedded_at": "2026-06-10T11:26:22.391346Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.6",
+      "articulo": "6",
+      "title_es": "Carácter esencial de los servicios afectados",
+      "title_en": "Criticality of services affected",
+      "languages": {
+        "es": {
+          "hash": "sha256:fe3555aae63d941edea324ae6fddafd5281bc6e6b1c3b81a8fd135bb3208dd29",
+          "tokens": 142,
+          "chunks": [
+            "dora_rts_class.6.es"
+          ],
+          "embedded_at": "2026-06-10T11:26:25.034724Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:a5707044ced2ccc13ebe6d09c56119850ec75fa7bff6f5ebe54352f0472709c6",
+          "tokens": 138,
+          "chunks": [
+            "dora_rts_class.6.en"
+          ],
+          "embedded_at": "2026-06-10T11:26:27.553387Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.7",
+      "articulo": "7",
+      "title_es": "Consecuencias económicas",
+      "title_en": "Economic impact",
+      "languages": {
+        "es": {
+          "hash": "sha256:3c4582361f198b9194cb965e6b00daed4d8db696a2fc4efa2b7f3ea575a1bd25",
+          "tokens": 474,
+          "chunks": [
+            "dora_rts_class.7.es"
+          ],
+          "embedded_at": "2026-06-10T11:26:35.765941Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:86d6459d343f843aca7e38b3986aec0207b69f471f9523fc6eedfd9a3245fb79",
+          "tokens": 410,
+          "chunks": [
+            "dora_rts_class.7.en"
+          ],
+          "embedded_at": "2026-06-10T11:26:42.055659Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.8",
+      "articulo": "8",
+      "title_es": "Incidentes graves",
+      "title_en": "Major incidents",
+      "languages": {
+        "es": {
+          "hash": "sha256:ef878d342190fa374c521675ec366f2aedb33e985dbf88cf22be202531a998e4",
+          "tokens": 280,
+          "chunks": [
+            "dora_rts_class.8.es"
+          ],
+          "embedded_at": "2026-06-10T11:26:46.580036Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:4a8c4250877412be9da0d0d18841ce1495c579d04d68ab833599f0fa954b49af",
+          "tokens": 260,
+          "chunks": [
+            "dora_rts_class.8.en"
+          ],
+          "embedded_at": "2026-06-10T11:26:50.925051Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.9",
+      "articulo": "9",
+      "title_es": "Umbrales de importancia relativa para determinar los incidentes graves",
+      "title_en": "Materiality thresholds for determining major incidents",
+      "languages": {
+        "es": {
+          "hash": "sha256:88002c1bba10b35b5f511a7b5ff9c15bb248693031756b958e799b1e7e78a612",
+          "tokens": 652,
+          "chunks": [
+            "dora_rts_class.9.es"
+          ],
+          "embedded_at": "2026-06-10T11:26:59.146307Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:097564cd903967646b17a73bcb6400fe7022d3618972afab8318904a25941cb7",
+          "tokens": 573,
+          "chunks": [
+            "dora_rts_class.9.en"
+          ],
+          "embedded_at": "2026-06-10T11:27:08.075379Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.10",
+      "articulo": "10",
+      "title_es": "Umbrales de importancia relativa elevada para determinar las ciberamenazas importantes",
+      "title_en": "High materiality thresholds for determining significant cyber threats",
+      "languages": {
+        "es": {
+          "hash": "sha256:6d36f22b7039fb829eb8dfdbea4ebe00076bd6dcb3a36718ac028306977d518b",
+          "tokens": 424,
+          "chunks": [
+            "dora_rts_class.10.es"
+          ],
+          "embedded_at": "2026-06-10T11:27:17.222279Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:c474bbc3ece9458624bacade13f7020f1ae70fd5931995b15e41037a9b74a337",
+          "tokens": 377,
+          "chunks": [
+            "dora_rts_class.10.en"
+          ],
+          "embedded_at": "2026-06-10T11:27:27.377957Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.11",
+      "articulo": "11",
+      "title_es": "Relevancia de los incidentes graves para las autoridades competentes de otros Estados miembros",
+      "title_en": "Relevance of major incidents to competent authorities in other Member States",
+      "languages": {
+        "es": {
+          "hash": "sha256:40d549ff9c18ec71e8b2871b6d2c31cf6e45efaae22f21ad518dbc9d5255044a",
+          "tokens": 140,
+          "chunks": [
+            "dora_rts_class.11.es"
+          ],
+          "embedded_at": "2026-06-10T11:27:30.586685Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:32fa58904de97b28cc331725cd5e6838e66d9e697854d6f176decdf385245050",
+          "tokens": 130,
+          "chunks": [
+            "dora_rts_class.11.en"
+          ],
+          "embedded_at": "2026-06-10T11:27:32.993968Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.12",
+      "articulo": "12",
+      "title_es": "Datos de los incidentes graves que deben compartirse con otras autoridades competentes",
+      "title_en": "Details of major incidents to be shared with other competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:0a230376da84218dc853d643ce8d12dde0fe8679ab69e7232302f4fea649a2c2",
+          "tokens": 138,
+          "chunks": [
+            "dora_rts_class.12.es"
+          ],
+          "embedded_at": "2026-06-10T11:27:35.959746Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:9c94dd755fcde1c87d54ff55355b515344f1bc48fcfb6d06840907de4f71e0c7",
+          "tokens": 118,
+          "chunks": [
+            "dora_rts_class.12.en"
+          ],
+          "embedded_at": "2026-06-10T11:27:38.707259Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_class.13",
+      "articulo": "13",
+      "title_es": "Entrada en vigor",
+      "title_en": "Entry into force",
+      "languages": {
+        "es": {
+          "hash": "sha256:0ef21f01c6b6864566f063bc2e5c45d1293e878424f9def347515be393a82fd1",
+          "tokens": 25,
+          "chunks": [
+            "dora_rts_class.13.es"
+          ],
+          "embedded_at": "2026-06-10T11:27:40.498278Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_es.html"
+        },
+        "en": {
+          "hash": "sha256:7521c32a90f5ee981042548d552a96206956fd9a1b9c292a5454ee68610371f8",
+          "tokens": 27,
+          "chunks": [
+            "dora_rts_class.13.en"
+          ],
+          "embedded_at": "2026-06-10T11:27:42.370239Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:22:45.517220Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_class_en.html"
+        }
+      }
+    }
+  ]
+}

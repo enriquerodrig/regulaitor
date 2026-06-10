@@ -42,6 +42,8 @@ _NORMA_STYLE: dict[str, tuple[str, str]] = {
     "gdpr": ("GDPR", "#047857"),  # emerald-700
     "nis2": ("NIS2", "#6D28D9"),  # violet-700
     "dora": ("DORA", "#B45309"),  # amber-700
+    "dora_rts_incident": ("DORA RTS Plazos", "#0F766E"),  # teal-700 (Fase 3)
+    "dora_rts_class": ("DORA RTS Clasif.", "#A21CAF"),  # fuchsia-700 (Fase 3)
 }
 
 

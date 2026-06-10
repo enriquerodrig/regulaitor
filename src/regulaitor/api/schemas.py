@@ -40,7 +40,7 @@ class AskRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     query: str = Field(min_length=1, max_length=2000)
-    corpus: Literal["ai_act", "gdpr", "nis2", "dora", "auto"]
+    corpus: Literal["ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class", "auto"]
     language: Literal["es", "en"]
     council: StrictBool | None = None
 

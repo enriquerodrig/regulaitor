@@ -17,10 +17,13 @@ from pathlib import Path
 from typing import Any
 
 from regulaitor.citation.schemas import AuditVerdict
+from regulaitor.corpus._targets import ALL_NORMAS
 from regulaitor.document.extractor import ExtractionError
 from regulaitor.orchestration.document_graph import run_document
 
-_VALID_CORPUS = {"ai_act", "gdpr", "nis2", "dora"}
+# Derive from the canonical norma set so the CLI self-updates for any future
+# corpus (Fase 3 review NEC-1: a hardcoded copy silently rejected the new normas).
+_VALID_CORPUS = set(ALL_NORMAS)
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -33,7 +36,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "--corpus",
         required=True,
-        help="Comma-separated subset of: ai_act,gdpr,nis2,dora",
+        help=f"Comma-separated subset of: {','.join(sorted(_VALID_CORPUS))}",
     )
     p.add_argument("--max-tokens-per-segment", type=int, default=1500)
     p.add_argument("--output", choices=["json", "md"], default="json")

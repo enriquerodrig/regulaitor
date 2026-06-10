@@ -1,0 +1,239 @@
+{
+  "corpus": "dora_rts_incident",
+  "celex": "32025R0301",
+  "version": "2025-02-20",
+  "source_format": "html",
+  "fetched_at": "2026-06-10T11:21:40.402699Z",
+  "languages": [
+    "es",
+    "en"
+  ],
+  "http_cache": {
+    "es": {
+      "etag": null,
+      "last_modified": null
+    },
+    "en": {
+      "etag": null,
+      "last_modified": null
+    }
+  },
+  "stats": {
+    "articles_total": 7,
+    "chunks_total": 14,
+    "embedded_total": 14,
+    "raw_size_bytes": 121058
+  },
+  "articles": [
+    {
+      "article_id": "dora_rts_incident.1",
+      "articulo": "1",
+      "title_es": "Información general que debe facilitarse en las notificaciones iniciales y en los informes intermedio y final sobre incidentes graves relacionados con las TIC",
+      "title_en": "General information to be provided in initial notifications and intermediate and final reports on major ICT-related incidents",
+      "languages": {
+        "es": {
+          "hash": "sha256:cfb6510217c56351eca10982998393f5bea5dc8746bc0377d0273012986fa1f2",
+          "tokens": 252,
+          "chunks": [
+            "dora_rts_incident.1.es"
+          ],
+          "embedded_at": "2026-06-10T11:23:45.849797Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_es.html"
+        },
+        "en": {
+          "hash": "sha256:3afd88c328f73cad9f22bc54fedc0224152c95045a79bc9afb05cb727758bdb5",
+          "tokens": 248,
+          "chunks": [
+            "dora_rts_incident.1.en"
+          ],
+          "embedded_at": "2026-06-10T11:23:50.657657Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_incident.2",
+      "articulo": "2",
+      "title_es": "Información específica que debe facilitarse en las notificaciones iniciales",
+      "title_en": "Specific information to be provided in initial notifications",
+      "languages": {
+        "es": {
+          "hash": "sha256:d2f89a4fdb7aea4ebf405c39f6d03c934c203576a8a6b81cb06a243865ce96a5",
+          "tokens": 265,
+          "chunks": [
+            "dora_rts_incident.2.es"
+          ],
+          "embedded_at": "2026-06-10T11:23:55.608696Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_es.html"
+        },
+        "en": {
+          "hash": "sha256:f448ae1ddc1518bee38044415f66c03175c552dffbce4e94828f50afa82b52df",
+          "tokens": 259,
+          "chunks": [
+            "dora_rts_incident.2.en"
+          ],
+          "embedded_at": "2026-06-10T11:24:02.784549Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_incident.3",
+      "articulo": "3",
+      "title_es": "Información específica que debe facilitarse en los informes intermedios",
+      "title_en": "Specific information to be provided in intermediate reports",
+      "languages": {
+        "es": {
+          "hash": "sha256:176946ff6e8a2faebae068e3b3f5157c242bb1d58780213325a3e025b6b640f0",
+          "tokens": 291,
+          "chunks": [
+            "dora_rts_incident.3.es"
+          ],
+          "embedded_at": "2026-06-10T11:24:08.051475Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_es.html"
+        },
+        "en": {
+          "hash": "sha256:c6a3d113fbd45cb6c230bf256a2d672a811b4a55ff72b3f119d324b097325f17",
+          "tokens": 272,
+          "chunks": [
+            "dora_rts_incident.3.en"
+          ],
+          "embedded_at": "2026-06-10T11:24:12.889341Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_incident.4",
+      "articulo": "4",
+      "title_es": "Información específica que debe facilitarse en los informes finales",
+      "title_en": "Specific information to be provided in final reports",
+      "languages": {
+        "es": {
+          "hash": "sha256:6cb34f31a735b52b4dd2affbb3b58752356257e197ed585ecfe6d8f50a799976",
+          "tokens": 157,
+          "chunks": [
+            "dora_rts_incident.4.es"
+          ],
+          "embedded_at": "2026-06-10T11:24:16.173972Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_es.html"
+        },
+        "en": {
+          "hash": "sha256:a23b7f38f599e1f2a5cff350f7ce4e44b0f335ccf48b45a000510165937bea45",
+          "tokens": 143,
+          "chunks": [
+            "dora_rts_incident.4.en"
+          ],
+          "embedded_at": "2026-06-10T11:24:19.152854Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_incident.5",
+      "articulo": "5",
+      "title_es": "Plazos para la notificación inicial y para los informes intermedio y final",
+      "title_en": "Time limits for the initial notification, and for the intermediate and final reports",
+      "languages": {
+        "es": {
+          "hash": "sha256:53eb2d4ee2b743e50a5d076bc21c36d5a5029021db2eafb70eb34a57c9e9718c",
+          "tokens": 665,
+          "chunks": [
+            "dora_rts_incident.5.es"
+          ],
+          "embedded_at": "2026-06-10T11:24:28.609500Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_es.html"
+        },
+        "en": {
+          "hash": "sha256:5866210385c58b5cfa500b593c32ab4e5f321b66b11344dfb06531650234f131",
+          "tokens": 637,
+          "chunks": [
+            "dora_rts_incident.5.en"
+          ],
+          "embedded_at": "2026-06-10T11:24:39.762250Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_incident.6",
+      "articulo": "6",
+      "title_es": "Contenido de la notificación voluntaria de ciberamenazas importantes",
+      "title_en": "Content of the voluntary notification of significant cyber threats",
+      "languages": {
+        "es": {
+          "hash": "sha256:0549e0584519236ef6fd0bb177bbf70a9f1831c6e7538e8828e57c0483d51cb2",
+          "tokens": 296,
+          "chunks": [
+            "dora_rts_incident.6.es"
+          ],
+          "embedded_at": "2026-06-10T11:24:46.786683Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_es.html"
+        },
+        "en": {
+          "hash": "sha256:c9888525051c38dd9bbf1f064db22a2cf122c762be79406533f932f3660509cc",
+          "tokens": 265,
+          "chunks": [
+            "dora_rts_incident.6.en"
+          ],
+          "embedded_at": "2026-06-10T11:24:52.385658Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "dora_rts_incident.7",
+      "articulo": "7",
+      "title_es": "Entrada en vigor",
+      "title_en": "Entry into force",
+      "languages": {
+        "es": {
+          "hash": "sha256:0ef21f01c6b6864566f063bc2e5c45d1293e878424f9def347515be393a82fd1",
+          "tokens": 25,
+          "chunks": [
+            "dora_rts_incident.7.es"
+          ],
+          "embedded_at": "2026-06-10T11:24:53.893930Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_es.html"
+        },
+        "en": {
+          "hash": "sha256:7521c32a90f5ee981042548d552a96206956fd9a1b9c292a5454ee68610371f8",
+          "tokens": 27,
+          "chunks": [
+            "dora_rts_incident.7.en"
+          ],
+          "embedded_at": "2026-06-10T11:24:57.872081Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-10T11:21:40.402699Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/dora_rts_incident_en.html"
+        }
+      }
+    }
+  ]
+}

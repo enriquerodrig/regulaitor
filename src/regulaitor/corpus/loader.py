@@ -28,7 +28,14 @@ CORPUS_ROOT = Path("corpus")
 MANIFEST_DIR = CORPUS_ROOT / "manifests"
 PROCESSED_DIR = CORPUS_ROOT / "processed"
 
-CORPORA_WITH_MANIFESTS: tuple[Norma, ...] = ("ai_act", "gdpr", "nis2", "dora")
+CORPORA_WITH_MANIFESTS: tuple[Norma, ...] = (
+    "ai_act",
+    "gdpr",
+    "nis2",
+    "dora",
+    "dora_rts_incident",
+    "dora_rts_class",
+)
 
 # Canonical hash prefix used by H1 ingest.py and recomputed during warmup.
 # Exposed at module scope so tests share the same constant.

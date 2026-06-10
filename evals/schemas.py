@@ -13,7 +13,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from regulaitor.corpus.schemas import CorpusSelector
+from regulaitor.corpus.schemas import CorpusSelector, Norma
 
 # ---------------------------------------------------------------------------
 # Gold set entries
@@ -47,7 +47,9 @@ class GoldCaseDoc(BaseModel):
     id: str = Field(min_length=1)
     tipo: Literal["document"]
     pdf_path: str = Field(min_length=1)
-    corpus_esperado: list[Literal["ai_act", "gdpr", "nis2", "dora"]] = Field(min_length=1)
+    # Reuse the canonical Norma (doc cases never use the "auto" cross-corpus
+    # selector); tracks future norma additions automatically (review NEC-2).
+    corpus_esperado: list[Norma] = Field(min_length=1)
     expected_findings_articulos: list[str]
     expected_document_verdict: Literal["pass", "block", "requires_human_review"]
     expected_n_segments: int = Field(ge=1)

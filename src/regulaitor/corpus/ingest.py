@@ -57,6 +57,8 @@ CELEX: dict[Norma, str] = {
     "gdpr": "02016R0679-20160504",
     "nis2": "32022L2555",
     "dora": "32022R2554",  # Regulation (EU) 2022/2554, OJ L 333, 27.12.2022 (base act, H14)
+    "dora_rts_incident": "32025R0301",  # Commission Delegated Reg (EU) 2025/301 (Fase 3)
+    "dora_rts_class": "32024R1772",  # Commission Delegated Reg (EU) 2024/1772 (Fase 3)
 }
 
 VERSION: dict[Norma, str] = {
@@ -64,6 +66,8 @@ VERSION: dict[Norma, str] = {
     "gdpr": "2016-05-04",
     "nis2": "2022-12-27",
     "dora": "2022-12-27",  # OJ L 333 publication date (base act, H14)
+    "dora_rts_incident": "2025-02-20",  # OJ L publication date (Fase 3)
+    "dora_rts_class": "2024-06-25",  # OJ L publication date (Fase 3)
 }
 
 

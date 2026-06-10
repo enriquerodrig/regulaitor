@@ -11,12 +11,19 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
-Norma = Literal["ai_act", "gdpr", "nis2", "dora"]
-# H15.1: opt-in cross-corpus retrieval selector. `Norma` itself is unchanged
-# (H1-stable). "auto" triggers the multi-corpus retrieve + post-rerank purity
-# gate (ADR-0017). Any of the four norms keeps the byte-identical single-corpus
-# path (no-leakage by construction, §22.18 / H14).
-CorpusSelector = Literal["ai_act", "gdpr", "nis2", "dora", "auto"]
+# Fase 3 (HX): DORA Level-2 RTS added as separate normas (each act has its own
+# CELEX + article numbering, so they cannot share the "dora" base-act norma).
+#   dora_rts_incident = Commission Delegated Reg (EU) 2025/301 (incident-report
+#     content + time limits; Art. 5 = 4h/24h/72h/1-month).
+#   dora_rts_class    = Commission Delegated Reg (EU) 2024/1772 (criteria for
+#     classifying an ICT incident as "major").
+Norma = Literal["ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class"]
+# H15.1: opt-in cross-corpus retrieval selector. "auto" triggers the multi-corpus
+# retrieve + post-rerank purity gate (ADR-0017). Any single norm keeps the
+# byte-identical single-corpus path (no-leakage by construction, §22.18 / H14).
+CorpusSelector = Literal[
+    "ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class", "auto"
+]
 Language = Literal["es", "en"]
 SourceFormat = Literal["formex4", "html", "pdf"]
 

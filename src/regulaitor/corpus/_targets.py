@@ -9,7 +9,14 @@ from typing import Literal
 
 from regulaitor.corpus.schemas import Language, Norma
 
-ALL_NORMAS: tuple[Norma, ...] = ("ai_act", "gdpr", "nis2", "dora")
+ALL_NORMAS: tuple[Norma, ...] = (
+    "ai_act",
+    "gdpr",
+    "nis2",
+    "dora",
+    "dora_rts_incident",
+    "dora_rts_class",
+)
 ALL_LANGUAGES: tuple[Language, ...] = ("es", "en")
 
 

@@ -71,7 +71,10 @@ async def analyze(
     # path). Return 415 here for a clean operator signal.
     if not corpus:
         raise UnsupportedMediaType(reason="corpus list cannot be empty")
-    if not all(c in ("ai_act", "gdpr", "nis2", "dora") for c in corpus):
+    if not all(
+        c in ("ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class")
+        for c in corpus
+    ):
         raise UnsupportedMediaType(reason="unsupported corpus member")
 
     t0 = time.monotonic()
