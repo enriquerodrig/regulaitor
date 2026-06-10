@@ -97,3 +97,21 @@ def test_app_example_buttons_prefill_chat_query(monkeypatch):
     target = next(b for b in app.button if b.label == "AI Act · alto riesgo")
     target.click().run(timeout=60)
     assert "alto riesgo" in app.session_state["chat_query"]
+
+
+def test_app_chat_warns_on_pii_in_query(monkeypatch):
+    """§18.5 (Fase 2): a query containing PII shows the alert and holds the
+    result behind a continue/cancel gate (does NOT auto-process — no backend
+    call). We do not click 'Continuar' here to avoid st.rerun() in AppTest."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-stub-for-smoke")
+    app = AppTest.from_file(APP_PATH).run(timeout=60)
+    ta = next(t for t in app.text_area if t.label == "Pregunta")
+    ta.set_value("Mi email es ana@test.com; ¿qué dice el RGPD sobre brechas?")
+    submit = next(b for b in app.button if b.label == "Analizar")
+    submit.click().run(timeout=60)
+    assert any(
+        "datos personales" in w.value for w in app.warning
+    ), f"expected PII warning; warnings: {[w.value for w in app.warning]}"
+    # the continue/cancel gate is present
+    labels = [b.label for b in app.button]
+    assert "Continuar de todos modos" in labels and "Cancelar" in labels

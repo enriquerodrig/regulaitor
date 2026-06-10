@@ -54,6 +54,10 @@ def render() -> None:
         "~30-60s por sección. Recomendado: PDFs ≤ 5 páginas para esta demo. "
         "Documentos extensos: deploy GPU o ejecutar localmente."
     )
+    st.caption(
+        "Privacidad: anonimiza los datos personales antes de subir un documento; "
+        "los registros internos se redactan automáticamente."
+    )
 
     with st.form("doc_form", clear_on_submit=False):
         uploaded = st.file_uploader(
