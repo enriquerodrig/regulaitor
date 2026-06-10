@@ -22,6 +22,18 @@ DISCLAIMER = (
     "contener errores. Consulta a un profesional para decisiones vinculantes."
 )
 
+INTRO = (
+    "**RegulAItor** — inteligencia normativa europea con cita verificable. "
+    "Consulta el AI Act, el RGPD, NIS2 y DORA: cada respuesta va respaldada por "
+    "una cita textual validada contra el corpus oficial de EUR-Lex. "
+    "**Sin cita verificable, no hay respuesta.**"
+)
+
+FOOTER = (
+    "Corre sobre un modelo de IA europeo open-source (Mistral): ni tus datos ni "
+    "el modelo de inferencia salen de la Unión Europea. Demo en fase temprana."
+)
+
 # Vercel Web Interface Guidelines: tabular-nums for numeric columns
 # (regulatory reporting, metrics, audit-result tables). Applied to common
 # Streamlit selectors via single small <style> block; no web-font fetched.
@@ -77,6 +89,12 @@ def main() -> None:
         {DISCLAIMER}</div>""",
         unsafe_allow_html=True,
     )
+    st.markdown(
+        f"""<div style="padding: 12px 16px; background: #F1F5F9; border-left: 3px solid #1E3A5F;
+        border-radius: 4px; color: #334155; font-size: 14px; margin-bottom: 20px;">
+        {INTRO}</div>""",
+        unsafe_allow_html=True,
+    )
 
     _key_error = _missing_key_error()
     if _key_error:
@@ -88,6 +106,9 @@ def main() -> None:
         tab_ask.render()
     with tab_analyze_view:
         tab_analyze.render()
+
+    st.divider()
+    st.caption(FOOTER)
 
 
 if __name__ == "__main__":

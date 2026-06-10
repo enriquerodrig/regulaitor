@@ -27,13 +27,42 @@ def _generate_case_id() -> str:
     return f"ch-{today}-{suffix}"
 
 
+_EXAMPLES = [
+    (
+        "AI Act · alto riesgo",
+        "¿Qué obligaciones impone el AI Act a los sistemas de IA de alto riesgo?",
+    ),
+    (
+        "RGPD · brecha de datos",
+        "¿En qué plazo debo notificar una brecha de datos personales bajo el RGPD?",
+    ),
+    (
+        "Fintech · DORA + NIS2",
+        "Soy una fintech regulada: ¿qué exigen DORA y NIS2 sobre la notificación de incidentes?",
+    ),
+]
+
+
 def render() -> None:
-    """Render the Pregunta tab: form + last result."""
+    """Render the Pregunta tab: examples + form + last result."""
     st.header("Pregunta normativa")
+
+    if "chat_query" not in st.session_state:
+        st.session_state["chat_query"] = ""
+
+    st.caption("Ejemplos — pulsa uno para probar:")
+    ex_cols = st.columns(len(_EXAMPLES))
+    for col, (label, example_query) in zip(ex_cols, _EXAMPLES, strict=False):
+        if col.button(label, key=f"ex_{label}", use_container_width=True):
+            # Set BEFORE the form's text_area (key="chat_query") instantiates so
+            # it pre-fills in this same run — no st.rerun() needed (and st.rerun
+            # pollutes AppTest isolation under random test order).
+            st.session_state["chat_query"] = example_query
 
     with st.form("chat_form", clear_on_submit=False):
         query = st.text_area(
             "Pregunta",
+            key="chat_query",
             placeholder="¿Qué dice el AI Act sobre sistemas de alto riesgo?",
             height=100,
         )

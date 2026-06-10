@@ -75,3 +75,25 @@ def test_app_blocks_when_self_hosted_endpoint_missing(monkeypatch):
     assert any(
         "self-hosted" in e.value.lower() for e in app.error
     ), f"expected self-hosted config error; errors: {[e.value for e in app.error]}"
+
+
+def test_app_renders_intro_and_sovereignty_footer(monkeypatch):
+    """Demo polish: the intro (what it is + the §6 rule) and the EU-sovereignty
+    footer render alongside the disclaimer."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-stub-for-smoke")
+    app = AppTest.from_file(APP_PATH).run(timeout=60)
+    md = " ".join(m.value for m in app.markdown)
+    assert "Sin cita verificable, no hay respuesta" in md
+    captions = " ".join(c.value for c in app.caption)
+    assert "salen de la Unión Europea" in captions
+
+
+def test_app_example_buttons_prefill_chat_query(monkeypatch):
+    """Demo polish: example buttons render and clicking one pre-fills the query."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-stub-for-smoke")
+    app = AppTest.from_file(APP_PATH).run(timeout=60)
+    labels = [b.label for b in app.button]
+    assert "AI Act · alto riesgo" in labels, f"example buttons missing; buttons: {labels}"
+    target = next(b for b in app.button if b.label == "AI Act · alto riesgo")
+    target.click().run(timeout=60)
+    assert "alto riesgo" in app.session_state["chat_query"]
