@@ -14,6 +14,7 @@ from regulaitor.api.auth import verify_token
 from regulaitor.api.errors import FileSizeExceeded, UnsupportedMediaType
 from regulaitor.api.logging import log_api_document_turn
 from regulaitor.api.schemas import AnalyzeResponse, to_analyze_response
+from regulaitor.corpus.registry import ALL_NORMAS
 from regulaitor.orchestration.document_graph import run_document
 from regulaitor.security.rate_limit import limiter
 
@@ -71,10 +72,7 @@ async def analyze(
     # path). Return 415 here for a clean operator signal.
     if not corpus:
         raise UnsupportedMediaType(reason="corpus list cannot be empty")
-    if not all(
-        c in ("ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class")
-        for c in corpus
-    ):
+    if not all(c in ALL_NORMAS for c in corpus):
         raise UnsupportedMediaType(reason="unsupported corpus member")
 
     t0 = time.monotonic()

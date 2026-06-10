@@ -7,16 +7,11 @@ from __future__ import annotations
 
 from typing import Literal
 
+from regulaitor.corpus.registry import ALL_NORMAS  # single source of truth (ADR-0037)
 from regulaitor.corpus.schemas import Language, Norma
 
-ALL_NORMAS: tuple[Norma, ...] = (
-    "ai_act",
-    "gdpr",
-    "nis2",
-    "dora",
-    "dora_rts_incident",
-    "dora_rts_class",
-)
+__all__ = ["ALL_NORMAS", "ALL_LANGUAGES", "expand_targets"]
+
 ALL_LANGUAGES: tuple[Language, ...] = ("es", "en")
 
 

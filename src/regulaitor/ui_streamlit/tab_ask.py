@@ -12,13 +12,14 @@ from secrets import token_urlsafe
 
 import streamlit as st
 
+from regulaitor.corpus.registry import ALL_NORMAS
 from regulaitor.orchestration.graph import run
 from regulaitor.security import pii
 from regulaitor.ui_streamlit import _render
 
 logger = logging.getLogger("regulaitor.ui_streamlit.tab_ask")
 
-_CORPUS_CHOICES = ["auto", "ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class"]
+_CORPUS_CHOICES = ["auto", *ALL_NORMAS]  # ADR-0037: derived (chat adds the auto selector)
 _LANGUAGE_CHOICES = ["es", "en"]
 
 

@@ -22,20 +22,15 @@ from pathlib import Path
 from typing import Any
 
 from regulaitor.corpus import manifest as manifest_mod
+from regulaitor.corpus.registry import ALL_NORMAS
 from regulaitor.corpus.schemas import ArticleEntry, Language, Manifest, Norma
 
 CORPUS_ROOT = Path("corpus")
 MANIFEST_DIR = CORPUS_ROOT / "manifests"
 PROCESSED_DIR = CORPUS_ROOT / "processed"
 
-CORPORA_WITH_MANIFESTS: tuple[Norma, ...] = (
-    "ai_act",
-    "gdpr",
-    "nis2",
-    "dora",
-    "dora_rts_incident",
-    "dora_rts_class",
-)
+# Every registry corpus has a manifest (ADR-0037: derived, not re-listed).
+CORPORA_WITH_MANIFESTS: tuple[Norma, ...] = ALL_NORMAS
 
 # Canonical hash prefix used by H1 ingest.py and recomputed during warmup.
 # Exposed at module scope so tests share the same constant.

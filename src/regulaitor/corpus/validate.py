@@ -5,15 +5,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from regulaitor.corpus.formex_parser import ParsedArticle
+from regulaitor.corpus.registry import CORPUS_REGISTRY
 from regulaitor.corpus.schemas import Norma
 
+# Derived from the registry (ADR-0037) — counts pinned per CorpusSpec.expected_articles.
 EXPECTED_ARTICLE_COUNTS: dict[Norma, int] = {
-    "ai_act": 113,
-    "gdpr": 99,
-    "nis2": 46,  # pinned from real manifest: corpus/manifests/nis2.json (H14)
-    "dora": 64,  # pinned from real manifest: corpus/manifests/dora.json (H14)
-    "dora_rts_incident": 7,  # Commission Delegated Reg (EU) 2025/301 (Fase 3)
-    "dora_rts_class": 13,  # Commission Delegated Reg (EU) 2024/1772 (Fase 3)
+    n: s.expected_articles for n, s in CORPUS_REGISTRY.items()
 }
 
 

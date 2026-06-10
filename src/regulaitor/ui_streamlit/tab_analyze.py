@@ -15,6 +15,7 @@ from typing import cast
 
 import streamlit as st
 
+from regulaitor.corpus.registry import ALL_NORMAS
 from regulaitor.corpus.schemas import Language
 from regulaitor.document.extractor import ExtractionError
 from regulaitor.orchestration.document_graph import run_document
@@ -22,7 +23,9 @@ from regulaitor.ui_streamlit import _render
 
 logger = logging.getLogger("regulaitor.ui_streamlit.tab_analyze")
 
-_CORPUS_CHOICES = ["ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class"]
+# ADR-0037: derived from the registry (plain str so the multiselect result is
+# list[str], matching run_document's signature — list[Norma] is invariant).
+_CORPUS_CHOICES: list[str] = [str(n) for n in ALL_NORMAS]
 _LANGUAGE_CHOICES = ["es", "en"]
 
 

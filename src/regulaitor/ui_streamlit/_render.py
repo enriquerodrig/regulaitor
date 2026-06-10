@@ -25,6 +25,7 @@ from regulaitor.citation.schemas import (
     PIISummary,
     SanitizerEvent,
 )
+from regulaitor.corpus.registry import CORPUS_REGISTRY
 from regulaitor.orchestration.state import ChatState
 
 _SEVERITY_LABEL_COLOR = {
@@ -34,16 +35,12 @@ _SEVERITY_LABEL_COLOR = {
     "high": "red",
 }
 
-# Corpus chip palette — one accent color per norma, distinct enough to scan
-# at a glance but all desaturated to stay subordinate to the verdict badge.
-# Labels are the human-readable forms (uppercase, official acronyms).
+# Corpus chip palette derived from the registry (ADR-0037): one desaturated
+# (label, color) accent per norma, declared once in CorpusSpec. Distinct enough
+# to scan at a glance but subordinate to the verdict badge. No edit needed here
+# to add a corpus.
 _NORMA_STYLE: dict[str, tuple[str, str]] = {
-    "ai_act": ("AI Act", "#1E40AF"),  # blue-800 (matches theme primaryColor)
-    "gdpr": ("GDPR", "#047857"),  # emerald-700
-    "nis2": ("NIS2", "#6D28D9"),  # violet-700
-    "dora": ("DORA", "#B45309"),  # amber-700
-    "dora_rts_incident": ("DORA RTS Plazos", "#0F766E"),  # teal-700 (Fase 3)
-    "dora_rts_class": ("DORA RTS Clasif.", "#A21CAF"),  # fuchsia-700 (Fase 3)
+    n: (s.label, s.color) for n, s in CORPUS_REGISTRY.items()
 }
 
 

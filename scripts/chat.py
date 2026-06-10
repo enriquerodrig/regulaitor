@@ -9,6 +9,7 @@ from datetime import UTC, datetime
 
 from nanoid import generate
 
+from regulaitor.corpus.registry import ALL_NORMAS
 from regulaitor.orchestration.graph import run
 from regulaitor.orchestration.state import ChatState
 
@@ -19,7 +20,8 @@ def _build_parser() -> argparse.ArgumentParser:
         description="Chat with the RegulAItor Analyst+Auditor pipeline.",
     )
     p.add_argument("--query", required=True)
-    p.add_argument("--corpus", choices=["ai_act", "gdpr"], required=True)
+    # ADR-0037: derived from the registry (+ "auto" cross-corpus, as the UI exposes).
+    p.add_argument("--corpus", choices=[*ALL_NORMAS, "auto"], required=True)
     p.add_argument("--lang", choices=["es", "en"], required=True)
     return p
 

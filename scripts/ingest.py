@@ -12,6 +12,7 @@ import logging
 import sys
 
 from regulaitor.corpus.ingest import run
+from regulaitor.corpus.registry import ALL_NORMAS
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -19,11 +20,7 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="regulaitor.ingest",
         description="Ingest a regulatory corpus from EUR-Lex.",
     )
-    p.add_argument(
-        "--corpus",
-        choices=["ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class", "all"],
-        default="all",
-    )
+    p.add_argument("--corpus", choices=[*ALL_NORMAS, "all"], default="all")
     p.add_argument("--lang", choices=["es", "en", "all"], default="all")
     p.add_argument("--force-fetch", action="store_true", help="Ignore HTTP 304 cache")
     p.add_argument(

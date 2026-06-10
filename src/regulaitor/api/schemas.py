@@ -23,6 +23,7 @@ from regulaitor.citation.schemas import (
     SanitizerEvent,
     SegmentResult,
 )
+from regulaitor.corpus.schemas import CorpusSelector
 from regulaitor.orchestration.state import ChatState
 
 # ---------------------------------------------------------------------------
@@ -40,7 +41,7 @@ class AskRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     query: str = Field(min_length=1, max_length=2000)
-    corpus: Literal["ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class", "auto"]
+    corpus: CorpusSelector  # canonical Literal (ADR-0037: no re-listing)
     language: Literal["es", "en"]
     council: StrictBool | None = None
 
