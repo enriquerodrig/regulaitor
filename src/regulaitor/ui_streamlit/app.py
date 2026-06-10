@@ -17,16 +17,16 @@ from regulaitor.corpus import loader as corpus_loader
 from regulaitor.ui_streamlit import tab_analyze, tab_ask
 
 DISCLAIMER = (
-    "**Aviso.** Esta herramienta no sustituye asesoría jurídica. "
+    "<strong>Aviso.</strong> Esta herramienta no sustituye asesoría jurídica. "
     "Las respuestas están respaldadas por citas validadas pero pueden "
     "contener errores. Consulta a un profesional para decisiones vinculantes."
 )
 
 INTRO = (
-    "**RegulAItor** — inteligencia normativa europea con cita verificable. "
-    "Consulta el AI Act, el RGPD, NIS2 y DORA: cada respuesta va respaldada por "
-    "una cita textual validada contra el corpus oficial de EUR-Lex. "
-    "**Sin cita verificable, no hay respuesta.**"
+    "<strong>RegulAItor</strong> — inteligencia normativa europea con cita "
+    "verificable. Consulta el AI Act, el RGPD, NIS2 y DORA: cada respuesta va "
+    "respaldada por una cita textual validada contra el corpus oficial de "
+    "EUR-Lex. <strong>Sin cita verificable, no hay respuesta.</strong>"
 )
 
 FOOTER = (
