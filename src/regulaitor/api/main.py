@@ -17,18 +17,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from slowapi.errors import RateLimitExceeded
 
-from regulaitor.api import auth, errors
+from regulaitor.api import errors
 from regulaitor.api.routes_analyze import router as analyze_router
 from regulaitor.api.routes_ask import router as ask_router
 from regulaitor.api.routes_health import router as health_router
 from regulaitor.api.schemas import ErrorResponse
 from regulaitor.corpus import loader as corpus_loader
+from regulaitor.security import tenancy
 from regulaitor.security.rate_limit import limiter
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    auth.load_api_token_or_raise()
+    # Fase 4: load the tenant registry (config-based; backward-compat single token).
+    tenancy.load_tenants_or_raise()
     # Deep-review minor (architecture-coherence): pre-load manifests at startup
     # so the first /ask doesn't crash with KeyError("corpus not loaded; call
     # warmup() first") on the auto-corpus path. Mirrors the R11 fix that

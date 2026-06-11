@@ -121,6 +121,18 @@ def test_log_api_chat_turn_emits_record(caplog) -> None:
     assert payload["token_hash"] == "a1b2c3d4"
     assert payload["client_ip_redacted"] == "192.168.1.0"
     assert payload["verdict"] == "pass"
+    assert payload["tenant_id"] is None  # no tenant in state -> null (legacy/pre-auth)
+
+
+def test_log_api_chat_turn_includes_tenant_id(caplog) -> None:
+    """Fase 4: the structured record carries tenant_id when a tenant is resolved."""
+    caplog.set_level(logging.INFO, logger="regulaitor.api.logging")
+    request = _request()
+    request.state.tenant = SimpleNamespace(tenant_id="acme")
+    log_api_chat_turn(request, _chat_state(), _ask_response())
+    msg = next(r.message for r in caplog.records if "api_chat_turn" in r.message)
+    payload = json.loads(msg.split("api_chat_turn: ", 1)[1])
+    assert payload["tenant_id"] == "acme"
 
 
 def _document_report() -> DocumentReport:

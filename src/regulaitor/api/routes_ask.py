@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-import os
 import time
 from datetime import UTC, datetime
 
@@ -15,7 +14,7 @@ from regulaitor.api.errors import BackendError, InjectionDetected
 from regulaitor.api.logging import log_api_chat_turn
 from regulaitor.api.schemas import AskRequest, AskResponse, to_ask_response
 from regulaitor.orchestration.graph import run
-from regulaitor.security.rate_limit import limiter
+from regulaitor.security.rate_limit import ask_limit, limiter
 
 router = APIRouter(tags=["chat"])
 
@@ -25,12 +24,8 @@ def _generate_case_id() -> str:
     return f"api-ch-{stamp}-{generate(size=8)}"
 
 
-def _rate_limit_value() -> str:
-    return os.getenv("REGULAITOR_RATE_LIMIT_ASK", "30/minute")
-
-
 @router.post("/ask", response_model=AskResponse)
-@limiter.limit(_rate_limit_value)
+@limiter.limit(ask_limit)  # Fase 4: per-tenant limit (key = tenant:{id})
 async def ask(
     request: Request,
     payload: AskRequest,

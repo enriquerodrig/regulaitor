@@ -34,6 +34,12 @@ def _redact_ip(client_ip: str | None) -> str | None:
     return str(net.network_address)
 
 
+def _tenant_id(request: Any) -> str | None:
+    """Fase 4: per-tenant log field. None pre-auth or single-token legacy state."""
+    tenant = getattr(request.state, "tenant", None)
+    return tenant.tenant_id if tenant is not None else None
+
+
 def log_api_chat_turn(request: Any, state: ChatState, response: AskResponse) -> None:
     """Emit one structured INFO record for a completed /ask request."""
     record = {
@@ -41,6 +47,7 @@ def log_api_chat_turn(request: Any, state: ChatState, response: AskResponse) -> 
         "http_method": request.method,
         "http_path": request.url.path,
         "http_status": 200,
+        "tenant_id": _tenant_id(request),
         "token_hash": getattr(request.state, "token_hash", None),
         "client_ip_redacted": _redact_ip(request.client.host if request.client else None),
         "verdict": response.verdict,
@@ -61,6 +68,7 @@ def log_api_document_turn(request: Any, report: DocumentReport, response: Analyz
         "http_method": request.method,
         "http_path": request.url.path,
         "http_status": 200,
+        "tenant_id": _tenant_id(request),
         "token_hash": getattr(request.state, "token_hash", None),
         "client_ip_redacted": _redact_ip(request.client.host if request.client else None),
         "document_verdict": response.document_verdict,

@@ -16,7 +16,7 @@ from regulaitor.api.logging import log_api_document_turn
 from regulaitor.api.schemas import AnalyzeResponse, to_analyze_response
 from regulaitor.corpus.registry import ALL_NORMAS
 from regulaitor.orchestration.document_graph import run_document
-from regulaitor.security.rate_limit import limiter
+from regulaitor.security.rate_limit import analyze_limit, limiter
 
 router = APIRouter(tags=["document"])
 
@@ -39,12 +39,8 @@ def _detect_mime(filename: str, head: bytes) -> str:
     raise UnsupportedMediaType(reason="unsupported file format")
 
 
-def _rate_limit_value() -> str:
-    return os.getenv("REGULAITOR_RATE_LIMIT_ANALYZE", "5/minute")
-
-
 @router.post("/analyze", response_model=AnalyzeResponse)
-@limiter.limit(_rate_limit_value)
+@limiter.limit(analyze_limit)  # Fase 4: per-tenant limit (key = tenant:{id})
 async def analyze(
     request: Request,
     file: UploadFile = File(...),  # noqa: B008

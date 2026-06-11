@@ -1,41 +1,28 @@
-"""H7 — Bearer token authentication for the FastAPI surface.
+"""Bearer token authentication for the FastAPI surface (H7; Fase 4 multi-tenant).
 
-Single static token loaded from REGULAITOR_API_TOKEN env var at app startup.
-Validation uses hmac.compare_digest (timing-attack safe).
+The presented Bearer token is resolved to a `Tenant` via security.tenancy (the
+registry is loaded once at startup from config). On success the tenant + a token
+hash are injected into request.state for downstream rate limiting + logging.
+Backward-compat: a single REGULAITOR_API_TOKEN resolves to a "default" tenant.
 
-verify_token uses Security(HTTPBearer) so that FastAPI/OpenAPI automatically
-advertises the Bearer scheme in /openapi.json, enabling the Authorize button in /docs.
+verify_token uses Security(HTTPBearer) so FastAPI/OpenAPI advertises the Bearer
+scheme in /openapi.json (the Authorize button in /docs).
 """
 
 from __future__ import annotations
 
 import hashlib
-import hmac
-import os
 
 from fastapi import HTTPException, Request, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-_API_TOKEN: str | None = None
+from regulaitor.security import tenancy
 
 _bearer = HTTPBearer(auto_error=False, scheme_name="REGULAITOR_API_TOKEN")
 
 
-def load_api_token_or_raise() -> None:
-    """Load and validate the API token from env. Called from FastAPI lifespan."""
-    global _API_TOKEN
-    raw = os.getenv("REGULAITOR_API_TOKEN", "").strip()
-    if not raw:
-        raise RuntimeError(
-            "REGULAITOR_API_TOKEN missing or empty. Set it in .env before starting the API."
-        )
-    if len(raw) < 16:
-        raise RuntimeError("REGULAITOR_API_TOKEN must be at least 16 characters (entropy guard).")
-    _API_TOKEN = raw
-
-
 def _token_hash(token: str) -> str:
-    """SHA256[:8] — used for logging + rate-limit key. Never the raw token."""
+    """SHA256[:8] — used for logging + rate-limit fallback. Never the raw token."""
     return hashlib.sha256(token.encode("utf-8")).hexdigest()[:8]
 
 
@@ -43,17 +30,15 @@ async def verify_token(
     request: Request,
     credentials: HTTPAuthorizationCredentials | None = Security(_bearer),  # noqa: B008
 ) -> None:
-    """FastAPI Depends. Raises 401 on any auth failure; injects token_hash on success.
-
-    Using Security(HTTPBearer) causes FastAPI to advertise the Bearer scheme in
-    /openapi.json so the Swagger UI /docs shows the Authorize button.
-    """
-    if _API_TOKEN is None:
-        # Defensive: lifespan loads token; this branch should be unreachable in production.
+    """FastAPI Depends. Raises 401 on auth failure; injects tenant + token_hash."""
+    if not tenancy.is_loaded():
+        # Defensive: lifespan loads the registry; unreachable in production.
         raise HTTPException(status_code=500, detail="Internal server error")
     if credentials is None or credentials.scheme.lower() != "bearer":
         raise HTTPException(status_code=401, detail="Missing or malformed Authorization header")
     presented = credentials.credentials
-    if not hmac.compare_digest(presented, _API_TOKEN):
+    tenant = tenancy.resolve_tenant(presented)
+    if tenant is None:
         raise HTTPException(status_code=401, detail="Invalid API token")
+    request.state.tenant = tenant
     request.state.token_hash = _token_hash(presented)

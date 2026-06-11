@@ -35,9 +35,10 @@ def _check_anthropic_key() -> HealthCheck:
 
 
 def _check_api_token() -> HealthCheck:
-    from regulaitor.api.auth import _API_TOKEN
+    # Fase 4: the tenant registry stands in for the old single-token check.
+    from regulaitor.security import tenancy
 
-    if _API_TOKEN is None:
+    if not tenancy.is_loaded():
         return HealthCheck(name="api_token", status="missing", detail=None)
     return HealthCheck(name="api_token", status="present", detail=None)
 
