@@ -3,11 +3,12 @@
 Adding a corpus to the system used to mean editing ~15 hardcoded enumeration
 sites (the closed-`Norma`-Literal cost noted in ADR-0036). This registry holds
 every per-norma datum once; the ingest maps, validation counts, CLI/API/UI
-choice lists, and corpus-chip styling all DERIVE from it. The static `Norma`
-Literal (`schemas.py`) stays manual (mypy/Pydantic need a compile-time type),
-but `tests/unit/corpus/test_registry_consistency.py` asserts the Literal and the
-registry keys never desync — so a new corpus is exactly two edits (the Literal +
-one registry entry) and nothing can be silently missed.
+choice lists, and corpus-chip styling all DERIVE from it. The static `Norma` and
+`CorpusSelector` Literals (`schemas.py`) stay manual (mypy/Pydantic need a
+compile-time type), but `tests/unit/corpus/test_registry_consistency.py` asserts
+the two Literals and the registry keys never desync — so a new corpus is exactly
+three edits in two files (the `Norma` + `CorpusSelector` Literals in `schemas.py`
++ one entry here) and nothing can be silently missed.
 
 The ingest inputs (`celex`, `version`, `expected_articles`) CANNOT derive from
 the manifests — they are needed BEFORE the manifest exists (the manifest is the
@@ -42,6 +43,10 @@ CORPUS_REGISTRY: dict[Norma, CorpusSpec] = {
     "dora": CorpusSpec("32022R2554", "2022-12-27", 64, "DORA", "#B45309"),
     "dora_rts_incident": CorpusSpec("32025R0301", "2025-02-20", 7, "DORA RTS Plazos", "#0F766E"),
     "dora_rts_class": CorpusSpec("32024R1772", "2024-06-25", 13, "DORA RTS Clasif.", "#A21CAF"),
+    # Fase 6 — AML/MiCA financial-crime + crypto corpus.
+    "amlr": CorpusSpec("32024R1624", "2024-06-19", 90, "AMLR", "#9F1239"),  # rose-800
+    "mica": CorpusSpec("32023R1114", "2023-06-09", 149, "MiCA", "#0E7490"),  # cyan-700
+    "tfr": CorpusSpec("32023R1113", "2023-06-09", 40, "TFR", "#4D7C0F"),  # lime-700
 }
 
 # Canonical ordered tuple of all normas — the basis every other enumeration

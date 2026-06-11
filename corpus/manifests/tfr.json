@@ -1,0 +1,1229 @@
+{
+  "corpus": "tfr",
+  "celex": "32023R1113",
+  "version": "2023-06-09",
+  "source_format": "html",
+  "fetched_at": "2026-06-11T06:38:44.621915Z",
+  "languages": [
+    "es",
+    "en"
+  ],
+  "http_cache": {
+    "es": {
+      "etag": null,
+      "last_modified": null
+    },
+    "en": {
+      "etag": null,
+      "last_modified": null
+    }
+  },
+  "stats": {
+    "articles_total": 40,
+    "chunks_total": 80,
+    "embedded_total": 80,
+    "raw_size_bytes": 690016
+  },
+  "articles": [
+    {
+      "article_id": "tfr.1",
+      "articulo": "1",
+      "title_es": "Objeto",
+      "title_en": "Subject matter",
+      "languages": {
+        "es": {
+          "hash": "sha256:f29198675695ab646e577a25228833686012478609cfbb5030d1f3554ba564bd",
+          "tokens": 208,
+          "chunks": [
+            "tfr.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:35:18.342211Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:9d2ca72bd848384d0e12d285614f81d6fe007281c22a0a2332bb361080ddf07f",
+          "tokens": 192,
+          "chunks": [
+            "tfr.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:35:23.070891Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.2",
+      "articulo": "2",
+      "title_es": "Ámbito de aplicación",
+      "title_en": "Scope",
+      "languages": {
+        "es": {
+          "hash": "sha256:9e34203922b650f0d0f87666724ab4448a7a0c6fa4dfe9b846c28f3140b04c70",
+          "tokens": 892,
+          "chunks": [
+            "tfr.2.es"
+          ],
+          "embedded_at": "2026-06-11T07:35:31.510209Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:87241cc5a215302ca314fcdf093035fb02d53ed8b582edb6343016453213951b",
+          "tokens": 809,
+          "chunks": [
+            "tfr.2.en"
+          ],
+          "embedded_at": "2026-06-11T07:35:40.236693Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.3",
+      "articulo": "3",
+      "title_es": "Definiciones",
+      "title_en": "Definitions",
+      "languages": {
+        "es": {
+          "hash": "sha256:1a7d8d0b3bec3a50bc0dea87b7575494965a3a32d5841c1be9c8a7da0bcd421f",
+          "tokens": 1631,
+          "chunks": [
+            "tfr.3.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:35:48.571666Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:dd3d2b7ae853a3adf08a587904398e705503d628c83e738cfa883340b35199a5",
+          "tokens": 1493,
+          "chunks": [
+            "tfr.3.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:35:57.211437Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.4",
+      "articulo": "4",
+      "title_es": "Información que acompaña a las transferencias de fondos",
+      "title_en": "Information accompanying transfers of funds",
+      "languages": {
+        "es": {
+          "hash": "sha256:e342a763a7c9c00d47dfaf185d1f843451ec622cb101c5482f1087a83f945d50",
+          "tokens": 546,
+          "chunks": [
+            "tfr.4.es"
+          ],
+          "embedded_at": "2026-06-11T07:36:06.030737Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:65f48894b9f81f70c39751228c2d24b183bc52086b290ee8ccef2b5710760a67",
+          "tokens": 529,
+          "chunks": [
+            "tfr.4.en"
+          ],
+          "embedded_at": "2026-06-11T07:36:15.111796Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.5",
+      "articulo": "5",
+      "title_es": "Transferencias de fondos dentro de la Unión",
+      "title_en": "Transfers of funds within the Union",
+      "languages": {
+        "es": {
+          "hash": "sha256:c6a111e42e5e3374af2df9c22f97b715a671a51906e3a95e3dc172652a747169",
+          "tokens": 450,
+          "chunks": [
+            "tfr.5.es"
+          ],
+          "embedded_at": "2026-06-11T07:36:23.153386Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:2a1914352fcb884629b27aa579d850de0a9c7fc4bf44e55a65034bec6dbf84fe",
+          "tokens": 394,
+          "chunks": [
+            "tfr.5.en"
+          ],
+          "embedded_at": "2026-06-11T07:36:29.665206Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.6",
+      "articulo": "6",
+      "title_es": "Transferencias de fondos al exterior de la Unión",
+      "title_en": "Transfers of funds to outside the Union",
+      "languages": {
+        "es": {
+          "hash": "sha256:144bbdbbbe95aa253f1a9a47ad237cf44d89ccb72c946733ec24675e597b5f5f",
+          "tokens": 419,
+          "chunks": [
+            "tfr.6.es"
+          ],
+          "embedded_at": "2026-06-11T07:36:36.757153Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:6ebdbf7dcc8bf71901581322841334a696b06ed68ebe0699552762b4b6570655",
+          "tokens": 347,
+          "chunks": [
+            "tfr.6.en"
+          ],
+          "embedded_at": "2026-06-11T07:36:43.832064Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.7",
+      "articulo": "7",
+      "title_es": "Detección de la falta de información sobre el ordenante o el beneficiario",
+      "title_en": "Detection of missing information on the payer or the payee",
+      "languages": {
+        "es": {
+          "hash": "sha256:625da153c0efbc883a5b00ed7f53a2ad40bb32a938c37553f245e4b3a597faa5",
+          "tokens": 696,
+          "chunks": [
+            "tfr.7.es"
+          ],
+          "embedded_at": "2026-06-11T07:36:52.204131Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:126630a16d1842a5b9741c202ad01a70bc7f1a14107c631ebb67b8d3b9459668",
+          "tokens": 635,
+          "chunks": [
+            "tfr.7.en"
+          ],
+          "embedded_at": "2026-06-11T07:37:00.661923Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.8",
+      "articulo": "8",
+      "title_es": "Transferencias de fondos a las que falte información o con información incompleta sobre el ordenante o el beneficiario",
+      "title_en": "Transfers of funds with missing or incomplete information on the payer or the payee",
+      "languages": {
+        "es": {
+          "hash": "sha256:85a9a68c75f711d034b4926a8345c6059e3490cfce4266edb252e51500ec4f48",
+          "tokens": 480,
+          "chunks": [
+            "tfr.8.es"
+          ],
+          "embedded_at": "2026-06-11T07:37:08.971738Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:b5dcc4fd836d1acd273c2ff47aaadf0c812b6f51391b4bb7ac6d048416ccd3d3",
+          "tokens": 417,
+          "chunks": [
+            "tfr.8.en"
+          ],
+          "embedded_at": "2026-06-11T07:37:16.097950Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.9",
+      "articulo": "9",
+      "title_es": "Evaluación y presentación de informes",
+      "title_en": "Assessment and reporting",
+      "languages": {
+        "es": {
+          "hash": "sha256:2553f233f4f6bb8550783a0ae23feaf8672e0021a9d7ffb5f7ee73e5c36c7759",
+          "tokens": 95,
+          "chunks": [
+            "tfr.9.es"
+          ],
+          "embedded_at": "2026-06-11T07:37:18.284930Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:7b27199be714ebb6c0c54282c2f51b2e42df4cdbacfe0e3560f218558dea8869",
+          "tokens": 74,
+          "chunks": [
+            "tfr.9.en"
+          ],
+          "embedded_at": "2026-06-11T07:37:20.235251Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.10",
+      "articulo": "10",
+      "title_es": "Conservación de la información sobre el ordenante y el beneficiario que acompaña a la transferencia",
+      "title_en": "Retention of information on the payer and the payee accompanying the transfer",
+      "languages": {
+        "es": {
+          "hash": "sha256:608aa121388b1819ca07eb34bc8a171b91873908a2c530d3811c574e635630f2",
+          "tokens": 39,
+          "chunks": [
+            "tfr.10.es"
+          ],
+          "embedded_at": "2026-06-11T07:37:21.733813Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:e87974f3a206edde8851b9a9fa99ac1f0485027e6bf36ace395dfe8a46dd0919",
+          "tokens": 38,
+          "chunks": [
+            "tfr.10.en"
+          ],
+          "embedded_at": "2026-06-11T07:37:23.278026Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.11",
+      "articulo": "11",
+      "title_es": "Detección de la falta de información sobre el ordenante o el beneficiario",
+      "title_en": "Detection of missing information on the payer or the payee",
+      "languages": {
+        "es": {
+          "hash": "sha256:304c6d3bcf8d85adcdba2998a608a644058e43ec695cf65e3344ed36d10ced57",
+          "tokens": 317,
+          "chunks": [
+            "tfr.11.es"
+          ],
+          "embedded_at": "2026-06-11T07:37:29.093441Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:8d4929361729d194fae4ff89d128fa4384a1593f92f69101c77605523ef1e9b7",
+          "tokens": 283,
+          "chunks": [
+            "tfr.11.en"
+          ],
+          "embedded_at": "2026-06-11T07:37:35.245537Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.12",
+      "articulo": "12",
+      "title_es": "Transferencias de fondos a las que falte información sobre el ordenante o el beneficiario",
+      "title_en": "Transfers of funds with missing information on the payer or the payee",
+      "languages": {
+        "es": {
+          "hash": "sha256:10ec4a77b15da0ac02954abf7af8fc636cdafcfacc9f540a4170c310e7539b72",
+          "tokens": 437,
+          "chunks": [
+            "tfr.12.es"
+          ],
+          "embedded_at": "2026-06-11T07:37:42.542594Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:4ffd32d390d6750b54bf5a24c8a252bb62e5663090e666c7fdaa39752bc013a1",
+          "tokens": 363,
+          "chunks": [
+            "tfr.12.en"
+          ],
+          "embedded_at": "2026-06-11T07:37:48.638875Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.13",
+      "articulo": "13",
+      "title_es": "Evaluación y presentación de informes",
+      "title_en": "Assessment and reporting",
+      "languages": {
+        "es": {
+          "hash": "sha256:3986dc2f776488ce0a4ffbcd40286b1e88ae0f0ec0044486109adf0b105bf8f0",
+          "tokens": 69,
+          "chunks": [
+            "tfr.13.es"
+          ],
+          "embedded_at": "2026-06-11T07:37:50.589190Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:7c3fd818568d571f79d7e7eb16909ce0ac4dc8f15d101bdf9b8cfa1b5cdd9128",
+          "tokens": 65,
+          "chunks": [
+            "tfr.13.en"
+          ],
+          "embedded_at": "2026-06-11T07:37:52.418572Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.14",
+      "articulo": "14",
+      "title_es": "Información que acompaña a las transferencias de criptoactivos",
+      "title_en": "Information accompanying transfers of crypto-assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:230476801112bf6981e891c45d08c956d99945a10a17b24ff8427d4fddd7d3cd",
+          "tokens": 1024,
+          "chunks": [
+            "tfr.14.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:38:00.988255Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:5eaa0c057faf06fc3f5a517afc5fff67227908d9886f853f410a2f22dce173e6",
+          "tokens": 966,
+          "chunks": [
+            "tfr.14.en"
+          ],
+          "embedded_at": "2026-06-11T07:38:10.097338Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.15",
+      "articulo": "15",
+      "title_es": "Transferencias por lotes de criptoactivos",
+      "title_en": "Batch file transfers of crypto-assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:8b4175df246b0525765604e051bc6f4380cede329939dfe8c2ecceccf02aa1c9",
+          "tokens": 177,
+          "chunks": [
+            "tfr.15.es"
+          ],
+          "embedded_at": "2026-06-11T07:38:13.578361Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:4dd63a8197cbff5d0ccc7e8525eba3557741e5bdc5a1f233cd9a83dffa92fc74",
+          "tokens": 143,
+          "chunks": [
+            "tfr.15.en"
+          ],
+          "embedded_at": "2026-06-11T07:38:16.718265Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.16",
+      "articulo": "16",
+      "title_es": "Detección de la omisión de información sobre el originante o el beneficiario",
+      "title_en": "Detection of missing information on the originator or the beneficiary",
+      "languages": {
+        "es": {
+          "hash": "sha256:4f634af1c5abec8108182248270b1fe0db01d2e9d998c9a5394ac6c21b8c0506",
+          "tokens": 436,
+          "chunks": [
+            "tfr.16.es"
+          ],
+          "embedded_at": "2026-06-11T07:38:24.047854Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:53761233405d75a9a6dab63d2baef61c8bbb7b1920be46481e777c5415ef2031",
+          "tokens": 392,
+          "chunks": [
+            "tfr.16.en"
+          ],
+          "embedded_at": "2026-06-11T07:38:32.085205Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.17",
+      "articulo": "17",
+      "title_es": "Omisión total o parcial de información sobre el originante o el beneficiario en las transferencias de criptoactivos",
+      "title_en": "Transfers of crypto-assets with missing or incomplete information on the originator or the beneficiary",
+      "languages": {
+        "es": {
+          "hash": "sha256:ee790377ecce5056e6b17f6d0de170c0065a8b43304142205ee5395ada35d370",
+          "tokens": 436,
+          "chunks": [
+            "tfr.17.es"
+          ],
+          "embedded_at": "2026-06-11T07:38:39.414348Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:11384c1131f93c8686f83e4b92c67cb1dc28c591226fbea64209bcdb6becaca9",
+          "tokens": 384,
+          "chunks": [
+            "tfr.17.en"
+          ],
+          "embedded_at": "2026-06-11T07:38:45.949244Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.18",
+      "articulo": "18",
+      "title_es": "Evaluación y presentación de informes",
+      "title_en": "Assessment and reporting",
+      "languages": {
+        "es": {
+          "hash": "sha256:65199179b1152a1fa91f6336f51136e82c1c52e3dec3c4e70dd92c8f436a7a4c",
+          "tokens": 87,
+          "chunks": [
+            "tfr.18.es"
+          ],
+          "embedded_at": "2026-06-11T07:38:48.078595Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:8a49affecf2f95b97701f464f5d10a1a8937d3c39b68ad616727f89c7203f64c",
+          "tokens": 74,
+          "chunks": [
+            "tfr.18.en"
+          ],
+          "embedded_at": "2026-06-11T07:38:50.040574Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.19",
+      "articulo": "19",
+      "title_es": "Conservación de la información sobre el originante y el beneficiario con la transferencia",
+      "title_en": "Retention of information on the originator and the beneficiary accompanying the transfer",
+      "languages": {
+        "es": {
+          "hash": "sha256:df30afeec6088182cb36c040732474c28ce9972ff93cc785161675470f24240d",
+          "tokens": 68,
+          "chunks": [
+            "tfr.19.es"
+          ],
+          "embedded_at": "2026-06-11T07:38:51.872782Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:5f44cb0b90e6db3e60cbc30bbbbf95a8e14812147a1a315a287f51a6522f39f1",
+          "tokens": 62,
+          "chunks": [
+            "tfr.19.en"
+          ],
+          "embedded_at": "2026-06-11T07:38:53.545525Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.20",
+      "articulo": "20",
+      "title_es": "Detección de la omisión de información sobre el originante o el beneficiario",
+      "title_en": "Detection of missing information on the originator or the beneficiary",
+      "languages": {
+        "es": {
+          "hash": "sha256:53b815657640e2def1471554a11f587856c35c3d325dd2d0da7d327898e52497",
+          "tokens": 138,
+          "chunks": [
+            "tfr.20.es"
+          ],
+          "embedded_at": "2026-06-11T07:38:56.588309Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:06706711988d2d072f50ab82643ee95a1ce2437d6e8fd66beae9d63398730de6",
+          "tokens": 118,
+          "chunks": [
+            "tfr.20.en"
+          ],
+          "embedded_at": "2026-06-11T07:38:59.051895Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.21",
+      "articulo": "21",
+      "title_es": "Omisión de información sobre el originante o el beneficiario en las transferencias de criptoactivos",
+      "title_en": "Transfers of crypto-assets with missing information on the originator or the beneficiary",
+      "languages": {
+        "es": {
+          "hash": "sha256:d467d02ff6d19a28ce6d04f9fedc7fce3082cff2c87913f4d63018313f92710e",
+          "tokens": 462,
+          "chunks": [
+            "tfr.21.es"
+          ],
+          "embedded_at": "2026-06-11T07:39:06.883422Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:cdf8c29015b2eac21ce117bfe5cb6befc1ce34d946eb589e0de609d2d5634a5b",
+          "tokens": 402,
+          "chunks": [
+            "tfr.21.en"
+          ],
+          "embedded_at": "2026-06-11T07:39:15.634293Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.22",
+      "articulo": "22",
+      "title_es": "Evaluación y presentación de informes",
+      "title_en": "Assessment and reporting",
+      "languages": {
+        "es": {
+          "hash": "sha256:e790408a6063ba5d9231c82b6aab10712e246d141a09c469612b7341a5e23736",
+          "tokens": 74,
+          "chunks": [
+            "tfr.22.es"
+          ],
+          "embedded_at": "2026-06-11T07:39:17.429682Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:20e566b3ec3b5ee3cb1d109dc2f1f28f1aef841c15f15683976d09ce1829f109",
+          "tokens": 70,
+          "chunks": [
+            "tfr.22.en"
+          ],
+          "embedded_at": "2026-06-11T07:39:19.333741Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.23",
+      "articulo": "23",
+      "title_es": "Políticas, procedimientos y controles internos para garantizar la aplicación de medidas restrictivas",
+      "title_en": "Internal policies, procedures and controls to ensure implementation of restrictive measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:0ae15dc17a37164c515d104c02a7f1674a780c0cfb51067c2877814b28c844b5",
+          "tokens": 101,
+          "chunks": [
+            "tfr.23.es"
+          ],
+          "embedded_at": "2026-06-11T07:39:21.743170Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:70eca2bbc570e490680590abe4777b779094f8f1c027ce17f29d2cfa92e118ee",
+          "tokens": 83,
+          "chunks": [
+            "tfr.23.en"
+          ],
+          "embedded_at": "2026-06-11T07:39:23.746710Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.24",
+      "articulo": "24",
+      "title_es": "Suministro de información",
+      "title_en": "Provision of information",
+      "languages": {
+        "es": {
+          "hash": "sha256:6cde4a1227bdd552340d59fa592d1f58bb7e781d672c2e4be2b9ea8e289160f4",
+          "tokens": 145,
+          "chunks": [
+            "tfr.24.es"
+          ],
+          "embedded_at": "2026-06-11T07:39:26.679481Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:f3e0685cb52bcf39fd055a68a6346a4ce8d331494907b732478e9a4971125315",
+          "tokens": 126,
+          "chunks": [
+            "tfr.24.en"
+          ],
+          "embedded_at": "2026-06-11T07:39:29.281299Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.25",
+      "articulo": "25",
+      "title_es": "Protección de datos",
+      "title_en": "Data protection",
+      "languages": {
+        "es": {
+          "hash": "sha256:5e2ce1e94d0d45d4ccc5feb14504767fff2b0facbf57614eb94ec4b746ffb88c",
+          "tokens": 497,
+          "chunks": [
+            "tfr.25.es"
+          ],
+          "embedded_at": "2026-06-11T07:39:37.880081Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:b1b61e7316752da8a539a568722edbdc3a7d1fff6480d1e3081af9b5a8ae5fae",
+          "tokens": 426,
+          "chunks": [
+            "tfr.25.en"
+          ],
+          "embedded_at": "2026-06-11T07:39:45.412633Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.26",
+      "articulo": "26",
+      "title_es": "Conservación de registros",
+      "title_en": "Record retention",
+      "languages": {
+        "es": {
+          "hash": "sha256:3a10964a30bef67d6b7f3442eee29c869d063ba23d1965e407665cc2263370cf",
+          "tokens": 492,
+          "chunks": [
+            "tfr.26.es"
+          ],
+          "embedded_at": "2026-06-11T07:39:54.115053Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:ccb0c26e83a6a4fddee5509147f29d03e57b63dc925eb7686428cba1fe0e672e",
+          "tokens": 415,
+          "chunks": [
+            "tfr.26.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:02.762663Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.27",
+      "articulo": "27",
+      "title_es": "Cooperación entre las autoridades competentes",
+      "title_en": "Cooperation among competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:b4bcaf5a65f96a75c33956aeb0c6791c699d51c0ceb21ed5bfbd20a9bd7e2d77",
+          "tokens": 39,
+          "chunks": [
+            "tfr.27.es"
+          ],
+          "embedded_at": "2026-06-11T07:40:04.249281Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:aabc650a302019910e9a41fad7df8a34e77374772eeecda36c365323871a0ee6",
+          "tokens": 33,
+          "chunks": [
+            "tfr.27.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:05.739402Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.28",
+      "articulo": "28",
+      "title_es": "Medidas y sanciones administrativas",
+      "title_en": "Administrative sanctions and measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:8cf5926e856400f11eecae1eb7a6264d285407a0cb9fd36e0a6fd16a49a71fcb",
+          "tokens": 810,
+          "chunks": [
+            "tfr.28.es"
+          ],
+          "embedded_at": "2026-06-11T07:40:14.226754Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:6abc1c4cc3e867ecb09977f72e1342d9e20501938eb5ec5e000df7007ee21e6f",
+          "tokens": 728,
+          "chunks": [
+            "tfr.28.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:23.326278Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.29",
+      "articulo": "29",
+      "title_es": "Disposiciones específicas",
+      "title_en": "Specific provisions",
+      "languages": {
+        "es": {
+          "hash": "sha256:abaddb704ee47b0f7a310a6ced3225b4b83cc8e6079b2b6382cbdc967595f4f7",
+          "tokens": 360,
+          "chunks": [
+            "tfr.29.es"
+          ],
+          "embedded_at": "2026-06-11T07:40:29.580114Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:eea225a22e94eb7d550454f0f63be689a31fb717ad449a13ea10704d0fac72d9",
+          "tokens": 254,
+          "chunks": [
+            "tfr.29.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:34.166934Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.30",
+      "articulo": "30",
+      "title_es": "Publicación de sanciones y medidas",
+      "title_en": "Publication of sanctions and measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:d2830047ba18557b7ab31308fddc34929b79f2ea73891ce07cc1384ffe42e50c",
+          "tokens": 107,
+          "chunks": [
+            "tfr.30.es"
+          ],
+          "embedded_at": "2026-06-11T07:40:36.634298Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:ad16419a1549a08da00cd9f89f8734677b2bab5d88dbe7031e4463ebdc926816",
+          "tokens": 92,
+          "chunks": [
+            "tfr.30.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:38.789719Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.31",
+      "articulo": "31",
+      "title_es": "Aplicación de las sanciones y medidas por las autoridades competentes",
+      "title_en": "Application of sanctions and measures by competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:59705b3e347fb74187d9230b1aaf8dfe396edca7f0289344e9c3a56161ac7b63",
+          "tokens": 106,
+          "chunks": [
+            "tfr.31.es"
+          ],
+          "embedded_at": "2026-06-11T07:40:41.007798Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:58af66ced66e9b38f731c6db0a9c409b12f0b8afa780f2bce6f731b682c70555",
+          "tokens": 85,
+          "chunks": [
+            "tfr.31.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:44.619397Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.32",
+      "articulo": "32",
+      "title_es": "Comunicación de infracciones",
+      "title_en": "Reporting of breaches",
+      "languages": {
+        "es": {
+          "hash": "sha256:8fd68d2468d12ca514da24cd7d5bdbeea196d9f0e6e8d54a40c7905874107049",
+          "tokens": 164,
+          "chunks": [
+            "tfr.32.es"
+          ],
+          "embedded_at": "2026-06-11T07:40:47.821023Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:f295bd7a21b9df74ac97148b52d057c607160dba9aee033c89a87317736c4ede",
+          "tokens": 132,
+          "chunks": [
+            "tfr.32.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:50.615494Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.33",
+      "articulo": "33",
+      "title_es": "Supervisión",
+      "title_en": "Monitoring",
+      "languages": {
+        "es": {
+          "hash": "sha256:b8a41140aa2e885506ac51432e393d2ee4b8d4f70f7b76849de2160756d5ec9b",
+          "tokens": 110,
+          "chunks": [
+            "tfr.33.es"
+          ],
+          "embedded_at": "2026-06-11T07:40:53.110715Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:c9ecc69b829ed2c560705c95fb48aac5e610231868f84a8a22613c1759c008d5",
+          "tokens": 99,
+          "chunks": [
+            "tfr.33.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:55.603452Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.34",
+      "articulo": "34",
+      "title_es": "Procedimiento de comité",
+      "title_en": "Committee procedure",
+      "languages": {
+        "es": {
+          "hash": "sha256:329af3982ce868e517161dbed33d9ef37cc4ffc9da6a1a2f13e2b43083908454",
+          "tokens": 84,
+          "chunks": [
+            "tfr.34.es"
+          ],
+          "embedded_at": "2026-06-11T07:40:57.789119Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:2c77d6d7ef6d4b598f67188253730c58296fa1125152a5339c0bdb11edb05670",
+          "tokens": 67,
+          "chunks": [
+            "tfr.34.en"
+          ],
+          "embedded_at": "2026-06-11T07:40:59.524738Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.35",
+      "articulo": "35",
+      "title_es": "Acuerdos con países y territorios que no formen parte del territorio de la Unión",
+      "title_en": "Agreements with countries and territories which do not form part of the territory of the Union",
+      "languages": {
+        "es": {
+          "hash": "sha256:51e464932e807cb5a3d4c9327e7860e54cec5f2beda479d00259b3de06f856cf",
+          "tokens": 576,
+          "chunks": [
+            "tfr.35.es"
+          ],
+          "embedded_at": "2026-06-11T07:41:08.739956Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:c1bc4dfb71d5b092669fa65147c037389222bcc624c53a8011a97985af1fddbe",
+          "tokens": 540,
+          "chunks": [
+            "tfr.35.en"
+          ],
+          "embedded_at": "2026-06-11T07:41:17.642041Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.36",
+      "articulo": "36",
+      "title_es": "Directrices",
+      "title_en": "Guidelines",
+      "languages": {
+        "es": {
+          "hash": "sha256:2887895f21c8f931d4cbca1046b6465a4300c1b426646ffa5d2fc35da02dbe86",
+          "tokens": 338,
+          "chunks": [
+            "tfr.36.es"
+          ],
+          "embedded_at": "2026-06-11T07:41:23.534578Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:d286e1965bde99ba3d05fffebf106cfc2794ba68b5fbcaf2cb32bd065c493ab7",
+          "tokens": 283,
+          "chunks": [
+            "tfr.36.en"
+          ],
+          "embedded_at": "2026-06-11T07:41:29.782611Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.37",
+      "articulo": "37",
+      "title_es": "Revisión",
+      "title_en": "Review",
+      "languages": {
+        "es": {
+          "hash": "sha256:41a82bed912e0b3afa15f226d91a94069c55daa8477fc03e42bfff78d95bc179",
+          "tokens": 746,
+          "chunks": [
+            "tfr.37.es"
+          ],
+          "embedded_at": "2026-06-11T07:41:37.985133Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:7a23c656a7aacecc2f9e0e7d46da78f77ee0645dc4a0790bb7bc96c365712b89",
+          "tokens": 663,
+          "chunks": [
+            "tfr.37.en"
+          ],
+          "embedded_at": "2026-06-11T07:41:46.984643Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.38",
+      "articulo": "38",
+      "title_es": "Modificaciones de la Directiva (UE) 2015/849",
+      "title_en": "Amendments to Directive (EU) 2015/849",
+      "languages": {
+        "es": {
+          "hash": "sha256:47c59eae53dee04c013b90148c1c1b6507193d86b54f308610c69b6f6ceadcf2",
+          "tokens": 2451,
+          "chunks": [
+            "tfr.38.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:41:55.656845Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:9e5605571287e474436ad35808afea68952d50027c104c3642eeb73ec740a53c",
+          "tokens": 2055,
+          "chunks": [
+            "tfr.38.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:42:04.236835Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.39",
+      "articulo": "39",
+      "title_es": "Derogación",
+      "title_en": "Repeal",
+      "languages": {
+        "es": {
+          "hash": "sha256:9d30c378554c2404b993fc429e4014e9b30430b5b1bde2cd140c637e7e0f821a",
+          "tokens": 62,
+          "chunks": [
+            "tfr.39.es"
+          ],
+          "embedded_at": "2026-06-11T07:42:06.093837Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:aaf3333850e1b15c016d869c0bcc9de0e3118938bf7898198a419c58ef60158e",
+          "tokens": 60,
+          "chunks": [
+            "tfr.39.en"
+          ],
+          "embedded_at": "2026-06-11T07:42:07.887927Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "tfr.40",
+      "articulo": "40",
+      "title_es": "Entrada en vigor",
+      "title_en": "Entry into force",
+      "languages": {
+        "es": {
+          "hash": "sha256:f21abdba5be8c4c6056fe88447f10a10a275bd683db7548ebd3f3fccbe4dfc6a",
+          "tokens": 36,
+          "chunks": [
+            "tfr.40.es"
+          ],
+          "embedded_at": "2026-06-11T07:42:09.235440Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+        },
+        "en": {
+          "hash": "sha256:d72f591220208eac51049ee4b6fc393dac5a916a0ce1782b27196a1f0dac81da",
+          "tokens": 35,
+          "chunks": [
+            "tfr.40.en"
+          ],
+          "embedded_at": "2026-06-11T07:42:10.644398Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:44.621915Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+        }
+      }
+    }
+  ]
+}

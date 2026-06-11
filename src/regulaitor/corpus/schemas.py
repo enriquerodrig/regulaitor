@@ -17,12 +17,37 @@ from pydantic import BaseModel, Field, field_validator
 #     content + time limits; Art. 5 = 4h/24h/72h/1-month).
 #   dora_rts_class    = Commission Delegated Reg (EU) 2024/1772 (criteria for
 #     classifying an ICT incident as "major").
-Norma = Literal["ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class"]
+# Fase 6 (HX): AML/MiCA financial-crime + crypto corpus added.
+#   amlr = Regulation (EU) 2024/1624 (AML single rulebook — CDD/KYC, beneficial
+#     ownership, suspicious-transaction reporting, record-keeping).
+#   mica = Regulation (EU) 2023/1114 (Markets in Crypto-Assets — CASP/issuer obligations).
+#   tfr  = Regulation (EU) 2023/1113 (Transfer of Funds / crypto "travel rule").
+# (Norma keys MUST match CORPUS_REGISTRY — enforced by test_registry_consistency.)
+Norma = Literal[
+    "ai_act",
+    "gdpr",
+    "nis2",
+    "dora",
+    "dora_rts_incident",
+    "dora_rts_class",
+    "amlr",
+    "mica",
+    "tfr",
+]
 # H15.1: opt-in cross-corpus retrieval selector. "auto" triggers the multi-corpus
 # retrieve + post-rerank purity gate (ADR-0017). Any single norm keeps the
 # byte-identical single-corpus path (no-leakage by construction, §22.18 / H14).
 CorpusSelector = Literal[
-    "ai_act", "gdpr", "nis2", "dora", "dora_rts_incident", "dora_rts_class", "auto"
+    "ai_act",
+    "gdpr",
+    "nis2",
+    "dora",
+    "dora_rts_incident",
+    "dora_rts_class",
+    "amlr",
+    "mica",
+    "tfr",
+    "auto",
 ]
 Language = Literal["es", "en"]
 SourceFormat = Literal["formex4", "html", "pdf"]

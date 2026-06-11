@@ -1,0 +1,2729 @@
+{
+  "corpus": "amlr",
+  "celex": "32024R1624",
+  "version": "2024-06-19",
+  "source_format": "html",
+  "fetched_at": "2026-06-11T06:37:55.715766Z",
+  "languages": [
+    "es",
+    "en"
+  ],
+  "http_cache": {
+    "es": {
+      "etag": null,
+      "last_modified": null
+    },
+    "en": {
+      "etag": null,
+      "last_modified": null
+    }
+  },
+  "stats": {
+    "articles_total": 90,
+    "chunks_total": 180,
+    "embedded_total": 180,
+    "raw_size_bytes": 2498726
+  },
+  "articles": [
+    {
+      "article_id": "amlr.1",
+      "articulo": "1",
+      "title_es": "Objeto",
+      "title_en": "Subject matter",
+      "languages": {
+        "es": {
+          "hash": "sha256:014da40d81e7d93625c33ce859027571a384318229ad90210cbb2f82cc273834",
+          "tokens": 91,
+          "chunks": [
+            "amlr.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:39:50.667255Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:dac18d8d770fb036da13fb3593754a1dcb9eaa0fe7b66cf61b63a924bc6add2b",
+          "tokens": 76,
+          "chunks": [
+            "amlr.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:39:52.261518Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.2",
+      "articulo": "2",
+      "title_es": "Definiciones",
+      "title_en": "Definitions",
+      "languages": {
+        "es": {
+          "hash": "sha256:0c71d98d6d72dff794f51f50dbff170c6e1080b881f6d473f0ca914b5748883a",
+          "tokens": 6508,
+          "chunks": [
+            "amlr.2.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:40:01.341757Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:28856fe5875f23b1b4c05aaa7eeb7f1cbe6591a04304833719e82a3d66fac033",
+          "tokens": 5959,
+          "chunks": [
+            "amlr.2.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:40:10.397204Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.3",
+      "articulo": "3",
+      "title_es": "Entidades obligadas",
+      "title_en": "Obliged entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:18a3b3c7cd0e76f3209173186248d8557bd3bb6265ab5008f4471846e126a317",
+          "tokens": 893,
+          "chunks": [
+            "amlr.3.es"
+          ],
+          "embedded_at": "2026-06-11T06:40:19.131632Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:31fb3c7e763b7f1f5b444df6e0dac647b692612e427c71c431a0aaed5d7d2538",
+          "tokens": 785,
+          "chunks": [
+            "amlr.3.en"
+          ],
+          "embedded_at": "2026-06-11T06:40:29.864211Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.4",
+      "articulo": "4",
+      "title_es": "Exenciones para determinados proveedores de servicios de juegos de azar",
+      "title_en": "Exemptions for certain providers of gambling services",
+      "languages": {
+        "es": {
+          "hash": "sha256:b7b5eec6487632f28fd1b0c3594d2baf76e528aa5a56f9cbc8c6bc83f0cea78e",
+          "tokens": 457,
+          "chunks": [
+            "amlr.4.es"
+          ],
+          "embedded_at": "2026-06-11T06:40:38.605785Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:c0c90ed5e8c47bdcca1453b7b813927a3529791d78b601e39d125d8bbff022e2",
+          "tokens": 355,
+          "chunks": [
+            "amlr.4.en"
+          ],
+          "embedded_at": "2026-06-11T06:40:44.664506Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.5",
+      "articulo": "5",
+      "title_es": "Exenciones de determinados clubes de fútbol profesional",
+      "title_en": "Exemptions for certain professional football clubs",
+      "languages": {
+        "es": {
+          "hash": "sha256:4c4db1638a492b96f9268f7f93af23d61b26f70d49fee0f4aa8bc89c5ae39f19",
+          "tokens": 413,
+          "chunks": [
+            "amlr.5.es"
+          ],
+          "embedded_at": "2026-06-11T06:40:52.090575Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:ce2313caec5bac06056078cc129440b32532a1d01a8b85eb007205e0822b6468",
+          "tokens": 326,
+          "chunks": [
+            "amlr.5.en"
+          ],
+          "embedded_at": "2026-06-11T06:40:57.710598Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.6",
+      "articulo": "6",
+      "title_es": "Exenciones para determinadas actividades financieras",
+      "title_en": "Exemptions for certain financial activities",
+      "languages": {
+        "es": {
+          "hash": "sha256:6c198859f9ca3061754862d63377848f7b9390b5dc936ebb096c0f5ee7a17e4e",
+          "tokens": 612,
+          "chunks": [
+            "amlr.6.es"
+          ],
+          "embedded_at": "2026-06-11T06:41:07.756015Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:ea63fd45e3fe0b93a8b54b9fad9b5ec9801010b8e293ac1136ca3e33cdade986",
+          "tokens": 587,
+          "chunks": [
+            "amlr.6.en"
+          ],
+          "embedded_at": "2026-06-11T06:41:16.975720Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.7",
+      "articulo": "7",
+      "title_es": "Notificación previa de las exenciones",
+      "title_en": "Prior notification of exemptions",
+      "languages": {
+        "es": {
+          "hash": "sha256:1ec5db0f0444f3600ef788a0992fbfbd9f7f36b815750ac30418000f0ef8a17c",
+          "tokens": 341,
+          "chunks": [
+            "amlr.7.es"
+          ],
+          "embedded_at": "2026-06-11T06:41:24.198414Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:b448219e2ab80fb8ea57c39c6e9db3a0cfad252ca9031eb73596199b620260ce",
+          "tokens": 319,
+          "chunks": [
+            "amlr.7.en"
+          ],
+          "embedded_at": "2026-06-11T06:41:32.103062Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.8",
+      "articulo": "8",
+      "title_es": "Notificación de operaciones transfronterizas y aplicación del Derecho nacional",
+      "title_en": "Notification of cross-border operations and application of national law",
+      "languages": {
+        "es": {
+          "hash": "sha256:6e34c8c268dfbe78ce20c736dec70cd2607ebfe2f60120ddc3dd486630979ce4",
+          "tokens": 513,
+          "chunks": [
+            "amlr.8.es"
+          ],
+          "embedded_at": "2026-06-11T06:41:44.317749Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:7a17be30319056d4429de87f95444aa6a4ede7130dfa0008bf92084f9d68283b",
+          "tokens": 480,
+          "chunks": [
+            "amlr.8.en"
+          ],
+          "embedded_at": "2026-06-11T06:41:56.677598Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.9",
+      "articulo": "9",
+      "title_es": "Ámbito de aplicación de las políticas, los procedimientos y los controles internos",
+      "title_en": "Scope of internal policies, procedures and controls",
+      "languages": {
+        "es": {
+          "hash": "sha256:aebd300547642ab3ac6c6a45ae4908ceafc3fb35019aa59a950a7384da6f2685",
+          "tokens": 986,
+          "chunks": [
+            "amlr.9.es"
+          ],
+          "embedded_at": "2026-06-11T06:42:08.539219Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:e944f48f121e0e0163afd12d01bd726cd392797d6fb507cc2882de595f3a5a20",
+          "tokens": 916,
+          "chunks": [
+            "amlr.9.en"
+          ],
+          "embedded_at": "2026-06-11T06:42:21.437897Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.10",
+      "articulo": "10",
+      "title_es": "Evaluación de riesgos de toda la actividad de negocio",
+      "title_en": "Business-wide risk assessment",
+      "languages": {
+        "es": {
+          "hash": "sha256:fd6361ac6ddae462af57d1caf8bde9fd880ec98dfae38333031f83eae2fd2aee",
+          "tokens": 739,
+          "chunks": [
+            "amlr.10.es"
+          ],
+          "embedded_at": "2026-06-11T06:42:33.706672Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:caa9228022896281865586ede7c0662df991ac2d5a92beb8e2a13d20e108f6a1",
+          "tokens": 637,
+          "chunks": [
+            "amlr.10.en"
+          ],
+          "embedded_at": "2026-06-11T06:42:43.929206Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.11",
+      "articulo": "11",
+      "title_es": "Funciones relacionadas con el cumplimiento",
+      "title_en": "Compliance functions",
+      "languages": {
+        "es": {
+          "hash": "sha256:c38f03c250eb1c2091d8e5cec41939654e2427615844c3ae8190c71890c326df",
+          "tokens": 1201,
+          "chunks": [
+            "amlr.11.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:42:53.141692Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:bd23c5b28122ce7cef617d4c0b6de3d14ba8b246a7985482be5e2e58336fdefe",
+          "tokens": 1079,
+          "chunks": [
+            "amlr.11.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:43:03.108721Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.12",
+      "articulo": "12",
+      "title_es": "Conocimiento de los requisitos",
+      "title_en": "Awareness of requirements",
+      "languages": {
+        "es": {
+          "hash": "sha256:504f463ad80a83effa34ab24fb766f96c9d460cbaace28836558aa9032ad21d0",
+          "tokens": 247,
+          "chunks": [
+            "amlr.12.es"
+          ],
+          "embedded_at": "2026-06-11T06:43:08.697252Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:1cc739927a1720375b8c231e6907f3f4bcdf047c8265fe687a996722f77ac8e2",
+          "tokens": 226,
+          "chunks": [
+            "amlr.12.en"
+          ],
+          "embedded_at": "2026-06-11T06:43:13.145356Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.13",
+      "articulo": "13",
+      "title_es": "Integridad de los empleados",
+      "title_en": "Integrity of employees",
+      "languages": {
+        "es": {
+          "hash": "sha256:b2cc3a5d60a299d50a73a356c8a4b114666656d17f0e53bda1ce8207ed2676b8",
+          "tokens": 451,
+          "chunks": [
+            "amlr.13.es"
+          ],
+          "embedded_at": "2026-06-11T06:43:21.127792Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:30436354aea4323e929a5aa8b520387e63aee04c8ab84ef06d9ded38d0458388",
+          "tokens": 402,
+          "chunks": [
+            "amlr.13.en"
+          ],
+          "embedded_at": "2026-06-11T06:43:29.114255Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.14",
+      "articulo": "14",
+      "title_es": "Denuncia de infracciones y protección de los denunciantes",
+      "title_en": "Reporting of breaches and protection of reporting persons",
+      "languages": {
+        "es": {
+          "hash": "sha256:405a9e72c332081651d642916ec169f81a655e34e49b683a48b7e1ffeff3e75f",
+          "tokens": 128,
+          "chunks": [
+            "amlr.14.es"
+          ],
+          "embedded_at": "2026-06-11T06:43:31.505738Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:2c4ea7deabdf3fc92a2b0fe9f88e4f7048bea6f9c170a650edd718bbc184c234",
+          "tokens": 127,
+          "chunks": [
+            "amlr.14.en"
+          ],
+          "embedded_at": "2026-06-11T06:43:34.028302Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.15",
+      "articulo": "15",
+      "title_es": "Situación de empleados específicos",
+      "title_en": "Situation of specific employees",
+      "languages": {
+        "es": {
+          "hash": "sha256:4602516f4c82443b6ab09d1a4b6c7de55aa0c6e1211123f039a0715ee0d520ca",
+          "tokens": 63,
+          "chunks": [
+            "amlr.15.es"
+          ],
+          "embedded_at": "2026-06-11T06:43:35.481246Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:8c57afa6e4b85404f3122e7c97cdb4e0b09554142c0f5ada5daa85e4b6df0c70",
+          "tokens": 53,
+          "chunks": [
+            "amlr.15.en"
+          ],
+          "embedded_at": "2026-06-11T06:43:36.838090Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.16",
+      "articulo": "16",
+      "title_es": "Requisitos a nivel de grupo",
+      "title_en": "Group-wide requirements",
+      "languages": {
+        "es": {
+          "hash": "sha256:439f4d4d6da8602b99b86e2375e6df8407aec926585271bf6726c3cc289819d9",
+          "tokens": 1138,
+          "chunks": [
+            "amlr.16.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:43:45.533646Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:59511cc948f5087d98a49dcdfeff722b86c0e530da175088396fdbb0caa3cc7b",
+          "tokens": 1005,
+          "chunks": [
+            "amlr.16.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:43:53.824587Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.17",
+      "articulo": "17",
+      "title_es": "Sucursales y filiales en terceros países",
+      "title_en": "Branches and subsidiaries in third countries",
+      "languages": {
+        "es": {
+          "hash": "sha256:5caa4c8d4707f3a2360e8656694d5d2970e05629c024acd4894539986a46cee5",
+          "tokens": 427,
+          "chunks": [
+            "amlr.17.es"
+          ],
+          "embedded_at": "2026-06-11T06:44:01.531207Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:95dd7b1b2a1d6639a2cfd528ddc3ca22086488d548fb618a40059af6619f224a",
+          "tokens": 364,
+          "chunks": [
+            "amlr.17.en"
+          ],
+          "embedded_at": "2026-06-11T06:44:08.351174Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.18",
+      "articulo": "18",
+      "title_es": "Externalización",
+      "title_en": "Outsourcing",
+      "languages": {
+        "es": {
+          "hash": "sha256:18966a8fa3a26b7b344770bec6448e2ca72585649ff37c3ca0eab96432c9f00d",
+          "tokens": 1375,
+          "chunks": [
+            "amlr.18.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:44:17.842044Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:a4e5f894b5df8dbacb4bb05117262e04097cd0c03f78713ba31470adaa8374f4",
+          "tokens": 1306,
+          "chunks": [
+            "amlr.18.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:44:26.177968Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.19",
+      "articulo": "19",
+      "title_es": "Aplicación de las medidas de diligencia debida con respecto al cliente",
+      "title_en": "Application of customer due diligence measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:813183223049f7ff38eff66a38a474226e239a229973060032ee947f6a568a34",
+          "tokens": 1696,
+          "chunks": [
+            "amlr.19.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:44:34.483609Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:d00e3f16c5fa075ae44e10362f425c2dd53cc9d119ff50cb1db8a7657fd4f7aa",
+          "tokens": 1518,
+          "chunks": [
+            "amlr.19.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:44:43.178303Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.20",
+      "articulo": "20",
+      "title_es": "Medidas de diligencia debida con respecto al cliente",
+      "title_en": "Customer due diligence measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:4f25181eab59c76139e6979d7dc138c1fd1e513d961c6de9d568e66b1a1a6da0",
+          "tokens": 753,
+          "chunks": [
+            "amlr.20.es"
+          ],
+          "embedded_at": "2026-06-11T06:44:52.419434Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:9eb8da3dfdb46682647c1a1b1956031004c608c48ea09e19e3c899ee626dc535",
+          "tokens": 737,
+          "chunks": [
+            "amlr.20.en"
+          ],
+          "embedded_at": "2026-06-11T06:45:01.299735Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.21",
+      "articulo": "21",
+      "title_es": "Incapacidad de cumplir el requisito de aplicar las medidas de diligencia debida con respecto al cliente",
+      "title_en": "Inability to comply with the requirement to apply customer due diligence measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:e79483241b90a1d83585cafc360064d9f46325802a855a1f6e303f51a4e9f4c9",
+          "tokens": 743,
+          "chunks": [
+            "amlr.21.es"
+          ],
+          "embedded_at": "2026-06-11T06:45:09.872123Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:18ab2a5d770b36d10ade7bdd5e0f24a4aa4ef582494ab6b1d457320ff3bae1e9",
+          "tokens": 650,
+          "chunks": [
+            "amlr.21.en"
+          ],
+          "embedded_at": "2026-06-11T06:45:18.413525Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.22",
+      "articulo": "22",
+      "title_es": "Identificación y comprobación de la identidad del cliente y del titular real",
+      "title_en": "Identification and verification of the identity of customers and beneficial owners",
+      "languages": {
+        "es": {
+          "hash": "sha256:c8b1aa9a18893d3fcf6911a43a79a1ea2bf78704548d78c2d30e172dfe321900",
+          "tokens": 1578,
+          "chunks": [
+            "amlr.22.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:45:27.243895Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:d18a93f922e840699312271a998022a345fa5df98718bc2cd582394f683cfe4c",
+          "tokens": 1436,
+          "chunks": [
+            "amlr.22.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:45:35.943962Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.23",
+      "articulo": "23",
+      "title_es": "Momento de la comprobación de la identidad del cliente y del titular real",
+      "title_en": "Timing of the verification of the customer and beneficial owner identity",
+      "languages": {
+        "es": {
+          "hash": "sha256:b60097a950c34f03c9118a705b50e7cf772d13eff4cd062e5099c951ef4608af",
+          "tokens": 481,
+          "chunks": [
+            "amlr.23.es"
+          ],
+          "embedded_at": "2026-06-11T06:45:44.015612Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:d74bbfe659e1a119bb79ad9dc05f795d8078d896186227545203c3766da92e2c",
+          "tokens": 433,
+          "chunks": [
+            "amlr.23.en"
+          ],
+          "embedded_at": "2026-06-11T06:45:51.304973Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.24",
+      "articulo": "24",
+      "title_es": "Comunicación de discrepancias con la información que figura en los registros de titularidad real",
+      "title_en": "Reporting of discrepancies with information contained in beneficial ownership registers",
+      "languages": {
+        "es": {
+          "hash": "sha256:5f41d35033af6b3dbc9f83cf2652b5cc834157881587cf123d76feb609c1882d",
+          "tokens": 655,
+          "chunks": [
+            "amlr.24.es"
+          ],
+          "embedded_at": "2026-06-11T06:46:00.122637Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:a92d66298d35baaefd623ba540f75c597beba85abc1fc35379396506e3c2bc00",
+          "tokens": 587,
+          "chunks": [
+            "amlr.24.en"
+          ],
+          "embedded_at": "2026-06-11T06:46:08.609601Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.25",
+      "articulo": "25",
+      "title_es": "Identificación del propósito y la índole prevista de una relación de negocios o una operación ocasional",
+      "title_en": "Identification of the purpose and intended nature of a business relationship or occasional transaction",
+      "languages": {
+        "es": {
+          "hash": "sha256:a3a8b669889bd4e930deb2d59ff8df1facde7b35fc04af5e14aaabc13f321f01",
+          "tokens": 168,
+          "chunks": [
+            "amlr.25.es"
+          ],
+          "embedded_at": "2026-06-11T06:46:11.458292Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:1db999fcd2e802f1a6a599d3eac6aaaadcae16d8bfe73e74d10a1fcda3720f36",
+          "tokens": 174,
+          "chunks": [
+            "amlr.25.en"
+          ],
+          "embedded_at": "2026-06-11T06:46:14.613548Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.26",
+      "articulo": "26",
+      "title_es": "Medidas de seguimiento continuo de la relación de negocios y seguimiento de las operaciones realizadas por los clientes",
+      "title_en": "Ongoing monitoring of the business relationship and monitoring of transactions performed by customers",
+      "languages": {
+        "es": {
+          "hash": "sha256:120b27eb2d254f2d1c737ca17d288781298e7ab1be9c7552116a3fdce4d812bd",
+          "tokens": 719,
+          "chunks": [
+            "amlr.26.es"
+          ],
+          "embedded_at": "2026-06-11T06:46:23.208558Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:73557d054a307bc32df69fd8ad89941b1b6fc6d846137f6af4938acac38f707c",
+          "tokens": 644,
+          "chunks": [
+            "amlr.26.en"
+          ],
+          "embedded_at": "2026-06-11T06:46:31.793959Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.27",
+      "articulo": "27",
+      "title_es": "Medidas temporales con respecto a clientes objeto de sanciones financieras de las Naciones Unidas",
+      "title_en": "Temporary measures for customers subject to UN financial sanctions",
+      "languages": {
+        "es": {
+          "hash": "sha256:48f51cca54ea356fe50068ee483c520d8afc60107e9eca4ce00f6876d557c37b",
+          "tokens": 204,
+          "chunks": [
+            "amlr.27.es"
+          ],
+          "embedded_at": "2026-06-11T06:46:35.172874Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:e2aaca43ed740a32e2d2ce1dc24155f5cd09bbd9311747f0113d9af353f56fbe",
+          "tokens": 172,
+          "chunks": [
+            "amlr.27.en"
+          ],
+          "embedded_at": "2026-06-11T06:46:38.244044Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.28",
+      "articulo": "28",
+      "title_es": "Normas técnicas de regulación sobre la información necesaria para la realización del procedimiento de diligencia debida con respecto al cliente",
+      "title_en": "Regulatory technical standards on the information necessary for the performance of customer due diligence",
+      "languages": {
+        "es": {
+          "hash": "sha256:8c6b56d0dd41bdb04ea15c4a4a32244cf388fc3b57378bdb7ffa465b9654ff02",
+          "tokens": 603,
+          "chunks": [
+            "amlr.28.es"
+          ],
+          "embedded_at": "2026-06-11T06:46:46.641151Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:353a962c08e06efa206a2266e61ee1bc600d976e973fda0eb9ff950e9398a9a1",
+          "tokens": 532,
+          "chunks": [
+            "amlr.28.en"
+          ],
+          "embedded_at": "2026-06-11T06:46:55.014806Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.29",
+      "articulo": "29",
+      "title_es": "Identificación de los terceros países con deficiencias estratégicas importantes en sus regímenes nacionales de LBC/LFT",
+      "title_en": "Identification of third countries with significant strategic deficiencies in their national AML/CFT regimes",
+      "languages": {
+        "es": {
+          "hash": "sha256:400aeec7a8d73184e04b901711c50a69cc447435db5c68d2ffb09de6166a8135",
+          "tokens": 888,
+          "chunks": [
+            "amlr.29.es"
+          ],
+          "embedded_at": "2026-06-11T06:47:04.437679Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:291e2116ca6fbb13b2afc367d13eee8e12157ea9f1b9c4bb26c0ee5b01da3579",
+          "tokens": 798,
+          "chunks": [
+            "amlr.29.en"
+          ],
+          "embedded_at": "2026-06-11T06:47:14.036229Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.30",
+      "articulo": "30",
+      "title_es": "Identificación de terceros países con deficiencias de cumplimiento en sus regímenes nacionales de LBC/LFT",
+      "title_en": "Identification of third countries with compliance weaknesses in their national AML/CFT regimes",
+      "languages": {
+        "es": {
+          "hash": "sha256:32d25a9714798eca04e7f587c5067474be2223795888bb2c06491ea1d335f485",
+          "tokens": 487,
+          "chunks": [
+            "amlr.30.es"
+          ],
+          "embedded_at": "2026-06-11T06:47:22.129783Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:9b65eb3539b20df52f9e0b77105733d1df4660a2b08d2f50e8e10b6bc54cc6b1",
+          "tokens": 428,
+          "chunks": [
+            "amlr.30.en"
+          ],
+          "embedded_at": "2026-06-11T06:47:29.679690Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.31",
+      "articulo": "31",
+      "title_es": "Identificación de los terceros países que plantean una amenaza específica y grave para el sistema financiero de la Unión",
+      "title_en": "Identification of third countries posing a specific and serious threat to the Union’s financial system",
+      "languages": {
+        "es": {
+          "hash": "sha256:a57c881f87506dae792c4546eb9f90d6e5b539ae28268fd6c365e365b3e02cb3",
+          "tokens": 980,
+          "chunks": [
+            "amlr.31.es"
+          ],
+          "embedded_at": "2026-06-11T06:47:38.194150Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:1a167878b60341d27cc32056000f124664a4f832ff70807bc1d11f1f74faf8ff",
+          "tokens": 918,
+          "chunks": [
+            "amlr.31.en"
+          ],
+          "embedded_at": "2026-06-11T06:47:46.683645Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.32",
+      "articulo": "32",
+      "title_es": "Directrices sobre los riesgos, las tendencias y los métodos relativos al blanqueo de capitales y financiación del terrorismo",
+      "title_en": "Guidelines on money laundering and terrorist financing risks, trends and methods",
+      "languages": {
+        "es": {
+          "hash": "sha256:5a0a94513c812e9445af1e2949fe54c086b7e26a5dfa15d0c8d766da4fd082da",
+          "tokens": 239,
+          "chunks": [
+            "amlr.32.es"
+          ],
+          "embedded_at": "2026-06-11T06:47:51.346015Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:487e3cee16775c51cf84d0d20bb9e934b0c987111dfefb812fc7dfac2a67f2bd",
+          "tokens": 194,
+          "chunks": [
+            "amlr.32.en"
+          ],
+          "embedded_at": "2026-06-11T06:47:54.441870Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.33",
+      "articulo": "33",
+      "title_es": "Medidas simplificadas de diligencia debida",
+      "title_en": "Simplified due diligence measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:3421a8ae1467ad47854447c49bb9ca2d4cb410fcd114430fde64984d97addc76",
+          "tokens": 705,
+          "chunks": [
+            "amlr.33.es"
+          ],
+          "embedded_at": "2026-06-11T06:48:03.036163Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:0009f65d66ca3316d7389c40883ac23441a99d3f0e60dd202bef76edc4c96297",
+          "tokens": 684,
+          "chunks": [
+            "amlr.33.en"
+          ],
+          "embedded_at": "2026-06-11T06:48:11.870599Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.34",
+      "articulo": "34",
+      "title_es": "Ámbito de aplicación de las medidas reforzadas de diligencia debida",
+      "title_en": "Scope of application of enhanced due diligence measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:d6351545c1f0e679ce11df8b23b9a185df0ff73c51d7e349c1e67f2172aae7bc",
+          "tokens": 1391,
+          "chunks": [
+            "amlr.34.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:48:20.467140Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:cdb9f10d3508bb557aac5dd8e017eb7afa82ba11d09c3f8c16baa4d21de8f835",
+          "tokens": 1221,
+          "chunks": [
+            "amlr.34.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:48:29.089632Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.35",
+      "articulo": "35",
+      "title_es": "Contramedidas para atenuar las amenazas de blanqueo de capitales y financiación del terrorismo procedentes del exterior de la Unión",
+      "title_en": "Countermeasures to mitigate money laundering and terrorist financing threats from outside the Union",
+      "languages": {
+        "es": {
+          "hash": "sha256:9af335c977fad8039948285c9513f3385401e9fa1e87306fe5dadd9877bf5c49",
+          "tokens": 475,
+          "chunks": [
+            "amlr.35.es"
+          ],
+          "embedded_at": "2026-06-11T06:48:36.968200Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:b3c017a0815e61dcecb3c13e71da8a5f8bea0047897bf3401d46e9b88488873c",
+          "tokens": 409,
+          "chunks": [
+            "amlr.35.en"
+          ],
+          "embedded_at": "2026-06-11T06:48:44.109310Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.36",
+      "articulo": "36",
+      "title_es": "Medidas reforzadas de diligencia debida específicas para relaciones de corresponsalía transfronterizas",
+      "title_en": "Specific enhanced due diligence measures for cross-border correspondent relationships",
+      "languages": {
+        "es": {
+          "hash": "sha256:6a440d37a54b4b64bcb49d7ee75d372acce7c59fcbfb33f53af137358d0c01d1",
+          "tokens": 356,
+          "chunks": [
+            "amlr.36.es"
+          ],
+          "embedded_at": "2026-06-11T06:48:50.020029Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:560d81a15442f46ba8ef0e54fe8fd96f01346a2075f8da718a7a20b4b67b5ae0",
+          "tokens": 277,
+          "chunks": [
+            "amlr.36.en"
+          ],
+          "embedded_at": "2026-06-11T06:48:54.821606Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.37",
+      "articulo": "37",
+      "title_es": "Medidas reforzadas de diligencia debida específicas para relaciones de corresponsalía transfronterizas para proveedores de servicios de criptoactivos",
+      "title_en": "Specific enhanced due diligence measures for cross-border correspondent relationships for crypto-asset service providers",
+      "languages": {
+        "es": {
+          "hash": "sha256:c1464441e4801e94f27f88e1df0aa96b1e0f1a4d5dbc07f530123ba81f47be8c",
+          "tokens": 588,
+          "chunks": [
+            "amlr.37.es"
+          ],
+          "embedded_at": "2026-06-11T06:49:03.219251Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:dfb9f018bd3fd96689dabab7848a1dc8ee129644897d333db056706455255271",
+          "tokens": 491,
+          "chunks": [
+            "amlr.37.en"
+          ],
+          "embedded_at": "2026-06-11T06:49:11.723977Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.38",
+      "articulo": "38",
+      "title_es": "Medidas específicas con respecto a entidades clientes individuales de terceros países",
+      "title_en": "Specific measures for individual third-country respondent institutions",
+      "languages": {
+        "es": {
+          "hash": "sha256:ad6353cabfdecfe05a0363e06465b7291050e8bc15bc521b19cadf003712cc49",
+          "tokens": 1104,
+          "chunks": [
+            "amlr.38.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:49:20.724227Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:91d4786c0213f9ce9ea40901188113950c5d9458ee6b511141ff2233ad153e46",
+          "tokens": 1001,
+          "chunks": [
+            "amlr.38.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:49:30.105547Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.39",
+      "articulo": "39",
+      "title_es": "Prohibición de relaciones de corresponsalía con entidades pantalla",
+      "title_en": "Prohibition of correspondent relationships with shell institutions",
+      "languages": {
+        "es": {
+          "hash": "sha256:a8b9da1f95526bce29264705dad36277d7de4d922f3dba173abc49931230c500",
+          "tokens": 167,
+          "chunks": [
+            "amlr.39.es"
+          ],
+          "embedded_at": "2026-06-11T06:49:34.453803Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:0b882f477a43fec01fc45fe4815f6739cff57c26a4e592b82c79bbff86001a18",
+          "tokens": 159,
+          "chunks": [
+            "amlr.39.en"
+          ],
+          "embedded_at": "2026-06-11T06:49:38.474594Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.40",
+      "articulo": "40",
+      "title_es": "Medidas para atenuar los riesgos en relación con las operaciones con una dirección autoalojada",
+      "title_en": "Measures to mitigate risks in relation to transactions with a self-hosted address",
+      "languages": {
+        "es": {
+          "hash": "sha256:86766e47608add1f12abe8fd06f862047a05bf5432cd9535fd10420213081666",
+          "tokens": 378,
+          "chunks": [
+            "amlr.40.es"
+          ],
+          "embedded_at": "2026-06-11T06:49:46.917877Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:63810d7a07389e373147b739523fc94346a5f809ab56f37bc9258332f8c492d4",
+          "tokens": 368,
+          "chunks": [
+            "amlr.40.en"
+          ],
+          "embedded_at": "2026-06-11T06:49:54.983288Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.41",
+      "articulo": "41",
+      "title_es": "Disposiciones específicas relativas a los solicitantes de residencia mediante programas de inversión",
+      "title_en": "Specific provisions regarding applicants for residence by investment schemes",
+      "languages": {
+        "es": {
+          "hash": "sha256:8045667a38fcbef350456bee987e67b939e472f27091968bf76e43f458b1bc31",
+          "tokens": 153,
+          "chunks": [
+            "amlr.41.es"
+          ],
+          "embedded_at": "2026-06-11T06:49:58.481225Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:73e548aa8b987b3fbacb306dcb31a26ec1269bfa970e48bcb1b7ca8129f734ea",
+          "tokens": 137,
+          "chunks": [
+            "amlr.41.en"
+          ],
+          "embedded_at": "2026-06-11T06:50:01.664337Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.42",
+      "articulo": "42",
+      "title_es": "Disposiciones específicas relativas a las personas del medio político",
+      "title_en": "Specific provisions regarding politically exposed persons",
+      "languages": {
+        "es": {
+          "hash": "sha256:5973adbdc5f0101938ad2b9842d9e14e2b38487daeccf9af444934f2ae680dba",
+          "tokens": 245,
+          "chunks": [
+            "amlr.42.es"
+          ],
+          "embedded_at": "2026-06-11T06:50:06.998465Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:8b2bc29ec7d4521472e665d17ab349c9af59e9c86cd93c7e47e66045678765df",
+          "tokens": 234,
+          "chunks": [
+            "amlr.42.en"
+          ],
+          "embedded_at": "2026-06-11T06:50:12.379160Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.43",
+      "articulo": "43",
+      "title_es": "Lista de funciones públicas importantes",
+      "title_en": "List of prominent public functions",
+      "languages": {
+        "es": {
+          "hash": "sha256:a1baf696e582179d43bc84ceb1cac059ba85a732db8eac26ac81ecd40a77b00a",
+          "tokens": 464,
+          "chunks": [
+            "amlr.43.es"
+          ],
+          "embedded_at": "2026-06-11T06:50:20.353339Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:83397093ea8e828ad73079180c04a8309d8c255913f04aa4e0d97fd3a9c2b2e1",
+          "tokens": 460,
+          "chunks": [
+            "amlr.43.en"
+          ],
+          "embedded_at": "2026-06-11T06:50:28.752137Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.44",
+      "articulo": "44",
+      "title_es": "Personas del medio político que son beneficiarias de pólizas de seguro",
+      "title_en": "Politically exposed persons who are beneficiaries of insurance policies",
+      "languages": {
+        "es": {
+          "hash": "sha256:4b765e49f285536620957b54415b2b476643f3a1a8fb289809c8a83bdd647bc7",
+          "tokens": 166,
+          "chunks": [
+            "amlr.44.es"
+          ],
+          "embedded_at": "2026-06-11T06:50:32.188858Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:d6d400cd2e4603a037e098388160ac78ab31215cad9e3d3f90e0a99292d394fa",
+          "tokens": 147,
+          "chunks": [
+            "amlr.44.en"
+          ],
+          "embedded_at": "2026-06-11T06:50:35.005277Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.45",
+      "articulo": "45",
+      "title_es": "Medidas destinadas a personas que dejan de ser personas del medio político",
+      "title_en": "Measures for persons who cease to be politically exposed persons",
+      "languages": {
+        "es": {
+          "hash": "sha256:4c686f5434681f492e8dcac76d9369e1db8a07dd8689b6b48eeb754339443f32",
+          "tokens": 240,
+          "chunks": [
+            "amlr.45.es"
+          ],
+          "embedded_at": "2026-06-11T06:50:39.509356Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:9b4a9b95e2d003e7b25aeddb436b9562a1083010ad779898df399351e975a480",
+          "tokens": 231,
+          "chunks": [
+            "amlr.45.en"
+          ],
+          "embedded_at": "2026-06-11T06:50:43.607736Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.46",
+      "articulo": "46",
+      "title_es": "Familiares y personas reconocidas como allegados de personas del medio político",
+      "title_en": "Family members and persons known to be close associates of politically exposed persons",
+      "languages": {
+        "es": {
+          "hash": "sha256:2299d8928c17129c7f14e85c12b6226014fcd8a7e81949e02174020460e7983a",
+          "tokens": 36,
+          "chunks": [
+            "amlr.46.es"
+          ],
+          "embedded_at": "2026-06-11T06:50:44.882360Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:29b27e4714ba9a7e694e9df85111b85cf9a7cfc3f89915aea0073845a306010a",
+          "tokens": 37,
+          "chunks": [
+            "amlr.46.en"
+          ],
+          "embedded_at": "2026-06-11T06:50:46.681697Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.47",
+      "articulo": "47",
+      "title_es": "Especificaciones para el sector de seguros de vida y otros seguros relacionados con inversiones",
+      "title_en": "Specifications for the life and other investment-related insurance sector",
+      "languages": {
+        "es": {
+          "hash": "sha256:e251bee2b85ce43864547845a2af3b689cb2aa80b985d5b030946bf69040e228",
+          "tokens": 294,
+          "chunks": [
+            "amlr.47.es"
+          ],
+          "embedded_at": "2026-06-11T06:50:53.160639Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:66a574e8250b0695a9dcc9a273bdf91700659c6eee0ed76c1d0e73e679b166c7",
+          "tokens": 272,
+          "chunks": [
+            "amlr.47.en"
+          ],
+          "embedded_at": "2026-06-11T06:50:58.192904Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.48",
+      "articulo": "48",
+      "title_es": "Disposiciones generales relativas al recurso a otras entidades obligadas",
+      "title_en": "General provisions relating to reliance on other obliged entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:9ffc211dc5ba950ac77dd5a6a70bd7106ddac94908f7430ce3bd13a107c2e1ee",
+          "tokens": 579,
+          "chunks": [
+            "amlr.48.es"
+          ],
+          "embedded_at": "2026-06-11T06:51:09.011446Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:257f15ce560cbc5ee2b7bc8d7c8938b70df9562490470767978a9b1e3b3dd909",
+          "tokens": 510,
+          "chunks": [
+            "amlr.48.en"
+          ],
+          "embedded_at": "2026-06-11T06:51:18.178658Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.49",
+      "articulo": "49",
+      "title_es": "Proceso de recurso a otra entidad obligada",
+      "title_en": "Process of reliance on another obliged entity",
+      "languages": {
+        "es": {
+          "hash": "sha256:834facbd85660e6ecaa7e8733a05e069c8c7428ea439eb1d2935efde9538f045",
+          "tokens": 364,
+          "chunks": [
+            "amlr.49.es"
+          ],
+          "embedded_at": "2026-06-11T06:51:24.487129Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:41184435d81ea256b4258fbccf2510b029a9f3067781556e7e297d0611555595",
+          "tokens": 324,
+          "chunks": [
+            "amlr.49.en"
+          ],
+          "embedded_at": "2026-06-11T06:51:29.881766Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.50",
+      "articulo": "50",
+      "title_es": "Directrices sobre el recurso a otra entidad obligada",
+      "title_en": "Guidelines on reliance on other obliged entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:c0c4afd445dca0c3468a15d39be541287d546d7193bdec96b90e219c3a3d18de",
+          "tokens": 125,
+          "chunks": [
+            "amlr.50.es"
+          ],
+          "embedded_at": "2026-06-11T06:51:33.585195Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:0458e20114866f7c54a56f48109b137153edbc9502777faf3cd7ab89bcc4305d",
+          "tokens": 105,
+          "chunks": [
+            "amlr.50.en"
+          ],
+          "embedded_at": "2026-06-11T06:51:36.820766Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.51",
+      "articulo": "51",
+      "title_es": "Identificación de los titulares reales de entidades jurídicas",
+      "title_en": "Identification of beneficial owners for legal entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:7f2aa7f4a2ea59e212f382414a2050c80e6386d0017fe631ba6b5092e6ee8cbf",
+          "tokens": 117,
+          "chunks": [
+            "amlr.51.es"
+          ],
+          "embedded_at": "2026-06-11T06:51:39.500986Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:9ee49a27669312476c65f4c62629b30418189c21a842e8353b7e935412edf8b5",
+          "tokens": 105,
+          "chunks": [
+            "amlr.51.en"
+          ],
+          "embedded_at": "2026-06-11T06:51:42.234497Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.52",
+      "articulo": "52",
+      "title_es": "Titularidad real a través de una participación en la propiedad",
+      "title_en": "Beneficial ownership through ownership interest",
+      "languages": {
+        "es": {
+          "hash": "sha256:7dff855cba735723dfe41c7cbe9061ec6faef4d30995a9e6f5c09c372abef6e5",
+          "tokens": 608,
+          "chunks": [
+            "amlr.52.es"
+          ],
+          "embedded_at": "2026-06-11T06:51:53.010854Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:c11f5bd9ffe8407d04755204078e9bb7d44078c96b1b2e0602a747998b498fbf",
+          "tokens": 575,
+          "chunks": [
+            "amlr.52.en"
+          ],
+          "embedded_at": "2026-06-11T06:52:02.280041Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.53",
+      "articulo": "53",
+      "title_es": "Titularidad real a través del control",
+      "title_en": "Beneficial ownership through control",
+      "languages": {
+        "es": {
+          "hash": "sha256:3926a462d6c9818004f94178b2184b1d81a99bd1d9be3cc58add0f3132288bec",
+          "tokens": 551,
+          "chunks": [
+            "amlr.53.es"
+          ],
+          "embedded_at": "2026-06-11T06:52:11.159609Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:1e5f57607aa932c464ef291b6d56d8332517307f3eb65adf22c1eb525f8c07e3",
+          "tokens": 530,
+          "chunks": [
+            "amlr.53.en"
+          ],
+          "embedded_at": "2026-06-11T06:52:20.304716Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.54",
+      "articulo": "54",
+      "title_es": "Coexistencia de participación en la propiedad y control en la estructura de propiedad",
+      "title_en": "Coexistence of ownership interest and control in the ownership structure",
+      "languages": {
+        "es": {
+          "hash": "sha256:c9756b78a1f4d6261907d0d74fb4c12b2501a45fa6568cf4edbeff030b812cb2",
+          "tokens": 169,
+          "chunks": [
+            "amlr.54.es"
+          ],
+          "embedded_at": "2026-06-11T06:52:23.588755Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:d182f71692276a887a1618a49d7581269a6873f002156140146d4cdcab0b2151",
+          "tokens": 159,
+          "chunks": [
+            "amlr.54.en"
+          ],
+          "embedded_at": "2026-06-11T06:52:27.143308Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.55",
+      "articulo": "55",
+      "title_es": "Estructuras de propiedad que implican instrumentos jurídicos o entidades jurídicas análogas",
+      "title_en": "Ownership structures involving legal arrangements or similar legal entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:043630ce252e4f5acb00a4903f6e12e8703cebfe6f26989f76eea55b9a88544e",
+          "tokens": 93,
+          "chunks": [
+            "amlr.55.es"
+          ],
+          "embedded_at": "2026-06-11T06:52:29.028954Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:5827ddcdbf37153705e7460c4d06f165aee6f4c6cb32d7f54c4738a17e1b1d71",
+          "tokens": 90,
+          "chunks": [
+            "amlr.55.en"
+          ],
+          "embedded_at": "2026-06-11T06:52:31.146292Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.56",
+      "articulo": "56",
+      "title_es": "Notificaciones",
+      "title_en": "Notifications",
+      "languages": {
+        "es": {
+          "hash": "sha256:f2c2e0d45c0e77b535375011949f5cfcd0359e117768a117bdf9c26d9ce05eec",
+          "tokens": 180,
+          "chunks": [
+            "amlr.56.es"
+          ],
+          "embedded_at": "2026-06-11T06:52:34.412115Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:aa2a861aeebec629718017718a1a4f785cb675f19d33ec489ef1bb0e043663a5",
+          "tokens": 149,
+          "chunks": [
+            "amlr.56.en"
+          ],
+          "embedded_at": "2026-06-11T06:52:37.310090Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.57",
+      "articulo": "57",
+      "title_es": "Identificación de los titulares reales en relación con entidades jurídicas análogas a los fideicomisos (del tipo «trust») expresos",
+      "title_en": "Identification of beneficial owners for legal entities similar to express trust",
+      "languages": {
+        "es": {
+          "hash": "sha256:3343bf15d6c252f74d36d2df4bd87d5c74780149dde7e6138fe829c669d246d2",
+          "tokens": 457,
+          "chunks": [
+            "amlr.57.es"
+          ],
+          "embedded_at": "2026-06-11T06:52:45.105299Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:234337647a10566bdae96c4aaba0e2595c3f056b2e6264e4ba9c710c48b5ca17",
+          "tokens": 421,
+          "chunks": [
+            "amlr.57.en"
+          ],
+          "embedded_at": "2026-06-11T06:52:53.129689Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.58",
+      "articulo": "58",
+      "title_es": "Identificación de los titulares reales en relación con fideicomisos (del tipo «trust») expresos e instrumentos jurídicos análogos",
+      "title_en": "Identification of beneficial owners for express trusts and similar legal arrangements",
+      "languages": {
+        "es": {
+          "hash": "sha256:c576660963a8159ac147c331d8b371b69d2f2fd29bcf5b0d11560b1f77959657",
+          "tokens": 640,
+          "chunks": [
+            "amlr.58.es"
+          ],
+          "embedded_at": "2026-06-11T06:53:01.744498Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:d51d3f1e03d102d5987d250806165b936d36c49feaa381193b6317438c1e9c13",
+          "tokens": 514,
+          "chunks": [
+            "amlr.58.en"
+          ],
+          "embedded_at": "2026-06-11T06:53:11.456165Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.59",
+      "articulo": "59",
+      "title_es": "Identificación de una categoría de beneficiarios",
+      "title_en": "Identification of a class of beneficiaries",
+      "languages": {
+        "es": {
+          "hash": "sha256:944609630ab962705a597e13da2aeddb9f40a55b02c33adad22752e7c06c027d",
+          "tokens": 490,
+          "chunks": [
+            "amlr.59.es"
+          ],
+          "embedded_at": "2026-06-11T06:53:20.351906Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:4911725257b88e0c4fd140ab1edc59f4bfb35456655586a02790ae0d3105ed24",
+          "tokens": 331,
+          "chunks": [
+            "amlr.59.en"
+          ],
+          "embedded_at": "2026-06-11T06:53:26.636787Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.60",
+      "articulo": "60",
+      "title_es": "Identificación de los objetos de un poder y de los beneficiarios por defecto en los fideicomisos discrecionales",
+      "title_en": "Identification of objects of a power and default takers in discretionary trusts",
+      "languages": {
+        "es": {
+          "hash": "sha256:48c3e74185a37a7d466d69b201361ce23cca2600319bb95d6d96ce37e0f818bd",
+          "tokens": 163,
+          "chunks": [
+            "amlr.60.es"
+          ],
+          "embedded_at": "2026-06-11T06:53:30.451231Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:300ffeac27eb746006093a57e27eb270028d91e984f1253da103d13341580876",
+          "tokens": 136,
+          "chunks": [
+            "amlr.60.en"
+          ],
+          "embedded_at": "2026-06-11T06:53:33.685395Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.61",
+      "articulo": "61",
+      "title_es": "Identificación de los titulares reales de los organismos de inversión colectiva",
+      "title_en": "Identification of beneficial owners of collective investment undertakings",
+      "languages": {
+        "es": {
+          "hash": "sha256:39c5aa131d25bda54334175b0247588c81b3a3b2c5316483ac27ec078852ce12",
+          "tokens": 112,
+          "chunks": [
+            "amlr.61.es"
+          ],
+          "embedded_at": "2026-06-11T06:53:36.037536Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:db543eda20d523b11e7e7c0de98e7e18d476a00ab2fdf6626e288ea70a81c0fa",
+          "tokens": 110,
+          "chunks": [
+            "amlr.61.en"
+          ],
+          "embedded_at": "2026-06-11T06:53:38.542914Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.62",
+      "articulo": "62",
+      "title_es": "Información sobre la titularidad real",
+      "title_en": "Beneficial ownership information",
+      "languages": {
+        "es": {
+          "hash": "sha256:5f5073f43113aaa55ac38fc804a1f16462d405ce7e533d289a485b18cbc5f22b",
+          "tokens": 655,
+          "chunks": [
+            "amlr.62.es"
+          ],
+          "embedded_at": "2026-06-11T06:53:48.790479Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:aeefb85aeb0d9118919f3237964ad1171a2f0871960f0297fa140bf622161419",
+          "tokens": 557,
+          "chunks": [
+            "amlr.62.en"
+          ],
+          "embedded_at": "2026-06-11T06:53:59.655723Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.63",
+      "articulo": "63",
+      "title_es": "Obligaciones de las entidades jurídicas",
+      "title_en": "Obligations of legal entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:fcd1f7abb6c3bc5f682deac59b102b8d099bce4e91ac677f6d9f2ec47a2d2238",
+          "tokens": 778,
+          "chunks": [
+            "amlr.63.es"
+          ],
+          "embedded_at": "2026-06-11T06:54:10.576190Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:3dcc87e98866559ea8615b78aad350d754bd32f18b4b0e56c2e89d26abd4835c",
+          "tokens": 755,
+          "chunks": [
+            "amlr.63.en"
+          ],
+          "embedded_at": "2026-06-11T06:54:19.688289Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.64",
+      "articulo": "64",
+      "title_es": "Obligaciones de los fiduciarios",
+      "title_en": "Trustee obligations",
+      "languages": {
+        "es": {
+          "hash": "sha256:bbc49589d7cc3f737811aab90365a986caf2b9d606c11b84407ad644a9f31dc9",
+          "tokens": 1150,
+          "chunks": [
+            "amlr.64.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:54:28.369974Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:e9edae24b106cca9747eb525bc0899e95b745a816a78d16cc0f97fb6507891b8",
+          "tokens": 1002,
+          "chunks": [
+            "amlr.64.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:54:37.052208Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.65",
+      "articulo": "65",
+      "title_es": "Excepciones a las obligaciones de las entidades e instrumentos jurídicos",
+      "title_en": "Exceptions to obligations of legal entities and legal arrangements",
+      "languages": {
+        "es": {
+          "hash": "sha256:fb55f52c87d72d942cfc2b0190490aa9d04dafda3ba4bbdb4b646b847edf371d",
+          "tokens": 167,
+          "chunks": [
+            "amlr.65.es"
+          ],
+          "embedded_at": "2026-06-11T06:54:40.203086Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:f5accb81e5b43a731184440d23b51a8c9ca4eb387e19405f8e56227fe5ea4111",
+          "tokens": 157,
+          "chunks": [
+            "amlr.65.en"
+          ],
+          "embedded_at": "2026-06-11T06:54:43.611416Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.66",
+      "articulo": "66",
+      "title_es": "Obligaciones de los nominatarios",
+      "title_en": "Nominee obligations",
+      "languages": {
+        "es": {
+          "hash": "sha256:6397854a3cc4c9e38671add25466bc31290f13b01b2113d1165557a151d17d2d",
+          "tokens": 121,
+          "chunks": [
+            "amlr.66.es"
+          ],
+          "embedded_at": "2026-06-11T06:54:45.985715Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:af8d9ed4b0f8de207c80f1f5981973d24a13e61e571b3acd96eb2f37a7886aea",
+          "tokens": 115,
+          "chunks": [
+            "amlr.66.en"
+          ],
+          "embedded_at": "2026-06-11T06:54:48.586647Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.67",
+      "articulo": "67",
+      "title_es": "Entidades e instrumentos jurídicos extranjeros",
+      "title_en": "Foreign legal entities and foreign legal arrangements",
+      "languages": {
+        "es": {
+          "hash": "sha256:467dcf43e62090275e80c1c46bab5de11013ac9144892ddb3e1058b7c093e19b",
+          "tokens": 1309,
+          "chunks": [
+            "amlr.67.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:54:57.320682Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:29d1d0a77090867e80207f7b8d02aa0408f68c4c6180587672620f5bf62b3083",
+          "tokens": 1196,
+          "chunks": [
+            "amlr.67.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:55:05.766811Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.68",
+      "articulo": "68",
+      "title_es": "Sanciones",
+      "title_en": "Penalties",
+      "languages": {
+        "es": {
+          "hash": "sha256:0217e683801daa741a51eca0d3df67704b2faa9fa3b9d3bafbc4b88fa75a9462",
+          "tokens": 250,
+          "chunks": [
+            "amlr.68.es"
+          ],
+          "embedded_at": "2026-06-11T06:55:10.155249Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:7e8fc773ca9cea989a57d0629106ed28060419e7292c19bb9093b74827247a4e",
+          "tokens": 246,
+          "chunks": [
+            "amlr.68.en"
+          ],
+          "embedded_at": "2026-06-11T06:55:14.171933Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.69",
+      "articulo": "69",
+      "title_es": "Comunicación de sospechas",
+      "title_en": "Reporting of suspicions",
+      "languages": {
+        "es": {
+          "hash": "sha256:fcab12b8d2f875c26bbbcfa45e8abc5d2427769632a9e4d84a54be58aad0b761",
+          "tokens": 1229,
+          "chunks": [
+            "amlr.69.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:55:24.194364Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:b09e1e96d76290fe133b37ca205cec5a4e73fd7dc4a8759f3897a887d3b4a078",
+          "tokens": 1089,
+          "chunks": [
+            "amlr.69.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:55:35.653509Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.70",
+      "articulo": "70",
+      "title_es": "Disposiciones específicas para la comunicación de sospechas por determinadas categorías de entidades obligadas",
+      "title_en": "Specific provisions for reporting of suspicions by certain categories of obliged entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:0f42640647250d2c5b6f6b0649cdbf459c4e9401643655935ef9e225dba47421",
+          "tokens": 527,
+          "chunks": [
+            "amlr.70.es"
+          ],
+          "embedded_at": "2026-06-11T06:55:46.879256Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:a7e16ef6f158c99ad118d3caa102239d4eb3a1cafc409e6734245e658875405a",
+          "tokens": 481,
+          "chunks": [
+            "amlr.70.en"
+          ],
+          "embedded_at": "2026-06-11T06:55:55.739962Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.71",
+      "articulo": "71",
+      "title_es": "Abstención de la ejecución de operaciones",
+      "title_en": "Refraining from carrying out transactions",
+      "languages": {
+        "es": {
+          "hash": "sha256:01bf8625e1d042d0affb1ada05aac8dd5023111ef06efc05226f11ccf2d34a9f",
+          "tokens": 230,
+          "chunks": [
+            "amlr.71.es"
+          ],
+          "embedded_at": "2026-06-11T06:56:00.393886Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:e9d3f4bb927dd3b42299b006f6a0fd9890ffdfd9d208b72469f388a1f4a1bebe",
+          "tokens": 198,
+          "chunks": [
+            "amlr.71.en"
+          ],
+          "embedded_at": "2026-06-11T06:56:04.754255Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.72",
+      "articulo": "72",
+      "title_es": "Revelación a la UIF",
+      "title_en": "Disclosure to FIU",
+      "languages": {
+        "es": {
+          "hash": "sha256:d1d318fd63ddf7b26f65bc3a1c312e050bdb779aadf18a26a5612ac8ec8d3fb1",
+          "tokens": 124,
+          "chunks": [
+            "amlr.72.es"
+          ],
+          "embedded_at": "2026-06-11T06:56:07.349482Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:1d27c3f1f95e6d46ab9ca1466154283ca6b075cbbdcc77a7343405ede94be240",
+          "tokens": 117,
+          "chunks": [
+            "amlr.72.en"
+          ],
+          "embedded_at": "2026-06-11T06:56:10.410049Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.73",
+      "articulo": "73",
+      "title_es": "Prohibición de revelación",
+      "title_en": "Prohibition of disclosure",
+      "languages": {
+        "es": {
+          "hash": "sha256:60030c540a45019842733c9896ce6e4deb8caced8e81cac8eca978c6d465d512",
+          "tokens": 624,
+          "chunks": [
+            "amlr.73.es"
+          ],
+          "embedded_at": "2026-06-11T06:56:21.950424Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:db2b3a0a9f2705211521fdaf8bbfe960ab703c68774c6ae367a91027202fb0e3",
+          "tokens": 557,
+          "chunks": [
+            "amlr.73.en"
+          ],
+          "embedded_at": "2026-06-11T06:56:32.961860Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.74",
+      "articulo": "74",
+      "title_es": "Comunicaciones basadas en umbrales sobre operaciones relativas a determinados bienes de gran valor",
+      "title_en": "Threshold-based reports of transactions in certain high-value goods",
+      "languages": {
+        "es": {
+          "hash": "sha256:b0015c793371f15a872d0b7b162152f274a0bb6f8a6fe63dec2e9935dd1ca8ee",
+          "tokens": 200,
+          "chunks": [
+            "amlr.74.es"
+          ],
+          "embedded_at": "2026-06-11T06:56:36.870719Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:a483cfe378da84767e326fbe7105ec7dc14ad9b3cfaa1eef63c5e5773ffe4ddc",
+          "tokens": 196,
+          "chunks": [
+            "amlr.74.en"
+          ],
+          "embedded_at": "2026-06-11T06:56:40.749457Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.75",
+      "articulo": "75",
+      "title_es": "Intercambio de información en el marco de asociaciones para el intercambio de información",
+      "title_en": "Exchange of information in the framework of partnerships for information sharing",
+      "languages": {
+        "es": {
+          "hash": "sha256:bd5e9c523d2ff5d869f79cf9967a1162f28ca03faeb5d83ecddd278358f10861",
+          "tokens": 1723,
+          "chunks": [
+            "amlr.75.1.es"
+          ],
+          "embedded_at": "2026-06-11T06:56:49.934443Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:cee752bee62c41415ceec9383f67172aa20142193eace1116c3c080941955f23",
+          "tokens": 1552,
+          "chunks": [
+            "amlr.75.1.en"
+          ],
+          "embedded_at": "2026-06-11T06:56:58.956932Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.76",
+      "articulo": "76",
+      "title_es": "Tratamiento de datos personales",
+      "title_en": "Processing of personal data",
+      "languages": {
+        "es": {
+          "hash": "sha256:2f306a6c17c519f68373bc6a6d53f534f36eccf7e382ac08d81a7296be27e3c1",
+          "tokens": 731,
+          "chunks": [
+            "amlr.76.es"
+          ],
+          "embedded_at": "2026-06-11T06:57:07.923067Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:075c9597c0dacead765e76ef3a969e973e5bdfbcc1057c196aed994ed46e7ad2",
+          "tokens": 690,
+          "chunks": [
+            "amlr.76.en"
+          ],
+          "embedded_at": "2026-06-11T06:57:17.279200Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.77",
+      "articulo": "77",
+      "title_es": "Conservación de registros",
+      "title_en": "Record retention",
+      "languages": {
+        "es": {
+          "hash": "sha256:86ed1edda35b52ce67e23829000e7590668610f0d6572717427294e6fabe2027",
+          "tokens": 854,
+          "chunks": [
+            "amlr.77.es"
+          ],
+          "embedded_at": "2026-06-11T06:57:25.996828Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:57a1a7403594b60040e1a34097dfd1ed559b59872931454478b568137b57eeaa",
+          "tokens": 767,
+          "chunks": [
+            "amlr.77.en"
+          ],
+          "embedded_at": "2026-06-11T06:57:34.547119Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.78",
+      "articulo": "78",
+      "title_es": "Suministro de registros a las autoridades competentes",
+      "title_en": "Provision of records to competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:d6485b72d005df0defcbbc5587ea057c12a7ec1bd11c133ad833fa4f5c837dca",
+          "tokens": 103,
+          "chunks": [
+            "amlr.78.es"
+          ],
+          "embedded_at": "2026-06-11T06:57:36.857056Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:29e8e43e7dab162b98b77fa97d2c4293d41f12916b8cb9832d7fe28dfbaeaea6",
+          "tokens": 102,
+          "chunks": [
+            "amlr.78.en"
+          ],
+          "embedded_at": "2026-06-11T06:57:38.912856Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.79",
+      "articulo": "79",
+      "title_es": "Cuentas anónimas, acciones al portador y derechos de suscripción de acciones al portador",
+      "title_en": "Anonymous accounts and bearer shares and bearer share warrants",
+      "languages": {
+        "es": {
+          "hash": "sha256:170f8be8f9a7b6bacd275b5ae3be0058e054569e931773d48b67e98f1d3923a1",
+          "tokens": 606,
+          "chunks": [
+            "amlr.79.es"
+          ],
+          "embedded_at": "2026-06-11T06:57:47.688561Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:a4c229b462166631297ea15313fe0b4e6f75d7cde155431f907d186c42fa8910",
+          "tokens": 522,
+          "chunks": [
+            "amlr.79.en"
+          ],
+          "embedded_at": "2026-06-11T06:57:56.500569Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.80",
+      "articulo": "80",
+      "title_es": "Límites a los pagos de grandes cantidades en efectivo a cambio de bienes o servicios",
+      "title_en": "Limits to large cash payments in exchange for goods or services",
+      "languages": {
+        "es": {
+          "hash": "sha256:b5ed1414643938784ed630b0a815927316dd12ec00b3c3c88d28d9be956f103a",
+          "tokens": 682,
+          "chunks": [
+            "amlr.80.es"
+          ],
+          "embedded_at": "2026-06-11T06:58:05.061489Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:df07cca5bc12aed80b3c052f30abea64d29ec25c7b7bc88e75e43aeeac2dd715",
+          "tokens": 639,
+          "chunks": [
+            "amlr.80.en"
+          ],
+          "embedded_at": "2026-06-11T06:58:14.140268Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.81",
+      "articulo": "81",
+      "title_es": "Cooperación entre las UIF y la Fiscalía Europea",
+      "title_en": "Cooperation between FIUs and the EPPO",
+      "languages": {
+        "es": {
+          "hash": "sha256:a94c66bb377c1e8c852d8f201420c3501e3038aeeeaa7695ce453815d0b253f8",
+          "tokens": 328,
+          "chunks": [
+            "amlr.81.es"
+          ],
+          "embedded_at": "2026-06-11T06:58:19.657319Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:092b21a0a4fa96a2cc48cacb861f61627ac22edfb30d2d49b200efffc3442cc9",
+          "tokens": 285,
+          "chunks": [
+            "amlr.81.en"
+          ],
+          "embedded_at": "2026-06-11T06:58:24.497851Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.82",
+      "articulo": "82",
+      "title_es": "Solicitudes de información a la Fiscalía Europea",
+      "title_en": "Requests for information to the EPPO",
+      "languages": {
+        "es": {
+          "hash": "sha256:0558876625aed8d1241831ade7a24937398444ec251fe06256b106916962ba16",
+          "tokens": 132,
+          "chunks": [
+            "amlr.82.es"
+          ],
+          "embedded_at": "2026-06-11T06:58:27.164483Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:5e7ef3618b07a07e0546ce26b203a0e97deb6b57ddf3e84b246de4043f34805f",
+          "tokens": 133,
+          "chunks": [
+            "amlr.82.en"
+          ],
+          "embedded_at": "2026-06-11T06:58:29.624093Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.83",
+      "articulo": "83",
+      "title_es": "Cooperación entre las UIF y la OLAF",
+      "title_en": "Cooperation between FIUs and OLAF",
+      "languages": {
+        "es": {
+          "hash": "sha256:0801b53421bf00ec83bac830e9ca85373856048ab50a1217dac54a1036518740",
+          "tokens": 214,
+          "chunks": [
+            "amlr.83.es"
+          ],
+          "embedded_at": "2026-06-11T06:58:33.452396Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:88840cee7be6e16d440c2d2a1fdfec225d91671258eccfcc0bf38576f5818e72",
+          "tokens": 198,
+          "chunks": [
+            "amlr.83.en"
+          ],
+          "embedded_at": "2026-06-11T06:58:36.961579Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.84",
+      "articulo": "84",
+      "title_es": "Solicitudes de información a la OLAF",
+      "title_en": "Requests for information to OLAF",
+      "languages": {
+        "es": {
+          "hash": "sha256:9cde096bfb9f8fed2654348cdceac272f7b2ce7507deae8a55ffb1d64813e519",
+          "tokens": 125,
+          "chunks": [
+            "amlr.84.es"
+          ],
+          "embedded_at": "2026-06-11T06:58:40.047001Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:3155b4ae7739fbaeadd5d67947e887ef379a0defe996f54709134f6d5af77259",
+          "tokens": 117,
+          "chunks": [
+            "amlr.84.en"
+          ],
+          "embedded_at": "2026-06-11T06:58:42.234152Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.85",
+      "articulo": "85",
+      "title_es": "Ejercicio de la delegación",
+      "title_en": "Exercise of the delegation",
+      "languages": {
+        "es": {
+          "hash": "sha256:839ef33d4ecb6f62ea1e3977fa1cc6e8e463426c3878fcedee71e7d82b1594b6",
+          "tokens": 455,
+          "chunks": [
+            "amlr.85.es"
+          ],
+          "embedded_at": "2026-06-11T06:58:50.703172Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:ffa43ebd8d960714e9a55bd5d9f64f11a540aecd9d98d2f87f8403328843cff4",
+          "tokens": 478,
+          "chunks": [
+            "amlr.85.en"
+          ],
+          "embedded_at": "2026-06-11T06:58:59.387473Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.86",
+      "articulo": "86",
+      "title_es": "Procedimiento de comité",
+      "title_en": "Committee procedure",
+      "languages": {
+        "es": {
+          "hash": "sha256:bae50c4cd7d17fa52ae3155e3a6731078816fb558b64d2ac21fd30616f60396c",
+          "tokens": 94,
+          "chunks": [
+            "amlr.86.es"
+          ],
+          "embedded_at": "2026-06-11T06:59:01.342926Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:3391da0afdb286d13aeada0c89ab38778fb08724f1fcfcde9078a5706eb40fae",
+          "tokens": 80,
+          "chunks": [
+            "amlr.86.en"
+          ],
+          "embedded_at": "2026-06-11T06:59:03.693101Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.87",
+      "articulo": "87",
+      "title_es": "Revisión",
+      "title_en": "Review",
+      "languages": {
+        "es": {
+          "hash": "sha256:bc7a8235cbb032096311eef9dc76d260940663e640f731f1755103a6a5f97eb0",
+          "tokens": 126,
+          "chunks": [
+            "amlr.87.es"
+          ],
+          "embedded_at": "2026-06-11T06:59:06.813899Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:f997f29a56453c1b7507eebc29b00c07ea73385c91c18352bdc481df38faa67c",
+          "tokens": 115,
+          "chunks": [
+            "amlr.87.en"
+          ],
+          "embedded_at": "2026-06-11T06:59:09.533905Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.88",
+      "articulo": "88",
+      "title_es": "Informes",
+      "title_en": "Reports",
+      "languages": {
+        "es": {
+          "hash": "sha256:24fee7b4d80cf63a6c3c04ce19214947b0a59e59be77073ef8929c1c03a99aed",
+          "tokens": 199,
+          "chunks": [
+            "amlr.88.es"
+          ],
+          "embedded_at": "2026-06-11T06:59:13.616431Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:debb0c5d20289ca3fae5252b166214e646ad7d1e6eb2519771f065696f603239",
+          "tokens": 178,
+          "chunks": [
+            "amlr.88.en"
+          ],
+          "embedded_at": "2026-06-11T06:59:17.407126Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.89",
+      "articulo": "89",
+      "title_es": "Relación con la Directiva (UE) 2015/849",
+      "title_en": "Relation to Directive (EU) 2015/849",
+      "languages": {
+        "es": {
+          "hash": "sha256:cb53b12e4e02903f728bd46d209e5575c7fa574e0f3c58ec7e1f6c539806f67e",
+          "tokens": 52,
+          "chunks": [
+            "amlr.89.es"
+          ],
+          "embedded_at": "2026-06-11T06:59:18.864400Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:493a733e832c82697105a2fe8d5bae32736a1be4331e96afe64bd79039edf0f7",
+          "tokens": 53,
+          "chunks": [
+            "amlr.89.en"
+          ],
+          "embedded_at": "2026-06-11T06:59:20.317728Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "amlr.90",
+      "articulo": "90",
+      "title_es": "Entrada en vigor y aplicación",
+      "title_en": "Entry into force and application",
+      "languages": {
+        "es": {
+          "hash": "sha256:aa5ae835398d521582383588e46a2ea56c96e7368b3b7c0b61243423078b2faf",
+          "tokens": 74,
+          "chunks": [
+            "amlr.90.es"
+          ],
+          "embedded_at": "2026-06-11T06:59:22.257740Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_es.html"
+        },
+        "en": {
+          "hash": "sha256:f46c55e9bbcb605e4436ec98cbd0a08f46d2eca916afd2fd48cab5c295f15e0c",
+          "tokens": 71,
+          "chunks": [
+            "amlr.90.en"
+          ],
+          "embedded_at": "2026-06-11T06:59:24.327809Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:37:55.715766Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/amlr_en.html"
+        }
+      }
+    }
+  ]
+}

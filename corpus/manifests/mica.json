@@ -1,0 +1,4499 @@
+{
+  "corpus": "mica",
+  "celex": "32023R1114",
+  "version": "2023-06-09",
+  "source_format": "html",
+  "fetched_at": "2026-06-11T06:38:22.810583Z",
+  "languages": [
+    "es",
+    "en"
+  ],
+  "http_cache": {
+    "es": {
+      "etag": null,
+      "last_modified": null
+    },
+    "en": {
+      "etag": null,
+      "last_modified": null
+    }
+  },
+  "stats": {
+    "articles_total": 149,
+    "chunks_total": 298,
+    "embedded_total": 298,
+    "raw_size_bytes": 3578314
+  },
+  "articles": [
+    {
+      "article_id": "mica.1",
+      "articulo": "1",
+      "title_es": "Objeto",
+      "title_en": "Subject matter",
+      "languages": {
+        "es": {
+          "hash": "sha256:fa9065b0f774fdf3217a2363aea25a2fce7b163c8b8a6906cdbd9ce8973bc976",
+          "tokens": 289,
+          "chunks": [
+            "mica.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:00:09.711094Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:be24293f47d0ce2202268795d39beaaaaf6f010bb74172e294a94d7b67095327",
+          "tokens": 286,
+          "chunks": [
+            "mica.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:00:14.852573Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.2",
+      "articulo": "2",
+      "title_es": "Ámbito de aplicación",
+      "title_en": "Scope",
+      "languages": {
+        "es": {
+          "hash": "sha256:43d30b233cf1e0f791190191d04117c2182310eb3a333f7d08bf487a0b3cba2a",
+          "tokens": 723,
+          "chunks": [
+            "mica.2.es"
+          ],
+          "embedded_at": "2026-06-11T07:00:23.385768Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:619e8c8d279b7d01d8991166c2c9dbc04766ae29d0c8cfaf0f204e7f793b0fc1",
+          "tokens": 664,
+          "chunks": [
+            "mica.2.en"
+          ],
+          "embedded_at": "2026-06-11T07:00:31.826708Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.3",
+      "articulo": "3",
+      "title_es": "Definiciones",
+      "title_en": "Definitions",
+      "languages": {
+        "es": {
+          "hash": "sha256:56647aaa31d0ceabc524f2aa508cfd721a85860b9aa7614de955585a4e34e401",
+          "tokens": 3080,
+          "chunks": [
+            "mica.3.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:00:40.530526Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:7a1c0997300dbb33005cca1a84b486466beef8afb5e39185a3c585f4e533ce0a",
+          "tokens": 2944,
+          "chunks": [
+            "mica.3.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:00:48.971841Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.4",
+      "articulo": "4",
+      "title_es": "Ofertas públicas de criptoactivos distintos de fichas referenciadas a activos o fichas de dinero electrónico",
+      "title_en": "Offers to the public of crypto-assets other than asset-referenced tokens or e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:8bc132fe268d95742fe13f184a40b6fdb2475eed0718d448095a596bcb8564de",
+          "tokens": 1295,
+          "chunks": [
+            "mica.4.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:00:58.559675Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ce858cbd98556f1d154291044e9a8729974adef3c54e7bfb9bc55c8f294c515e",
+          "tokens": 1268,
+          "chunks": [
+            "mica.4.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:01:08.968289Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.5",
+      "articulo": "5",
+      "title_es": "Admisión a negociación de criptoactivos distintos de fichas referenciadas a activos o fichas de dinero electrónico",
+      "title_en": "Admission to trading of crypto-assets other than asset-referenced tokens or e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:016c661e011f827d5ad0409ee5723150825c303592081b1bd64b1287ba3e717d",
+          "tokens": 524,
+          "chunks": [
+            "mica.5.es"
+          ],
+          "embedded_at": "2026-06-11T07:01:19.297035Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:568840486669c0f2fbc91ff6f9e571ae220cbb487416908ae1dfc4e3f3f2d940",
+          "tokens": 507,
+          "chunks": [
+            "mica.5.en"
+          ],
+          "embedded_at": "2026-06-11T07:01:28.409595Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.6",
+      "articulo": "6",
+      "title_es": "Contenido y forma del libro blanco de criptoactivos",
+      "title_en": "Content and form of the crypto-asset white paper",
+      "languages": {
+        "es": {
+          "hash": "sha256:50cd52e1ee9712f12c60d6e9df6276f5828094e9070f81c3fa71c341bb0c3070",
+          "tokens": 1679,
+          "chunks": [
+            "mica.6.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:01:37.029630Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:5f63a5eabdd385c42f4495f4775ab0637aba17dd73b040b2f4314e77cab21efd",
+          "tokens": 1592,
+          "chunks": [
+            "mica.6.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:01:45.609381Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.7",
+      "articulo": "7",
+      "title_es": "Comunicaciones publicitarias",
+      "title_en": "Marketing communications",
+      "languages": {
+        "es": {
+          "hash": "sha256:650b13e00885c827d3f8f4955d98c21e208bc2575912372f011f7e284554b796",
+          "tokens": 645,
+          "chunks": [
+            "mica.7.es"
+          ],
+          "embedded_at": "2026-06-11T07:01:54.260434Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:5505dd69d826a416b37ec54a4d45b35dabb4c2ad76c5000b49f59ab522178976",
+          "tokens": 587,
+          "chunks": [
+            "mica.7.en"
+          ],
+          "embedded_at": "2026-06-11T07:02:03.941607Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.8",
+      "articulo": "8",
+      "title_es": "Notificación del libro blanco de criptoactivos y de las comunicaciones publicitarias",
+      "title_en": "Notification of the crypto-asset white paper and of the marketing communications",
+      "languages": {
+        "es": {
+          "hash": "sha256:9e9ce291273bc4402151008c2d1b36a570419d31e38c23d2f8b54d10e7243117",
+          "tokens": 679,
+          "chunks": [
+            "mica.8.es"
+          ],
+          "embedded_at": "2026-06-11T07:02:13.869694Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:0874b66839124811d7f44e601893e84a9f346031e65c40bf94920001a4b65946",
+          "tokens": 630,
+          "chunks": [
+            "mica.8.en"
+          ],
+          "embedded_at": "2026-06-11T07:02:23.441342Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.9",
+      "articulo": "9",
+      "title_es": "Publicación del libro blanco de criptoactivos y de las comunicaciones publicitarias",
+      "title_en": "Publication of the crypto-asset white paper and of the marketing communications",
+      "languages": {
+        "es": {
+          "hash": "sha256:2baa64b98e91cbc1b161596f678d1b5f9499782b13a24c13bc7dbbc1010bc0ce",
+          "tokens": 219,
+          "chunks": [
+            "mica.9.es"
+          ],
+          "embedded_at": "2026-06-11T07:02:27.422535Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:abb0394521e33ce822b13f66f58f17940597021ed9835df53f4578f27bd75e16",
+          "tokens": 206,
+          "chunks": [
+            "mica.9.en"
+          ],
+          "embedded_at": "2026-06-11T07:02:31.220126Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.10",
+      "articulo": "10",
+      "title_es": "Resultado de la oferta pública y mecanismos de salvaguardia",
+      "title_en": "Result of the offer to the public and safeguarding arrangements",
+      "languages": {
+        "es": {
+          "hash": "sha256:8513e352670f35819ef0b93e7caf9ea28909f17899dbc669fa8eff127b5533c0",
+          "tokens": 328,
+          "chunks": [
+            "mica.10.es"
+          ],
+          "embedded_at": "2026-06-11T07:02:36.642654Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:985ebe53357fda8543d535456a9f74705e6166ebed33d230e4c3ece2c921908d",
+          "tokens": 334,
+          "chunks": [
+            "mica.10.en"
+          ],
+          "embedded_at": "2026-06-11T07:02:42.397620Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.11",
+      "articulo": "11",
+      "title_es": "Derechos de los oferentes y de las personas que soliciten la admisión a negociación de criptoactivos distintos de fichas referenciadas a activos o fichas de dinero electrónico",
+      "title_en": "Rights of offerors and persons seeking admission to trading of crypto-assets other than asset-referenced tokens or e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:effe866c4de1d5a1d7f6d71201591a51f23b4e1ff9b9135c2643a19e8161a8e0",
+          "tokens": 198,
+          "chunks": [
+            "mica.11.es"
+          ],
+          "embedded_at": "2026-06-11T07:02:46.017298Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:01b2830b1f886d95bad6c9cf51f2a249fd6b58bc3967663b04bedc211e4fbfaa",
+          "tokens": 182,
+          "chunks": [
+            "mica.11.en"
+          ],
+          "embedded_at": "2026-06-11T07:02:49.159579Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.12",
+      "articulo": "12",
+      "title_es": "Modificación del libro blanco de criptoactivos y de las comunicaciones publicitarias publicadas",
+      "title_en": "Modification of published crypto-asset white papers and of published marketing communications",
+      "languages": {
+        "es": {
+          "hash": "sha256:a0cdb7cebe52accc31e56d90eb20ea2e87228e9de0862709ecfdfc9beed08094",
+          "tokens": 932,
+          "chunks": [
+            "mica.12.es"
+          ],
+          "embedded_at": "2026-06-11T07:02:57.903393Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:1b8561cb8a5b434c7924bb94d336354eb943c3a92e10a19929da315a090fe7d1",
+          "tokens": 816,
+          "chunks": [
+            "mica.12.en"
+          ],
+          "embedded_at": "2026-06-11T07:03:06.249749Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.13",
+      "articulo": "13",
+      "title_es": "Derecho de desistimiento",
+      "title_en": "Right of withdrawal",
+      "languages": {
+        "es": {
+          "hash": "sha256:469e7eb08b90a9d7620042fd9741696d431ce6993fa5c04d4edc34a68469b1f3",
+          "tokens": 432,
+          "chunks": [
+            "mica.13.es"
+          ],
+          "embedded_at": "2026-06-11T07:03:13.897001Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:b4c036c9674eaf03a09a28dbc729406a83cc91c3c78cf0c9368248aa2fe9a000",
+          "tokens": 398,
+          "chunks": [
+            "mica.13.en"
+          ],
+          "embedded_at": "2026-06-11T07:03:21.120979Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.14",
+      "articulo": "14",
+      "title_es": "Obligaciones de los oferentes y las personas que soliciten la admisión a negociación de criptoactivos distintos de fichas referenciadas a activos o fichas de dinero electrónico",
+      "title_en": "Obligations of offerors and persons seeking admission to trading of crypto-assets other than asset-referenced tokens or e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:f71e33b4ec08d8fa80b1a29765d6c03dafce9e3d547a6a3108e51ef0fae0222b",
+          "tokens": 392,
+          "chunks": [
+            "mica.14.es"
+          ],
+          "embedded_at": "2026-06-11T07:03:28.157417Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:c25ada6e621ec3f846cac6803a70c48b694863226500f728687cca26ebdad4d3",
+          "tokens": 348,
+          "chunks": [
+            "mica.14.en"
+          ],
+          "embedded_at": "2026-06-11T07:03:33.829107Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.15",
+      "articulo": "15",
+      "title_es": "Responsabilidad respecto de la información facilitada en el libro blanco de criptoactivos",
+      "title_en": "Liability for the information given in a crypto-asset white paper",
+      "languages": {
+        "es": {
+          "hash": "sha256:7088a38d5307bfb179564bf576314f538f3d243e5d502b7b2d166fdbe1d42434",
+          "tokens": 533,
+          "chunks": [
+            "mica.15.es"
+          ],
+          "embedded_at": "2026-06-11T07:03:42.679209Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:05030d2128b0d5fdc5342bc555f223b1c7d437a2e6ed7e941a7c7e7cc03b94b7",
+          "tokens": 499,
+          "chunks": [
+            "mica.15.en"
+          ],
+          "embedded_at": "2026-06-11T07:03:51.548978Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.16",
+      "articulo": "16",
+      "title_es": "Autorización",
+      "title_en": "Authorisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:cf97fd8f06b7c9cd42a2a32265f144d0af2cd23199277548d7f888547d2c6b68",
+          "tokens": 574,
+          "chunks": [
+            "mica.16.es"
+          ],
+          "embedded_at": "2026-06-11T07:04:00.229585Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:5826a37690363607703c9a5c9295412443fad94125b9473ac16d6b15dc014916",
+          "tokens": 581,
+          "chunks": [
+            "mica.16.en"
+          ],
+          "embedded_at": "2026-06-11T07:04:09.212628Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.17",
+      "articulo": "17",
+      "title_es": "Requisitos para las entidades de crédito",
+      "title_en": "Requirements for credit institutions",
+      "languages": {
+        "es": {
+          "hash": "sha256:33058ecd2ae087b5f2804d9b58914f1bdfbc070c2fcdb2a2cac3b6b2987cedf8",
+          "tokens": 1388,
+          "chunks": [
+            "mica.17.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:04:17.950178Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:b9cf67b5f8a09666d93eb5efcf7956e903b2a35bcaa28598f9abab25f3c10328",
+          "tokens": 1260,
+          "chunks": [
+            "mica.17.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:04:26.634639Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.18",
+      "articulo": "18",
+      "title_es": "Solicitud de autorización",
+      "title_en": "Application for authorisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:5014774e153fdd27ed55fe3e0bed118bcf926ce907922127c402f6571f47624c",
+          "tokens": 1337,
+          "chunks": [
+            "mica.18.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:04:35.336499Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:bd3d771873e5f5f29ed14a9e393140e854534c8cb97eac27f637dd9ce824dcaf",
+          "tokens": 1291,
+          "chunks": [
+            "mica.18.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:04:45.204694Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.19",
+      "articulo": "19",
+      "title_es": "Contenido y forma del libro blanco de criptoactivos relativo a fichas referenciadas a activos",
+      "title_en": "Content and form of the crypto-asset white paper for asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:3fec38f47abc0218f64c4f48d8260c97cfe729e302cbc4609e70eae8b1eb82e5",
+          "tokens": 1520,
+          "chunks": [
+            "mica.19.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:04:56.915447Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:fdf1f0876e1125ce03cf16e1d11f81d9f40666a287f219ab7da56c19f66660a6",
+          "tokens": 1468,
+          "chunks": [
+            "mica.19.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:05:09.386185Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.20",
+      "articulo": "20",
+      "title_es": "Valoración de la solicitud de autorización",
+      "title_en": "Assessment of the application for authorisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:5baf23db24935e47d8a7603f55b635cc3b5ede1f260c7b984468920c0486ba0f",
+          "tokens": 793,
+          "chunks": [
+            "mica.20.es"
+          ],
+          "embedded_at": "2026-06-11T07:05:20.384331Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:7d86797262072e350637fc316ea9ecaa655bc5f4e59447e77ec09c066f710e48",
+          "tokens": 686,
+          "chunks": [
+            "mica.20.en"
+          ],
+          "embedded_at": "2026-06-11T07:05:30.850900Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.21",
+      "articulo": "21",
+      "title_es": "Concesión o denegación de la autorización",
+      "title_en": "Grant or refusal of the authorisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:47a9a13e674f690949747ebdc5fd92e3013362c39f09431af6e056938daa03d7",
+          "tokens": 755,
+          "chunks": [
+            "mica.21.es"
+          ],
+          "embedded_at": "2026-06-11T07:05:39.732542Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:fcf7545936eb87107c257b4cf4585fce254a0487f7a492cd23769a2a220a5783",
+          "tokens": 646,
+          "chunks": [
+            "mica.21.en"
+          ],
+          "embedded_at": "2026-06-11T07:05:48.924257Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.22",
+      "articulo": "22",
+      "title_es": "Notificación sobre las fichas referenciadas a activos",
+      "title_en": "Reporting on asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:ef91f9f749bdf9a8ba5d810869af6f5790150c3bb796e72a81d1769e7f011604",
+          "tokens": 813,
+          "chunks": [
+            "mica.22.es"
+          ],
+          "embedded_at": "2026-06-11T07:05:57.805511Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:937736175dc9f868fc545b5c39c625c80371ab7ec6c9b2f6b1c75e590116c5d7",
+          "tokens": 793,
+          "chunks": [
+            "mica.22.en"
+          ],
+          "embedded_at": "2026-06-11T07:06:06.534000Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.23",
+      "articulo": "23",
+      "title_es": "Restricciones a la emisión de fichas referenciadas a activos de las que se hace un uso generalizado como medio de cambio",
+      "title_en": "Restrictions on the issuance of asset-referenced tokens used widely as a means of exchange",
+      "languages": {
+        "es": {
+          "hash": "sha256:8ac316e331268c8f8c54f0b3ccb38969a5d9cf80e988a9f52549653edd599590",
+          "tokens": 409,
+          "chunks": [
+            "mica.23.es"
+          ],
+          "embedded_at": "2026-06-11T07:06:13.736903Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:6e3c7b532f2ab590d7f24dcb0ade0cf98efd11c2a3f991aef9b486fe35614fec",
+          "tokens": 408,
+          "chunks": [
+            "mica.23.en"
+          ],
+          "embedded_at": "2026-06-11T07:06:21.447072Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.24",
+      "articulo": "24",
+      "title_es": "Revocación de la autorización",
+      "title_en": "Withdrawal of the authorisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:d25018bf5d9a195cbb23feb088863d5ff5f19029c1b775a0b8e9293d0325df77",
+          "tokens": 921,
+          "chunks": [
+            "mica.24.es"
+          ],
+          "embedded_at": "2026-06-11T07:06:30.199448Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:a8079e8828c0064b252c45bea6e5fdff6e339967bf6451b1b9c5f9ec13230f16",
+          "tokens": 863,
+          "chunks": [
+            "mica.24.en"
+          ],
+          "embedded_at": "2026-06-11T07:06:38.657094Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.25",
+      "articulo": "25",
+      "title_es": "Modificación del libro blanco de criptoactivos relativo a fichas referenciadas a activos tras su publicación",
+      "title_en": "Modification of published crypto-asset white papers for asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:a52dd9bf628cdbf2da51c1feb150512500c656e63ed43c34de1274bbfbe47151",
+          "tokens": 1298,
+          "chunks": [
+            "mica.25.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:06:47.306939Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:befb1ed66040e38c2bf0a65c2aaf88d687c41857f3c1ddf5fef1c070cfc312cc",
+          "tokens": 1183,
+          "chunks": [
+            "mica.25.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:06:56.416539Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.26",
+      "articulo": "26",
+      "title_es": "Responsabilidad de los emisores de fichas referenciadas a activos respecto de la información contenida en el libro blanco de criptoactivos",
+      "title_en": "Liability of issuers of asset-referenced tokens for the information given in a crypto-asset white paper",
+      "languages": {
+        "es": {
+          "hash": "sha256:b8133c904d292234f9d0871f19a24c1fe6fe543249f16549dd0660cfa53cc66d",
+          "tokens": 379,
+          "chunks": [
+            "mica.26.es"
+          ],
+          "embedded_at": "2026-06-11T07:07:03.493250Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:11e27c2c0638eefc5bd49c31c59e66246485dc227b86a2a75bab89e82bf49e0b",
+          "tokens": 382,
+          "chunks": [
+            "mica.26.en"
+          ],
+          "embedded_at": "2026-06-11T07:07:10.583880Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.27",
+      "articulo": "27",
+      "title_es": "Obligación de actuar con honestidad imparcialidad y profesionalidad, en el mejor interés de los titulares de fichas referenciadas a activos",
+      "title_en": "Obligation to act honestly, fairly and professionally in the best interest of the holders of asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:9b7b6ee6b368b3a538118f75d5f5774e46a8301441d0f2d3ee168e3e85ed13a3",
+          "tokens": 127,
+          "chunks": [
+            "mica.27.es"
+          ],
+          "embedded_at": "2026-06-11T07:07:12.972774Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:e6c543903982b7b8967a0f09bd70ec0a77668df0239c671bf2caa2537be7ad42",
+          "tokens": 113,
+          "chunks": [
+            "mica.27.en"
+          ],
+          "embedded_at": "2026-06-11T07:07:15.609416Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.28",
+      "articulo": "28",
+      "title_es": "Publicación del libro blanco de criptoactivos",
+      "title_en": "Publication of the crypto-asset white paper",
+      "languages": {
+        "es": {
+          "hash": "sha256:eb0c40088b3fb55a338c5e60f1afc9a5bffa7f49445f6b4707f13c5c432d8943",
+          "tokens": 152,
+          "chunks": [
+            "mica.28.es"
+          ],
+          "embedded_at": "2026-06-11T07:07:18.337045Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:fe0252045d894e95675ab2c3cc872b82067c6c1c4304704fe35264193268d919",
+          "tokens": 144,
+          "chunks": [
+            "mica.28.en"
+          ],
+          "embedded_at": "2026-06-11T07:07:21.339389Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.29",
+      "articulo": "29",
+      "title_es": "Comunicaciones publicitarias",
+      "title_en": "Marketing communications",
+      "languages": {
+        "es": {
+          "hash": "sha256:87ec71e6033e9024d436f7c05903a14799d030bdbcfe3c9f65f7bd8f5aa36dc5",
+          "tokens": 327,
+          "chunks": [
+            "mica.29.es"
+          ],
+          "embedded_at": "2026-06-11T07:07:26.760338Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:6ca0328fa41faa7b6435fe3fcadf6cbb141658be4a914d7631816faa49c1f836",
+          "tokens": 310,
+          "chunks": [
+            "mica.29.en"
+          ],
+          "embedded_at": "2026-06-11T07:07:31.666300Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.30",
+      "articulo": "30",
+      "title_es": "Información de carácter continuo a los titulares de fichas referenciadas a activos",
+      "title_en": "Ongoing information to holders of asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:166ee06d9e2b5d03e2fe4f837e8ace5eb2ee06bdf8cc656ca1043105299c2222",
+          "tokens": 245,
+          "chunks": [
+            "mica.30.es"
+          ],
+          "embedded_at": "2026-06-11T07:07:36.126319Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:9769f841d50f42216dd4d0f40b91f07e604201eb3daa431043a7faa40858c84e",
+          "tokens": 225,
+          "chunks": [
+            "mica.30.en"
+          ],
+          "embedded_at": "2026-06-11T07:07:40.891826Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.31",
+      "articulo": "31",
+      "title_es": "Procedimiento de tramitación de reclamaciones",
+      "title_en": "Complaints-handling procedures",
+      "languages": {
+        "es": {
+          "hash": "sha256:fee2f728708748e59352c1d6f3bda2a925ed47d0c3f7f9457cd053dcee24635b",
+          "tokens": 507,
+          "chunks": [
+            "mica.31.es"
+          ],
+          "embedded_at": "2026-06-11T07:07:49.388926Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:442c2817f37b72f5fd5026f1ce1b6bf6b619b8330c89af922b40d1281a8f4a7e",
+          "tokens": 456,
+          "chunks": [
+            "mica.31.en"
+          ],
+          "embedded_at": "2026-06-11T07:07:57.509240Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.32",
+      "articulo": "32",
+      "title_es": "Detección, prevención, gestión y comunicación de los conflictos de intereses",
+      "title_en": "Identification, prevention, management and disclosure of conflicts of interest",
+      "languages": {
+        "es": {
+          "hash": "sha256:b8052e29581a97dca3fbbb55ee0ec7e551549e2afe6c86eef5a919529aea5eed",
+          "tokens": 470,
+          "chunks": [
+            "mica.32.es"
+          ],
+          "embedded_at": "2026-06-11T07:08:06.516663Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:aa909cbffc7d26d1d651446e8d4ef1029f25a581df2a91f332602469d25c212a",
+          "tokens": 433,
+          "chunks": [
+            "mica.32.en"
+          ],
+          "embedded_at": "2026-06-11T07:08:14.901345Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.33",
+      "articulo": "33",
+      "title_es": "Información a las autoridades competentes",
+      "title_en": "Notification of changes to management body",
+      "languages": {
+        "es": {
+          "hash": "sha256:f22fc11dad53431f7e27d8173256f56c28a0400a0e83d2ef15849c705b7f9400",
+          "tokens": 47,
+          "chunks": [
+            "mica.33.es"
+          ],
+          "embedded_at": "2026-06-11T07:08:16.361500Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:2bcf4f7220f03ecd91dd8bb321268028ab78064450fca1f69f264af592e7d748",
+          "tokens": 47,
+          "chunks": [
+            "mica.33.en"
+          ],
+          "embedded_at": "2026-06-11T07:08:17.897931Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.34",
+      "articulo": "34",
+      "title_es": "Sistema de gobernanza",
+      "title_en": "Governance arrangements",
+      "languages": {
+        "es": {
+          "hash": "sha256:24465bfc150b99e701e8c7ef93b6ba77c1c554f9d8a7fc60a23050fb4a03d297",
+          "tokens": 1759,
+          "chunks": [
+            "mica.34.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:08:26.709747Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:bd62c590403bc763b19e3e184c91f6586fe92420666f98c75e344c50a0c972d6",
+          "tokens": 1597,
+          "chunks": [
+            "mica.34.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:08:35.510052Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.35",
+      "articulo": "35",
+      "title_es": "Requisitos de fondos propios",
+      "title_en": "Own funds requirements",
+      "languages": {
+        "es": {
+          "hash": "sha256:a24221d21f3a56a913fb1cc020ab5c04fdbbda6e245b18d1c11a456dba86372b",
+          "tokens": 1232,
+          "chunks": [
+            "mica.35.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:08:44.206106Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ec12b382fdbf5fa87806d68c27a8da04c236fcb92aad5b8dc4e13299763812e1",
+          "tokens": 1133,
+          "chunks": [
+            "mica.35.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:08:53.876902Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.36",
+      "articulo": "36",
+      "title_es": "Obligación de disponer de una reserva de activos, y composición y gestión de dicha reserva de activos",
+      "title_en": "Obligation to have a reserve of assets, and composition and management of such reserve of assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:4f6bf69ac330249c985f235e97caf557f84b4993bc3a8b67429120ae50020da4",
+          "tokens": 1956,
+          "chunks": [
+            "mica.36.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:09:02.622060Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ef89f40ae7e5d3c546cb52557240bd1afb0bff97b9c096088cbabff501f5c178",
+          "tokens": 1778,
+          "chunks": [
+            "mica.36.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:09:13.169390Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.37",
+      "articulo": "37",
+      "title_es": "Custodia de los activos de reserva",
+      "title_en": "Custody of reserve assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:ad09ab77214c0bfdb69cf7ccf4b61e8bb6be58ee089064688b2e1a96e22d404e",
+          "tokens": 2182,
+          "chunks": [
+            "mica.37.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:09:23.184980Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:d13e4ef22cd6743855bebeca6c12eaa206b9457d2812d442d5dd19bb6e901cae",
+          "tokens": 1993,
+          "chunks": [
+            "mica.37.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:09:34.478551Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.38",
+      "articulo": "38",
+      "title_es": "Inversión de la reserva de activos",
+      "title_en": "Investment of the reserve of assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:ed5170d2230cbd4cf6b810c334f3e686605b34f38ec7b15255f2b81f1c0e5054",
+          "tokens": 742,
+          "chunks": [
+            "mica.38.es"
+          ],
+          "embedded_at": "2026-06-11T07:09:43.794131Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:56256672262b11216be7fbdc53f49674c704f90ef70c3622e790cd3689ecb0f8",
+          "tokens": 695,
+          "chunks": [
+            "mica.38.en"
+          ],
+          "embedded_at": "2026-06-11T07:09:55.130234Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.39",
+      "articulo": "39",
+      "title_es": "Derecho de reembolso",
+      "title_en": "Right of redemption",
+      "languages": {
+        "es": {
+          "hash": "sha256:eb88d66777e68ceb49d9e3cffb43e0830ed0a3981e25fd70c3604ccf0dcb7537",
+          "tokens": 537,
+          "chunks": [
+            "mica.39.es"
+          ],
+          "embedded_at": "2026-06-11T07:10:04.397817Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:303aa2c4b5b5423af61a5da6ab016e61cca1acea3908d7f62ef8f23d03559b6a",
+          "tokens": 509,
+          "chunks": [
+            "mica.39.en"
+          ],
+          "embedded_at": "2026-06-11T07:10:15.481790Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.40",
+      "articulo": "40",
+      "title_es": "Prohibición del devengo de intereses",
+      "title_en": "Prohibition of granting interest",
+      "languages": {
+        "es": {
+          "hash": "sha256:3a4244958478b910d75f08e0873fb70a12f20d8de947922617da80aed6129985",
+          "tokens": 172,
+          "chunks": [
+            "mica.40.es"
+          ],
+          "embedded_at": "2026-06-11T07:10:18.840367Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:2800363303014531805af9e4f585c0fabf1a691b39e994b63b402943edeabbda",
+          "tokens": 170,
+          "chunks": [
+            "mica.40.en"
+          ],
+          "embedded_at": "2026-06-11T07:10:22.989026Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.41",
+      "articulo": "41",
+      "title_es": "Evaluación de las adquisiciones propuestas de emisores de fichas referenciadas a activos",
+      "title_en": "Assessment of proposed acquisitions of issuers of asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:2ad46021c493b95a5456bb1d4d80bb9546e820671f95c57f51c792dfb6679f04",
+          "tokens": 894,
+          "chunks": [
+            "mica.41.es"
+          ],
+          "embedded_at": "2026-06-11T07:10:33.104023Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:89148f3afc46d316ae62ddcc35b447050ef516016c5c2286f9f5ffb649203e5e",
+          "tokens": 862,
+          "chunks": [
+            "mica.41.en"
+          ],
+          "embedded_at": "2026-06-11T07:10:43.566621Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.42",
+      "articulo": "42",
+      "title_es": "Contenido de la evaluación de las adquisiciones propuestas de emisores de fichas referenciadas a activos",
+      "title_en": "Content of the assessment of proposed acquisitions of issuers of asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:7872c8ef25ecac98fb1f85203106897910a255647392d132c1e57058894d6167",
+          "tokens": 597,
+          "chunks": [
+            "mica.42.es"
+          ],
+          "embedded_at": "2026-06-11T07:10:53.622291Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:38314d0bcdb71186e25b90b3462fad64f9714f70338793e2841c599dcc4aede4",
+          "tokens": 550,
+          "chunks": [
+            "mica.42.en"
+          ],
+          "embedded_at": "2026-06-11T07:11:05.639659Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.43",
+      "articulo": "43",
+      "title_es": "Clasificación de fichas referenciadas a activos como fichas significativas referenciadas a activos",
+      "title_en": "Classification of asset-referenced tokens as significant asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:ae6b34707bca1fd37a11a2509411b045f52a0ec3a425e0cf65cba9d80f0ad6ec",
+          "tokens": 1632,
+          "chunks": [
+            "mica.43.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:11:16.910660Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:2d7f2d12007f9fefe8776b11a558173c1907e3ef30fcf3348cd1b2c9032b7a4b",
+          "tokens": 1571,
+          "chunks": [
+            "mica.43.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:11:27.345613Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.44",
+      "articulo": "44",
+      "title_es": "Clasificación voluntaria de fichas referenciadas a activos como fichas significativas referenciadas a activos",
+      "title_en": "Voluntary classification of asset-referenced tokens as significant asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:8d794ef3d4c596674b4cdfff85add19b8b708906dd357f2a15eefaca8ed6b50c",
+          "tokens": 625,
+          "chunks": [
+            "mica.44.es"
+          ],
+          "embedded_at": "2026-06-11T07:11:38.433677Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:01b318e520d41824608dcbd64aaa4fb302ed225a9e222616759e994a309d0d50",
+          "tokens": 584,
+          "chunks": [
+            "mica.44.en"
+          ],
+          "embedded_at": "2026-06-11T07:11:48.930121Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.45",
+      "articulo": "45",
+      "title_es": "Obligaciones adicionales específicas de los emisores de fichas significativas referenciadas a activos",
+      "title_en": "Specific additional obligations for issuers of significant asset-referenced tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:0fbc4a9ee1e29ba50142e63eb46213a851c9d13a40bff70b56d716743ebd31ad",
+          "tokens": 984,
+          "chunks": [
+            "mica.45.es"
+          ],
+          "embedded_at": "2026-06-11T07:11:58.290426Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:c916d12132f30403e33db48319362fc32464003c8744353e89511370ed66505c",
+          "tokens": 867,
+          "chunks": [
+            "mica.45.en"
+          ],
+          "embedded_at": "2026-06-11T07:12:11.031097Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.46",
+      "articulo": "46",
+      "title_es": "Plan de recuperación",
+      "title_en": "Recovery plan",
+      "languages": {
+        "es": {
+          "hash": "sha256:f39382b8aa6b246dacfcd8dd170292cea92095b6e556a97073d3c43b039efe6f",
+          "tokens": 733,
+          "chunks": [
+            "mica.46.es"
+          ],
+          "embedded_at": "2026-06-11T07:12:20.694336Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:9070177911f202d1ad03b4a2820cbaf0a6038fe7adf4afd60ed5c888f4de5044",
+          "tokens": 676,
+          "chunks": [
+            "mica.46.en"
+          ],
+          "embedded_at": "2026-06-11T07:12:30.448515Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.47",
+      "articulo": "47",
+      "title_es": "Plan de reembolso",
+      "title_en": "Redemption plan",
+      "languages": {
+        "es": {
+          "hash": "sha256:d8f61ca3ab2851ace909e416239ce242a45aa2bff27630ce86b3186d42ff8dc1",
+          "tokens": 740,
+          "chunks": [
+            "mica.47.es"
+          ],
+          "embedded_at": "2026-06-11T07:12:40.087585Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:1948f7107de8fbc8e90efabf66f49f5bcdb90e1c2cd1fa8b4c82cf588871dd88",
+          "tokens": 695,
+          "chunks": [
+            "mica.47.en"
+          ],
+          "embedded_at": "2026-06-11T07:12:49.306002Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.48",
+      "articulo": "48",
+      "title_es": "Requisitos para la oferta pública o admisión a negociación de fichas de dinero electrónico",
+      "title_en": "Requirements for the offer to the public or admission to trading of e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:39136c7f70629f84c72afc96f3c0abe8d3e7a33a72e238c12f6ce8add1506de0",
+          "tokens": 430,
+          "chunks": [
+            "mica.48.es"
+          ],
+          "embedded_at": "2026-06-11T07:12:57.042322Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:41f9cc277bdd8aeba4ecb3935958c8152fa0981ce7dd0781badaf6de3df5593a",
+          "tokens": 425,
+          "chunks": [
+            "mica.48.en"
+          ],
+          "embedded_at": "2026-06-11T07:13:05.328546Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.49",
+      "articulo": "49",
+      "title_es": "Emisión y reembolso de las fichas de dinero electrónico",
+      "title_en": "Issuance and redeemability of e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:bc13083fa0fe5e92423fd903424d4fc1ffe611fcd9a5d6178c6f30716ba3f137",
+          "tokens": 267,
+          "chunks": [
+            "mica.49.es"
+          ],
+          "embedded_at": "2026-06-11T07:13:10.343422Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:2d621fbefcad9586567e2a732e08411bdbcc21428f2c5d779a72f997bae501bc",
+          "tokens": 265,
+          "chunks": [
+            "mica.49.en"
+          ],
+          "embedded_at": "2026-06-11T07:13:15.064930Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.50",
+      "articulo": "50",
+      "title_es": "Prohibición del devengo de intereses",
+      "title_en": "Prohibition of granting interest",
+      "languages": {
+        "es": {
+          "hash": "sha256:68658bbad8c593195446c4c77d7178fd1ee3dd6cde880c69c16b807faefb0654",
+          "tokens": 176,
+          "chunks": [
+            "mica.50.es"
+          ],
+          "embedded_at": "2026-06-11T07:13:18.855411Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:236a861cd285ce45ea643f56650821db130c2b13b5c23d032fd3eebe8d16d776",
+          "tokens": 179,
+          "chunks": [
+            "mica.50.en"
+          ],
+          "embedded_at": "2026-06-11T07:13:23.154858Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.51",
+      "articulo": "51",
+      "title_es": "Contenido y forma del libro blanco de criptoactivos relativo a fichas de dinero electrónico",
+      "title_en": "Content and form of the crypto-asset white paper for e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:a105385d592e5f2e4628e909ec3f6b78ac50106f07de623a3838b9564a803878",
+          "tokens": 1813,
+          "chunks": [
+            "mica.51.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:13:32.372706Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:d2bc149537412dbfdb25b08745397cfac76ac4e2df192a51dd9c381f55662dab",
+          "tokens": 1749,
+          "chunks": [
+            "mica.51.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:13:41.719861Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.52",
+      "articulo": "52",
+      "title_es": "Responsabilidad de los emisores de fichas de dinero electrónico respecto de la información facilitada en el libro blanco de criptoactivos",
+      "title_en": "Liability of issuers of e-money tokens for the information given in a crypto-asset white paper",
+      "languages": {
+        "es": {
+          "hash": "sha256:ffa953681d82bf4dce8b5a3a709218505a44f2d94c72af712042ca5d2e03e30c",
+          "tokens": 385,
+          "chunks": [
+            "mica.52.es"
+          ],
+          "embedded_at": "2026-06-11T07:13:48.871421Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:cacaa8dbe156f6e189c1abdbc147f80fe60202e074003e2c01c8cfda8bad0788",
+          "tokens": 390,
+          "chunks": [
+            "mica.52.en"
+          ],
+          "embedded_at": "2026-06-11T07:13:56.127538Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.53",
+      "articulo": "53",
+      "title_es": "Comunicaciones publicitarias",
+      "title_en": "Marketing communications",
+      "languages": {
+        "es": {
+          "hash": "sha256:92433890d6d771dbbeb99a2e5e8c5136fb22f3c618af7659c80fc4a50eedbe6f",
+          "tokens": 326,
+          "chunks": [
+            "mica.53.es"
+          ],
+          "embedded_at": "2026-06-11T07:14:01.693418Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:f87e6c90a4d9e616854817031a442eef23a9df3532e8ff3f90c2d693ddce5d90",
+          "tokens": 308,
+          "chunks": [
+            "mica.53.en"
+          ],
+          "embedded_at": "2026-06-11T07:14:08.419151Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.54",
+      "articulo": "54",
+      "title_es": "Inversión de los fondos recibidos por los emisores a cambio de las fichas de dinero electrónico",
+      "title_en": "Investment of funds received in exchange for e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:6bcf852a352414aaba599fe8a48440de6c329d727841ceb226b6acfa22316fd8",
+          "tokens": 162,
+          "chunks": [
+            "mica.54.es"
+          ],
+          "embedded_at": "2026-06-11T07:14:12.325825Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:11dc928b1dfcd69af7e425385d96d5c102a48aa76fadcad02d04a38efb343764",
+          "tokens": 145,
+          "chunks": [
+            "mica.54.en"
+          ],
+          "embedded_at": "2026-06-11T07:14:16.292212Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.55",
+      "articulo": "55",
+      "title_es": "Planes de recuperación y de reembolso",
+      "title_en": "Recovery and redemption plans",
+      "languages": {
+        "es": {
+          "hash": "sha256:9fadd8fb9b30b05126f63285a6519f8113eb46d12a73d2c152ed35ce146b96b8",
+          "tokens": 159,
+          "chunks": [
+            "mica.55.es"
+          ],
+          "embedded_at": "2026-06-11T07:14:19.257366Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:f5f437e11c35f3ff31c1953345387b215e920287084e4077a1d8222df3262b5b",
+          "tokens": 148,
+          "chunks": [
+            "mica.55.en"
+          ],
+          "embedded_at": "2026-06-11T07:14:23.033314Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.56",
+      "articulo": "56",
+      "title_es": "Clasificación de fichas de dinero electrónico como fichas significativas de dinero electrónico",
+      "title_en": "Classification of e-money tokens as significant e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:80d7b86aac3a928ae6a8344d12b4ca9581cc6cf2630f0b4b940a536ad22f9280",
+          "tokens": 1330,
+          "chunks": [
+            "mica.56.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:14:33.732462Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:872eee66973f5da133e4d6cb15794a0db0c565572cdb501fab5cc13e644deb54",
+          "tokens": 1252,
+          "chunks": [
+            "mica.56.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:14:42.894063Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.57",
+      "articulo": "57",
+      "title_es": "Clasificación voluntaria de fichas de dinero electrónico como fichas significativas de dinero electrónico",
+      "title_en": "Voluntary classification of e-money tokens as significant e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:aeb33c35f98ce54e1076c8f05084ce6e14a7bb980737176965a12ee2d6d5fce9",
+          "tokens": 772,
+          "chunks": [
+            "mica.57.es"
+          ],
+          "embedded_at": "2026-06-11T07:14:52.253905Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:f0edf6fe4db25f08bbd713048825a949d519eeb4eddc1190467a342d03c698a9",
+          "tokens": 726,
+          "chunks": [
+            "mica.57.en"
+          ],
+          "embedded_at": "2026-06-11T07:15:01.203602Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.58",
+      "articulo": "58",
+      "title_es": "Obligaciones adicionales específicas de los emisores de fichas de dinero electrónico",
+      "title_en": "Specific additional obligations for issuers of e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:d0036b5512ddbc0a2ec85b2efea36f4b7852919c6ee058c31977dfe46871c188",
+          "tokens": 320,
+          "chunks": [
+            "mica.58.es"
+          ],
+          "embedded_at": "2026-06-11T07:15:06.476083Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:72e5f8c5a165480c182b1a489054284c2b9772656ff7ab6880fddc1b18163ac5",
+          "tokens": 288,
+          "chunks": [
+            "mica.58.en"
+          ],
+          "embedded_at": "2026-06-11T07:15:11.452350Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.59",
+      "articulo": "59",
+      "title_es": "Autorización",
+      "title_en": "Authorisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:bf04776c700bc21c9d4848d993aeeb599963e23a89f4f1c8312a302631f0ffc0",
+          "tokens": 590,
+          "chunks": [
+            "mica.59.es"
+          ],
+          "embedded_at": "2026-06-11T07:15:20.319363Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:5537c7f33d6ad4415b8bb5fd35d230ccb10761223b22158fb7c3f40fcfbdfad4",
+          "tokens": 513,
+          "chunks": [
+            "mica.59.en"
+          ],
+          "embedded_at": "2026-06-11T07:15:28.812524Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.60",
+      "articulo": "60",
+      "title_es": "Prestación de servicios de criptoactivos por determinadas entidades financieras",
+      "title_en": "Provision of crypto-asset services by certain financial entities",
+      "languages": {
+        "es": {
+          "hash": "sha256:73b932aea6848cee9c502da9f46521cde7c4fb8bce387b18170c4521bcb5b07e",
+          "tokens": 2550,
+          "chunks": [
+            "mica.60.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:15:37.340264Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:508bbdec57b716cc51ca07e1664bea6318d4a22c57832bc3d4798d38e35ee859",
+          "tokens": 2357,
+          "chunks": [
+            "mica.60.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:15:46.601870Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.61",
+      "articulo": "61",
+      "title_es": "Prestación de servicios de criptoactivos por iniciativa exclusiva del cliente",
+      "title_en": "Provision of crypto-asset services at the exclusive initiative of the client",
+      "languages": {
+        "es": {
+          "hash": "sha256:42e09c32c768ffed1d2cfd4ecbb2170486276c26b37d497c8f54c54cc4a53578",
+          "tokens": 488,
+          "chunks": [
+            "mica.61.es"
+          ],
+          "embedded_at": "2026-06-11T07:15:54.981057Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:f67b7f1aa58b4d1398fc7992c9f3725d5cfdec8d5b9018ef02ba78c412a135cb",
+          "tokens": 411,
+          "chunks": [
+            "mica.61.en"
+          ],
+          "embedded_at": "2026-06-11T07:16:01.844078Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.62",
+      "articulo": "62",
+      "title_es": "Solicitud de autorización como proveedor de servicios de criptoactivos",
+      "title_en": "Application for authorisation as a crypto-asset service provider",
+      "languages": {
+        "es": {
+          "hash": "sha256:dc5e1dacfdbffb575e0bae15836d57c257992a69047f975d010d4c380ce03703",
+          "tokens": 1591,
+          "chunks": [
+            "mica.62.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:16:10.154071Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ca2b87cb282c68d367ff76a66df74b859545bf8232ddf60ecf724d597c02193a",
+          "tokens": 1445,
+          "chunks": [
+            "mica.62.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:16:18.713630Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.63",
+      "articulo": "63",
+      "title_es": "Evaluación de la solicitud de autorización y concesión o denegación de la autorización",
+      "title_en": "Assessment of the application for authorisation and grant or refusal of authorisation",
+      "languages": {
+        "es": {
+          "hash": "sha256:7b462e4647044564200f976e177daccff6a4e39756a1735da981a74af7a31a6e",
+          "tokens": 1611,
+          "chunks": [
+            "mica.63.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:16:26.946799Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:dc23d1a0a1670d386a483168c55e8c61dcd0e6919e606d10420d170189b2883b",
+          "tokens": 1383,
+          "chunks": [
+            "mica.63.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:16:35.334895Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.64",
+      "articulo": "64",
+      "title_es": "Revocación de la autorización como proveedor de servicios de criptoactivos",
+      "title_en": "Withdrawal of authorisation of a crypto-asset service provider",
+      "languages": {
+        "es": {
+          "hash": "sha256:ab572ff6017037bc45f0d20d1bb04ef0004e3555d7d04e4615b1838790b1b4f4",
+          "tokens": 785,
+          "chunks": [
+            "mica.64.es"
+          ],
+          "embedded_at": "2026-06-11T07:16:43.921662Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:76b6c3be922b73e4a1f8eb57b69f01194bbb4e594922d89717063dea500d4be8",
+          "tokens": 706,
+          "chunks": [
+            "mica.64.en"
+          ],
+          "embedded_at": "2026-06-11T07:16:52.220579Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.65",
+      "articulo": "65",
+      "title_es": "Prestación transfronteriza de servicios de criptoactivos",
+      "title_en": "Cross-border provision of crypto-asset services",
+      "languages": {
+        "es": {
+          "hash": "sha256:11951154d5af3da184389e59a2e085cbb6001efca292bc80de0d3924547a8edd",
+          "tokens": 324,
+          "chunks": [
+            "mica.65.es"
+          ],
+          "embedded_at": "2026-06-11T07:16:57.770824Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:87fd1f35a1b329d411b515237d415a81960202693aab7809a57883eddd2c10fd",
+          "tokens": 285,
+          "chunks": [
+            "mica.65.en"
+          ],
+          "embedded_at": "2026-06-11T07:17:03.513426Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.66",
+      "articulo": "66",
+      "title_es": "Obligación de actuar con honestidad, imparcialidad y profesionalidad y en el mejor interés de los clientes",
+      "title_en": "Obligation to act honestly, fairly and professionally in the best interests of clients",
+      "languages": {
+        "es": {
+          "hash": "sha256:f400a066ed864897b51eaa5c4e2aaf23228e935d89760b208afdbd8cc69afdb8",
+          "tokens": 631,
+          "chunks": [
+            "mica.66.es"
+          ],
+          "embedded_at": "2026-06-11T07:17:12.763208Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:5182a63a688b010d0b594db0d5f1fa9f71f2241fff4826ae05bf3b1d34dffe7f",
+          "tokens": 559,
+          "chunks": [
+            "mica.66.en"
+          ],
+          "embedded_at": "2026-06-11T07:17:21.244700Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.67",
+      "articulo": "67",
+      "title_es": "Requisitos prudenciales",
+      "title_en": "Prudential requirements",
+      "languages": {
+        "es": {
+          "hash": "sha256:37f22186b9dba9bf8e26dcdbcb353c8c618ad174155190621dc79ab49978dc90",
+          "tokens": 858,
+          "chunks": [
+            "mica.67.es"
+          ],
+          "embedded_at": "2026-06-11T07:17:29.669478Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:43a3eb0b916972da3b7115a331fdba1490cb3867e5a7f11a63cd1a0a2f03f8b1",
+          "tokens": 805,
+          "chunks": [
+            "mica.67.en"
+          ],
+          "embedded_at": "2026-06-11T07:17:38.073618Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.68",
+      "articulo": "68",
+      "title_es": "Disposiciones de gobernanza",
+      "title_en": "Governance arrangements",
+      "languages": {
+        "es": {
+          "hash": "sha256:b7b51cf4e3ccb089ca2393200768e3453ea7ef154aed6223be278ec223f548a7",
+          "tokens": 1291,
+          "chunks": [
+            "mica.68.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:17:46.479174Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:3277cf88dedf89536e97864e4d9f3618a8edcefb3b66561a6de7d0313e1f9e81",
+          "tokens": 1136,
+          "chunks": [
+            "mica.68.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:17:55.223883Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.69",
+      "articulo": "69",
+      "title_es": "Información a las autoridades competentes",
+      "title_en": "Information to competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:a32d4b57ec00836ba8d9a0618cc9f38aea3f7201713676a9f55eac43b29ac837",
+          "tokens": 58,
+          "chunks": [
+            "mica.69.es"
+          ],
+          "embedded_at": "2026-06-11T07:17:56.729461Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:d9ad91097edb70acab7f34a3b2851501831ece0206fa1e9ea323e7dffea52573",
+          "tokens": 55,
+          "chunks": [
+            "mica.69.en"
+          ],
+          "embedded_at": "2026-06-11T07:17:58.353504Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.70",
+      "articulo": "70",
+      "title_es": "Guarda de los criptoactivos y fondos de clientes",
+      "title_en": "Safekeeping of clients’ crypto-assets and funds",
+      "languages": {
+        "es": {
+          "hash": "sha256:ab5e3c9f8d4829d22f5e1c98eb8966ec189cf06129e388bd76fcb2f555f66801",
+          "tokens": 480,
+          "chunks": [
+            "mica.70.es"
+          ],
+          "embedded_at": "2026-06-11T07:18:06.391380Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:fe79071a76dad158061565165bf0af0f20362a6cd57e111948a5695c8a4764f9",
+          "tokens": 417,
+          "chunks": [
+            "mica.70.en"
+          ],
+          "embedded_at": "2026-06-11T07:18:14.124831Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.71",
+      "articulo": "71",
+      "title_es": "Procedimiento de tramitación de reclamaciones",
+      "title_en": "Complaints-handling procedures",
+      "languages": {
+        "es": {
+          "hash": "sha256:c048b31d080903f1c1a3add764499e9f0bb1b4beb9fdd60f65e2f896f09478f9",
+          "tokens": 336,
+          "chunks": [
+            "mica.71.es"
+          ],
+          "embedded_at": "2026-06-11T07:18:19.714265Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:bb097d3e684e9da96759bcce8c4f24fd6304c2a88c0ac39304239d0be88e7d84",
+          "tokens": 273,
+          "chunks": [
+            "mica.71.en"
+          ],
+          "embedded_at": "2026-06-11T07:18:24.225438Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.72",
+      "articulo": "72",
+      "title_es": "Detección, prevención, gestión y comunicación de los conflictos de intereses",
+      "title_en": "Identification, prevention, management and disclosure of conflicts of interest",
+      "languages": {
+        "es": {
+          "hash": "sha256:14030ae8bd1f4efd9c5ed1876f70715cb2f4170f66cca66b3e4e020c1f1902a4",
+          "tokens": 493,
+          "chunks": [
+            "mica.72.es"
+          ],
+          "embedded_at": "2026-06-11T07:18:32.509244Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:67c3844dde0a3b8686a892e71d446813810ebc0ae3bca4b4c5b172ee6f3d9b6c",
+          "tokens": 451,
+          "chunks": [
+            "mica.72.en"
+          ],
+          "embedded_at": "2026-06-11T07:18:39.981727Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.73",
+      "articulo": "73",
+      "title_es": "Externalización",
+      "title_en": "Outsourcing",
+      "languages": {
+        "es": {
+          "hash": "sha256:230e9d9df97ae0efc2a42c518952868b3c9a83bc749c2054c1e584986cf6563e",
+          "tokens": 602,
+          "chunks": [
+            "mica.73.es"
+          ],
+          "embedded_at": "2026-06-11T07:18:48.486335Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ad678c3b45dc4781a0264ebec0e64a56a822f1437964d7dd2393b984f9ef5464",
+          "tokens": 524,
+          "chunks": [
+            "mica.73.en"
+          ],
+          "embedded_at": "2026-06-11T07:18:56.860011Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.74",
+      "articulo": "74",
+      "title_es": "Liquidación ordenada de los proveedores de servicios de criptoactivos",
+      "title_en": "Orderly wind-down of crypto-asset service providers",
+      "languages": {
+        "es": {
+          "hash": "sha256:39bf61cc91c574766279b75169ac60721d03a44418060a72497ecefe3ce6045d",
+          "tokens": 108,
+          "chunks": [
+            "mica.74.es"
+          ],
+          "embedded_at": "2026-06-11T07:18:59.211682Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:db68feae840b07f1b66fd512ade7906dc2223dd7f7685b53e3c15bfa28e8ef74",
+          "tokens": 96,
+          "chunks": [
+            "mica.74.en"
+          ],
+          "embedded_at": "2026-06-11T07:19:01.303219Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.75",
+      "articulo": "75",
+      "title_es": "Custodia y administración de criptoactivos por cuenta de clientes",
+      "title_en": "Providing custody and administration of crypto-assets on behalf of clients",
+      "languages": {
+        "es": {
+          "hash": "sha256:b71b87d963204488ce1fdc7c8dacb437306c494c6e5b896a0bfb8887a2e4fc30",
+          "tokens": 1421,
+          "chunks": [
+            "mica.75.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:19:10.156632Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:26b3d448413f56c67797d5467fd986f0af6403721323ada70f2c1a6aadf0e27c",
+          "tokens": 1305,
+          "chunks": [
+            "mica.75.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:19:19.319902Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.76",
+      "articulo": "76",
+      "title_es": "Gestión de una plataforma de negociación de criptoactivos",
+      "title_en": "Operation of a trading platform for crypto-assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:173e2d46af16f52fbc2aa00c2d2a8d4e824081bd3c15aaf2693b4efe82aa4f03",
+          "tokens": 2111,
+          "chunks": [
+            "mica.76.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:19:27.847524Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:bb2298d8da3788158b0d1baca45ad26bc9b7ad8c7cc6e2a15c15262b71e99c0c",
+          "tokens": 1830,
+          "chunks": [
+            "mica.76.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:19:36.246828Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.77",
+      "articulo": "77",
+      "title_es": "Canje de criptoactivos por fondos u otros criptoactivos",
+      "title_en": "Exchange of crypto-assets for funds or other crypto-assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:b436efbfb38b9eecbd9c2f789d7bea45b28d6141af4f6a8b5435983469d5a4c9",
+          "tokens": 269,
+          "chunks": [
+            "mica.77.es"
+          ],
+          "embedded_at": "2026-06-11T07:19:40.922737Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:22573c555519c7fc77600fda140b569a06b0eaeda8ede8053fe4a9c3aba5ed2e",
+          "tokens": 256,
+          "chunks": [
+            "mica.77.en"
+          ],
+          "embedded_at": "2026-06-11T07:19:45.276713Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.78",
+      "articulo": "78",
+      "title_es": "Ejecución de órdenes relacionadas con criptoactivos por cuenta de clientes",
+      "title_en": "Execution of orders for crypto-assets on behalf of clients",
+      "languages": {
+        "es": {
+          "hash": "sha256:d9806a662a407606339b21c8f1bae79b27347b478ebbd47f0509f9e48cca8e2f",
+          "tokens": 829,
+          "chunks": [
+            "mica.78.es"
+          ],
+          "embedded_at": "2026-06-11T07:19:54.145709Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:0cb5b69ef007ade9d48f1c164060a8e0fa85d5907b46a60c9b103c7b7992236d",
+          "tokens": 694,
+          "chunks": [
+            "mica.78.en"
+          ],
+          "embedded_at": "2026-06-11T07:20:02.895708Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.79",
+      "articulo": "79",
+      "title_es": "Colocación de criptoactivos",
+      "title_en": "Placing of crypto-assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:04354c57d199b9b75d6fd57ae046a8e3b05ea4b2082da1311d454c44c9405e26",
+          "tokens": 328,
+          "chunks": [
+            "mica.79.es"
+          ],
+          "embedded_at": "2026-06-11T07:20:08.875309Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:dd089fa2a295902152e6a344fa7feca881eb535432f51fcbcaea93700187e4cf",
+          "tokens": 313,
+          "chunks": [
+            "mica.79.en"
+          ],
+          "embedded_at": "2026-06-11T07:20:14.239867Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.80",
+      "articulo": "80",
+      "title_es": "Recepción y transmisión de órdenes relacionadas con criptoactivos por cuenta de clientes",
+      "title_en": "Reception and transmission of orders for crypto-assets on behalf of clients",
+      "languages": {
+        "es": {
+          "hash": "sha256:462a499e32c81f5cba38b8d0ea94914d2e0b62c187abe9d73f8e448e14a26a57",
+          "tokens": 232,
+          "chunks": [
+            "mica.80.es"
+          ],
+          "embedded_at": "2026-06-11T07:20:18.653215Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:701bf8f25cc4b2bfc5c70bf2c16ae4187115ea73052a3fbab3f2e0ae9c2e6c11",
+          "tokens": 186,
+          "chunks": [
+            "mica.80.en"
+          ],
+          "embedded_at": "2026-06-11T07:20:22.732762Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.81",
+      "articulo": "81",
+      "title_es": "Prestación de asesoramiento en materia de criptoactivos y de servicios de gestión de carteras de criptoactivos",
+      "title_en": "Providing advice on crypto-assets and providing portfolio management of crypto-assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:07bbe75fb8f9760a9a4c3e7c8f9ebee83f4c0afda5ac12d0dcff74a69ab5d23b",
+          "tokens": 2190,
+          "chunks": [
+            "mica.81.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:20:31.268739Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:598ee2060f3097773556bf399e199faa649a73409c2a9c44f193e3e345579c67",
+          "tokens": 1933,
+          "chunks": [
+            "mica.81.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:20:39.773425Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.82",
+      "articulo": "82",
+      "title_es": "Prestación de servicios de transferencia de criptoactivos por cuenta de clientes",
+      "title_en": "Providing transfer services for crypto-assets on behalf of clients",
+      "languages": {
+        "es": {
+          "hash": "sha256:83bae45e6c7cafd18f6be06d5e87ed3c327d5f36e1e99126e890ca5d78b064b0",
+          "tokens": 220,
+          "chunks": [
+            "mica.82.es"
+          ],
+          "embedded_at": "2026-06-11T07:20:43.550178Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:afa09fb7f53ca050c672d98e65ff0daaed4fe889c25ed1c7501e72b118b23c2b",
+          "tokens": 186,
+          "chunks": [
+            "mica.82.en"
+          ],
+          "embedded_at": "2026-06-11T07:20:46.830323Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.83",
+      "articulo": "83",
+      "title_es": "Evaluación de las adquisiciones propuestas de proveedores de servicios de criptoactivos",
+      "title_en": "Assessment of proposed acquisitions of crypto-asset service providers",
+      "languages": {
+        "es": {
+          "hash": "sha256:ce2b5a5f1659274b832b2e529880ff0296815984c5fb9a0a774e08e036c98ba1",
+          "tokens": 951,
+          "chunks": [
+            "mica.83.es"
+          ],
+          "embedded_at": "2026-06-11T07:20:55.324746Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:2a03d18a34633f786fc0b23aa4f94a17c215bee77dc37928c30f028e070a5b55",
+          "tokens": 903,
+          "chunks": [
+            "mica.83.en"
+          ],
+          "embedded_at": "2026-06-11T07:21:03.969616Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.84",
+      "articulo": "84",
+      "title_es": "Contenido de la evaluación de las adquisiciones propuestas de proveedores de servicios de criptoactivos",
+      "title_en": "Content of the assessment of proposed acquisitions of crypto-asset service providers",
+      "languages": {
+        "es": {
+          "hash": "sha256:5dbc4f816f936c3a73211f0c9a943f804c7739a6bed4fdc435a0058467f1d3ee",
+          "tokens": 583,
+          "chunks": [
+            "mica.84.es"
+          ],
+          "embedded_at": "2026-06-11T07:21:12.250333Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:1a48c675b9bdf82cbf2c60ea454430cce2980134403031d968a5af3ef181e742",
+          "tokens": 534,
+          "chunks": [
+            "mica.84.en"
+          ],
+          "embedded_at": "2026-06-11T07:21:20.932319Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.85",
+      "articulo": "85",
+      "title_es": "Identificación de proveedores de servicios de criptoactivos significativos",
+      "title_en": "Identification of significant crypto-asset service providers",
+      "languages": {
+        "es": {
+          "hash": "sha256:398726a9d7fea95a645e1569f7881560cec6e9d5367f1f5ade9002f7ee2223a5",
+          "tokens": 429,
+          "chunks": [
+            "mica.85.es"
+          ],
+          "embedded_at": "2026-06-11T07:21:28.298960Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:7101cb7789eacc0ed4733c95ba156789d00ae219da3511dfc2f4983e8249f8da",
+          "tokens": 397,
+          "chunks": [
+            "mica.85.en"
+          ],
+          "embedded_at": "2026-06-11T07:21:36.050498Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.86",
+      "articulo": "86",
+      "title_es": "Ámbito de aplicación de las normas sobre abuso de mercado",
+      "title_en": "Scope of the rules on market abuse",
+      "languages": {
+        "es": {
+          "hash": "sha256:2c4349485e1925d0095faa550a088eefe2a61422d854fbc0a8e4d62eb8e50e60",
+          "tokens": 131,
+          "chunks": [
+            "mica.86.es"
+          ],
+          "embedded_at": "2026-06-11T07:21:38.705096Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:f06e52896645c7537fa1e23420c7eaeed7727b026dfea8bf3d39dc4f5cb1e713",
+          "tokens": 118,
+          "chunks": [
+            "mica.86.en"
+          ],
+          "embedded_at": "2026-06-11T07:21:41.118164Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.87",
+      "articulo": "87",
+      "title_es": "Información privilegiada",
+      "title_en": "Inside information",
+      "languages": {
+        "es": {
+          "hash": "sha256:9724789bb273f176fecfe01582132648d5e46e5b051dce338c708ec2d8bd6840",
+          "tokens": 514,
+          "chunks": [
+            "mica.87.es"
+          ],
+          "embedded_at": "2026-06-11T07:21:49.608850Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:6b145a0a79547cb3fe3c547d5f765fa69272741cbb95087578352a6ada118073",
+          "tokens": 511,
+          "chunks": [
+            "mica.87.en"
+          ],
+          "embedded_at": "2026-06-11T07:21:58.355759Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.88",
+      "articulo": "88",
+      "title_es": "Difusión pública de información privilegiada",
+      "title_en": "Public disclosure of inside information",
+      "languages": {
+        "es": {
+          "hash": "sha256:87b80db6e8ca09e288ee5966ad3f9b57d63f9f9a9dd48cdc2307ce3bd940977d",
+          "tokens": 563,
+          "chunks": [
+            "mica.88.es"
+          ],
+          "embedded_at": "2026-06-11T07:22:07.043164Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:4e511170220c9170552a4aec58e6f2d4fbfb80bfc328e897d28fa8654b328fb4",
+          "tokens": 512,
+          "chunks": [
+            "mica.88.en"
+          ],
+          "embedded_at": "2026-06-11T07:22:16.196031Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.89",
+      "articulo": "89",
+      "title_es": "Prohibición de operaciones con información privilegiada",
+      "title_en": "Prohibition of insider dealing",
+      "languages": {
+        "es": {
+          "hash": "sha256:ee884ef9478b9e5856e8044392e382cfa520f29edb2ba07a2cd8ebc69ffe72d1",
+          "tokens": 604,
+          "chunks": [
+            "mica.89.es"
+          ],
+          "embedded_at": "2026-06-11T07:22:24.936161Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:69743e61690e4868b27946a1dc8653130856d59624a6e48424278bff3bc80ebd",
+          "tokens": 585,
+          "chunks": [
+            "mica.89.en"
+          ],
+          "embedded_at": "2026-06-11T07:22:33.598649Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.90",
+      "articulo": "90",
+      "title_es": "Prohibición de comunicación ilícita de información privilegiada",
+      "title_en": "Prohibition of unlawful disclosure of inside information",
+      "languages": {
+        "es": {
+          "hash": "sha256:a4f5d7ff15ab0c05400302880f85fc2816a584aeb88e3dbca0492538addafe2a",
+          "tokens": 109,
+          "chunks": [
+            "mica.90.es"
+          ],
+          "embedded_at": "2026-06-11T07:22:35.935902Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:5e65597f1e5373d2207b315405c0052819b828197d5e4c30e5520c169e393c3a",
+          "tokens": 98,
+          "chunks": [
+            "mica.90.en"
+          ],
+          "embedded_at": "2026-06-11T07:22:38.760328Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.91",
+      "articulo": "91",
+      "title_es": "Prohibición de manipulación de mercado",
+      "title_en": "Prohibition of market manipulation",
+      "languages": {
+        "es": {
+          "hash": "sha256:26367b464fa03d778b741dc6c0e04f2db97d0d856718e7bdade3362e7c884d90",
+          "tokens": 653,
+          "chunks": [
+            "mica.91.es"
+          ],
+          "embedded_at": "2026-06-11T07:22:47.413114Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ea8f829761893324b3a0a7076bbaf367a89949483e69d29ab5528c43e8fcefe7",
+          "tokens": 699,
+          "chunks": [
+            "mica.91.en"
+          ],
+          "embedded_at": "2026-06-11T07:22:56.064401Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.92",
+      "articulo": "92",
+      "title_es": "Prevención y detección del abuso de mercado",
+      "title_en": "Prevention and detection of market abuse",
+      "languages": {
+        "es": {
+          "hash": "sha256:46c46448f61438201e510535e38448758e7ccb3423ee94635237cad4651f1fdc",
+          "tokens": 447,
+          "chunks": [
+            "mica.92.es"
+          ],
+          "embedded_at": "2026-06-11T07:23:03.863485Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:d9f84e0da11d4c23cef15a9cf68be15399a4e95f5a24d84f5f2bdd371b3ea6c7",
+          "tokens": 385,
+          "chunks": [
+            "mica.92.en"
+          ],
+          "embedded_at": "2026-06-11T07:23:11.036271Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.93",
+      "articulo": "93",
+      "title_es": "Autoridades competentes",
+      "title_en": "Competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:72c9a858cfe900f45cf7ddbc04139417bd5a2ca946adad54a42e6b63732deb4b",
+          "tokens": 165,
+          "chunks": [
+            "mica.93.es"
+          ],
+          "embedded_at": "2026-06-11T07:23:14.090606Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:481e69486383eec5b9c3cbff7567041f209210b38be30da24e0fe2ced8c6b88d",
+          "tokens": 151,
+          "chunks": [
+            "mica.93.en"
+          ],
+          "embedded_at": "2026-06-11T07:23:17.003892Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.94",
+      "articulo": "94",
+      "title_es": "Facultades de las autoridades competentes",
+      "title_en": "Powers of competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:8e5b94066c7323d1571852b61510fd2d4243f02154b323abd8964ae2c3eb5ec2",
+          "tokens": 2756,
+          "chunks": [
+            "mica.94.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:23:25.670516Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:20c47675a55d4220d06ac4972974eee62d380dfce95d0637552a838f02c14bd7",
+          "tokens": 2545,
+          "chunks": [
+            "mica.94.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:23:34.198956Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.95",
+      "articulo": "95",
+      "title_es": "Cooperación entre las autoridades competentes",
+      "title_en": "Cooperation between competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:e5e7f95f3cef279829cb2befe2243398ff6917c3b23c49c81e460398835687ae",
+          "tokens": 1422,
+          "chunks": [
+            "mica.95.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:23:42.655659Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ca7acf3923cf7e2f6555bc61ab28f50b298b2d2b7ecaa4e9a3f7bbd56f07827f",
+          "tokens": 1341,
+          "chunks": [
+            "mica.95.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:23:52.010211Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.96",
+      "articulo": "96",
+      "title_es": "Cooperación con la ABE y la AEVM",
+      "title_en": "Cooperation with EBA and ESMA",
+      "languages": {
+        "es": {
+          "hash": "sha256:6f93ccd735eac948879c42361744061ddd1a16509fa6714fb4e02a1b02ea2268",
+          "tokens": 299,
+          "chunks": [
+            "mica.96.es"
+          ],
+          "embedded_at": "2026-06-11T07:23:57.024363Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:319b2ce72976d847ac493d9f49b0d0b0b25ff90af51385e3f7961ccbf4177b3b",
+          "tokens": 254,
+          "chunks": [
+            "mica.96.en"
+          ],
+          "embedded_at": "2026-06-11T07:24:01.294315Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.97",
+      "articulo": "97",
+      "title_es": "Fomento de la convergencia en la clasificación de criptoactivos",
+      "title_en": "Promotion of convergence on the classification of crypto-assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:e57f6ebb9035c8c50ce8f1d1151d8dde6198c688b7f3aa15bb71b9e136805680",
+          "tokens": 594,
+          "chunks": [
+            "mica.97.es"
+          ],
+          "embedded_at": "2026-06-11T07:24:10.057869Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:8c99b0c9aef14e51658168a8a16e68fbaf8e501554ac088df11ecb19c382e205",
+          "tokens": 514,
+          "chunks": [
+            "mica.97.en"
+          ],
+          "embedded_at": "2026-06-11T07:24:18.761275Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.98",
+      "articulo": "98",
+      "title_es": "Cooperación con otras autoridades",
+      "title_en": "Cooperation with other authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:6f098eae7d4381076c7d2d65320062ab5bee05a73656ec51b222a2c04295971c",
+          "tokens": 107,
+          "chunks": [
+            "mica.98.es"
+          ],
+          "embedded_at": "2026-06-11T07:24:21.121241Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:9255bea95a68efa43539d2bce75c11a0e5f8f1369ef1375dc863d49724ef6141",
+          "tokens": 96,
+          "chunks": [
+            "mica.98.en"
+          ],
+          "embedded_at": "2026-06-11T07:24:23.316329Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.99",
+      "articulo": "99",
+      "title_es": "Obligaciones de notificación",
+      "title_en": "Duty of notification",
+      "languages": {
+        "es": {
+          "hash": "sha256:018b33b23201cd4bf7971199836896a602adc20e66c2408329dae53f328ff822",
+          "tokens": 94,
+          "chunks": [
+            "mica.99.es"
+          ],
+          "embedded_at": "2026-06-11T07:24:25.254318Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ec1d088e795b5a26743abe5074ed4256bde965c604f4451e8b48db524ea6f258",
+          "tokens": 67,
+          "chunks": [
+            "mica.99.en"
+          ],
+          "embedded_at": "2026-06-11T07:24:27.008378Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.100",
+      "articulo": "100",
+      "title_es": "Secreto profesional",
+      "title_en": "Professional secrecy",
+      "languages": {
+        "es": {
+          "hash": "sha256:6fd0c6c939b6c9f05712da03464e61ed0a2a528832f0153f930c6c797f0ed81e",
+          "tokens": 175,
+          "chunks": [
+            "mica.100.es"
+          ],
+          "embedded_at": "2026-06-11T07:24:30.205015Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:6279045373ad846de37cca5113fa5a5582e16488ce94f32c5ad0c7e32c807592",
+          "tokens": 151,
+          "chunks": [
+            "mica.100.en"
+          ],
+          "embedded_at": "2026-06-11T07:24:33.837354Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.101",
+      "articulo": "101",
+      "title_es": "Protección de datos",
+      "title_en": "Data protection",
+      "languages": {
+        "es": {
+          "hash": "sha256:fedc755454cb03d2ca4a44ead4d0106c7766c3fab5f4d9d60aae20d0cdd263c5",
+          "tokens": 81,
+          "chunks": [
+            "mica.101.es"
+          ],
+          "embedded_at": "2026-06-11T07:24:35.784116Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:79050e8048a329adba6df2562901185f152d346a2426a92fbd6a6d401bb182c7",
+          "tokens": 80,
+          "chunks": [
+            "mica.101.en"
+          ],
+          "embedded_at": "2026-06-11T07:24:37.633902Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.102",
+      "articulo": "102",
+      "title_es": "Medidas cautelares",
+      "title_en": "Precautionary measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:09b4121b3fc8f5a9c7933e61d5920ada69cd1b82b299aaeb9961e08a80974567",
+          "tokens": 620,
+          "chunks": [
+            "mica.102.es"
+          ],
+          "embedded_at": "2026-06-11T07:24:46.611218Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:1eafa65a667acb519b490260218541eabbc1b74149bca2f8ce4278bb06326601",
+          "tokens": 565,
+          "chunks": [
+            "mica.102.en"
+          ],
+          "embedded_at": "2026-06-11T07:24:55.558034Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.103",
+      "articulo": "103",
+      "title_es": "Poderes de intervención temporal de la AEVM",
+      "title_en": "ESMA temporary intervention powers",
+      "languages": {
+        "es": {
+          "hash": "sha256:daa4f34bbd254630eab402423887fd8e82e0f0c060624e5429956344bd1961e2",
+          "tokens": 805,
+          "chunks": [
+            "mica.103.es"
+          ],
+          "embedded_at": "2026-06-11T07:25:03.755773Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:97078a03ad0842fc62637cdcc151071d46d4924fdd11130d00065b51d819532d",
+          "tokens": 746,
+          "chunks": [
+            "mica.103.en"
+          ],
+          "embedded_at": "2026-06-11T07:25:12.463086Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.104",
+      "articulo": "104",
+      "title_es": "Poderes de intervención temporal de la ABE",
+      "title_en": "EBA temporary intervention powers",
+      "languages": {
+        "es": {
+          "hash": "sha256:2ec6d41c25a82bceab80664260f8028ae29784ae3b1a17ab7d7cfc9db2faeb4e",
+          "tokens": 813,
+          "chunks": [
+            "mica.104.es"
+          ],
+          "embedded_at": "2026-06-11T07:25:21.408991Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:34e5a4ec095117110aaee164f72935c02ea84f2a96a9e02362059f55c9b5aba1",
+          "tokens": 751,
+          "chunks": [
+            "mica.104.en"
+          ],
+          "embedded_at": "2026-06-11T07:25:30.010046Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.105",
+      "articulo": "105",
+      "title_es": "Intervención de las autoridades competentes en relación con los productos",
+      "title_en": "Product intervention by competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:513a47e8f6ea4dd372c24be8294a5f76281959f1e4f917fd719928c4b085990e",
+          "tokens": 1034,
+          "chunks": [
+            "mica.105.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:25:38.621444Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:c2eec39c2a2cdb32d99ce8f834134ac99508d9b04967ae1b6bd0b5d0d1b0673e",
+          "tokens": 955,
+          "chunks": [
+            "mica.105.en"
+          ],
+          "embedded_at": "2026-06-11T07:25:48.001304Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.106",
+      "articulo": "106",
+      "title_es": "Coordinación con la AEVM o la ABE",
+      "title_en": "Coordination with ESMA or EBA",
+      "languages": {
+        "es": {
+          "hash": "sha256:b86500efd143ac5d840647bc2746f307c28dbbbcb2872558cac8bbc47d847603",
+          "tokens": 377,
+          "chunks": [
+            "mica.106.es"
+          ],
+          "embedded_at": "2026-06-11T07:25:54.317733Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:6b272f76a051d2c5ced5d008c276505eee98a8f9c1d41f88d1ae719ff02fba8d",
+          "tokens": 310,
+          "chunks": [
+            "mica.106.en"
+          ],
+          "embedded_at": "2026-06-11T07:25:59.434253Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.107",
+      "articulo": "107",
+      "title_es": "Cooperación con terceros países",
+      "title_en": "Cooperation with third countries",
+      "languages": {
+        "es": {
+          "hash": "sha256:4acded1355c65dd305bc27b02f841ab3a65633da088f3bbdeb63c4bd02e8e64d",
+          "tokens": 490,
+          "chunks": [
+            "mica.107.es"
+          ],
+          "embedded_at": "2026-06-11T07:26:08.296997Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:57b6409dccfe56f02ce8f6b529d94bcf276db3151c5589fb6155e2661ab900fe",
+          "tokens": 421,
+          "chunks": [
+            "mica.107.en"
+          ],
+          "embedded_at": "2026-06-11T07:26:15.776977Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.108",
+      "articulo": "108",
+      "title_es": "Tramitación de reclamaciones por las autoridades competentes",
+      "title_en": "Complaints-handling by competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:062f02f4178a5091c16d9ed7ffa60e19062ce4222c2c8e25b20851e10dd25369",
+          "tokens": 242,
+          "chunks": [
+            "mica.108.es"
+          ],
+          "embedded_at": "2026-06-11T07:26:20.029218Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:cca70f4ba3f8fdc1b00ac7645ef34ab24a8363cda3a83f156d289d874a54b761",
+          "tokens": 206,
+          "chunks": [
+            "mica.108.en"
+          ],
+          "embedded_at": "2026-06-11T07:26:23.851112Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.109",
+      "articulo": "109",
+      "title_es": "Registro de libros blancos de criptoactivos, de emisores de fichas referenciadas a activos y fichas de dinero electrónico, y de proveedores de servicios de criptoactivos",
+      "title_en": "Register of crypto-asset white papers, of issuers of asset-referenced tokens and e-money tokens, and of crypto-asset service providers",
+      "languages": {
+        "es": {
+          "hash": "sha256:c24b7b42631d0156d785d14bbf19967fa7cd209625357c72d15c3bbc7626041d",
+          "tokens": 1439,
+          "chunks": [
+            "mica.109.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:26:32.230529Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:88f0052d53475228cf5c954e79cecab27615531fce8878ef6733ab0b4296ebf3",
+          "tokens": 1353,
+          "chunks": [
+            "mica.109.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:26:41.054667Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.110",
+      "articulo": "110",
+      "title_es": "Registro de entidades que, sin cumplir las normas, prestan servicios de criptoactivos",
+      "title_en": "Register of non-compliant entities providing crypto-asset services",
+      "languages": {
+        "es": {
+          "hash": "sha256:138ed17265493e064ea14cb6ecc5ad6edfd5249f0fc542abace522e4826a995c",
+          "tokens": 341,
+          "chunks": [
+            "mica.110.es"
+          ],
+          "embedded_at": "2026-06-11T07:26:46.759088Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:b1695b39e1050714fe977e73b74276317fc9c0d91f18615d0f0d160593e7253b",
+          "tokens": 311,
+          "chunks": [
+            "mica.110.en"
+          ],
+          "embedded_at": "2026-06-11T07:26:52.815367Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.111",
+      "articulo": "111",
+      "title_es": "Sanciones administrativas y otras medidas administrativas",
+      "title_en": "Administrative penalties and other administrative measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:4fd419f5d43b7aee36c38c792134411b3d58091619db37e2c073de9634ba9805",
+          "tokens": 1962,
+          "chunks": [
+            "mica.111.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:27:01.507103Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:c73550b6d20edd2bb1e72f48860cc4145381b4fc262ef1f8322e9e0d75a1d424",
+          "tokens": 1857,
+          "chunks": [
+            "mica.111.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:27:10.265187Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.112",
+      "articulo": "112",
+      "title_es": "Ejercicio de las facultades supervisoras y sancionadoras",
+      "title_en": "Exercise of supervisory powers and powers to impose penalties",
+      "languages": {
+        "es": {
+          "hash": "sha256:90d74e938a1e584b150d31a96353a27595f422362a13e2f3fd1f8d047aaffa4c",
+          "tokens": 475,
+          "chunks": [
+            "mica.112.es"
+          ],
+          "embedded_at": "2026-06-11T07:27:18.852227Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:6d4994dcf3a58c808068f0d0619ce5ce3bb7f9037b8b77235c788a54997fece6",
+          "tokens": 457,
+          "chunks": [
+            "mica.112.en"
+          ],
+          "embedded_at": "2026-06-11T07:27:26.620622Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.113",
+      "articulo": "113",
+      "title_es": "Derecho de recurso",
+      "title_en": "Right of appeal",
+      "languages": {
+        "es": {
+          "hash": "sha256:649717259963729ce61f962e489ef6f505ed8c0fbd09298dfc7adcfbfb367450",
+          "tokens": 218,
+          "chunks": [
+            "mica.113.es"
+          ],
+          "embedded_at": "2026-06-11T07:27:30.601535Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:b3e182c0653eee2858a319ca1c2eb290e1e27d9e8a7a22fe47c0040e0e68315e",
+          "tokens": 178,
+          "chunks": [
+            "mica.113.en"
+          ],
+          "embedded_at": "2026-06-11T07:27:34.013450Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.114",
+      "articulo": "114",
+      "title_es": "Publicación de decisiones",
+      "title_en": "Publication of decisions",
+      "languages": {
+        "es": {
+          "hash": "sha256:622d4d2480ddde16d377e0a7a8e26fd765858b3134dbbcb47ac1b49813ddc19e",
+          "tokens": 614,
+          "chunks": [
+            "mica.114.es"
+          ],
+          "embedded_at": "2026-06-11T07:27:42.624551Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:d913529339395ab6e90c907925d41843aaad9f621f5e89056c404c50f34b6984",
+          "tokens": 581,
+          "chunks": [
+            "mica.114.en"
+          ],
+          "embedded_at": "2026-06-11T07:27:51.142987Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.115",
+      "articulo": "115",
+      "title_es": "Notificación de sanciones administrativas y otras medidas administrativas a la AEVM y a la ABE",
+      "title_en": "Reporting of administrative penalties and other administrative measures to ESMA and EBA",
+      "languages": {
+        "es": {
+          "hash": "sha256:d49a28d49631e7dd160b3805b229e106ba4ae61e5527dcd20af43830b2dc69f0",
+          "tokens": 372,
+          "chunks": [
+            "mica.115.es"
+          ],
+          "embedded_at": "2026-06-11T07:27:57.895370Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:a4593275c372dec07d60f433a097ef036e1d1267c39c06903edd66363fe365af",
+          "tokens": 321,
+          "chunks": [
+            "mica.115.en"
+          ],
+          "embedded_at": "2026-06-11T07:28:04.207509Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.116",
+      "articulo": "116",
+      "title_es": "Denuncia de infracciones y protección de los denunciantes",
+      "title_en": "Reporting of infringements and protection of reporting persons",
+      "languages": {
+        "es": {
+          "hash": "sha256:b73b3100778d412642a5ae6abc8d1a759a9d2478ae273b095035c19a8b3ceb14",
+          "tokens": 37,
+          "chunks": [
+            "mica.116.es"
+          ],
+          "embedded_at": "2026-06-11T07:28:05.593088Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:2bca181acb2f62822d4ac0792f1f916189a12b9320d2f363aedbc9fbec6b454e",
+          "tokens": 35,
+          "chunks": [
+            "mica.116.en"
+          ],
+          "embedded_at": "2026-06-11T07:28:06.773451Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.117",
+      "articulo": "117",
+      "title_es": "Responsabilidades de la ABE en materia de supervisión en relación con los emisores de fichas significativas referenciadas a activos y de fichas significativas de dinero electrónico",
+      "title_en": "Supervisory responsibilities of EBA with respect to issuers of significant asset-referenced tokens and issuers of significant e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:7186a8f646932142361a7f612e3521237798ce86f532bd1ffeebe227ac34d56c",
+          "tokens": 542,
+          "chunks": [
+            "mica.117.es"
+          ],
+          "embedded_at": "2026-06-11T07:28:15.378294Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:770a3efbe9389d3dd633e38ed6001075f4295aa6a3b2439d9c3c297c07eb4309",
+          "tokens": 485,
+          "chunks": [
+            "mica.117.en"
+          ],
+          "embedded_at": "2026-06-11T07:28:23.592307Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.118",
+      "articulo": "118",
+      "title_es": "Comité de criptoactivos de la ABE",
+      "title_en": "EBA crypto-asset committee",
+      "languages": {
+        "es": {
+          "hash": "sha256:92c90ce6ace9ea25015b99664226a80593a6e9436e2ef8a4c1547d3bcc8e4dbb",
+          "tokens": 180,
+          "chunks": [
+            "mica.118.es"
+          ],
+          "embedded_at": "2026-06-11T07:28:26.861988Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:5778e478a2c8788e09bf1e9978869737ae977afc3cbf1a7591be94c7ce67e40b",
+          "tokens": 165,
+          "chunks": [
+            "mica.118.en"
+          ],
+          "embedded_at": "2026-06-11T07:28:29.970125Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.119",
+      "articulo": "119",
+      "title_es": "Colegios para los emisores de fichas significativas referenciadas a activos y de fichas significativas de dinero electrónico",
+      "title_en": "Colleges for issuers of significant asset-referenced tokens and significant e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:ff4567a398ac5c61fe794c8aea782ebe5f51bdf525ab7f01a1313857378fd499",
+          "tokens": 1449,
+          "chunks": [
+            "mica.119.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:28:38.738958Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:fa83e7766dbee0aeda4e6c0ad4f2ba3f1d6dc68da79dd43be2b886fc7801d116",
+          "tokens": 1385,
+          "chunks": [
+            "mica.119.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:28:47.444580Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.120",
+      "articulo": "120",
+      "title_es": "Dictámenes no vinculantes de los colegios para los emisores de fichas significativas referenciadas a activos y de fichas significativas de dinero electrónico",
+      "title_en": "Non-binding opinions of the colleges for issuers of significant asset-referenced tokens and significant e-money tokens",
+      "languages": {
+        "es": {
+          "hash": "sha256:f3805095615ce0b61239cbc3939377652790e2a067762ee9985b4bf655e5b3ad",
+          "tokens": 755,
+          "chunks": [
+            "mica.120.es"
+          ],
+          "embedded_at": "2026-06-11T07:28:55.872717Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:592af55088f5469f77095ac7a0fce515c77dbf5b798e4620347f48e6702fba67",
+          "tokens": 714,
+          "chunks": [
+            "mica.120.en"
+          ],
+          "embedded_at": "2026-06-11T07:29:06.510233Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.121",
+      "articulo": "121",
+      "title_es": "Secreto profesional",
+      "title_en": "Legal privilege",
+      "languages": {
+        "es": {
+          "hash": "sha256:9a05ff2b02111532b37b33e01f3fe258625ba63800626c2502f248af37069521",
+          "tokens": 55,
+          "chunks": [
+            "mica.121.es"
+          ],
+          "embedded_at": "2026-06-11T07:29:08.109379Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:718a2152d44e5008a4a9fe9aff7d8e492271547a4cad764199d7750428286f39",
+          "tokens": 47,
+          "chunks": [
+            "mica.121.en"
+          ],
+          "embedded_at": "2026-06-11T07:29:09.854655Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.122",
+      "articulo": "122",
+      "title_es": "Solicitud de información",
+      "title_en": "Request for information",
+      "languages": {
+        "es": {
+          "hash": "sha256:ba2a4936befb0316f3ef7387298bc4baf1b9abab05cd0851a25f5b38f18320de",
+          "tokens": 787,
+          "chunks": [
+            "mica.122.es"
+          ],
+          "embedded_at": "2026-06-11T07:29:19.319200Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:26fd54eee0180cf02466139d5a0da1108edcf13fd47b05bb30e5235bc6d74bc2",
+          "tokens": 778,
+          "chunks": [
+            "mica.122.en"
+          ],
+          "embedded_at": "2026-06-11T07:29:28.025717Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.123",
+      "articulo": "123",
+      "title_es": "Facultades generales de investigación",
+      "title_en": "General investigative powers",
+      "languages": {
+        "es": {
+          "hash": "sha256:006df4317868c38236c1fce2ef7088dc3353d1266d13433cdfae9dfe121723f3",
+          "tokens": 1026,
+          "chunks": [
+            "mica.123.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:29:37.254343Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:e0ad4c27c2cbef45b8e6f9d6f55eaceeff818ab7151b6309e6710bbdbb5f401c",
+          "tokens": 942,
+          "chunks": [
+            "mica.123.en"
+          ],
+          "embedded_at": "2026-06-11T07:29:45.991954Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.124",
+      "articulo": "124",
+      "title_es": "Inspecciones in situ",
+      "title_en": "On-site inspections",
+      "languages": {
+        "es": {
+          "hash": "sha256:b18a7450ef11ea3f6f2ac5498af2d877475c1f302292657dcabd440ae5dc589c",
+          "tokens": 1043,
+          "chunks": [
+            "mica.124.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:29:54.832330Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:c878c9f92ae01d6cba0d2fcf26f84f56f4ee767d73f99281e67e978f433f6dce",
+          "tokens": 958,
+          "chunks": [
+            "mica.124.en"
+          ],
+          "embedded_at": "2026-06-11T07:30:03.315777Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.125",
+      "articulo": "125",
+      "title_es": "Intercambio de información",
+      "title_en": "Exchange of information",
+      "languages": {
+        "es": {
+          "hash": "sha256:8c5eb736c677bec8d87765316a0356add72bc5875f3db5edc7bacdf99a83e195",
+          "tokens": 563,
+          "chunks": [
+            "mica.125.es"
+          ],
+          "embedded_at": "2026-06-11T07:30:11.776227Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:326e41aa3a2df0cfcfe6d0bde34bfe04caa0612765d0a9875cc9617a5a9b5af0",
+          "tokens": 558,
+          "chunks": [
+            "mica.125.en"
+          ],
+          "embedded_at": "2026-06-11T07:30:21.958595Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.126",
+      "articulo": "126",
+      "title_es": "Acuerdos administrativos sobre el intercambio de información entre la ABE y terceros países",
+      "title_en": "Administrative agreements on the exchange of information between EBA and third countries",
+      "languages": {
+        "es": {
+          "hash": "sha256:be69ea09d683172db4e14a4b0d10b60c93a9003d1cdfdb198789978c791f55f5",
+          "tokens": 136,
+          "chunks": [
+            "mica.126.es"
+          ],
+          "embedded_at": "2026-06-11T07:30:24.792561Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:48f08c848744afb3ffc159229bd4898af7681fd62337fc0b4feb40b083238515",
+          "tokens": 125,
+          "chunks": [
+            "mica.126.en"
+          ],
+          "embedded_at": "2026-06-11T07:30:27.364687Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.127",
+      "articulo": "127",
+      "title_es": "Divulgación de información procedente de terceros países",
+      "title_en": "Disclosure of information from third countries",
+      "languages": {
+        "es": {
+          "hash": "sha256:824277a68a178cbcd7dce11a2b633b8603d03b805d8c14b6f9f8f3fb5e739a02",
+          "tokens": 181,
+          "chunks": [
+            "mica.127.es"
+          ],
+          "embedded_at": "2026-06-11T07:30:30.770960Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:3b392718a5e6d05755487fe63e5116d2a59a0fd9f7b7be183da788513ab9f83c",
+          "tokens": 171,
+          "chunks": [
+            "mica.127.en"
+          ],
+          "embedded_at": "2026-06-11T07:30:33.887972Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.128",
+      "articulo": "128",
+      "title_es": "Cooperación con otras autoridades",
+      "title_en": "Cooperation with other authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:2844d60693efc3fff68fee0633beaf73c1da882d8244d9a83dbac0544f0f96bf",
+          "tokens": 109,
+          "chunks": [
+            "mica.128.es"
+          ],
+          "embedded_at": "2026-06-11T07:30:36.345112Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ad781b9f70f7077346e941e1235462d88a48d6d39dbc717b4832027bfda2c166",
+          "tokens": 100,
+          "chunks": [
+            "mica.128.en"
+          ],
+          "embedded_at": "2026-06-11T07:30:38.495605Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.129",
+      "articulo": "129",
+      "title_es": "Secreto profesional",
+      "title_en": "Professional secrecy",
+      "languages": {
+        "es": {
+          "hash": "sha256:ea64a17f807a50d0b1ed80ed8328d4fd5f78453b8ef20515d56486ff3e45ccbb",
+          "tokens": 62,
+          "chunks": [
+            "mica.129.es"
+          ],
+          "embedded_at": "2026-06-11T07:30:40.287177Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:a0ad6b924a8ea9a3a41378c99bb08a1e04c6c0485e684e78fcfa9ef99b1bc1a1",
+          "tokens": 54,
+          "chunks": [
+            "mica.129.en"
+          ],
+          "embedded_at": "2026-06-11T07:30:41.788665Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.130",
+      "articulo": "130",
+      "title_es": "Medidas de supervisión adoptadas por la ABE",
+      "title_en": "Supervisory measures by EBA",
+      "languages": {
+        "es": {
+          "hash": "sha256:15bcaeafbeddc200bd70f69977cf4f7888d8bc54f7ea47b5df9299ca298a8115",
+          "tokens": 2261,
+          "chunks": [
+            "mica.130.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:30:50.263478Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:c25915b7545c90def57b35025247f5def4ca291225cd82cb0e2708403c13445a",
+          "tokens": 2189,
+          "chunks": [
+            "mica.130.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:30:59.792878Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.131",
+      "articulo": "131",
+      "title_es": "Multas",
+      "title_en": "Fines",
+      "languages": {
+        "es": {
+          "hash": "sha256:6a3e482491401ff78a2f78339cad4d1f3853c58ef16bea613085aca9dc391733",
+          "tokens": 856,
+          "chunks": [
+            "mica.131.es"
+          ],
+          "embedded_at": "2026-06-11T07:31:08.359606Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:68debd0947bd3cf6caaf8bff34202276c66f82649a63291751558b1d839f16bd",
+          "tokens": 845,
+          "chunks": [
+            "mica.131.en"
+          ],
+          "embedded_at": "2026-06-11T07:31:17.429354Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.132",
+      "articulo": "132",
+      "title_es": "Multas coercitivas",
+      "title_en": "Periodic penalty payments",
+      "languages": {
+        "es": {
+          "hash": "sha256:a3d49784d134c4f6dae240b3015028f79e6cb1011638045262cba6cf32a5933b",
+          "tokens": 359,
+          "chunks": [
+            "mica.132.es"
+          ],
+          "embedded_at": "2026-06-11T07:31:23.356979Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:87f5ae55e48a9cecedb1bc6d1296d238c1a055f8b0609d871d68bc73da650a4d",
+          "tokens": 302,
+          "chunks": [
+            "mica.132.en"
+          ],
+          "embedded_at": "2026-06-11T07:31:28.335012Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.133",
+      "articulo": "133",
+      "title_es": "Divulgación, naturaleza, ejecución y asignación de multas y multas coercitivas",
+      "title_en": "Disclosure, nature, enforcement and allocation of fines and periodic penalty payments",
+      "languages": {
+        "es": {
+          "hash": "sha256:685f1cf380da50bf5fa630b8b3f04797b3cdb37dc45a6ad9dad9f0b495b0c38f",
+          "tokens": 252,
+          "chunks": [
+            "mica.133.es"
+          ],
+          "embedded_at": "2026-06-11T07:31:32.950295Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:0809a0301cbf212d07339c17f4e9f9dfba1d73894a01de88eea72f96adf3126b",
+          "tokens": 231,
+          "chunks": [
+            "mica.133.en"
+          ],
+          "embedded_at": "2026-06-11T07:31:36.862521Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.134",
+      "articulo": "134",
+      "title_es": "Normas de procedimiento para la adopción de medidas de supervisión y la imposición de multas",
+      "title_en": "Procedural rules for taking supervisory measures and imposing fines",
+      "languages": {
+        "es": {
+          "hash": "sha256:4d741a53ff5ea9dfb438f359ecab89b7388dc73a9795eab89fef20255dffd945",
+          "tokens": 927,
+          "chunks": [
+            "mica.134.es"
+          ],
+          "embedded_at": "2026-06-11T07:31:45.515441Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:d7d91ba09d79de2ca021e3713a3ddbfd3ce5b88eacfc887ec32fb70f5635aeee",
+          "tokens": 839,
+          "chunks": [
+            "mica.134.en"
+          ],
+          "embedded_at": "2026-06-11T07:31:53.928341Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.135",
+      "articulo": "135",
+      "title_es": "Audiencia de las personas afectadas",
+      "title_en": "Hearing of the persons concerned",
+      "languages": {
+        "es": {
+          "hash": "sha256:4f20b3c62554628377991c73fdeb6f7b4a292d9386c13e3c3796df95e9a65e31",
+          "tokens": 243,
+          "chunks": [
+            "mica.135.es"
+          ],
+          "embedded_at": "2026-06-11T07:31:58.710853Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:5d19249cbaf0d227b0e015c39f0b2bb59c0aef8ed03eee5fa23e6263207fe170",
+          "tokens": 224,
+          "chunks": [
+            "mica.135.en"
+          ],
+          "embedded_at": "2026-06-11T07:32:03.845781Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.136",
+      "articulo": "136",
+      "title_es": "Control del Tribunal de Justicia",
+      "title_en": "Review by the Court of Justice",
+      "languages": {
+        "es": {
+          "hash": "sha256:2a3d9eb47788c73bc919fc4dd8641cb5a5e45442b8d6aa5cebdf5ead6e71febc",
+          "tokens": 77,
+          "chunks": [
+            "mica.136.es"
+          ],
+          "embedded_at": "2026-06-11T07:32:05.880668Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:6dedb7963045878e21cc7fe144e77e7d6af686031de53f2321e021fb4bae6c84",
+          "tokens": 59,
+          "chunks": [
+            "mica.136.en"
+          ],
+          "embedded_at": "2026-06-11T07:32:07.644492Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.137",
+      "articulo": "137",
+      "title_es": "Tasas de supervisión",
+      "title_en": "Supervisory fees",
+      "languages": {
+        "es": {
+          "hash": "sha256:013a9b6a8e3c92a455919559153cba6af6a0924576be4d96da8054caae92cee8",
+          "tokens": 393,
+          "chunks": [
+            "mica.137.es"
+          ],
+          "embedded_at": "2026-06-11T07:32:15.724161Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:45c04de7ae2ca3000e0a71f6535b116ad63b99a4f9ff471f0f1217b5535b2b4d",
+          "tokens": 371,
+          "chunks": [
+            "mica.137.en"
+          ],
+          "embedded_at": "2026-06-11T07:32:22.119496Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.138",
+      "articulo": "138",
+      "title_es": "Delegación de tareas de la ABE en las autoridades competentes",
+      "title_en": "Delegation of tasks by EBA to competent authorities",
+      "languages": {
+        "es": {
+          "hash": "sha256:c155a86fe1ca0ae3681e3aa2706be0f1339df0f5f53b1f6ee9984d2f79391223",
+          "tokens": 267,
+          "chunks": [
+            "mica.138.es"
+          ],
+          "embedded_at": "2026-06-11T07:32:26.779250Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:414f2fbc8320980e65dd83285bb7eb26920175b8011d4647148497e149b1ca99",
+          "tokens": 246,
+          "chunks": [
+            "mica.138.en"
+          ],
+          "embedded_at": "2026-06-11T07:32:31.212138Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.139",
+      "articulo": "139",
+      "title_es": "Ejercicio de la delegación",
+      "title_en": "Exercise of the delegation",
+      "languages": {
+        "es": {
+          "hash": "sha256:98ef73cc8d4d9bf7173fc8c97e78a728aa0e396521e98a1e93b42e150804aecc",
+          "tokens": 562,
+          "chunks": [
+            "mica.139.es"
+          ],
+          "embedded_at": "2026-06-11T07:32:39.820746Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:7df473824ffbd1a4fa490c987531b326db35a918015dca3181952c0ede8a41d0",
+          "tokens": 494,
+          "chunks": [
+            "mica.139.en"
+          ],
+          "embedded_at": "2026-06-11T07:32:48.357434Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.140",
+      "articulo": "140",
+      "title_es": "Informes sobre la aplicación del presente Reglamento",
+      "title_en": "Reports on the application of this Regulation",
+      "languages": {
+        "es": {
+          "hash": "sha256:29dde67fbc434e53b10b19655a485baeaafc1888bcd5c7e0acb427f756e7dbba",
+          "tokens": 2035,
+          "chunks": [
+            "mica.140.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:32:56.897182Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:cbb9483ae111d2c98d64399c966cf6a2be3a7e07a8c4fc54ca5640354ee1c68f",
+          "tokens": 1870,
+          "chunks": [
+            "mica.140.1.en"
+          ],
+          "embedded_at": "2026-06-11T07:33:06.386428Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.141",
+      "articulo": "141",
+      "title_es": "Informe anual de la AEVM sobre la evolución de los mercados",
+      "title_en": "ESMA annual report on market developments",
+      "languages": {
+        "es": {
+          "hash": "sha256:f57ce02f630bd1c4096596381ed867b550422f752def6acc9034e8fa3014bbfc",
+          "tokens": 1010,
+          "chunks": [
+            "mica.141.1.es"
+          ],
+          "embedded_at": "2026-06-11T07:33:15.086292Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:a153f6b0307bed8a5e12ba4160af5362034f9f6a09b4f3d5d4e8af30d269774e",
+          "tokens": 933,
+          "chunks": [
+            "mica.141.en"
+          ],
+          "embedded_at": "2026-06-11T07:33:23.514328Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.142",
+      "articulo": "142",
+      "title_es": "Informe sobre los últimos desarrollos en materia de criptoactivos",
+      "title_en": "Report on latest developments in crypto-assets",
+      "languages": {
+        "es": {
+          "hash": "sha256:e223702e9449e25d4ce08a503983e7e62bc724dc33a1497875fed04c4bb2d315",
+          "tokens": 308,
+          "chunks": [
+            "mica.142.es"
+          ],
+          "embedded_at": "2026-06-11T07:33:29.024010Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:d5da5ed861aa1c0126b34774d0c61230ba6da9911cc70ad536f4fe44572f53b1",
+          "tokens": 306,
+          "chunks": [
+            "mica.142.en"
+          ],
+          "embedded_at": "2026-06-11T07:33:34.315640Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.143",
+      "articulo": "143",
+      "title_es": "Medidas transitorias",
+      "title_en": "Transitional measures",
+      "languages": {
+        "es": {
+          "hash": "sha256:e10aa562c38a329851c28f212f0ea69f69694e628fa15d941d6d760db710a0c7",
+          "tokens": 682,
+          "chunks": [
+            "mica.143.es"
+          ],
+          "embedded_at": "2026-06-11T07:33:42.598724Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:06da24109cc269d39cc131904242907eb7c095eb96d7a9a721cf722b868d50f0",
+          "tokens": 595,
+          "chunks": [
+            "mica.143.en"
+          ],
+          "embedded_at": "2026-06-11T07:33:51.193354Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.144",
+      "articulo": "144",
+      "title_es": "Modificación del Reglamento (UE) n.o 1093/2010",
+      "title_en": "Amendment to Regulation (EU) No 1093/2010",
+      "languages": {
+        "es": {
+          "hash": "sha256:251f123a418be6e298e483fb65666ae1b647dba9e26418f49a500b4cc5520f01",
+          "tokens": 271,
+          "chunks": [
+            "mica.144.es"
+          ],
+          "embedded_at": "2026-06-11T07:33:55.786972Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:36274872152474338cedfbdacbd02919a1fef7a05d0bfa2db7d506b46c2e94bf",
+          "tokens": 236,
+          "chunks": [
+            "mica.144.en"
+          ],
+          "embedded_at": "2026-06-11T07:33:59.992479Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.145",
+      "articulo": "145",
+      "title_es": "Modificación del Reglamento (UE) n.o 1095/2010",
+      "title_en": "Amendment to Regulation (EU) No 1095/2010",
+      "languages": {
+        "es": {
+          "hash": "sha256:9dcee4860a585a5255b99e2dc8fc6096487af8bc0c9e6ea544b347a121572b66",
+          "tokens": 326,
+          "chunks": [
+            "mica.145.es"
+          ],
+          "embedded_at": "2026-06-11T07:34:05.655328Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:14a4da65c5e748ac71e29ebe715230e275ea4cad0172bcbc5dedcb4e6f8520c6",
+          "tokens": 285,
+          "chunks": [
+            "mica.145.en"
+          ],
+          "embedded_at": "2026-06-11T07:34:11.659113Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.146",
+      "articulo": "146",
+      "title_es": "Modificación de la Directiva 2013/36/UE",
+      "title_en": "Amendment to Directive 2013/36/EU",
+      "languages": {
+        "es": {
+          "hash": "sha256:51cc5c8a4819fd07da00fde8425e04221d6a35597e2ff9540a03541acf3408f2",
+          "tokens": 146,
+          "chunks": [
+            "mica.146.es"
+          ],
+          "embedded_at": "2026-06-11T07:34:14.329407Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:237f5e5452e126ca1be8b0a68d46988f3f82a77b10ce7a1d32690a52b383f4e0",
+          "tokens": 127,
+          "chunks": [
+            "mica.146.en"
+          ],
+          "embedded_at": "2026-06-11T07:34:17.265660Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.147",
+      "articulo": "147",
+      "title_es": "Modificación de la Directiva (UE) 2019/1937",
+      "title_en": "Amendment to Directive (EU) 2019/1937",
+      "languages": {
+        "es": {
+          "hash": "sha256:9334fc22c66e7cc7651e292a439dd00e7a09d5abc2e3a8e71a20c795ff229335",
+          "tokens": 121,
+          "chunks": [
+            "mica.147.es"
+          ],
+          "embedded_at": "2026-06-11T07:34:19.677930Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:ed4c2cd4c1e5998790d1c7df38ec6c5d2fdd00a87fe23e9f10dc3649a23f38e7",
+          "tokens": 110,
+          "chunks": [
+            "mica.147.en"
+          ],
+          "embedded_at": "2026-06-11T07:34:22.060896Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.148",
+      "articulo": "148",
+      "title_es": "Transposición de las modificaciones de las Directivas 2013/36/UE y (UE) 2019/1937",
+      "title_en": "Transposition of amendments to Directives 2013/36/EU and (EU) 2019/1937",
+      "languages": {
+        "es": {
+          "hash": "sha256:3a35e7643bca5af1bf4d15381fa36b74dbe092497f5a7fa66f2b9b0cfcb952ef",
+          "tokens": 91,
+          "chunks": [
+            "mica.148.es"
+          ],
+          "embedded_at": "2026-06-11T07:34:24.239047Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:bfe733028305d1ff1379919df15b2fd9437d474bc2e6229dc99ab7c3b73d4a63",
+          "tokens": 70,
+          "chunks": [
+            "mica.148.en"
+          ],
+          "embedded_at": "2026-06-11T07:34:26.070227Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    },
+    {
+      "article_id": "mica.149",
+      "articulo": "149",
+      "title_es": "Entrada en vigor y aplicación",
+      "title_en": "Entry into force and application",
+      "languages": {
+        "es": {
+          "hash": "sha256:e884ad47de80d83102bb3cb5f322a8f0bd1a4f15bda752f34117e8551b53f3e4",
+          "tokens": 360,
+          "chunks": [
+            "mica.149.es"
+          ],
+          "embedded_at": "2026-06-11T07:34:32.036745Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_es.html"
+        },
+        "en": {
+          "hash": "sha256:4fbae069c2928e0398035f911e5687b105eb56e2997279990aeabf2f0dc5039e",
+          "tokens": 275,
+          "chunks": [
+            "mica.149.en"
+          ],
+          "embedded_at": "2026-06-11T07:34:36.865402Z",
+          "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
+          "fetched_at": "2026-06-11T06:38:22.810583Z",
+          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/mica_en.html"
+        }
+      }
+    }
+  ]
+}

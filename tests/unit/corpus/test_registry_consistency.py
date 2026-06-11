@@ -12,8 +12,9 @@ from regulaitor.corpus.schemas import CorpusSelector, Norma
 
 
 def test_norma_literal_matches_registry_keys() -> None:
-    """A new corpus is exactly: the Literal + one registry entry. If they
-    desync (a forgotten edit), this fails — nothing is silently missed."""
+    """A new corpus is exactly: the Norma + CorpusSelector Literals + one
+    registry entry. If they desync (a forgotten edit), this fails — nothing
+    is silently missed."""
     assert set(get_args(Norma)) == set(CORPUS_REGISTRY)
 
 
@@ -36,6 +37,9 @@ def test_celex_values_unchanged() -> None:
         "dora": "32022R2554",
         "dora_rts_incident": "32025R0301",
         "dora_rts_class": "32024R1772",
+        "amlr": "32024R1624",
+        "mica": "32023R1114",
+        "tfr": "32023R1113",
     }
     assert {n: s.celex for n, s in CORPUS_REGISTRY.items()} == expected
 
@@ -48,6 +52,9 @@ def test_version_values_unchanged() -> None:
         "dora": "2022-12-27",
         "dora_rts_incident": "2025-02-20",
         "dora_rts_class": "2024-06-25",
+        "amlr": "2024-06-19",
+        "mica": "2023-06-09",
+        "tfr": "2023-06-09",
     }
     assert {n: s.version for n, s in CORPUS_REGISTRY.items()} == expected
 
@@ -60,6 +67,9 @@ def test_expected_article_counts_unchanged() -> None:
         "dora": 64,
         "dora_rts_incident": 7,
         "dora_rts_class": 13,
+        "amlr": 90,
+        "mica": 149,
+        "tfr": 40,
     }
     assert {n: s.expected_articles for n, s in CORPUS_REGISTRY.items()} == expected
 
@@ -72,6 +82,9 @@ def test_norma_style_unchanged() -> None:
         "dora": ("DORA", "#B45309"),
         "dora_rts_incident": ("DORA RTS Plazos", "#0F766E"),
         "dora_rts_class": ("DORA RTS Clasif.", "#A21CAF"),
+        "amlr": ("AMLR", "#9F1239"),
+        "mica": ("MiCA", "#0E7490"),
+        "tfr": ("TFR", "#4D7C0F"),
     }
     assert {n: (s.label, s.color) for n, s in CORPUS_REGISTRY.items()} == expected
 
