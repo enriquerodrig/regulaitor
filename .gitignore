@@ -170,3 +170,18 @@ docs/video_demo_script.md
 
 # Handoff briefs entre sesiones Claude Code (estrategia interna, no para repo público):
 docs/_handoff/
+
+# Fase 5 — Next.js frontend (frontend_next/). Source + config are tracked; build
+# output, deps, and local tooling caches are not.
+frontend_next/node_modules/
+frontend_next/.next/
+frontend_next/out/
+frontend_next/coverage/
+frontend_next/next-env.d.ts
+frontend_next/.vercel/
+frontend_next/*.tsbuildinfo
+
+# Playwright MCP scratch + ad-hoc UI smoke screenshots (working artifacts).
+.playwright-mcp/
+fase*-*.png
+sovereign-*.png

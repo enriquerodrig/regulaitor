@@ -2,7 +2,8 @@
 # Usage:
 #   docker compose up -d api          # FastAPI on http://localhost:8000
 #   docker compose up -d streamlit    # Streamlit on http://localhost:8501
-#   docker compose up -d              # both
+#   docker compose up -d frontend     # Next.js UI on http://localhost:3000 (Fase 5)
+#   docker compose up -d              # all three
 #
 # Persistent volumes:
 #   regulaitor-data: corpus/indexes (LanceDB) + HF model cache
@@ -63,6 +64,24 @@ services:
       - "8501:8501"
     volumes:
       - regulaitor-data:/data
+    depends_on:
+      - api
+
+  # Fase 5 (HX) — Next.js frontend. BFF pattern: the browser only needs :3000;
+  # the Next server reaches the FastAPI backend over the internal compose network
+  # (REGULAITOR_API_URL), so no CORS and the api port need not be public.
+  frontend:
+    build:
+      context: ./frontend_next
+      dockerfile: Dockerfile
+    image: regulaitor-frontend:dev
+    container_name: regulaitor-frontend
+    restart: unless-stopped
+    environment:
+      REGULAITOR_API_URL: http://api:8000
+      PORT: "3000"
+    ports:
+      - "3000:3000"
     depends_on:
       - api
 

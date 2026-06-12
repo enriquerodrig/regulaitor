@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+.git
+.gitignore
+*.log
+npm-debug.log*
+coverage
+.playwright-mcp
+.env
+.env.*
+.vercel
+*.tsbuildinfo
+README.md
