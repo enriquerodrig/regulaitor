@@ -1,21 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 
 import "./globals.css";
+
+// Self-hosted Geist (the `geist` package) — NOT next/font/google: the fonts are
+// bundled, so the build needs no Google Fonts fetch (works offline / in
+// restricted networks, and keeps the deploy free of external font CDNs).
 
 // The per-request CSP nonce (src/proxy.ts) requires dynamic rendering so the
 // nonce in the response header matches the inline scripts Next emits.
 export const dynamic = "force-dynamic";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "RegulAItor — cumplimiento normativo con citas verificadas",
@@ -31,7 +26,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
