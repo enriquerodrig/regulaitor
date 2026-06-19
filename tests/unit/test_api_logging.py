@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 from types import SimpleNamespace
@@ -231,3 +232,44 @@ def test_log_api_document_turn_emits_record(caplog) -> None:
     )
     log_api_document_turn(request, _document_report(), _analyze_response())
     assert any("api_document_turn" in r.message for r in caplog.records)
+
+
+# --- Fase 6 (ADR-0041): audit-trail persistence wiring -----------------------
+
+
+def test_chat_turn_persists_audit_row_when_enabled(monkeypatch, tmp_path) -> None:
+    from regulaitor.observability import audit_store
+
+    monkeypatch.setenv("REGULAITOR_AUDIT_DB", str(tmp_path / "audit.db"))
+    request = _request()
+    request.state.tenant = SimpleNamespace(tenant_id="acme")
+    log_api_chat_turn(request, _chat_state(), _ask_response())
+    rows = audit_store.recent()
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["mode"] == "chat"
+    assert row["tenant_id"] == "acme"
+    assert row["verdict"] == "pass"
+    assert row["case_id"] == "api-ch-1"
+    # query is hashed (the ChatState query is "q"); raw text never persisted.
+    assert row["query_sha256"] == hashlib.sha256(b"q").hexdigest()
+
+
+def test_document_turn_persists_audit_row_when_enabled(monkeypatch, tmp_path) -> None:
+    from regulaitor.observability import audit_store
+
+    monkeypatch.setenv("REGULAITOR_AUDIT_DB", str(tmp_path / "audit.db"))
+    log_api_document_turn(_request(), _document_report(), _analyze_response())
+    rows = audit_store.recent()
+    assert len(rows) == 1
+    assert rows[0]["mode"] == "document"
+    assert rows[0]["n_segments"] == 1
+    assert rows[0]["query_sha256"] is None  # documents have no query to hash
+
+
+def test_chat_turn_does_not_persist_when_disabled(monkeypatch, tmp_path) -> None:
+    from regulaitor.observability import audit_store
+
+    monkeypatch.delenv("REGULAITOR_AUDIT_DB", raising=False)
+    log_api_chat_turn(_request(), _chat_state(), _ask_response())  # no-op, no raise
+    assert audit_store.recent() == []

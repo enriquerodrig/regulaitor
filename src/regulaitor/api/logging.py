@@ -14,6 +14,7 @@ from typing import Any
 
 from regulaitor.api.schemas import AnalyzeResponse, AskResponse
 from regulaitor.citation.schemas import DocumentReport
+from regulaitor.observability import audit_store
 from regulaitor.orchestration.state import ChatState
 
 logger = logging.getLogger(__name__)
@@ -59,6 +60,20 @@ def log_api_chat_turn(request: Any, state: ChatState, response: AskResponse) -> 
         "language": str(state.language),
     }
     logger.info("api_chat_turn: %s", json.dumps(record, ensure_ascii=False))
+    # Optional audit-trail persistence (no-op unless REGULAITOR_AUDIT_DB is set).
+    audit_store.record(
+        case_id=state.case_id,
+        tenant_id=_tenant_id(request),
+        mode="chat",
+        corpus=str(state.corpus),
+        language=str(state.language),
+        verdict=response.verdict,
+        query=state.query,  # hashed inside audit_store; raw text never stored
+        n_findings=len(response.answer.findings),
+        n_citations=len(response.audit_results),
+        n_validated=sum(1 for r in response.audit_results if r.validated),
+        latency_ms=response.response_time_ms,
+    )
 
 
 def log_api_document_turn(request: Any, report: DocumentReport, response: AnalyzeResponse) -> None:
@@ -84,3 +99,15 @@ def log_api_document_turn(request: Any, report: DocumentReport, response: Analyz
         "language": str(report.language),
     }
     logger.info("api_document_turn: %s", json.dumps(record, ensure_ascii=False))
+    # Optional audit-trail persistence (no-op unless REGULAITOR_AUDIT_DB is set).
+    audit_store.record(
+        case_id=report.case_id,
+        tenant_id=_tenant_id(request),
+        mode="document",
+        corpus=",".join(report.corpus) if report.corpus else None,
+        language=str(report.language),
+        verdict=response.document_verdict,
+        n_segments=response.n_segments_total,
+        latency_ms=response.latency_ms_total,
+        cost_eur=response.cost_eur_total,
+    )
