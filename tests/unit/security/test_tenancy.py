@@ -167,3 +167,44 @@ def test_missing_file_raises_named_error_and_stays_unloaded(monkeypatch, tmp_pat
     with pytest.raises(RuntimeError, match="REGULAITOR_TENANTS_FILE not found"):
         tenancy.load_tenants_or_raise()
     assert tenancy.is_loaded() is False
+
+
+# --- Fase 6B (ADR-0042): per-tenant model_choice + corpus allowlist ---------
+
+
+def _load_one(monkeypatch, **extra):
+    _clear_env(monkeypatch)
+    entry = {"token": _T, "tenant_id": "acme", "name": "Acme", **extra}
+    monkeypatch.setenv("REGULAITOR_TENANTS_JSON", json.dumps([entry]))
+    tenancy.load_tenants_or_raise()
+    return tenancy.resolve_tenant(_T)
+
+
+def test_defaults_unset_backward_compat(monkeypatch):
+    t = _load_one(monkeypatch)
+    assert t is not None and t.model_choice is None and t.allowed_corpora is None
+
+
+def test_valid_model_choice_accepted(monkeypatch):
+    t = _load_one(monkeypatch, model_choice="self_hosted")
+    assert t.model_choice == "self_hosted"
+
+
+def test_invalid_model_choice_rejected_at_load(monkeypatch):
+    with pytest.raises(Exception, match="invalid model_choice"):
+        _load_one(monkeypatch, model_choice="bogus-mode")
+
+
+def test_valid_allowed_corpora_accepted(monkeypatch):
+    t = _load_one(monkeypatch, allowed_corpora=["ai_act", "gdpr"])
+    assert t.allowed_corpora == ["ai_act", "gdpr"]
+
+
+def test_invalid_corpus_in_allowlist_rejected(monkeypatch):
+    with pytest.raises(Exception, match="invalid corpus"):
+        _load_one(monkeypatch, allowed_corpora=["ai_act", "not_a_corpus"])
+
+
+def test_empty_allowed_corpora_rejected(monkeypatch):
+    with pytest.raises(Exception, match="cannot be empty"):
+        _load_one(monkeypatch, allowed_corpora=[])

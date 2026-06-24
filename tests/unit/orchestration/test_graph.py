@@ -127,8 +127,28 @@ def test_analyst_node_calls_analyst(monkeypatch: pytest.MonkeyPatch) -> None:
     state = ChatState(case_id="ch-1", query="q", corpus="ai_act", language="es", context=ctx)
     result = graph._analyst_node(state)
 
-    mock_analyst.analyze.assert_called_once_with("q", ctx)
+    mock_analyst.analyze.assert_called_once_with("q", ctx, model_choice=None)
     assert "answer" in result
+
+
+def test_analyst_node_threads_model_choice(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Fase 6B (ADR-0042): the tenant's model_choice on the state reaches analyze()."""
+    mock_analyst = MagicMock()
+    mock_analyst.analyze.return_value = _make_answer()
+    monkeypatch.setattr(graph, "_analyst", lambda: mock_analyst)
+
+    ctx = _make_context()
+    state = ChatState(
+        case_id="ch-1",
+        query="q",
+        corpus="ai_act",
+        language="es",
+        context=ctx,
+        model_choice="self_hosted",
+    )
+    graph._analyst_node(state)
+
+    mock_analyst.analyze.assert_called_once_with("q", ctx, model_choice="self_hosted")
 
 
 def test_analyst_node_raises_without_context() -> None:

@@ -10,7 +10,7 @@ from datetime import UTC, datetime
 from fastapi import APIRouter, Depends, File, Form, Request, UploadFile
 from nanoid import generate
 
-from regulaitor.api.auth import verify_token
+from regulaitor.api.auth import enforce_corpus_allowlist, verify_token
 from regulaitor.api.errors import FileSizeExceeded, UnsupportedMediaType
 from regulaitor.api.logging import log_api_document_turn
 from regulaitor.api.schemas import AnalyzeResponse, to_analyze_response
@@ -70,6 +70,8 @@ async def analyze(
         raise UnsupportedMediaType(reason="corpus list cannot be empty")
     if not all(c in ALL_NORMAS for c in corpus):
         raise UnsupportedMediaType(reason="unsupported corpus member")
+    # Fase 6B (ADR-0042): per-tenant corpus allowlist (403 if any member is off-list).
+    enforce_corpus_allowlist(request, corpus)
 
     t0 = time.monotonic()
     # Deep-review I1: offload sync run_document() to thread so event loop stays

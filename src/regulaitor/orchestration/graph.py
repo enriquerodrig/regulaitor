@@ -103,7 +103,7 @@ def _retriever_node(state: ChatState) -> dict[str, Any]:
 def _analyst_node(state: ChatState) -> dict[str, Any]:
     if state.context is None:
         raise RuntimeError("analyst_node invoked without context (graph wiring bug)")
-    answer = _analyst().analyze(state.query, state.context)
+    answer = _analyst().analyze(state.query, state.context, model_choice=state.model_choice)
     return {"answer": answer}
 
 
@@ -253,8 +253,13 @@ def run(
     language: str,
     case_id: str,
     council_override: bool | None = None,
+    model_choice: str | None = None,
 ) -> ChatState:
-    """Run the cached compiled graph; return the final ChatState."""
+    """Run the cached compiled graph; return the final ChatState.
+
+    `model_choice` (Fase 6B, ADR-0042) overrides the Analyst's router mode for
+    this turn; None falls back to the REGULAITOR_ANALYST_MODEL_CHOICE env seam.
+    """
     with trace_turn(kind="chat", case_id=case_id, corpus=corpus, language=language) as tt:
         initial = ChatState(
             case_id=case_id,
@@ -262,6 +267,7 @@ def run(
             corpus=cast(CorpusSelector, corpus),
             language=cast(Language, language),
             council_override=council_override,
+            model_choice=model_choice,
         )
         t0 = time.monotonic()
         final_dict = _compiled_graph().invoke(initial)

@@ -9,7 +9,7 @@ from datetime import UTC, datetime
 from fastapi import APIRouter, Depends, Request
 from nanoid import generate
 
-from regulaitor.api.auth import verify_token
+from regulaitor.api.auth import enforce_corpus_allowlist, verify_token
 from regulaitor.api.errors import BackendError, InjectionDetected
 from regulaitor.api.logging import log_api_chat_turn
 from regulaitor.api.schemas import AskRequest, AskResponse, to_ask_response
@@ -33,6 +33,9 @@ async def ask(
 ) -> AskResponse:
     case_id = _generate_case_id()
     request.state.case_id = case_id
+    # Fase 6B (ADR-0042): per-tenant corpus allowlist + model_choice.
+    enforce_corpus_allowlist(request, [payload.corpus])
+    tenant = getattr(request.state, "tenant", None)
     t0 = time.monotonic()
     # Deep-review I1: offload sync run() to thread so event loop stays free for
     # concurrent traffic. Without this, all /ask requests serialize end-to-end
@@ -44,6 +47,7 @@ async def ask(
         language=payload.language,
         case_id=case_id,
         council_override=payload.council,
+        model_choice=tenant.model_choice if tenant is not None else None,
     )
     response_time_ms = int((time.monotonic() - t0) * 1000)
     if state.injection_blocked:

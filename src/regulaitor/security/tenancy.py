@@ -53,11 +53,45 @@ class Tenant(BaseModel):
     name: str = Field(min_length=1)
     rate_limit_ask: str = "30/minute"
     rate_limit_analyze: str = "5/minute"
+    # Fase 6B (ADR-0042). Both optional; None = no per-tenant restriction
+    # (byte-identical to the prior behaviour). Validated at load (fail-closed).
+    model_choice: str | None = None  # router mode for this tenant's Analyst (chat)
+    allowed_corpora: list[str] | None = None  # corpus allowlist (None = all)
 
     @field_validator("rate_limit_ask", "rate_limit_analyze")
     @classmethod
     def _check_limit(cls, v: str) -> str:
         return _validate_rate_limit(v)
+
+    @field_validator("model_choice")
+    @classmethod
+    def _check_model_choice(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        # Lazy import: the valid router modes are the source of truth, but we do
+        # not want to pull the LLM router (heavy) at module load.
+        from regulaitor.models import router
+
+        if v not in router._VALID_MODES:
+            raise ValueError(f"invalid model_choice {v!r} (valid: {sorted(router._VALID_MODES)})")
+        return v
+
+    @field_validator("allowed_corpora")
+    @classmethod
+    def _check_allowed_corpora(cls, v: list[str] | None) -> list[str] | None:
+        if v is None:
+            return v
+        if not v:
+            raise ValueError("allowed_corpora cannot be empty (use null for no restriction)")
+        from typing import get_args
+
+        from regulaitor.corpus.schemas import CorpusSelector
+
+        valid = set(get_args(CorpusSelector))
+        bad = [c for c in v if c not in valid]
+        if bad:
+            raise ValueError(f"invalid corpus in allowed_corpora: {bad} (valid: {sorted(valid)})")
+        return v
 
 
 # (token, Tenant) pairs for constant-time resolution + a tenant_id -> Tenant index.

@@ -60,6 +60,14 @@ class UnsupportedMediaType(Exception):  # noqa: N818 — spec uses non-Error suf
         self.reason_code = reason
 
 
+class CorpusNotAllowed(Exception):  # noqa: N818 — spec uses non-Error suffix; see ADR 0009
+    """Tenant requested a corpus outside its allowlist (Fase 6B, ADR-0042)."""
+
+    def __init__(self, corpus: str) -> None:
+        super().__init__("corpus_not_allowed")
+        self.corpus = corpus
+
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -120,6 +128,19 @@ async def unsupported_media_handler(request: Request, exc: UnsupportedMediaType)
     body = _build("unsupported_media", "Unsupported file or input format.", case_id)
     _log_error(request, status=415, error_code="unsupported_media", case_id=case_id)
     return _json(body, 415)
+
+
+async def corpus_not_allowed_handler(request: Request, exc: CorpusNotAllowed) -> JSONResponse:
+    case_id = getattr(request.state, "case_id", None)
+    body = _build("corpus_not_allowed", "Corpus not permitted for this tenant.", case_id)
+    _log_error(
+        request,
+        status=403,
+        error_code="corpus_not_allowed",
+        case_id=case_id,
+        corpus=exc.corpus,
+    )
+    return _json(body, 403)
 
 
 async def rate_limit_handler(request: Request, exc: RateLimitExceeded) -> JSONResponse:

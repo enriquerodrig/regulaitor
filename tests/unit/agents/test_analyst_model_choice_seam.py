@@ -79,3 +79,46 @@ def test_analyze_uses_default_when_env_unset(monkeypatch) -> None:
     with pytest.raises(RuntimeError, match="stop-after-capture"):
         agent.analyze("q", _ctx())
     assert captured["model_choice"] == "default"
+
+
+# --- Fase 6B (ADR-0042): per-tenant model_choice override -------------------
+
+
+def _capture_model_choice(monkeypatch) -> dict:
+    captured: dict = {}
+
+    def _fake_complete(**kwargs):
+        captured["model_choice"] = kwargs["model_choice"]
+        raise RuntimeError("stop-after-capture")
+
+    monkeypatch.setattr(router, "complete", _fake_complete)
+    return captured
+
+
+def test_analyze_explicit_model_choice_overrides_env(monkeypatch) -> None:
+    """An explicit (per-tenant) model_choice wins over the env seam."""
+    monkeypatch.setenv("REGULAITOR_ANALYST_MODEL_CHOICE", "default")
+    monkeypatch.delenv("REGULAITOR_ANALYST_PROMPT_VERSION", raising=False)
+    captured = _capture_model_choice(monkeypatch)
+    with pytest.raises(RuntimeError, match="stop-after-capture"):
+        AnalystAgent().analyze("q", _ctx(), model_choice="self_hosted")
+    assert captured["model_choice"] == "self_hosted"
+
+
+def test_analyze_explicit_none_falls_back_to_env(monkeypatch) -> None:
+    monkeypatch.setenv("REGULAITOR_ANALYST_MODEL_CHOICE", "self_hosted")
+    monkeypatch.delenv("REGULAITOR_ANALYST_PROMPT_VERSION", raising=False)
+    captured = _capture_model_choice(monkeypatch)
+    with pytest.raises(RuntimeError, match="stop-after-capture"):
+        AnalystAgent().analyze("q", _ctx(), model_choice=None)
+    assert captured["model_choice"] == "self_hosted"
+
+
+def test_analyze_explicit_invalid_falls_back_to_env(monkeypatch) -> None:
+    """A bogus override is ignored (defensive) and the env/default is used."""
+    monkeypatch.delenv("REGULAITOR_ANALYST_MODEL_CHOICE", raising=False)
+    monkeypatch.delenv("REGULAITOR_ANALYST_PROMPT_VERSION", raising=False)
+    captured = _capture_model_choice(monkeypatch)
+    with pytest.raises(RuntimeError, match="stop-after-capture"):
+        AnalystAgent().analyze("q", _ctx(), model_choice="bogus-mode")
+    assert captured["model_choice"] == "default"

@@ -16,6 +16,7 @@ import hashlib
 from fastapi import HTTPException, Request, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
+from regulaitor.api.errors import CorpusNotAllowed
 from regulaitor.security import tenancy
 
 _bearer = HTTPBearer(auto_error=False, scheme_name="REGULAITOR_API_TOKEN")
@@ -24,6 +25,20 @@ _bearer = HTTPBearer(auto_error=False, scheme_name="REGULAITOR_API_TOKEN")
 def _token_hash(token: str) -> str:
     """SHA256[:8] — used for logging + rate-limit fallback. Never the raw token."""
     return hashlib.sha256(token.encode("utf-8")).hexdigest()[:8]
+
+
+def enforce_corpus_allowlist(request: Request, corpora: list[str]) -> None:
+    """Fase 6B (ADR-0042): raise 403 (CorpusNotAllowed) if the tenant's allowlist
+    excludes ANY requested corpus. No-op when there is no tenant or no allowlist.
+    Shared by /ask (single corpus) and /analyze (list) so the check cannot be
+    forgotten by a future corpus-consuming route."""
+    tenant = getattr(request.state, "tenant", None)
+    if (
+        tenant is not None
+        and tenant.allowed_corpora is not None
+        and not all(c in tenant.allowed_corpora for c in corpora)
+    ):
+        raise CorpusNotAllowed(corpus=",".join(corpora))
 
 
 async def verify_token(

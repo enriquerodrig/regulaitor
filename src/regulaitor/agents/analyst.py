@@ -177,7 +177,7 @@ class AnalystAgent:
             )
         self._system_prompt = prompt_path.read_text(encoding="utf-8")
 
-    def analyze(self, query: str, context: Context) -> Answer:
+    def analyze(self, query: str, context: Context, *, model_choice: str | None = None) -> Answer:
         """Produce a validated Answer via Anthropic tool use.
 
         v0.1.21 (ADR-0027 D4, Capa C): aggressive retry with
@@ -212,13 +212,20 @@ class AnalystAgent:
         last_error: ValidationError | None = None
         n_retries = 0
         max_attempts = 3
+        # Fase 6B (ADR-0042): a per-tenant model_choice (threaded from the route)
+        # overrides the env seam; an unset/invalid value falls back to it.
+        chosen_model: router.ModelChoice = (
+            cast("router.ModelChoice", model_choice)
+            if model_choice in router._VALID_MODES
+            else _analyst_model_choice()
+        )
         for attempt in range(1, max_attempts + 1):
             result = router.complete(
                 messages=messages,
                 system=self._system_prompt,
                 tools=tools_spec,
                 tool_choice={"type": "tool", "name": "emit_answer"},
-                model_choice=_analyst_model_choice(),
+                model_choice=chosen_model,
                 max_tokens=2000,
             )
             if result.tool_use_input is None:

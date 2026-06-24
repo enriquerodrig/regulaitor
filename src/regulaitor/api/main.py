@@ -84,6 +84,7 @@ app.add_exception_handler(RateLimitExceeded, errors.rate_limit_handler)  # type:
 app.add_exception_handler(errors.InjectionDetected, errors.injection_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.FileSizeExceeded, errors.file_size_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.UnsupportedMediaType, errors.unsupported_media_handler)  # type: ignore[arg-type]
+app.add_exception_handler(errors.CorpusNotAllowed, errors.corpus_not_allowed_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.BackendError, errors.backend_error_handler)  # type: ignore[arg-type]
 errors.register_anthropic_handlers(app)
 app.add_exception_handler(Exception, errors.generic_handler)

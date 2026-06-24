@@ -34,4 +34,7 @@ class ChatState(BaseModel):
     council_override: bool | None = None
     council_review: CouncilReview | None = None
 
+    # Fase 6B (ADR-0042): per-tenant Analyst router mode. None => env/default seam.
+    model_choice: str | None = None
+
     errors: list[str] = Field(default_factory=list)
