@@ -20,6 +20,7 @@ from slowapi.errors import RateLimitExceeded
 from regulaitor.api import errors
 from regulaitor.api.routes_analyze import router as analyze_router
 from regulaitor.api.routes_ask import router as ask_router
+from regulaitor.api.routes_audit import router as audit_router
 from regulaitor.api.routes_health import router as health_router
 from regulaitor.api.schemas import ErrorResponse
 from regulaitor.corpus import loader as corpus_loader
@@ -92,6 +93,7 @@ app.add_exception_handler(Exception, errors.generic_handler)
 app.include_router(health_router)
 app.include_router(ask_router)
 app.include_router(analyze_router)
+app.include_router(audit_router)
 
 # CORS — env-configurable allowlist. Empty value (default) = no CORS headers emitted
 # (safe-by-default for non-browser API consumers). For browser deploy (Streamlit

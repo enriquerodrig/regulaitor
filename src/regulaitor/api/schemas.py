@@ -205,6 +205,35 @@ class ErrorResponse(BaseModel):
     case_id: str | None
 
 
+class AuditEntryDTO(BaseModel):
+    """One audit-trail row (Fase 6B; ADR-0041). Hashes + metadata only — the raw
+    query is never stored, so it is never returned (only its SHA-256)."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+    ts: str
+    case_id: str
+    mode: str
+    corpus: str | None = None
+    language: str | None = None
+    verdict: str | None = None
+    query_sha256: str | None = None
+    n_findings: int | None = None
+    n_citations: int | None = None
+    n_validated: int | None = None
+    n_segments: int | None = None
+    latency_ms: int | None = None
+    cost_eur: float | None = None
+
+
+class AuditLogResponse(BaseModel):
+    """The authenticated tenant's OWN audit trail (never another tenant's)."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+    enabled: bool  # False when REGULAITOR_AUDIT_DB is unset (audit disabled)
+    total: int
+    entries: list[AuditEntryDTO]
+
+
 # ---------------------------------------------------------------------------
 # Converters
 # ---------------------------------------------------------------------------
