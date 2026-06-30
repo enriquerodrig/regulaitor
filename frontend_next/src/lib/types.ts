@@ -10,6 +10,8 @@ export type AskResponse = components["schemas"]["AskResponse"];
 export type AnalyzeResponse = components["schemas"]["AnalyzeResponse"];
 export type HealthResponse = components["schemas"]["HealthResponse"];
 export type HealthCheck = components["schemas"]["HealthCheck"];
+export type AuditLogResponse = components["schemas"]["AuditLogResponse"];
+export type AuditEntryDTO = components["schemas"]["AuditEntryDTO"];
 
 export type AnswerDTO = components["schemas"]["AnswerDTO"];
 export type FindingDTO = components["schemas"]["FindingDTO"];

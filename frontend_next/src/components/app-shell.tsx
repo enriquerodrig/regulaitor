@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, FileText, LogOut, MessageSquare, Shield } from "lucide-react";
+import { Activity, FileText, LogOut, MessageSquare, ScrollText, Shield } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "/ask", label: "Pregunta", icon: MessageSquare },
   { href: "/analyze", label: "Analiza documento", icon: FileText },
+  { href: "/audit", label: "Auditoría", icon: ScrollText },
   { href: "/health", label: "Estado", icon: Activity },
 ] as const;
 

@@ -55,6 +55,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Audit
+         * @description Return the calling tenant's most recent audit rows + its total turn count.
+         */
+        get: operations["audit_audit_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -141,6 +161,51 @@ export interface components {
             /** Council Notice */
             council_notice?: string | null;
             council?: components["schemas"]["CouncilReviewDTO"] | null;
+        };
+        /**
+         * AuditEntryDTO
+         * @description One audit-trail row (Fase 6B; ADR-0041). Hashes + metadata only — the raw
+         *     query is never stored, so it is never returned (only its SHA-256).
+         */
+        AuditEntryDTO: {
+            /** Ts */
+            ts: string;
+            /** Case Id */
+            case_id: string;
+            /** Mode */
+            mode: string;
+            /** Corpus */
+            corpus?: string | null;
+            /** Language */
+            language?: string | null;
+            /** Verdict */
+            verdict?: string | null;
+            /** Query Sha256 */
+            query_sha256?: string | null;
+            /** N Findings */
+            n_findings?: number | null;
+            /** N Citations */
+            n_citations?: number | null;
+            /** N Validated */
+            n_validated?: number | null;
+            /** N Segments */
+            n_segments?: number | null;
+            /** Latency Ms */
+            latency_ms?: number | null;
+            /** Cost Eur */
+            cost_eur?: number | null;
+        };
+        /**
+         * AuditLogResponse
+         * @description The authenticated tenant's OWN audit trail (never another tenant's).
+         */
+        AuditLogResponse: {
+            /** Enabled */
+            enabled: boolean;
+            /** Total */
+            total: number;
+            /** Entries */
+            entries: components["schemas"]["AuditEntryDTO"][];
         };
         /**
          * AuditResultDTO
@@ -416,6 +481,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AnalyzeResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    audit_audit_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuditLogResponse"];
                 };
             };
             /** @description Validation Error */

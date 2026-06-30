@@ -7,6 +7,7 @@ import type {
   ApiErrorBody,
   AskRequest,
   AskResponse,
+  AuditLogResponse,
   HealthResponse,
 } from "@/lib/types";
 
@@ -65,4 +66,9 @@ export async function analyze(form: FormData): Promise<AnalyzeResponse> {
 export async function getHealth(): Promise<HealthResponse> {
   const res = await fetch("/api/health", { method: "GET" });
   return parse<HealthResponse>(res);
+}
+
+export async function getAudit(): Promise<AuditLogResponse> {
+  const res = await fetch("/api/audit", { method: "GET" });
+  return parse<AuditLogResponse>(res);
 }
