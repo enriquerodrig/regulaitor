@@ -66,6 +66,13 @@ def analyze_limit(key: str) -> str:
     return _tenant_from_key(key, "rate_limit_analyze", "REGULAITOR_RATE_LIMIT_ANALYZE", "5/minute")
 
 
+def audit_limit(key: str) -> str:
+    """/audit rate-limit VALUE (audit dos-02). A flat env-or-default value; per-tenant
+    isolation comes from `_key_func` (which buckets by tenant_id), not from here. The
+    `key` arg is unused but required by slowapi's limit-value-callable contract."""
+    return _safe_env_limit("REGULAITOR_RATE_LIMIT_AUDIT", "30/minute")
+
+
 def _is_disabled() -> bool:
     """Tests can set REGULAITOR_RATE_LIMIT_DISABLED=1 to short-circuit limits."""
     return os.getenv("REGULAITOR_RATE_LIMIT_DISABLED", "").strip() == "1"

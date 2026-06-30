@@ -16,6 +16,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from slowapi.errors import RateLimitExceeded
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from regulaitor.api import errors
 from regulaitor.api.routes_analyze import router as analyze_router
@@ -42,11 +43,20 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
 
 
+# authz-02: /docs, /redoc and /openapi.json are an UNAUTHENTICATED map of the API
+# surface. Gated behind REGULAITOR_ENABLE_DOCS (default ON to preserve dev DX + the
+# BFF `npm run gen:types` workflow that reads /openapi.json). Set =0 before an
+# external pilot to stop advertising the schema publicly.
+_docs_enabled = os.getenv("REGULAITOR_ENABLE_DOCS", "1").strip() != "0"
+
 app = FastAPI(
     title="RegulAItor API",
     version="0.0.8",
     description="Multi-agent regulatory compliance API. No citation, no answer.",
     lifespan=lifespan,
+    docs_url="/docs" if _docs_enabled else None,
+    redoc_url="/redoc" if _docs_enabled else None,
+    openapi_url="/openapi.json" if _docs_enabled else None,
 )
 app.state.limiter = limiter
 
@@ -62,18 +72,25 @@ async def _validation_handler(request: Request, exc: RequestValidationError) -> 
 
 
 async def _http_exception_handler(request: Request, exc: HTTPException) -> JSONResponse:
-    """Map HTTPException 401/403 (e.g. from verify_token Depends) to ErrorResponse format.
+    """Map ANY HTTPException to the uniform ErrorResponse JSON shape (audit err-04).
 
-    Narrowed to 401/403 only: RateLimitExceeded inherits from HTTPException and is
-    handled by its own dedicated handler registered on the more-specific class.
-    Other HTTPException status codes fall through to Starlette's default plain-text handler.
+    Previously only 401/403 were mapped; every other app-raised code was re-raised
+    into the generic catch-all and reported as 500. Now all codes keep their status.
+    Registered on BOTH fastapi.HTTPException AND starlette.exceptions.HTTPException so
+    that framework-raised routing errors (404 unmatched route, 405 method) also return
+    the {error_code, message, case_id} envelope instead of Starlette's plain
+    {"detail": ...} — one consistent error shape for API consumers.
+
+    RateLimitExceeded subclasses the Starlette HTTPException but has its own dedicated
+    handler registered on the (more specific) RateLimitExceeded class; Starlette's
+    MRO-first-match dispatch picks that, so 429 is never routed here. 5xx detail is
+    redacted to avoid leaking internals.
     """
-    if exc.status_code not in (401, 403):
-        raise exc
     case_id = getattr(request.state, "case_id", None)
+    message = str(exc.detail) if exc.detail and exc.status_code < 500 else "Request failed."
     body = ErrorResponse(
         error_code=f"http_{exc.status_code}",
-        message=str(exc.detail) if exc.detail else "Request failed.",
+        message=message,
         case_id=case_id,
     )
     return JSONResponse(status_code=exc.status_code, content=body.model_dump())
@@ -81,6 +98,7 @@ async def _http_exception_handler(request: Request, exc: HTTPException) -> JSONR
 
 app.add_exception_handler(RequestValidationError, _validation_handler)  # type: ignore[arg-type]
 app.add_exception_handler(HTTPException, _http_exception_handler)  # type: ignore[arg-type]
+app.add_exception_handler(StarletteHTTPException, _http_exception_handler)  # type: ignore[arg-type]
 app.add_exception_handler(RateLimitExceeded, errors.rate_limit_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.InjectionDetected, errors.injection_handler)  # type: ignore[arg-type]
 app.add_exception_handler(errors.FileSizeExceeded, errors.file_size_handler)  # type: ignore[arg-type]

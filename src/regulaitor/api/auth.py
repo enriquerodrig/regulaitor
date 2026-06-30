@@ -29,15 +29,20 @@ def _token_hash(token: str) -> str:
 
 def enforce_corpus_allowlist(request: Request, corpora: list[str]) -> None:
     """Fase 6B (ADR-0042): raise 403 (CorpusNotAllowed) if the tenant's allowlist
-    excludes ANY requested corpus. No-op when there is no tenant or no allowlist.
-    Shared by /ask (single corpus) and /analyze (list) so the check cannot be
-    forgotten by a future corpus-consuming route."""
+    excludes ANY requested corpus. No-op only when the tenant has no allowlist set
+    (allowed_corpora is None = "all corpora"). Shared by /ask (single corpus) and
+    /analyze (list) so the check cannot be forgotten by a future corpus-consuming
+    route.
+
+    authz-03: fail CLOSED when there is no tenant. Every caller invokes this AFTER
+    verify_token, which always sets request.state.tenant on success (single-token
+    mode resolves to a "default" tenant). Reaching here with tenant=None therefore
+    means auth did not run — a wiring fault — so we deny rather than silently allow.
+    """
     tenant = getattr(request.state, "tenant", None)
-    if (
-        tenant is not None
-        and tenant.allowed_corpora is not None
-        and not all(c in tenant.allowed_corpora for c in corpora)
-    ):
+    if tenant is None:
+        raise CorpusNotAllowed(corpus=",".join(corpora))
+    if tenant.allowed_corpora is not None and not all(c in tenant.allowed_corpora for c in corpora):
         raise CorpusNotAllowed(corpus=",".join(corpora))
 
 

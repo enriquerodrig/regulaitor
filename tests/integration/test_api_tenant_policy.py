@@ -121,8 +121,10 @@ def _req(tenant: object) -> SimpleNamespace:
     return SimpleNamespace(state=SimpleNamespace(tenant=tenant))
 
 
-def test_helper_no_tenant_is_noop() -> None:
-    enforce_corpus_allowlist(SimpleNamespace(state=SimpleNamespace()), ["gdpr"])
+def test_helper_no_tenant_fails_closed() -> None:
+    # authz-03: reaching the helper with no tenant means auth did not run — deny.
+    with pytest.raises(CorpusNotAllowed):
+        enforce_corpus_allowlist(SimpleNamespace(state=SimpleNamespace()), ["gdpr"])
 
 
 def test_helper_no_allowlist_is_noop() -> None:

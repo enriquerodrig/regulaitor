@@ -14,13 +14,18 @@ from fastapi import APIRouter, Depends, Query, Request
 from regulaitor.api.auth import verify_token
 from regulaitor.api.schemas import AuditEntryDTO, AuditLogResponse
 from regulaitor.observability import audit_store
+from regulaitor.security.rate_limit import audit_limit, limiter
 
-router = APIRouter(tags=["meta"])
+# authz-01: router-level default-deny — any route added to this router is auth-gated
+# even if a future author forgets the per-route Depends. FastAPI caches the
+# dependency by callable identity, so verify_token still runs exactly once.
+router = APIRouter(tags=["meta"], dependencies=[Depends(verify_token)])
 
 _MAX_LIMIT = 200
 
 
 @router.get("/audit", response_model=AuditLogResponse)
+@limiter.limit(audit_limit)  # dos-02: per-tenant limit (buckets keyed by tenant_id)
 async def audit(
     request: Request,
     limit: int = Query(default=50, ge=1, le=_MAX_LIMIT),

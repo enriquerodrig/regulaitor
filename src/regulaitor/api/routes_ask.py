@@ -16,7 +16,10 @@ from regulaitor.api.schemas import AskRequest, AskResponse, to_ask_response
 from regulaitor.orchestration.graph import run
 from regulaitor.security.rate_limit import ask_limit, limiter
 
-router = APIRouter(tags=["chat"])
+# authz-01: router-level default-deny (verify_token also declared per-route; FastAPI
+# caches by callable identity so it runs once). A future route on this router is
+# auth-gated even if its author forgets the per-route Depends.
+router = APIRouter(tags=["chat"], dependencies=[Depends(verify_token)])
 
 
 def _generate_case_id() -> str:
