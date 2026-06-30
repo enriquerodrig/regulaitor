@@ -33,6 +33,34 @@
 
 **Never commit `.env` to git** (it's gitignored). For each platform §3-§6, the secrets injection is platform-specific (see each).
 
+### §2.1 — Operator configuration (optional; pre-pilot hardening)
+
+Not secrets — these tune behaviour and were added by the pre-pilot hardening pass.
+All have safe defaults.
+
+| Env var | Default | Purpose |
+|---|---|---|
+| `REGULAITOR_TENANTS_JSON` | (single-token) | Multi-tenant registry as inline JSON (see shape below). When unset, `REGULAITOR_API_TOKEN` resolves to one "default" tenant (backward-compat). |
+| `REGULAITOR_TENANTS_FILE` | — | Path to the tenant-registry JSON (alternative to `_JSON`). |
+| `REGULAITOR_AUDIT_DB` | (disabled) | Path to the opt-in SQLite audit trail. **MUST live on the persistent volume** (e.g. `/data/audit.db`) — a path on the image layer is wiped on every restart. Stores hashes + metadata only; the raw query is never persisted (§18.8). |
+| `REGULAITOR_ENABLE_DOCS` | `1` (on) | Serves `/docs`, `/redoc`, `/openapi.json`. **Set `0` before a public pilot** so the API schema is not advertised to unauthenticated callers. |
+| `REGULAITOR_MAX_SEGMENTS` | `500` | Hard cap on segments processed per `/analyze` document (DoS guard — each segment is a CPU-reranker call). Over the cap → `requires_human_review`. Raise only for genuinely long contracts. |
+| `REGULAITOR_RATE_LIMIT_ASK` / `_ANALYZE` / `_AUDIT` | `30/minute` / `5/minute` / `30/minute` | Per-tenant rate limits (override per-tenant in the registry). |
+| `REGULAITOR_RATELIMIT_STORAGE` | `memory://` | Rate-limit bucket backend. **`memory://` is per-worker** — a multi-worker / multi-instance deploy needs a shared store (e.g. `redis://host:6379`) for global limits. The single-worker self-hosted pilot is fine on the default. |
+
+**Per-tenant config shape** (one entry in `REGULAITOR_TENANTS_JSON`'s list):
+
+```json
+{"token": "<bearer>", "tenant_id": "acme", "name": "Acme S.L.",
+ "allowed_corpora": ["ai_act", "gdpr"], "model_choice": "quality"}
+```
+
+`allowed_corpora` omitted = all corpora allowed; `model_choice` omitted = server default.
+
+**Pre-pilot security checklist additions**: set `REGULAITOR_ENABLE_DOCS=0`, put
+`REGULAITOR_AUDIT_DB` on the persistent volume, and rotate every key in §2 before
+onboarding the first external tenant.
+
 ---
 
 ## §3 — HF Spaces
