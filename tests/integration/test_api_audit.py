@@ -78,6 +78,17 @@ def test_audit_never_returns_raw_query(audit_client: TestClient) -> None:
     assert all(e["query_sha256"] for e in r.json()["entries"])
 
 
+def test_audit_response_omits_internal_columns(audit_client: TestClient) -> None:
+    """cq-06: the DB row has `id` and `tenant_id` columns; the response must expose
+    NEITHER (projection is restricted to AuditEntryDTO.model_fields)."""
+    r = audit_client.get("/audit", headers={"Authorization": f"Bearer {_ACME}"})
+    assert r.status_code == 200
+    for e in r.json()["entries"]:
+        assert "tenant_id" not in e
+        assert "id" not in e
+    assert "tenant_id" not in r.text  # belt-and-suspenders: not anywhere in the body
+
+
 def test_audit_requires_auth(audit_client: TestClient) -> None:
     assert audit_client.get("/audit").status_code == 401
 

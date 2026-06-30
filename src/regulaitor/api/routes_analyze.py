@@ -54,8 +54,17 @@ async def analyze(
     case_id = _generate_case_id()
     request.state.case_id = case_id
 
-    body = await file.read()
     max_b = _max_bytes()
+    # dos-03: reject an over-large upload via the declared Content-Length BEFORE
+    # buffering the whole body into memory. The header is advisory (spoofable, and
+    # absent for chunked transfer), so the post-read length check below stays
+    # authoritative. A small slack absorbs multipart envelope overhead so a file of
+    # exactly max_b is not false-rejected on the header alone.
+    declared = request.headers.get("content-length")
+    if declared is not None and declared.isdigit() and int(declared) > max_b + 64 * 1024:
+        raise FileSizeExceeded(size=int(declared), max_size=max_b)
+
+    body = await file.read()
     if len(body) > max_b:
         raise FileSizeExceeded(size=len(body), max_size=max_b)
     if len(body) == 0:

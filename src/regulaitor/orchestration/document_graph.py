@@ -12,6 +12,7 @@ from __future__ import annotations
 import functools
 import json
 import logging
+import os
 import time
 from collections import Counter
 from datetime import datetime
@@ -39,6 +40,21 @@ from regulaitor.observability.langfuse_client import trace_turn
 from regulaitor.security import injection, pii
 
 logger = logging.getLogger("regulaitor.orchestration.document_graph")
+
+_DEFAULT_MAX_SEGMENTS = 500
+
+
+def _max_segments() -> int:
+    """dos-01: hard cap on segments processed per document. Each segment drives a
+    CPU reranker call (~15-30s on the deploy box), so an unbounded segment count is
+    a single-request DoS (a 10 MB markdown of short headings → 10^4-10^6 segments).
+    Read at call time so operators/tests can override via REGULAITOR_MAX_SEGMENTS.
+    500 is generous for legitimate long contracts (a granular 100-page contract) while
+    still bounding the pathological case; the failure mode is a conservative RHR."""
+    raw = os.getenv("REGULAITOR_MAX_SEGMENTS", "").strip()
+    if raw.isdigit() and int(raw) > 0:
+        return int(raw)
+    return _DEFAULT_MAX_SEGMENTS
 
 
 # Lazy-init agent helpers. Same pattern as orchestration.graph: avoid
@@ -293,6 +309,33 @@ def run_document(
             return report
 
         segs = segmenter.segment(sanitized)
+        max_segs = _max_segments()
+        if len(segs) > max_segs:
+            # dos-01: refuse to process a pathologically-segmented upload. Each
+            # segment is a CPU-reranker call, so an unbounded count wedges the
+            # single worker. Return REQUIRES_HUMAN_REVIEW — never a silent pass, so
+            # the §6 contract holds — mirroring the sanitizer-critical short-circuit.
+            latency = int((time.monotonic() - t0) * 1000)
+            report = DocumentReport(
+                case_id=case_id,
+                document_hash=sanitized.document_hash,
+                language=language,
+                corpus=corpus,
+                sanitizer_log=sanitized.sanitizer_log,
+                segments=[],
+                document_verdict=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+                document_reason=f"too_many_segments:{len(segs)}>{max_segs}",
+                n_segments_total=0,
+                n_segments_blocked_by_injection=0,
+                n_segments_pass=0,
+                n_segments_block=0,
+                n_segments_review=0,
+                latency_ms_total=latency,
+                cost_eur_total=0.0,
+            )
+            _log_document_turn(report)
+            tt.set_root(**_doc_trace_record(report))
+            return report
         primary_corpus = cast(Norma, corpus[0])
         segment_results: list[SegmentResult] = []
         for seg in segs:

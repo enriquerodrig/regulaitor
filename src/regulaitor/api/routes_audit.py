@@ -9,6 +9,9 @@ is not configured (REGULAITOR_AUDIT_DB unset).
 
 from __future__ import annotations
 
+import asyncio
+from typing import Any
+
 from fastapi import APIRouter, Depends, Query, Request
 
 from regulaitor.api.auth import verify_token
@@ -22,6 +25,15 @@ from regulaitor.security.rate_limit import audit_limit, limiter
 router = APIRouter(tags=["meta"], dependencies=[Depends(verify_token)])
 
 _MAX_LIMIT = 200
+
+
+def _read_audit(limit: int, tenant_id: str) -> tuple[list[dict[str, Any]], int]:
+    """cq-01: the two sync SQLite reads, run together on a worker thread (via
+    asyncio.to_thread in the handler) so the async event loop never blocks on I/O."""
+    return (
+        audit_store.recent(limit=limit, tenant_id=tenant_id),
+        audit_store.count_turns(tenant_id),
+    )
 
 
 @router.get("/audit", response_model=AuditLogResponse)
@@ -42,13 +54,13 @@ async def audit(
         return AuditLogResponse(enabled=audit_store.is_enabled(), total=0, entries=[])
     # SECURITY: scope strictly to the caller's tenant — never a client-supplied id.
     tenant_id = tenant.tenant_id
-    rows = audit_store.recent(limit=limit, tenant_id=tenant_id)
+    rows, total = await asyncio.to_thread(_read_audit, limit, tenant_id)
     entries = [
         AuditEntryDTO.model_validate({k: r.get(k) for k in AuditEntryDTO.model_fields})
         for r in rows
     ]
     return AuditLogResponse(
         enabled=audit_store.is_enabled(),
-        total=audit_store.count_turns(tenant_id),
+        total=total,
         entries=entries,
     )

@@ -102,6 +102,27 @@ def test_validate_article_not_found(loader_with_data: _FakeLoader) -> None:
     assert "article_not_found" in r.reason
 
 
+def test_known_gap_trivial_substring_citation_validates(loader_with_data: _FakeLoader) -> None:
+    """sec6-01 (pre-pilot audit — KNOWN GAP, documented not yet fixed).
+
+    Check 3 is a bare substring test (`citation_norm in target_norm`), so a citation
+    whose text is a trivial token that occurs in the article (here the stopword "el")
+    validates True despite carrying no real evidentiary content. Fabrication is still
+    blocked (the article/apartado must genuinely exist — Checks 1/2), so this is a
+    precision gap, not a fabrication hole.
+
+    This test PINS the current behaviour so the gap is visible and tracked. The fix
+    (a minimum-meaningful-length floor on Citation.text, a STRICT-tightening mirroring
+    the v0.1.32-post whitespace fix) is an ADR'd milestone gated on gold-set
+    calibration to avoid regressing legitimate short legal quotes. When that lands,
+    this test will start FAILING — replace it with the floor's assertions then.
+    """
+    # "el" appears in the fixture's article text ("...incluido el apartado 1.").
+    c = Citation(norma="ai_act", articulo="6", language="es", text="el")
+    r = validate(c, loader=loader_with_data)
+    assert r.validated is True  # KNOWN GAP: a 2-char stopword currently passes Check 3
+
+
 def test_validate_apartado_not_found(loader_with_data: _FakeLoader) -> None:
     c = Citation(
         norma="ai_act",

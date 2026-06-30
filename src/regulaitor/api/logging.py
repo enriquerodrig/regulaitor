@@ -104,7 +104,10 @@ def log_api_document_turn(request: Any, report: DocumentReport, response: Analyz
         case_id=report.case_id,
         tenant_id=_tenant_id(request),
         mode="document",
-        corpus=",".join(report.corpus) if report.corpus else None,
+        # cq-03: canonical corpus encoding — comma-join of SORTED members so a
+        # multi-corpus document always serialises deterministically (chat writes a
+        # single corpus string; both are "comma-join of the sorted corpus set").
+        corpus=",".join(sorted(report.corpus)) if report.corpus else None,
         language=str(report.language),
         verdict=response.document_verdict,
         n_segments=response.n_segments_total,
