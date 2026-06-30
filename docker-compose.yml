@@ -29,7 +29,10 @@ services:
     environment:
       APP_MODE: api
       PORT: "8000"
-      LANCEDB_PATH: /data/indexes
+      # obs-07: default to the baked-in index (Dockerfile COPYs it) for a FAST start —
+      # the entrypoint finds chunks.lance and skips the 10-15 min cold rebuild. Point
+      # at /data/indexes only if you deliberately want to rebuild onto a volume.
+      LANCEDB_PATH: /app/corpus/indexes/regulaitor.lance
       HF_HOME: /data/hf_cache
     env_file:
       - .env
@@ -56,7 +59,8 @@ services:
     environment:
       APP_MODE: streamlit
       PORT: "8501"
-      LANCEDB_PATH: /data/indexes
+      # obs-07: baked-in index for a fast start (see the api service note above).
+      LANCEDB_PATH: /app/corpus/indexes/regulaitor.lance
       HF_HOME: /data/hf_cache
     env_file:
       - .env

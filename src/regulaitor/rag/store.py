@@ -51,12 +51,25 @@ SCHEMA = pa.schema(
 )
 
 
-def connect(path: Path = DEFAULT_PATH) -> lancedb.table.Table:
+def connect(path: Path = DEFAULT_PATH, *, create: bool = True) -> lancedb.table.Table:
     """Open or create the chunks table at the given path.
 
     ``path`` is the directory of the LanceDB database (a directory, not a single
     file — LanceDB stores its data as a tree of arrow files).
+
+    obs-02: with ``create=False`` this is strictly READ-ONLY — it never mkdirs and
+    never creates the table; a missing store/table raises ``FileNotFoundError``. The
+    /health probe uses this so a readiness check can't silently materialise an empty
+    index (which would then mask the real "index missing" condition). ingest/build
+    keep the default ``create=True``.
     """
+    if not create:
+        if not path.exists():
+            raise FileNotFoundError(f"LanceDB store not found at {path}")
+        db = lancedb.connect(str(path))
+        if TABLE_NAME not in db.list_tables().tables:
+            raise FileNotFoundError(f"LanceDB table {TABLE_NAME!r} not found at {path}")
+        return db.open_table(TABLE_NAME)
     path.mkdir(parents=True, exist_ok=True)
     db = lancedb.connect(str(path))
     if TABLE_NAME in db.list_tables().tables:

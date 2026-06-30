@@ -41,16 +41,24 @@ def _tenant_id(request: Any) -> str | None:
     return tenant.tenant_id if tenant is not None else None
 
 
-def log_api_chat_turn(request: Any, state: ChatState, response: AskResponse) -> None:
-    """Emit one structured INFO record for a completed /ask request."""
-    record = {
-        "case_id": state.case_id,
+def _http_log_base(request: Any, case_id: str) -> dict[str, Any]:
+    """cq-02: the HTTP-level fields common to every structured request log record
+    (single source of truth for the shared /ask + /analyze envelope)."""
+    return {
+        "case_id": case_id,
         "http_method": request.method,
         "http_path": request.url.path,
         "http_status": 200,
         "tenant_id": _tenant_id(request),
         "token_hash": getattr(request.state, "token_hash", None),
         "client_ip_redacted": _redact_ip(request.client.host if request.client else None),
+    }
+
+
+def log_api_chat_turn(request: Any, state: ChatState, response: AskResponse) -> None:
+    """Emit one structured INFO record for a completed /ask request."""
+    record = {
+        **_http_log_base(request, state.case_id),
         "verdict": response.verdict,
         "n_findings": len(response.answer.findings),
         "n_citations": len(response.audit_results),
@@ -79,13 +87,7 @@ def log_api_chat_turn(request: Any, state: ChatState, response: AskResponse) -> 
 def log_api_document_turn(request: Any, report: DocumentReport, response: AnalyzeResponse) -> None:
     """Emit one structured INFO record for a completed /analyze request."""
     record = {
-        "case_id": report.case_id,
-        "http_method": request.method,
-        "http_path": request.url.path,
-        "http_status": 200,
-        "tenant_id": _tenant_id(request),
-        "token_hash": getattr(request.state, "token_hash", None),
-        "client_ip_redacted": _redact_ip(request.client.host if request.client else None),
+        **_http_log_base(request, report.case_id),
         "document_verdict": response.document_verdict,
         "n_segments_total": response.n_segments_total,
         "n_segments_pass": response.n_segments_pass,

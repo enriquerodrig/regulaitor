@@ -59,6 +59,27 @@ def is_enabled() -> bool:
     return _db_path() is not None
 
 
+def is_healthy() -> bool:
+    """obs-08: True if the configured audit DB is reachable + writable, OR not
+    configured (unconfigured is not a failure). A False means the operator pointed
+    REGULAITOR_AUDIT_DB at a broken/unwritable path — surfaced as a non-fatal
+    'degraded' sub-check by /health so a silently-broken trail is alertable. Opening
+    the DB ensures the schema (a write), so this doubles as a writability probe."""
+    path = _db_path()
+    if path is None:
+        return True
+    try:
+        conn = _open(path)
+        try:
+            conn.execute("SELECT 1")
+            return True
+        finally:
+            conn.close()
+    except Exception as exc:  # noqa: BLE001 — health probe must never raise
+        logger.warning("audit_store.is_healthy probe failed: %s", exc)
+        return False
+
+
 def _open(path: str) -> sqlite3.Connection:
     # A fresh connection per call, used only on the thread that opened it (never
     # shared across threads). Concurrent writers may briefly contend on the

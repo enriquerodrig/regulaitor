@@ -125,3 +125,22 @@ def test_schema_idempotent_across_calls(monkeypatch: pytest.MonkeyPatch, tmp_pat
     audit_store.record(case_id="c1", tenant_id="acme", mode="chat", query="q")
     audit_store.record(case_id="c2", tenant_id="acme", mode="chat", query="q")
     assert audit_store.count_turns("acme") == 2
+
+
+def test_is_healthy_true_when_disabled(monkeypatch: pytest.MonkeyPatch) -> None:
+    # obs-08: unconfigured is not a failure.
+    monkeypatch.delenv("REGULAITOR_AUDIT_DB", raising=False)
+    assert audit_store.is_healthy() is True
+
+
+def test_is_healthy_true_when_reachable(monkeypatch: pytest.MonkeyPatch, tmp_path) -> None:
+    _enable(monkeypatch, tmp_path)
+    assert audit_store.is_healthy() is True
+
+
+def test_is_healthy_false_when_path_unwritable(monkeypatch: pytest.MonkeyPatch, tmp_path) -> None:
+    # Point at a path whose PARENT is a file → the DB cannot be opened/created.
+    blocker = tmp_path / "not-a-dir"
+    blocker.write_text("x")
+    monkeypatch.setenv("REGULAITOR_AUDIT_DB", str(blocker / "sub" / "audit.db"))
+    assert audit_store.is_healthy() is False

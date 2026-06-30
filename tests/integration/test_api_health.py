@@ -46,7 +46,7 @@ def test_health_returns_200_when_all_healthy(client, monkeypatch: pytest.MonkeyP
         def count_rows(self) -> int:
             return 1011
 
-    monkeypatch.setattr(routes_health, "connect", lambda: _FakeTable())
+    monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
     response = client.get("/health")
     assert response.status_code == 200
     body = response.json()
@@ -61,7 +61,7 @@ def test_health_returns_503_when_lancedb_unreachable(
     monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
     from regulaitor.api import routes_health
 
-    def _raise():
+    def _raise(**_: object) -> None:
         raise FileNotFoundError("no lancedb")
 
     monkeypatch.setattr(routes_health, "connect", _raise)
@@ -82,7 +82,7 @@ def test_health_returns_503_when_anthropic_key_missing(
         def count_rows(self) -> int:
             return 1011
 
-    monkeypatch.setattr(routes_health, "connect", lambda: _FakeTable())
+    monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
     response = client.get("/health")
     assert response.status_code == 503
     body = response.json()
@@ -94,3 +94,37 @@ def test_health_no_auth_required(client) -> None:
     # No headers passed; should still respond (with 200 or 503, not 401)
     response = client.get("/health")
     assert response.status_code in (200, 503)
+
+
+def test_health_audit_db_subcheck_is_nonfatal(client, monkeypatch: pytest.MonkeyPatch, tmp_path):
+    """obs-08: a broken opt-in audit DB is REPORTED but does NOT 503 the service."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
+    from regulaitor.api import routes_health
+
+    class _FakeTable:
+        def count_rows(self) -> int:
+            return 1011
+
+    monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
+    blocker = tmp_path / "f"  # parent-is-a-file → audit DB cannot open
+    blocker.write_text("x")
+    monkeypatch.setenv("REGULAITOR_AUDIT_DB", str(blocker / "sub" / "a.db"))
+
+    response = client.get("/health")
+    assert response.status_code == 200  # criticals ok → up despite the broken audit DB
+    checks = response.json()["checks"]
+    assert any(c["name"] == "audit_db" and c["status"] == "degraded" for c in checks)
+
+
+def test_health_audit_db_subcheck_absent_when_unconfigured(client, monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
+    monkeypatch.delenv("REGULAITOR_AUDIT_DB", raising=False)
+    from regulaitor.api import routes_health
+
+    class _FakeTable:
+        def count_rows(self) -> int:
+            return 1011
+
+    monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
+    checks = client.get("/health").json()["checks"]
+    assert not any(c["name"] == "audit_db" for c in checks)

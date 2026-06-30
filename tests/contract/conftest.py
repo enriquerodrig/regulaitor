@@ -79,7 +79,7 @@ def _setup(monkeypatch: pytest.MonkeyPatch) -> Generator[None, None, None]:
         def count_rows(self) -> int:
             return 1011
 
-    monkeypatch.setattr("regulaitor.api.routes_health.connect", lambda: _FakeTable())
+    monkeypatch.setattr("regulaitor.api.routes_health.connect", lambda **_: _FakeTable())
 
     # Reset rate-limit counters accumulated by earlier tests.
     from regulaitor.security.rate_limit import limiter

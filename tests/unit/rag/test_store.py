@@ -97,3 +97,27 @@ def test_delete_by_article_rejects_unsafe_input(tmp_path: Path) -> None:
         store.delete_by_article("ai_act.1' OR 1=1 --", "es", table)
     with pytest.raises(ValueError, match="Unsafe"):
         store.delete_by_article("ai_act.1", "es' OR 1=1 --", table)
+
+
+def test_connect_create_false_raises_on_missing_store(tmp_path: Path) -> None:
+    """obs-02: read-only connect never materialises a store/table; missing → raise."""
+    missing = tmp_path / "does-not-exist.lance"
+    with pytest.raises(FileNotFoundError):
+        store.connect(missing, create=False)
+    assert not missing.exists()  # the read-only probe did not mkdir
+
+
+def test_connect_create_false_raises_on_missing_table(tmp_path: Path) -> None:
+    """A LanceDB dir that exists but has no `chunks` table → FileNotFoundError."""
+    empty = tmp_path / "empty.lance"
+    empty.mkdir()
+    with pytest.raises(FileNotFoundError):
+        store.connect(empty, create=False)
+
+
+def test_connect_create_false_opens_existing_table(tmp_path: Path) -> None:
+    """When the table exists, read-only connect opens it normally."""
+    path = tmp_path / "t.lance"
+    store.connect(path)  # create=True: materialise the table
+    table = store.connect(path, create=False)
+    assert table.count_rows() == 0
