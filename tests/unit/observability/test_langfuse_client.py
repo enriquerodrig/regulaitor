@@ -293,7 +293,8 @@ def test_assert_safe_keys_accepts_h13_council_keys() -> None:
         council_diverges=False,
         n_judges_ok=2,
         latency_ms_total=500,
-        errors=[],
+        n_errors=0,
+        reason_code=None,
     )
 
     # All four council keys must survive without ValueError.
@@ -301,3 +302,16 @@ def test_assert_safe_keys_accepts_h13_council_keys() -> None:
     assert tt._root_meta["council_verdict"] == "block"
     assert tt._root_meta["council_diverges"] is False
     assert tt._root_meta["n_judges_ok"] == 2
+
+
+def test_raw_errors_list_is_rejected_from_egress() -> None:
+    """obs-06: free-text error strings must NEVER reach the 3rd-party trace. The
+    `errors` key was removed from the egress allowlist, so passing it raises — only
+    the n_errors COUNT (n_ prefix) and the categorical reason_code may egress."""
+    tt = lc.TurnTrace(kind="chat", case_id="c", corpus="ai_act", language="es")
+    with pytest.raises(ValueError, match="redaction allowlist"):
+        tt.set_root(errors=["stack_trace_with_user_data", "secret_internal_state"])
+    # The safe replacements pass cleanly.
+    tt.set_root(n_errors=2, reason_code="injection_blocked")
+    assert tt._root_meta["n_errors"] == 2
+    assert tt._root_meta["reason_code"] == "injection_blocked"

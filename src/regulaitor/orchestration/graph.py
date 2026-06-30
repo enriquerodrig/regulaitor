@@ -286,8 +286,9 @@ def run(
             council_diverges=record["council_diverges"],
             n_judges_ok=record["n_judges_ok"],
             latency_ms_total=record["latency_ms_total"],
-            # errors: pipeline error CATEGORY strings only (no user text);
-            # see langfuse_client redaction allowlist.
-            errors=record["errors"],
+            # obs-06: egress only the COUNT of pipeline errors + the categorical
+            # reason_code — never the raw error strings (kept in the local JSON log).
+            n_errors=len(cast("list[str]", record["errors"])),
+            reason_code=record["reason_code"],
         )
         return state

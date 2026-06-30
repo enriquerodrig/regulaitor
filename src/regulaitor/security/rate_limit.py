@@ -78,9 +78,13 @@ def _is_disabled() -> bool:
     return os.getenv("REGULAITOR_RATE_LIMIT_DISABLED", "").strip() == "1"
 
 
+# obs-04: in-process memory:// by default. Rate-limit buckets are then per-WORKER,
+# so a multi-worker / multi-instance deploy needs a shared backend (e.g. redis://...)
+# set via REGULAITOR_RATELIMIT_STORAGE for the limits to be global. The single-worker
+# self-hosted pilot is fine on memory://; see docs/H16_DEPLOY.md.
 limiter = Limiter(
     key_func=_key_func,
     default_limits=[],
     enabled=not _is_disabled(),
-    storage_uri="memory://",
+    storage_uri=os.getenv("REGULAITOR_RATELIMIT_STORAGE", "memory://"),
 )

@@ -32,7 +32,10 @@ _SAFE_META_KEYS = frozenset(
         "verdict",
         "document_verdict",
         "reason_code",
-        "errors",
+        # obs-06: the raw `errors` LIST is intentionally NOT egress-safe — only its
+        # COUNT (n_errors, via the n_ prefix rule) and the categorical reason_code
+        # leave the process. This keeps free-text error strings off the 3rd-party
+        # egress path even if a future error grows beyond a bare category label.
         "cache_hit",
         "embedding_model",
         "blocked_category",
