@@ -686,3 +686,54 @@ def test_auditor_all_blocked_routing_block_when_failed_check_none(
     assert (
         audited.verdict == AuditVerdict.BLOCK
     ), f"Expected BLOCK (failed_check=None conservative) but got {audited.verdict}"
+
+
+# ---------------------------------------------------------------------------
+# sec6-01 (ADR-0043): the too-short floor's TURN-LEVEL closure. failed_check=4
+# (too-short) must NOT get the paraphrase-only PASS softening (failed_check=3).
+# ---------------------------------------------------------------------------
+
+
+def _blocked(citation: Citation, *, failed_check: int, reason: str) -> AuditResult:
+    return AuditResult(
+        citation=citation,
+        validated=False,
+        article_exists=True,
+        apartado_exists=True if citation.apartado else None,
+        text_normalized_match=False,
+        reason=reason,
+        failed_check=failed_check,  # type: ignore[arg-type]
+    )
+
+
+def test_too_short_citation_routes_block_not_paraphrase_pass(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """sec6-01 closure: a Finding whose only citation is too-short (failed_check=4)
+    routes to BLOCK — the floor's effect reaches the TURN verdict, not just the
+    validator. Without the distinct check value it would be softened to PASS."""
+    from regulaitor.agents import auditor
+
+    c = _citation("6", "1", "el")
+    answer = _answer([Finding(text="f", citations=[c])])
+    monkeypatch.setattr(
+        auditor.validator,
+        "validate",
+        MagicMock(return_value=_blocked(c, failed_check=4, reason="citation_text_too_short: ...")),
+    )
+    assert AuditorAgent().audit(answer).verdict == AuditVerdict.BLOCK
+
+
+def test_paraphrase_only_citation_still_passes(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Contrast: a genuine paraphrase mismatch (failed_check=3) all-blocked Finding
+    still PASSES under v0.1.29 — proving failed_check=4 is routed differently."""
+    from regulaitor.agents import auditor
+
+    c = _citation("6", "1", "a sufficiently long paraphrased citation text")
+    answer = _answer([Finding(text="f", citations=[c])])
+    monkeypatch.setattr(
+        auditor.validator,
+        "validate",
+        MagicMock(return_value=_blocked(c, failed_check=3, reason="text_not_in_apartado: ...")),
+    )
+    assert AuditorAgent().audit(answer).verdict == AuditVerdict.PASS

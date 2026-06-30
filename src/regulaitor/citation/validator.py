@@ -13,6 +13,17 @@ from regulaitor.citation.schemas import AuditResult, Citation
 from regulaitor.corpus import loader as default_loader
 from regulaitor.rag.chunking import _normalize
 
+# sec6-01 (pre-pilot audit; ADR-0043): minimum normalized length for a citation's
+# text to carry evidentiary weight. Check 3 is a substring test, so without a floor
+# a trivial token (e.g. "el") is a substring of nearly every article and validates
+# with zero evidence. Calibrated from real data ($0): across 429 validated citations
+# from paid runs the shortest was 53 chars, and the shortest citable corpus segment
+# is 42 chars (4820 segments, none < 30) — so 20 sits safely below BOTH, rejecting
+# trivial/short-phrase citations with zero false-positives on the observed cohort.
+# §6-safe: a STRICT-tightening (can only make MORE citations invalid, never fewer);
+# article/apartado fabrication stays blocked upstream at Checks 1/2.
+_MIN_CITATION_CHARS = 20
+
 
 class LoaderProtocol(Protocol):
     """Structural typing for the corpus loader surface used by the validator.
@@ -113,6 +124,33 @@ def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> Aud
                 f"(input was whitespace-only or zero-width sequence)."
             ),
             failed_check=3,
+        )
+    # sec6-01 (ADR-0043): reject a too-short citation BEFORE the substring test, so a
+    # trivial token can no longer ride the `in` operator to a spurious pass. See the
+    # _MIN_CITATION_CHARS calibration note above.
+    #
+    # failed_check=4 (NOT 3): a too-short citation is a NON-citation, not a paraphrase.
+    # The Auditor's paraphrase-routing helper (_all_blocked_findings_paraphrase_only)
+    # softens to PASS only when every invalid citation has failed_check==3; emitting 4
+    # makes its `!= 3` guard route a too-short-only Finding to BLOCK/RHR instead — so
+    # the floor actually closes the gap at the TURN level, not just the validator
+    # layer. auditor.py stays byte-unchanged (its existing guard handles 4).
+    if len(citation_norm) < _MIN_CITATION_CHARS:
+        scope = "apartado" if citation.apartado is not None else "article"
+        return AuditResult(
+            citation=citation,
+            validated=False,
+            article_exists=True,
+            apartado_exists=apartado_exists,
+            text_normalized_match=False,
+            reason=(
+                f"citation_text_too_short: {citation.norma} art. {citation.articulo}"
+                f"{('.' + citation.apartado) if citation.apartado else ''} "
+                f"{citation.language}; cited text is {len(citation_norm)} normalized "
+                f"chars (minimum {_MIN_CITATION_CHARS}) — too short to carry evidence "
+                f"in a substring match against the {scope}."
+            ),
+            failed_check=4,
         )
     text_match = citation_norm in target_norm
 

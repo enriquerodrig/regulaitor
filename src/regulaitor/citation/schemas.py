@@ -46,10 +46,12 @@ class AuditResult(BaseModel):
     apartado_exists: bool | None
     text_normalized_match: bool
     reason: str | None
-    failed_check: Literal[1, 2, 3] | None = None
+    failed_check: Literal[1, 2, 3, 4] | None = None
     # v0.1.24 (ADR-0031): which check fired first on fail-fast.
     # 1=article_not_exists (Check 1), 2=apartado_not_exists (Check 2),
-    # 3=text_not_match (Check 3). None=all checks passed OR pre-v0.1.24 cached AuditResult.
+    # 3=text_not_match (Check 3, paraphrase mismatch). 4=citation_text_too_short
+    # (sec6-01 / ADR-0043 — a NON-citation; the Auditor routes it strictly, NOT as a
+    # paraphrase). None=all checks passed OR pre-v0.1.24 cached AuditResult.
 
 
 class RetrievedChunk(BaseModel):

@@ -102,25 +102,34 @@ def test_validate_article_not_found(loader_with_data: _FakeLoader) -> None:
     assert "article_not_found" in r.reason
 
 
-def test_known_gap_trivial_substring_citation_validates(loader_with_data: _FakeLoader) -> None:
-    """sec6-01 (pre-pilot audit — KNOWN GAP, documented not yet fixed).
+def test_trivial_substring_citation_rejected_by_length_floor(
+    loader_with_data: _FakeLoader,
+) -> None:
+    """sec6-01 (pre-pilot audit; ADR-0043) — the length floor closes the gap.
 
-    Check 3 is a bare substring test (`citation_norm in target_norm`), so a citation
-    whose text is a trivial token that occurs in the article (here the stopword "el")
-    validates True despite carrying no real evidentiary content. Fabrication is still
-    blocked (the article/apartado must genuinely exist — Checks 1/2), so this is a
-    precision gap, not a fabrication hole.
-
-    This test PINS the current behaviour so the gap is visible and tracked. The fix
-    (a minimum-meaningful-length floor on Citation.text, a STRICT-tightening mirroring
-    the v0.1.32-post whitespace fix) is an ADR'd milestone gated on gold-set
-    calibration to avoid regressing legitimate short legal quotes. When that lands,
-    this test will start FAILING — replace it with the floor's assertions then.
+    Check 3 is a substring test, so before the floor a trivial token (here the
+    stopword "el", which occurs in the article) validated True with zero evidence.
+    The _MIN_CITATION_CHARS floor (20) now rejects it as failed_check=4 (too-short,
+    distinct from paraphrase=3 so the Auditor routes it strictly). Calibrated so it
+    cannot reject a legitimate citation (shortest real validated citation 53 chars;
+    shortest citable corpus segment 42 chars). §6-safe: strict-tightening.
     """
-    # "el" appears in the fixture's article text ("...incluido el apartado 1.").
     c = Citation(norma="ai_act", articulo="6", language="es", text="el")
     r = validate(c, loader=loader_with_data)
-    assert r.validated is True  # KNOWN GAP: a 2-char stopword currently passes Check 3
+    assert r.validated is False
+    # failed_check=4 (too-short), distinct from 3 (paraphrase) so the Auditor routes
+    # it strictly (BLOCK/RHR) instead of softening to PASS — see test_auditor.
+    assert r.failed_check == 4
+    assert r.reason is not None and "too_short" in r.reason
+
+
+def test_citation_at_length_floor_still_evaluated_on_match(loader_with_data: _FakeLoader) -> None:
+    """A citation at/above the floor is evaluated normally by the substring match
+    (the floor only short-circuits BELOW the threshold)."""
+    # 'el artículo 6 establece reglas' is >20 chars and is a substring of the article.
+    c = Citation(norma="ai_act", articulo="6", language="es", text="el artículo 6 establece reglas")
+    r = validate(c, loader=loader_with_data)
+    assert r.validated is True
 
 
 def test_validate_apartado_not_found(loader_with_data: _FakeLoader) -> None:
@@ -203,16 +212,20 @@ def test_validate_text_from_other_apartado_rejected() -> None:
     claimed apartado, not the whole article. Citation claims apartado 1 but
     quotes the text of apartado 2; must fail.
     """
-    fl = _FakeLoader({("ai_act", "6", "es"): "alpha text\n\nbeta text"})
-    fl.add_paragraph("ai_act", "6", "1", "es", "alpha text")
-    fl.add_paragraph("ai_act", "6", "2", "es", "beta text")
+    # Passages are >20 chars so they exercise the substring-scoping logic, not the
+    # sec6-01 length floor (which short-circuits below the threshold).
+    apartado_1 = "El ámbito material del primer apartado es el que se describe aquí."
+    apartado_2 = "Las obligaciones del segundo apartado son completamente distintas."
+    fl = _FakeLoader({("ai_act", "6", "es"): f"{apartado_1}\n\n{apartado_2}"})
+    fl.add_paragraph("ai_act", "6", "1", "es", apartado_1)
+    fl.add_paragraph("ai_act", "6", "2", "es", apartado_2)
 
     c = Citation(
         norma="ai_act",
         articulo="6",
         apartado="1",
         language="es",
-        text="beta text",
+        text=apartado_2,  # claims apartado 1 but quotes apartado 2
     )
     r = validate(c, loader=fl)
     assert r.validated is False
@@ -230,10 +243,13 @@ def test_validate_text_from_other_article_rejected() -> None:
     the claimed article, not the whole corpus. Citation claims article 6 but
     quotes the text of article 7; must fail.
     """
+    # Passages are >20 chars so they exercise article scoping, not the length floor.
+    art_6 = "El artículo seis regula el ámbito material de aplicación."
+    art_7 = "El artículo siete regula obligaciones de transparencia distintas."
     fl = _FakeLoader(
         {
-            ("ai_act", "6", "es"): "alpha text",
-            ("ai_act", "7", "es"): "beta text",
+            ("ai_act", "6", "es"): art_6,
+            ("ai_act", "7", "es"): art_7,
         }
     )
 
@@ -241,7 +257,7 @@ def test_validate_text_from_other_article_rejected() -> None:
         norma="ai_act",
         articulo="6",
         language="es",
-        text="beta text",
+        text=art_7,  # claims article 6 but quotes article 7
     )
     r = validate(c, loader=fl)
     assert r.validated is False
