@@ -21,7 +21,7 @@ describe("POST /api/login", () => {
     expect(res.status).toBe(400);
   });
 
-  it("accepts a valid token and sets a hardened httpOnly cookie", async () => {
+  it("accepts a valid token and sets a hardened httpOnly cookie with Secure by default", async () => {
     const res = await POST(loginRequest({ token: `tok_${"a".repeat(20)}` }));
     expect(res.status).toBe(200);
     const setCookie = res.headers.get("set-cookie") ?? "";
@@ -29,15 +29,30 @@ describe("POST /api/login", () => {
     expect(setCookie.toLowerCase()).toContain("httponly");
     expect(setCookie.toLowerCase()).toContain("samesite=strict");
     expect(setCookie.toLowerCase()).toContain("path=/");
-    // http request -> no Secure (so a plain-http self-hosted LAN deploy works)
-    expect(setCookie.toLowerCase()).not.toContain("secure");
+    // fe-01: fail-secure — Secure is set by default, even on this http test request.
+    expect(setCookie.toLowerCase()).toContain("secure");
   });
 
-  it("sets Secure on the cookie when the request is https", async () => {
-    const res = await POST(
-      loginRequest({ token: `tok_${"a".repeat(20)}` }, "https://app.example/api/login"),
-    );
-    expect(res.status).toBe(200);
-    expect((res.headers.get("set-cookie") ?? "").toLowerCase()).toContain("secure");
+  it("omits Secure only when REGULAITOR_ALLOW_INSECURE_COOKIE=1 (trusted-LAN http opt-out)", async () => {
+    const prev = process.env.REGULAITOR_ALLOW_INSECURE_COOKIE;
+    process.env.REGULAITOR_ALLOW_INSECURE_COOKIE = "1";
+    try {
+      const res = await POST(loginRequest({ token: `tok_${"a".repeat(20)}` }));
+      expect(res.status).toBe(200);
+      expect((res.headers.get("set-cookie") ?? "").toLowerCase()).not.toContain("secure");
+    } finally {
+      if (prev === undefined) delete process.env.REGULAITOR_ALLOW_INSECURE_COOKIE;
+      else process.env.REGULAITOR_ALLOW_INSECURE_COOKIE = prev;
+    }
+  });
+
+  it("rejects a cross-origin POST with 403 (fe-02 CSRF guard)", async () => {
+    const req = new Request("http://localhost/api/login", {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: "https://evil.example" },
+      body: JSON.stringify({ token: `tok_${"a".repeat(20)}` }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(403);
   });
 });

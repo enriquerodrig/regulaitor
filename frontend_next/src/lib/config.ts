@@ -13,3 +13,8 @@ export const MIN_TOKEN_LEN = 16;
 
 /** Session lifetime (seconds). The token cookie expires after this. */
 export const SESSION_MAX_AGE_S = 60 * 60 * 8; // 8h
+
+/** Max upload size for /analyze, mirrored from the backend default
+ *  (`REGULAITOR_MAX_UPLOAD_BYTES`, 10 MB). The BFF rejects early on the declared
+ *  Content-Length (fe-05) so an oversized body is not relayed to the backend. */
+export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;

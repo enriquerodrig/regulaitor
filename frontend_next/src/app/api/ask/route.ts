@@ -2,11 +2,15 @@ import { NextResponse } from "next/server";
 
 import { backendFetch } from "@/lib/api-server";
 import { SESSION_COOKIE } from "@/lib/config";
+import { crossOriginRejection } from "@/lib/csrf";
 
 export const runtime = "nodejs";
 
 // POST /api/ask — forward the chat query (JSON) to the FastAPI /ask endpoint.
 export async function POST(request: Request): Promise<NextResponse> {
+  const csrf = crossOriginRejection(request);
+  if (csrf) return csrf;
+
   let payload: unknown;
   try {
     payload = await request.json();
