@@ -82,16 +82,16 @@ Toda salida del Analyst-Agent pasa por el Auditor-Agent. El Auditor valida:
 
 Si falla cualquier validación crítica, la salida se bloquea o se marca como "requiere revisión humana". **No hay atajos.**
 
-### 6.1 Arquitectura §6 multi-capa (evolución interpretiva v0.1.24 → v0.1.29)
+### 6.1 Arquitectura §6 multi-capa (evolución interpretiva v0.1.24 → v0.1.29 → sec6-01/ADR-0043)
 
 El invariante §6 se ha refinado en capas explícitas (cada cambio documentado en su ADR + decisions_log; **el enforcement boundary se preserva en TODAS las capas a y b**):
 
-- **Capa (a) per-citation validator** — `src/regulaitor/citation/validator.py`. Validación estricta 3-checks (article_exists / apartado_exists / text_normalized_match). BYTE-EQUIVALENT desde H4; v0.1.24 ADR-0031 añadió `failed_check: Literal[1,2,3] | None` como observabilidad aditiva (NO está en el decision path).
+- **Capa (a) per-citation validator** — `src/regulaitor/citation/validator.py`. Validación estricta 3-checks (article_exists / apartado_exists / text_normalized_match). BYTE-EQUIVALENT semantics desde H4 con strict-tightenings **aditivos (nunca loosening)**: v0.1.32-post rechazo de citas whitespace-only, y **sec6-01/ADR-0043** floor de longitud mínima `_MIN_CITATION_CHARS=20` en Check 3 (cierra el gap del substring trivial `"el"`; calibrado $0 sobre 429 citas validadas reales, mínima observada 53 chars, y 4820 segmentos de corpus, mínimo 42). `failed_check: Literal[1,2,3,4] | None` (v0.1.24 ADR-0031 introdujo 1-3 como observabilidad; **4=too-short** en ADR-0043). Desde v0.1.25 (ADR-0032) el campo **SÍ está en el decision path**: la Capa (c) lo lee (`==3` → paraphrase-softening a PASS; `==4`/1/2 → routing estricto BLOCK/RHR).
 - **Capa (b) Finding-Lenient aggregation** — `auditor.py` línea 65 `any(r.validated for r in this_finding_results)`. BYTE-UNCHANGED desde v0.1.21.
 - **Capa (c) Turn-level aggregation policy** — `auditor.py` branches del `audit()`. Modificada en (1) v0.1.21 ADR-0027 D1 Tier 1 quorum `n_invalid_citations >= 2` → RHR; (2) v0.1.25 ADR-0032 D2 partial-Findings routing softening cuando helper True; (3) v0.1.29 ADR-0034 D Mirror all-blocked routing softening con la MISMA condición helper.
 - **Capa (d) prompt-level explicit forbid** — `agents/prompts/analyst/system.v1.5.md` + `agents/prompts/document_analyst/system.v1.6.md`. Hard rule 4 inviolable "Never emit placeholder citation strings (UNKNOWN/N/A/TBD)" + Rule 2 Finding-based refusal cuando contexto insuficiente. NUEVA en v0.1.28 ADR-0033 (defense-in-depth model-side; complementa enforcement validator-side).
 
-**Garantía §6**: el helper compartido `_all_blocked_findings_paraphrase_only` (auditor.py:20-48) sólo retorna True si TODA citation invalid tiene `failed_check==3` (paraphrase mismatch donde article + apartado SÍ existen en corpus); cualquier Check 1 (article fabrication) o Check 2 (apartado fabrication) retorna False → preserva BLOCK/RHR routing original. **Por construcción, fabricación nunca es PASS.**
+**Garantía §6**: el helper compartido `_all_blocked_findings_paraphrase_only` (auditor.py:20-48) sólo retorna True si TODA citation invalid tiene `failed_check==3` (paraphrase mismatch donde article + apartado SÍ existen en corpus); cualquier Check 1 (article fabrication), Check 2 (apartado fabrication) o Check 4 (**too-short, sec6-01/ADR-0043** — cita trivial sin contenido evidencial) retorna False → preserva el routing estricto BLOCK/RHR (el floor de Capa (a) emite `failed_check=4`, distinto de 3, precisamente para que este helper —byte-unchanged— lo enrute estricto en vez de suavizarlo a PASS). **Por construcción, ni la fabricación ni la cita trivial es PASS.**
 
 ---
 
