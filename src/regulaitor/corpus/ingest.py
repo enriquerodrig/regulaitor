@@ -34,7 +34,7 @@ from regulaitor.corpus.formex_parser import (
 from regulaitor.corpus.html_parser import HtmlParseError, HtmlParser
 from regulaitor.corpus.manifest import ManifestDiff
 from regulaitor.corpus.pdf_parser import PdfParseError, PdfParser
-from regulaitor.corpus.registry import CORPUS_REGISTRY
+from regulaitor.corpus.registry import CORPUS_REGISTRY, canonical_source_url
 from regulaitor.corpus.schemas import (
     ArticleEntry,
     HttpCacheEntry,
@@ -450,13 +450,16 @@ def run(
                 raw_total_bytes=raw_total_bytes
                 or (old_manifest.stats.raw_size_bytes if old_manifest else 0),
             )
-            # Backfill source_url on freshly-fetched language entries.
+            # Provenance: always record the canonical EUR-Lex URL (registry CELEX),
+            # never the fetch source (which is `file:///…/corpus/raw/…` under the
+            # --use-local-only path used since H14). See registry.canonical_source_url
+            # + the P2 credibility fix. `source_url_per_lang` is still built above as a
+            # fetch-audit trail but is no longer the provenance of record.
             for article in new_manifest.articles:
                 for lang_, le in article.languages.items():
-                    if le.source_url == "" and source_url_per_lang.get(lang_):
-                        article.languages[lang_] = le.model_copy(
-                            update={"source_url": source_url_per_lang[lang_]}
-                        )
+                    canonical = canonical_source_url(new_manifest.corpus, lang_)
+                    if le.source_url != canonical:
+                        article.languages[lang_] = le.model_copy(update={"source_url": canonical})
 
             summary.reprocessed_articles += reprocessed
 

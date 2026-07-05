@@ -40,7 +40,7 @@
           "embedded_at": "2026-06-11T07:35:18.342211Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:9d2ca72bd848384d0e12d285614f81d6fe007281c22a0a2332bb361080ddf07f",
@@ -51,7 +51,7 @@
           "embedded_at": "2026-06-11T07:35:23.070891Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -70,7 +70,7 @@
           "embedded_at": "2026-06-11T07:35:31.510209Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:87241cc5a215302ca314fcdf093035fb02d53ed8b582edb6343016453213951b",
@@ -81,7 +81,7 @@
           "embedded_at": "2026-06-11T07:35:40.236693Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -100,7 +100,7 @@
           "embedded_at": "2026-06-11T07:35:48.571666Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:dd3d2b7ae853a3adf08a587904398e705503d628c83e738cfa883340b35199a5",
@@ -111,7 +111,7 @@
           "embedded_at": "2026-06-11T07:35:57.211437Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -130,7 +130,7 @@
           "embedded_at": "2026-06-11T07:36:06.030737Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:65f48894b9f81f70c39751228c2d24b183bc52086b290ee8ccef2b5710760a67",
@@ -141,7 +141,7 @@
           "embedded_at": "2026-06-11T07:36:15.111796Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -160,7 +160,7 @@
           "embedded_at": "2026-06-11T07:36:23.153386Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:2a1914352fcb884629b27aa579d850de0a9c7fc4bf44e55a65034bec6dbf84fe",
@@ -171,7 +171,7 @@
           "embedded_at": "2026-06-11T07:36:29.665206Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -190,7 +190,7 @@
           "embedded_at": "2026-06-11T07:36:36.757153Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:6ebdbf7dcc8bf71901581322841334a696b06ed68ebe0699552762b4b6570655",
@@ -201,7 +201,7 @@
           "embedded_at": "2026-06-11T07:36:43.832064Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -220,7 +220,7 @@
           "embedded_at": "2026-06-11T07:36:52.204131Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:126630a16d1842a5b9741c202ad01a70bc7f1a14107c631ebb67b8d3b9459668",
@@ -231,7 +231,7 @@
           "embedded_at": "2026-06-11T07:37:00.661923Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -250,7 +250,7 @@
           "embedded_at": "2026-06-11T07:37:08.971738Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:b5dcc4fd836d1acd273c2ff47aaadf0c812b6f51391b4bb7ac6d048416ccd3d3",
@@ -261,7 +261,7 @@
           "embedded_at": "2026-06-11T07:37:16.097950Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -280,7 +280,7 @@
           "embedded_at": "2026-06-11T07:37:18.284930Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:7b27199be714ebb6c0c54282c2f51b2e42df4cdbacfe0e3560f218558dea8869",
@@ -291,7 +291,7 @@
           "embedded_at": "2026-06-11T07:37:20.235251Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -310,7 +310,7 @@
           "embedded_at": "2026-06-11T07:37:21.733813Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:e87974f3a206edde8851b9a9fa99ac1f0485027e6bf36ace395dfe8a46dd0919",
@@ -321,7 +321,7 @@
           "embedded_at": "2026-06-11T07:37:23.278026Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -340,7 +340,7 @@
           "embedded_at": "2026-06-11T07:37:29.093441Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:8d4929361729d194fae4ff89d128fa4384a1593f92f69101c77605523ef1e9b7",
@@ -351,7 +351,7 @@
           "embedded_at": "2026-06-11T07:37:35.245537Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -370,7 +370,7 @@
           "embedded_at": "2026-06-11T07:37:42.542594Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:4ffd32d390d6750b54bf5a24c8a252bb62e5663090e666c7fdaa39752bc013a1",
@@ -381,7 +381,7 @@
           "embedded_at": "2026-06-11T07:37:48.638875Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -400,7 +400,7 @@
           "embedded_at": "2026-06-11T07:37:50.589190Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:7c3fd818568d571f79d7e7eb16909ce0ac4dc8f15d101bdf9b8cfa1b5cdd9128",
@@ -411,7 +411,7 @@
           "embedded_at": "2026-06-11T07:37:52.418572Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -430,7 +430,7 @@
           "embedded_at": "2026-06-11T07:38:00.988255Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:5eaa0c057faf06fc3f5a517afc5fff67227908d9886f853f410a2f22dce173e6",
@@ -441,7 +441,7 @@
           "embedded_at": "2026-06-11T07:38:10.097338Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -460,7 +460,7 @@
           "embedded_at": "2026-06-11T07:38:13.578361Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:4dd63a8197cbff5d0ccc7e8525eba3557741e5bdc5a1f233cd9a83dffa92fc74",
@@ -471,7 +471,7 @@
           "embedded_at": "2026-06-11T07:38:16.718265Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -490,7 +490,7 @@
           "embedded_at": "2026-06-11T07:38:24.047854Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:53761233405d75a9a6dab63d2baef61c8bbb7b1920be46481e777c5415ef2031",
@@ -501,7 +501,7 @@
           "embedded_at": "2026-06-11T07:38:32.085205Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -520,7 +520,7 @@
           "embedded_at": "2026-06-11T07:38:39.414348Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:11384c1131f93c8686f83e4b92c67cb1dc28c591226fbea64209bcdb6becaca9",
@@ -531,7 +531,7 @@
           "embedded_at": "2026-06-11T07:38:45.949244Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -550,7 +550,7 @@
           "embedded_at": "2026-06-11T07:38:48.078595Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:8a49affecf2f95b97701f464f5d10a1a8937d3c39b68ad616727f89c7203f64c",
@@ -561,7 +561,7 @@
           "embedded_at": "2026-06-11T07:38:50.040574Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -580,7 +580,7 @@
           "embedded_at": "2026-06-11T07:38:51.872782Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:5f44cb0b90e6db3e60cbc30bbbbf95a8e14812147a1a315a287f51a6522f39f1",
@@ -591,7 +591,7 @@
           "embedded_at": "2026-06-11T07:38:53.545525Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -610,7 +610,7 @@
           "embedded_at": "2026-06-11T07:38:56.588309Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:06706711988d2d072f50ab82643ee95a1ce2437d6e8fd66beae9d63398730de6",
@@ -621,7 +621,7 @@
           "embedded_at": "2026-06-11T07:38:59.051895Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -640,7 +640,7 @@
           "embedded_at": "2026-06-11T07:39:06.883422Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:cdf8c29015b2eac21ce117bfe5cb6befc1ce34d946eb589e0de609d2d5634a5b",
@@ -651,7 +651,7 @@
           "embedded_at": "2026-06-11T07:39:15.634293Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -670,7 +670,7 @@
           "embedded_at": "2026-06-11T07:39:17.429682Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:20e566b3ec3b5ee3cb1d109dc2f1f28f1aef841c15f15683976d09ce1829f109",
@@ -681,7 +681,7 @@
           "embedded_at": "2026-06-11T07:39:19.333741Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -700,7 +700,7 @@
           "embedded_at": "2026-06-11T07:39:21.743170Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:70eca2bbc570e490680590abe4777b779094f8f1c027ce17f29d2cfa92e118ee",
@@ -711,7 +711,7 @@
           "embedded_at": "2026-06-11T07:39:23.746710Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -730,7 +730,7 @@
           "embedded_at": "2026-06-11T07:39:26.679481Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:f3e0685cb52bcf39fd055a68a6346a4ce8d331494907b732478e9a4971125315",
@@ -741,7 +741,7 @@
           "embedded_at": "2026-06-11T07:39:29.281299Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -760,7 +760,7 @@
           "embedded_at": "2026-06-11T07:39:37.880081Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:b1b61e7316752da8a539a568722edbdc3a7d1fff6480d1e3081af9b5a8ae5fae",
@@ -771,7 +771,7 @@
           "embedded_at": "2026-06-11T07:39:45.412633Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -790,7 +790,7 @@
           "embedded_at": "2026-06-11T07:39:54.115053Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:ccb0c26e83a6a4fddee5509147f29d03e57b63dc925eb7686428cba1fe0e672e",
@@ -801,7 +801,7 @@
           "embedded_at": "2026-06-11T07:40:02.762663Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -820,7 +820,7 @@
           "embedded_at": "2026-06-11T07:40:04.249281Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:aabc650a302019910e9a41fad7df8a34e77374772eeecda36c365323871a0ee6",
@@ -831,7 +831,7 @@
           "embedded_at": "2026-06-11T07:40:05.739402Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -850,7 +850,7 @@
           "embedded_at": "2026-06-11T07:40:14.226754Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:6abc1c4cc3e867ecb09977f72e1342d9e20501938eb5ec5e000df7007ee21e6f",
@@ -861,7 +861,7 @@
           "embedded_at": "2026-06-11T07:40:23.326278Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -880,7 +880,7 @@
           "embedded_at": "2026-06-11T07:40:29.580114Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:eea225a22e94eb7d550454f0f63be689a31fb717ad449a13ea10704d0fac72d9",
@@ -891,7 +891,7 @@
           "embedded_at": "2026-06-11T07:40:34.166934Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -910,7 +910,7 @@
           "embedded_at": "2026-06-11T07:40:36.634298Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:ad16419a1549a08da00cd9f89f8734677b2bab5d88dbe7031e4463ebdc926816",
@@ -921,7 +921,7 @@
           "embedded_at": "2026-06-11T07:40:38.789719Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -940,7 +940,7 @@
           "embedded_at": "2026-06-11T07:40:41.007798Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:58af66ced66e9b38f731c6db0a9c409b12f0b8afa780f2bce6f731b682c70555",
@@ -951,7 +951,7 @@
           "embedded_at": "2026-06-11T07:40:44.619397Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -970,7 +970,7 @@
           "embedded_at": "2026-06-11T07:40:47.821023Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:f295bd7a21b9df74ac97148b52d057c607160dba9aee033c89a87317736c4ede",
@@ -981,7 +981,7 @@
           "embedded_at": "2026-06-11T07:40:50.615494Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -1000,7 +1000,7 @@
           "embedded_at": "2026-06-11T07:40:53.110715Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:c9ecc69b829ed2c560705c95fb48aac5e610231868f84a8a22613c1759c008d5",
@@ -1011,7 +1011,7 @@
           "embedded_at": "2026-06-11T07:40:55.603452Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -1030,7 +1030,7 @@
           "embedded_at": "2026-06-11T07:40:57.789119Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:2c77d6d7ef6d4b598f67188253730c58296fa1125152a5339c0bdb11edb05670",
@@ -1041,7 +1041,7 @@
           "embedded_at": "2026-06-11T07:40:59.524738Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -1060,7 +1060,7 @@
           "embedded_at": "2026-06-11T07:41:08.739956Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:c1bc4dfb71d5b092669fa65147c037389222bcc624c53a8011a97985af1fddbe",
@@ -1071,7 +1071,7 @@
           "embedded_at": "2026-06-11T07:41:17.642041Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -1090,7 +1090,7 @@
           "embedded_at": "2026-06-11T07:41:23.534578Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:d286e1965bde99ba3d05fffebf106cfc2794ba68b5fbcaf2cb32bd065c493ab7",
@@ -1101,7 +1101,7 @@
           "embedded_at": "2026-06-11T07:41:29.782611Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -1120,7 +1120,7 @@
           "embedded_at": "2026-06-11T07:41:37.985133Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:7a23c656a7aacecc2f9e0e7d46da78f77ee0645dc4a0790bb7bc96c365712b89",
@@ -1131,7 +1131,7 @@
           "embedded_at": "2026-06-11T07:41:46.984643Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -1150,7 +1150,7 @@
           "embedded_at": "2026-06-11T07:41:55.656845Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:9e5605571287e474436ad35808afea68952d50027c104c3642eeb73ec740a53c",
@@ -1161,7 +1161,7 @@
           "embedded_at": "2026-06-11T07:42:04.236835Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -1180,7 +1180,7 @@
           "embedded_at": "2026-06-11T07:42:06.093837Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:aaf3333850e1b15c016d869c0bcc9de0e3118938bf7898198a419c58ef60158e",
@@ -1191,7 +1191,7 @@
           "embedded_at": "2026-06-11T07:42:07.887927Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     },
@@ -1210,7 +1210,7 @@
           "embedded_at": "2026-06-11T07:42:09.235440Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_es.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R1113"
         },
         "en": {
           "hash": "sha256:d72f591220208eac51049ee4b6fc393dac5a916a0ce1782b27196a1f0dac81da",
@@ -1221,7 +1221,7 @@
           "embedded_at": "2026-06-11T07:42:10.644398Z",
           "embedding_model": "BAAI/bge-m3@5617a9f61b028005",
           "fetched_at": "2026-06-11T06:38:44.621915Z",
-          "source_url": "file:///C:/Users/enriq/Documents/regulaitor/regulaitor/corpus/raw/tfr_en.html"
+          "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1113"
         }
       }
     }

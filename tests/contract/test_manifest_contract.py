@@ -41,6 +41,11 @@ hex_hash = st.text(alphabet="0123456789abcdef", min_size=64, max_size=64).map(
     # 200ms per-example deadline. Disabling the deadline (not just suppressing the
     # aggregate too_slow health check) makes the test order-/seed-independent.
     deadline=None,
+    # database=None: disable Hypothesis's on-disk example database for this test. Under
+    # pytest-randomly reordering on Windows, concurrent access to .hypothesis/examples
+    # intermittently raised PermissionError (a known Windows file-locking flake); this
+    # test does not need example replay. Removes the last order-/seed-dependence.
+    database=None,
     # tmp_path is not reset between Hypothesis examples, but that is intentional:
     # each run overwrites the same file path, which correctly tests the atomic
     # write + load round-trip without needing a fresh directory per example.

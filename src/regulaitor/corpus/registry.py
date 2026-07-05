@@ -52,3 +52,14 @@ CORPUS_REGISTRY: dict[Norma, CorpusSpec] = {
 # Canonical ordered tuple of all normas — the basis every other enumeration
 # (CLI choices, API guard, UI lists, ingest/validate maps) derives from.
 ALL_NORMAS: tuple[Norma, ...] = tuple(CORPUS_REGISTRY)
+
+
+def canonical_source_url(norma: Norma, language: str) -> str:
+    """The canonical EUR-Lex provenance URL for a norma + language, built from its
+    CELEX. This is the public link a user/auditor follows to verify a citation, so it
+    must ALWAYS be the official source — never a local ingest path. (The `--use-local-
+    only` ingest path used since H14, when EUR-Lex's WAF blocked fetching, had recorded
+    `file:///…/corpus/raw/…` here, both leaking the operator's home dir into committed
+    manifests + index and breaking provenance; fixed in the P2 credibility pass.)"""
+    celex = CORPUS_REGISTRY[norma].celex
+    return f"https://eur-lex.europa.eu/legal-content/{language.upper()}/TXT/?uri=CELEX:{celex}"
