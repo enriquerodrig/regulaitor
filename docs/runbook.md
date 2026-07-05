@@ -333,4 +333,28 @@ el contrato no-op de LangFuse sin las env vars, consultar también
 
 ---
 
+## 10. Retención del audit trail + DSR (GDPR)
+
+El audit store es **opt-in** (`REGULAITOR_AUDIT_DB`); con la variable sin definir
+el sistema es stateless. Cuando está activado, retención por defecto **365 días**
+(`REGULAITOR_AUDIT_RETENTION_DAYS`), purga vía cron:
+
+```bash
+REGULAITOR_AUDIT_DB=/data/audit.db python -m scripts.dsr purge
+```
+
+Solicitudes de derechos del interesado (mediadas por el DPO, no self-service):
+
+```bash
+# Art. 15 acceso — exporta las filas del tenant a JSON
+REGULAITOR_AUDIT_DB=/data/audit.db python -m scripts.dsr export <tenant_id> > export.json
+# Art. 17 supresión — borra las filas del tenant (irreversible; --yes obligatorio)
+REGULAITOR_AUDIT_DB=/data/audit.db python -m scripts.dsr erase <tenant_id> --yes
+```
+
+Política + procedimiento completos (qué se persiste, seudonimización SHA-256 de la
+consulta, garantías de seguridad): `docs/data_retention.md`.
+
+---
+
 **Fin del runbook RegulAItor (post-v0.1.32 H16 deploy).**

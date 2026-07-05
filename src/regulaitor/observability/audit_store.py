@@ -20,12 +20,14 @@ import hashlib
 import logging
 import os
 import sqlite3
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 logger = logging.getLogger(__name__)
 
 _ENV_PATH = "REGULAITOR_AUDIT_DB"
+_ENV_RETENTION = "REGULAITOR_AUDIT_RETENTION_DAYS"
+_DEFAULT_RETENTION_DAYS = 365
 
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS audit_log (
@@ -168,6 +170,87 @@ def count_turns(tenant_id: str | None, *, since: str | None = None) -> int:
     except Exception as exc:  # noqa: BLE001
         logger.warning("audit_store.count_turns failed: %s", exc)
         return 0
+
+
+def retention_days() -> int:
+    """Configured retention window (REGULAITOR_AUDIT_RETENTION_DAYS, default 365).
+    Invalid or non-positive values fall back to the default with a WARNING."""
+    raw = os.getenv(_ENV_RETENTION, "").strip()
+    if not raw:
+        return _DEFAULT_RETENTION_DAYS
+    try:
+        n = int(raw)
+    except ValueError:
+        logger.warning("invalid %s=%r; using %d", _ENV_RETENTION, raw, _DEFAULT_RETENTION_DAYS)
+        return _DEFAULT_RETENTION_DAYS
+    if n <= 0:
+        logger.warning(
+            "%s=%d is not positive; using %d", _ENV_RETENTION, n, _DEFAULT_RETENTION_DAYS
+        )
+        return _DEFAULT_RETENTION_DAYS
+    return n
+
+
+def export_tenant(tenant_id: str | None) -> list[dict[str, Any]]:
+    """GDPR Art. 15 (access): ALL persisted rows for a tenant, oldest first.
+
+    Returns [] when the store is disabled. Unlike the request-path helpers,
+    DSR operations are operator-invoked (scripts/dsr.py) and DO NOT swallow DB
+    errors — a silently-failed access request is a compliance defect.
+    """
+    path = _db_path()
+    if path is None:
+        return []
+    conn = _open(path)
+    conn.row_factory = sqlite3.Row
+    try:
+        cur = conn.execute(
+            "SELECT * FROM audit_log WHERE tenant_id IS ? ORDER BY id ASC",
+            (tenant_id,),
+        )
+        return [dict(row) for row in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def erase_tenant(tenant_id: str | None) -> int:
+    """GDPR Art. 17 (erasure): delete ALL rows for a tenant; return the count.
+
+    Returns 0 when the store is disabled. Raises on DB error (operator-facing):
+    a silently-failed erasure would leave personal data the DPO believes gone.
+    """
+    path = _db_path()
+    if path is None:
+        return 0
+    conn = _open(path)
+    try:
+        cur = conn.execute("DELETE FROM audit_log WHERE tenant_id IS ?", (tenant_id,))
+        conn.commit()
+        return int(cur.rowcount)
+    finally:
+        conn.close()
+
+
+def purge_expired(days: int | None = None) -> int:
+    """Retention (P3.2): delete rows older than ``days`` (default retention_days()).
+
+    Returns the count deleted (0 when disabled). Raises on DB error, like
+    erase_tenant — this is operator/cron-invoked, not on the request path.
+    ISO-8601 UTC timestamps sort lexicographically, so a string compare is a
+    correct chronological cutoff (same approach as count_turns' ``ts >=``).
+    """
+    path = _db_path()
+    if path is None:
+        return 0
+    window = days if days is not None else retention_days()
+    cutoff = (datetime.now(UTC) - timedelta(days=window)).isoformat()
+    conn = _open(path)
+    try:
+        cur = conn.execute("DELETE FROM audit_log WHERE ts < ?", (cutoff,))
+        conn.commit()
+        return int(cur.rowcount)
+    finally:
+        conn.close()
 
 
 def recent(*, limit: int = 50, tenant_id: str | None = None) -> list[dict[str, Any]]:

@@ -43,6 +43,7 @@ All have safe defaults.
 | `REGULAITOR_TENANTS_JSON` | (single-token) | Multi-tenant registry as inline JSON (see shape below). When unset, `REGULAITOR_API_TOKEN` resolves to one "default" tenant (backward-compat). |
 | `REGULAITOR_TENANTS_FILE` | — | Path to the tenant-registry JSON (alternative to `_JSON`). |
 | `REGULAITOR_AUDIT_DB` | (disabled) | Path to the opt-in SQLite audit trail. **MUST live on the persistent volume** (e.g. `/data/audit.db`) — a path on the image layer is wiped on every restart. Stores hashes + metadata only; the raw query is never persisted (§18.8). |
+| `REGULAITOR_AUDIT_RETENTION_DAYS` | `365` | Retention window for the audit trail. Purge with `python -m scripts.dsr purge` (cron); GDPR access/erasure via the same CLI. See `docs/data_retention.md`. |
 | `REGULAITOR_ENABLE_DOCS` | `1` (on) | Serves `/docs`, `/redoc`, `/openapi.json`. **Set `0` before a public pilot** so the API schema is not advertised to unauthenticated callers. |
 | `REGULAITOR_MAX_SEGMENTS` | `500` | Hard cap on segments processed per `/analyze` document (DoS guard — each segment is a CPU-reranker call). Over the cap → `requires_human_review`. Raise only for genuinely long contracts. |
 | `REGULAITOR_RATE_LIMIT_ASK` / `_ANALYZE` / `_AUDIT` | `30/minute` / `5/minute` / `30/minute` | Per-tenant rate limits (override per-tenant in the registry). |

@@ -209,6 +209,8 @@ Evidencia para la memoria TFM (H17), defensa académica, y trazabilidad del inva
 
 Los reports incluyen citas textuales del corpus (públicas) y respuestas del Analyst que pueden contener fragmentos sustanciales de los gold cases. NO contienen claves API ni tokens (filtrado por `gitleaks` en pre-commit + CI). El módulo `observability/langfuse_client.py:27-60` enforza una allowlist de claves de metadatos (`_SAFE_META_KEYS` + `_SAFE_KEY_SUFFIXES`) que impide que texto raw del usuario salga por el egress LangFuse; los hashes son SHA-256 truncado a 12 chars. El logging API (`api/logging.py:22`) redacta la IP del cliente (`_redact_ip`).
 
+**Audit trail opt-in + retención + DSR.** El audit store (`observability/audit_store.py`, opt-in vía `REGULAITOR_AUDIT_DB`) persiste una fila por turno con metadatos no sensibles + el **SHA-256** de la consulta (nunca el texto raw, §18.8). Retención por defecto 365 días (`REGULAITOR_AUDIT_RETENTION_DAYS`, purga vía cron). Las solicitudes GDPR de acceso (Art. 15) y supresión (Art. 17) se atienden por el DPO con `scripts/dsr.py`. Política y procedimiento completos: `docs/data_retention.md`.
+
 ### Versionado y mantenimiento
 
 Los reports son immutables post-merge — un report se re-renderiza ($0) si y solo si su instrumento de medición evoluciona (precedente v0.1.18 ADR-0024 hierarchical containment). Los reports nuevos viven en `evals/reports/v0.1.X/` por milestone; el `evals/reports/latest.md` apunta al último agregado H8-formato. Plan de retención: indefinida (el TFM se defiende sobre este corpus de evidencia).
