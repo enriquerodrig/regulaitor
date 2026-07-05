@@ -108,3 +108,5 @@ class RedTeamRunMeta(BaseModel):
     commit_sha: str
     mode: Literal["full", "smoke"]
     corpus_languages: list[str]
+    # Whole authored suite size (before the smoke filter). 0 = legacy/unknown.
+    suite_total: int = 0

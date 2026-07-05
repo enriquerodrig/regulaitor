@@ -363,6 +363,7 @@ def main(
 ) -> None:
     """Entry point. Loads, dispatches, aggregates, writes report."""
     attacks = load_attacks(attacks_path)
+    suite_total = len(attacks)  # whole authored suite, before the smoke filter
 
     if smoke:
         attacks = [a for a in attacks if a.mode == "document" and not a.requires_e2e]
@@ -390,6 +391,7 @@ def main(
         commit_sha=_git_sha_short(),
         mode="smoke" if smoke else "full",
         corpus_languages=["es"],
+        suite_total=suite_total,
     )
 
     try:

@@ -124,11 +124,12 @@ def render_report(
     sections.append("")
     sections.append("## Caveats")
     sections.append("")
+    suite_n = meta.suite_total or len(attacks)  # 0 = legacy meta → fall back to run size
     sections.append(
-        "Suite manual de N=50 ataques cubriendo los 10 escenarios §18; "
-        "no es benchmark público. Cobertura limitada a las categorías §18; "
-        "fuzzing automatizado diferido a HX1+. Mejoras intra-H9 visibles "
-        "en diff `block_rate_baseline` → `block_rate_final`."
+        f"Suite manual de N={suite_n} ataques cubriendo los 10 escenarios §18 "
+        "sobre los 9 corpus; no es benchmark público. Cobertura limitada a las "
+        "categorías §18; fuzzing automatizado diferido a HX1+. Mejoras intra-H9 "
+        "visibles en diff `block_rate_baseline` → `block_rate_final`."
     )
     if n_timeout:
         sections.append("")
