@@ -11,33 +11,38 @@
 
 ### Resumen — ES
 
-RegulAItor consume y produce cuatro datasets diferenciados. El corpus normativo agrupa cuatro instrumentos europeos (AI Act, RGPD, NIS2, DORA) descargados de EUR-Lex en PDF bilingüe ES + EN, parseados con `pdfplumber`, chunkeados por artículo y embebidos con `BAAI/bge-m3` (1569 chunks). El gold set (64 chat + 10 documentos) sintetiza preguntas y casos documentales por el autor para evaluar precision/recall de citación y verdict matching. El red team set añade 50 ataques manualmente diseñados sobre los 10 escenarios §18 (CLAUDE.md). Los eval reports históricos son artefactos por hito que sustentan la afirmación §22.22 "nunca presentar como medido lo que no se ha medido".
+RegulAItor consume y produce cuatro datasets diferenciados. El corpus normativo agrupa **nueve** instrumentos europeos (AI Act, RGPD, NIS2, DORA + 2 RTS de DORA + AMLR, MiCA, TFR) descargados de EUR-Lex en ES + EN (PDF para el MVP, HTML para las expansiones HX), parseados, chunkeados por artículo y embebidos con `BAAI/bge-m3` (**2167 chunks**). El gold set (64 chat + 10 documentos) sintetiza preguntas y casos documentales por el autor para evaluar precision/recall de citación y verdict matching. El red team set añade 50 ataques manualmente diseñados sobre los 10 escenarios §18 (CLAUDE.md). Los eval reports históricos son artefactos por hito que sustentan la afirmación §22.22 "nunca presentar como medido lo que no se ha medido".
 
 ### Abstract — EN
 
-RegulAItor relies on four distinct datasets. The normative corpus bundles four European instruments (AI Act, GDPR, NIS2, DORA) fetched from EUR-Lex as bilingual ES + EN PDFs, parsed with `pdfplumber`, article-chunked, and embedded with `BAAI/bge-m3` (1569 chunks). The gold set (64 chat + 10 document cases) is hand-synthesized by the project owner to measure citation precision/recall and verdict matching. The red team set adds 50 manually authored attacks covering the 10 scenarios in CLAUDE.md §18. Historical eval reports are per-milestone artifacts that anchor the §22.22 "never claim as measured what was not measured" honesty discipline.
+RegulAItor relies on four distinct datasets. The normative corpus bundles **nine** European instruments (AI Act, GDPR, NIS2, DORA + 2 DORA RTS + AMLR, MiCA, TFR) fetched from EUR-Lex in ES + EN (PDF for the MVP, HTML for the HX expansions), parsed, article-chunked, and embedded with `BAAI/bge-m3` (**2167 chunks**). The gold set (64 chat + 10 document cases) is hand-synthesized by the project owner to measure citation precision/recall and verdict matching. The red team set adds 50 manually authored attacks covering the 10 scenarios in CLAUDE.md §18. Historical eval reports are per-milestone artifacts that anchor the §22.22 "never claim as measured what was not measured" honesty discipline.
 
 ---
 
-## Dataset 1 — Corpus normativo (AI Act + RGPD + NIS2 + DORA)
+## Dataset 1 — Corpus normativo (9 instrumentos: AI Act, RGPD, NIS2, DORA, DORA-RTS ×2, AMLR, MiCA, TFR)
 
 ### Descripción
 
-Cuatro instrumentos jurídicos europeos consumidos como fuente única de verdad por el `RetrieverAgent` y el `citation/validator.py`:
+Nueve instrumentos jurídicos europeos consumidos como fuente única de verdad por el `RetrieverAgent` y el `citation/validator.py` (los 4 del MVP + las expansiones HX: 2 RTS de DORA en Fase 3 y AMLR/MiCA/TFR en Fase 6):
 
-| Corpus | CELEX | Versión | Artículos | Chunks | Tamaño raw | Embeddings |
-|---|---|---|---|---|---|---|
-| AI Act (Regl. (UE) 2024/1689) | `32024R1689` | 2024-07-12 | 113 | 687 | 5.26 MB | 226 |
-| RGPD (Regl. (UE) 2016/679) | `02016R0679-20160504` | 2016-05-04 (consolidada) | 99 | 324 | 1.45 MB | 198 |
-| NIS2 (Directiva (UE) 2022/2555) | `32022L2555` | 2022-12-27 (base act) | 46 | 244 | 2.71 MB | 92 |
-| DORA (Regl. (UE) 2022/2554) | `32022R2554` | 2022-12-27 (base act) | 64 | 314 | 3.06 MB | 128 |
-| **Total** | — | — | **322** | **1569** | **12.48 MB** | **644** |
+| Corpus | CELEX | Versión | Artículos | Chunks |
+|---|---|---|---|---|
+| AI Act (Regl. (UE) 2024/1689) | `32024R1689` | 2024-07-12 | 113 | 687 |
+| RGPD (Regl. (UE) 2016/679) | `02016R0679-20160504` | 2016-05-04 (consolidada) | 99 | 324 |
+| NIS2 (Directiva (UE) 2022/2555) | `32022L2555` | 2022-12-27 (base act) | 46 | 244 |
+| DORA (Regl. (UE) 2022/2554) | `32022R2554` | 2022-12-27 (base act) | 64 | 314 |
+| DORA RTS Plazos (Regl. Deleg. (UE) 2025/301) | `32025R0301` | 2025-02-20 | 7 | 14 |
+| DORA RTS Clasificación (Regl. Deleg. (UE) 2024/1772) | `32024R1772` | 2024-06-25 | 13 | 26 |
+| AMLR (Regl. (UE) 2024/1624) | `32024R1624` | 2024-06-19 | 90 | 180 |
+| MiCA (Regl. (UE) 2023/1114) | `32023R1114` | 2023-06-09 | 149 | 298 |
+| TFR (Regl. (UE) 2023/1113) | `32023R1113` | 2023-06-09 | 40 | 80 |
+| **Total** | — | — | **621** | **2167** |
 
-Fuente: `corpus/manifests/{ai_act,gdpr,nis2,dora}.json` (manifests autoritativos).
+Fuente: `corpus/manifests/*.json` (9 manifests autoritativos, uno por norma). `source_url` por artículo = URL canónica EUR-Lex por CELEX (`registry.canonical_source_url`).
 
 ### Metodología de recolección
 
-Pipeline `src/regulaitor/corpus/` documentado en ADR-0003 (H1) y extendido en ADR-0015 (H14). Tres formatos de fetch (`formex4`, `html`, `pdf`) seleccionados por dispatcher (`corpus/ingest.py`); en producción los 4 corpora usan PDF tras pivote operativo descrito en ADR-0003 §"Pivot to PDF": el WAF CloudFront de EUR-Lex devuelve HTTP 202 + reto JavaScript a clientes no-browser, bloqueando `curl`/`httpx` deterministas. Resolución H1: descarga manual de los PDFs ES + EN en un navegador real (que resuelve el reto) + commit en Git-LFS bajo `corpus/raw/`. Resolución H14 (NIS2 + DORA): Playwright headless con same-origin fetch dentro de la sesión que resolvió el reto WAF (ADR-0015 D1).
+Pipeline `src/regulaitor/corpus/` documentado en ADR-0003 (H1) y extendido en ADR-0015 (H14). Tres formatos de fetch (`formex4`, `html`, `pdf`) seleccionados por dispatcher (`corpus/ingest.py`); los 4 corpora del MVP usan PDF y las expansiones HX (RTS DORA, AMLR/MiCA/TFR) usan HTML, tras el pivote operativo descrito en ADR-0003 §"Pivot to PDF": el WAF CloudFront de EUR-Lex devuelve HTTP 202 + reto JavaScript a clientes no-browser, bloqueando `curl`/`httpx` deterministas. Resolución H1: descarga manual de los PDFs ES + EN en un navegador real (que resuelve el reto) + commit en Git-LFS bajo `corpus/raw/`. Resolución H14 (NIS2 + DORA): Playwright headless con same-origin fetch dentro de la sesión que resolvió el reto WAF (ADR-0015 D1).
 
 Parseo: `pdfplumber` + regex estructural en `corpus/pdf_parser.py`. Validación: `corpus/validate.py` enforza `EXPECTED_ARTICLE_COUNTS` por corpus, ausencia de duplicados y ausencia de artículos vacíos antes del write atómico del manifest. Chunking: estructural por artículo (`rag/chunking.py`); CLAUDE.md §10.3 obliga a no mezclar artículos en un mismo chunk. Embeddings: `BAAI/bge-m3@5617a9f61b028005` local CPU (sin coste API); reranker `bge-reranker-v2-m3` (`rag/reranker.py`).
 
@@ -45,7 +50,7 @@ Parseo: `pdfplumber` + regex estructural en `corpus/pdf_parser.py`. Validación:
 
 Cada chunk almacena (`rag/schemas.py` + manifest):
 
-- `norma` (`ai_act` | `gdpr` | `nis2` | `dora`).
+- `norma` (`ai_act` | `gdpr` | `nis2` | `dora` | `dora_rts_incident` | `dora_rts_class` | `amlr` | `mica` | `tfr`).
 - `articulo`, `apartado`.
 - `idioma` (`es` | `en`).
 - `version` (CELEX versionado).
@@ -216,7 +221,7 @@ Los reports son immutables post-merge — un report se re-renderiza ($0) si y so
 2. **Base-act vs consolidada.** NIS2 y DORA usan la base act 2022-12-27 (no hay consolidadas con enmiendas a fecha H14); RGPD usa la consolidada 2016-05-04 (corrigenda 2018 incluida). Una nueva corrigenda no detectada automáticamente desactualizará el corpus hasta el siguiente re-fetch manual.
 3. **Gold set N=74 limitado.** Para descender el intervalo de confianza de las métricas hace falta N≥100 chat + ≥30 doc; carry-forward HX. Los 10 doc gold cases son insuficientes para decisiones de retrieval engineering de alta confianza (vindicado en v0.1.30 REVERT).
 4. **Red team `requires_e2e: true` cuesta dinero.** El full run E2E está bloqueado por reliability de API (H11). El gate productivo se ancla en el smoke determinista 0.92.
-5. **PII filtering del Analyst no medido formalmente.** El sanitizer detecta categorías embebidas en documento; el filtro PII de salida está pendiente desde §18 #5 (módulo `security/pii.py` no implementado; medición no ejecutada en evals históricos).
+5. **PII filtering construido, cobertura parcial.** `src/regulaitor/security/pii.py` **SÍ existe** (HX Fase 2/2.1): detección regex MVP (email, teléfono-ES, DNI/NIF, NIE, IBAN, tarjeta con Luhn) + `count_pii` counts-only (§18.8). Cableado como **gate pre-pipeline en el chat de Streamlit** (aviso + Continuar/Cancelar) y como **recuento in-pipeline en doc-mode** (`PIISummary`). Cobertura pendiente: el path del API `/ask` aún no escanea PII (roadmap P2.3); regex-MVP, no NER exhaustivo.
 6. **§22.22 — algunos campos del manifest están vacíos.** `http_cache.etag` y `http_cache.last_modified` son `null` para los 4 corpora porque el fetch vino vía Playwright (WAF bypass), no vía HTTP condicional. Documentado en ADR-0003 y ADR-0015.
 
 ---

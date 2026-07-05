@@ -100,7 +100,7 @@ Invariante de routing (CLAUDE.md §22.13): ningún agente llama a un modelo dire
 ## 4. BAAI/bge-m3 — Embeddings retriever + Ragas
 
 ### Intended use
-- Codifica chunks del corpus (1569 filas en LanceDB a v0.1.32; AI Act 687 + GDPR 324 + NIS2 244 + DORA 314) y queries del usuario en vectores densos 1024-dim (`src/regulaitor/rag/embeddings.py:35-46`).
+- Codifica chunks del corpus (**2167 filas** en LanceDB tras las expansiones HX; AI Act 687 + GDPR 324 + NIS2 244 + DORA 314 + DORA-RTS 14+26 + AMLR 180 + MiCA 298 + TFR 80) y queries del usuario en vectores densos 1024-dim (`src/regulaitor/rag/embeddings.py:35-46`).
 - Backend de embeddings para Ragas metrics (`faithfulness`, `context_precision`, `answer_relevancy`) — añadido como dependencia tras ADR-0010 amendment 8 para evitar segundo API key (HuggingFace local en lugar de OpenAI embeddings).
 - Provee el tokenizer XLM-RoBERTa usado por `rag.chunking` y `corpus.ingest` para conteo de tokens (`embeddings.py:49-57`).
 
@@ -110,7 +110,7 @@ Invariante de routing (CLAUDE.md §22.13): ningún agente llama a un modelo dire
 
 ### Métricas medidas
 - `context_precision`: 0.78 (v0.1.20-bar 0.55 ✅) en v0.1.22-prod H10 cohort.
-- Indexa 1569 chunks en LanceDB local (`corpus/indexes/regulaitor.lance`) sin coste API.
+- Indexa 2167 chunks (9 corpus) en LanceDB local (`corpus/indexes/regulaitor.lance`) sin coste API.
 - Throughput local: ~CPU; batch_size=16 por defecto (`embeddings.py:35`).
 
 ### Limitaciones y consideraciones de sesgo
@@ -119,7 +119,7 @@ Invariante de routing (CLAUDE.md §22.13): ningún agente llama a un modelo dire
 - **Dominio general, no jurídico**: no es un encoder fine-tuned sobre derecho. Reranker custom legal sería candidato HX (ADR-0035 §Alternatives).
 
 ### Impacto ambiental
-- **Local CPU/GPU**: el cómputo lo realiza la máquina del operador. Ingestión completa de los 4 corpus tarda ~1.5h en CPU (medido en T3 v0.1.30, ADR-0035). Servir queries online es ms-scale por query.
+- **Local CPU/GPU**: el cómputo lo realiza la máquina del operador. Ingestión completa de los 9 corpus tarda ~1.5h en CPU (medido en T3 v0.1.30, ADR-0035). Servir queries online es ms-scale por query.
 - No hay coste API recurrente. Pesos descargados de HuggingFace Hub (~2.5 GB) bajo licencia MIT.
 
 ### Licencia

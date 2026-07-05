@@ -13,7 +13,7 @@ Referencia normativa: REGULATION (EU) 2024/1689, OJ L 12.7.2024, ELI `http://dat
 | Versión | v0.1.32 |
 | Proveedor (artículo 3.3) | TFM author (uso académico) |
 | Responsable del despliegue (artículo 3.4) | Mismo autor en demo HF; potenciales PYMEs en despliegues derivados |
-| Finalidad prevista (artículo 3.12) | Asistente de primera línea de compliance europeo (AI Act, RGPD, NIS2, DORA) con citación verificable obligatoria |
+| Finalidad prevista (artículo 3.12) | Asistente de primera línea de compliance europeo (9 corpus: AI Act, RGPD, NIS2, DORA, 2 RTS de DORA, AMLR, MiCA, TFR) con citación verificable obligatoria |
 | Modalidad | Servicio multi-agente con interfaz Streamlit + FastAPI |
 | Modelos base | Claude Sonnet 4.6 (producción), Haiku 4.5 (judge), Llama-3.3-70B (Council/Groq); ver `docs/model_card.md` |
 | Idiomas soportados | Español, inglés |
@@ -133,7 +133,7 @@ RegulAItor no procesa categorías especiales de datos personales (artículo 9 RG
 - Las consultas chat son textuales en lenguaje natural sobre obligaciones normativas; el usuario es libre de incluir o excluir PII.
 - El modo análisis documental procesa documentos corporativos (políticas, procedimientos, registros) — el operador es responsable de pseudonimizar antes de subir.
 - Los logs aplican redacción por allowlist (`src/regulaitor/observability/langfuse_client.py:27-60`); no se persiste texto crudo del usuario en LangFuse.
-- No se implementa aún detección automática PII en input (`src/regulaitor/security/pii.py` **[pendiente]**, planeado en CLAUDE.md §11 estructura objetivo pero no construido en H0-H16).
+- Detección automática de PII en input **construida** (`src/regulaitor/security/pii.py`, HX Fase 2/2.1): regex MVP (email, teléfono-ES, DNI/NIF, NIE, IBAN, tarjeta con Luhn) + `count_pii` counts-only (§18.8). Cableada como gate pre-pipeline en el chat de Streamlit (aviso + Continuar/Cancelar) y como recuento in-pipeline en doc-mode (`PIISummary`). Cobertura pendiente: el path del API `/ask` aún no escanea (roadmap P2.3); es regex-MVP, no NER exhaustivo.
 
 **DPIA simplificada**: dado que la base de uso esperada es texto no-personal sobre normas, el riesgo RGPD es **bajo**; un DPIA formal artículo 35 RGPD sería exigible solo si el sistema se integrara con datasets de empleados/clientes en el ámbito del responsable del despliegue. Ese análisis quedaría a cargo del responsable del despliegue, no del proveedor.
 
@@ -146,7 +146,7 @@ RegulAItor no entrena ni proporciona modelos de IA de uso general; consume model
 1. **Provisional**: realizada por el autor del TFM, no por organismo notificado. Una certificación formal requerirá el ramp-up del régimen 2025-2027.
 2. **Anexo III(8a) borderline**: si futuras directrices de la Comisión (artículo 6.5) extendieran la noción de "administración de justicia" a asistencia compliance, el sistema requeriría re-clasificación.
 3. **Marcado máquina-legible artículo 50.2**: no implementado watermarking criptográfico; el formato estructurado `Answer/Finding/Citation` es la única señal actual.
-4. **PII detection**: módulo planeado (CLAUDE.md §11) pero no construido en H0-H16; **[pendiente HX]**.
+4. **PII detection**: **construido en HX** (`security/pii.py`, Fase 2/2.1) — regex MVP cableado en chat (Streamlit) + doc-mode; cobertura pendiente en el path API `/ask` (roadmap P2.3) y NER exhaustivo (HX).
 5. **Evaluación de conformidad externa**: no aplicable bajo riesgo limitado, pero documentación técnica acumulada (35 ADRs + decisions log + evidence matrix) está formateada para sustentar una auditoría futura.
 
 ## 9. Conclusión
