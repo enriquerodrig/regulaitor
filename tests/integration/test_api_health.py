@@ -128,3 +128,23 @@ def test_health_audit_db_subcheck_absent_when_unconfigured(client, monkeypatch: 
     monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
     checks = client.get("/health").json()["checks"]
     assert not any(c["name"] == "audit_db" for c in checks)
+
+
+def test_metrics_404_when_disabled(client, monkeypatch: pytest.MonkeyPatch) -> None:
+    # P3.1: fail-secure — /metrics is not exposed unless REGULAITOR_ENABLE_METRICS=1.
+    monkeypatch.delenv("REGULAITOR_ENABLE_METRICS", raising=False)
+    assert client.get("/metrics").status_code == 404
+
+
+def test_metrics_prometheus_when_enabled(client, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("REGULAITOR_ENABLE_METRICS", "1")
+    r = client.get("/metrics")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("text/plain")
+    assert "regulaitor_turns_total" in r.text  # HELP/TYPE always render
+
+
+def test_metrics_no_auth_required(client, monkeypatch: pytest.MonkeyPatch) -> None:
+    # Like /health, a scraper must reach it without a token (network-restricted in deploy).
+    monkeypatch.setenv("REGULAITOR_ENABLE_METRICS", "1")
+    assert client.get("/metrics").status_code == 200  # no Authorization header

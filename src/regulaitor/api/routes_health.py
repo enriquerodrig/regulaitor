@@ -5,10 +5,11 @@ from __future__ import annotations
 import os
 from typing import Literal
 
-from fastapi import APIRouter
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse, PlainTextResponse
 
 from regulaitor.api.schemas import HealthCheck, HealthResponse
+from regulaitor.observability import metrics
 from regulaitor.rag.store import connect
 
 router = APIRouter(tags=["meta"])
@@ -77,3 +78,18 @@ async def health() -> HealthResponse | JSONResponse:
     if overall != "ok":
         return JSONResponse(status_code=503, content=response.model_dump())
     return response
+
+
+@router.get("/metrics", include_in_schema=False)
+async def prometheus_metrics() -> PlainTextResponse:
+    """P3.1 metrics floor — Prometheus text exposition of the §6 verdict distribution
+    (turns by mode+verdict → a scraper computes the live block-rate) + PII-query count.
+    Fail-secure: 404 unless REGULAITOR_ENABLE_METRICS=1 (usage volume is not advertised
+    publicly; the operator scrapes it on an internal network). No auth — like /health,
+    it must be reachable by an unauthenticated scraper; restrict it at the network layer.
+    """
+    if not metrics.is_enabled():
+        raise HTTPException(status_code=404, detail="Not Found")
+    return PlainTextResponse(
+        metrics.render_prometheus(), media_type="text/plain; version=0.0.4; charset=utf-8"
+    )

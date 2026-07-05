@@ -47,6 +47,7 @@ All have safe defaults.
 | `REGULAITOR_MAX_SEGMENTS` | `500` | Hard cap on segments processed per `/analyze` document (DoS guard — each segment is a CPU-reranker call). Over the cap → `requires_human_review`. Raise only for genuinely long contracts. |
 | `REGULAITOR_RATE_LIMIT_ASK` / `_ANALYZE` / `_AUDIT` | `30/minute` / `5/minute` / `30/minute` | Per-tenant rate limits (override per-tenant in the registry). |
 | `REGULAITOR_RATELIMIT_STORAGE` | `memory://` | Rate-limit bucket backend. **`memory://` is per-worker** — a multi-worker / multi-instance deploy needs a shared store (e.g. `redis://host:6379`) for global limits. The single-worker self-hosted pilot is fine on the default. |
+| `REGULAITOR_ENABLE_METRICS` | (off) | Set `1` to expose `GET /metrics` (Prometheus text: §6 verdict distribution → live block-rate + PII-query count). Unauth like `/health` — **restrict at the network layer** (scraper-only). Fail-secure: 404 when unset. See `observability/metrics.py` for the block-rate-collapse alert rule. |
 
 **Per-tenant config shape** (one entry in `REGULAITOR_TENANTS_JSON`'s list):
 

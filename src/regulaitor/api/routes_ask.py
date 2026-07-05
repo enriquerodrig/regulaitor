@@ -15,6 +15,7 @@ from regulaitor.api.auth import enforce_corpus_allowlist, verify_token
 from regulaitor.api.errors import BackendError, InjectionDetected
 from regulaitor.api.logging import log_api_chat_turn
 from regulaitor.api.schemas import AskRequest, AskResponse, PIISummaryDTO, to_ask_response
+from regulaitor.observability import metrics
 from regulaitor.orchestration.graph import run
 from regulaitor.security import pii
 from regulaitor.security.rate_limit import ask_limit, limiter
@@ -58,6 +59,7 @@ async def ask(
             "pii_detected_in_query: %s",
             json.dumps({"case_id": case_id, "pii_counts": pii_summary.counts}, ensure_ascii=False),
         )
+        metrics.record_pii_query()  # P3.1 metrics floor
 
     t0 = time.monotonic()
     # Deep-review I1: offload sync run() to thread so event loop stays free for

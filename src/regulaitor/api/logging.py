@@ -14,7 +14,7 @@ from typing import Any
 
 from regulaitor.api.schemas import AnalyzeResponse, AskResponse
 from regulaitor.citation.schemas import DocumentReport
-from regulaitor.observability import audit_store
+from regulaitor.observability import audit_store, metrics
 from regulaitor.orchestration.state import ChatState
 
 logger = logging.getLogger(__name__)
@@ -68,6 +68,7 @@ def log_api_chat_turn(request: Any, state: ChatState, response: AskResponse) -> 
         "language": str(state.language),
     }
     logger.info("api_chat_turn: %s", json.dumps(record, ensure_ascii=False))
+    metrics.record_turn("chat", response.verdict)  # P3.1 §6 verdict signal
     # Optional audit-trail persistence (no-op unless REGULAITOR_AUDIT_DB is set).
     audit_store.record(
         case_id=state.case_id,
@@ -101,6 +102,7 @@ def log_api_document_turn(request: Any, report: DocumentReport, response: Analyz
         "language": str(report.language),
     }
     logger.info("api_document_turn: %s", json.dumps(record, ensure_ascii=False))
+    metrics.record_turn("document", response.document_verdict)  # P3.1 §6 verdict signal
     # Optional audit-trail persistence (no-op unless REGULAITOR_AUDIT_DB is set).
     audit_store.record(
         case_id=report.case_id,
