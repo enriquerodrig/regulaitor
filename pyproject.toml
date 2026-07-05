@@ -15,7 +15,11 @@ dependencies = [
     "pdfplumber>=0.11,<0.13",
     "FlagEmbedding>=1.3,<2.0",
     "transformers>=4.44,<5.0",
-    "lancedb>=0.16,<1.0",
+    # Capped <0.31: lancedb 0.34 changed the default cache dir to /var/cache/lancedb,
+    # which is root-only on the Linux CI runner (PermissionError; passes on Windows
+    # where the path differs). Stay on the known-good 0.30.x line. Re-evaluate + set an
+    # explicit cache path when deliberately upgrading (roadmap P3.4 dep automation).
+    "lancedb>=0.16,<0.31",
     "pyarrow>=18.0,<24.0",
     "mcp>=1.0,<2.0",
     "anthropic>=0.40,<2.0",  # widened from <1.0 per deep-review minor (HX upgrade window for 1.0 release)
