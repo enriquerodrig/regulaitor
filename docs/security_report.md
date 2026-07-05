@@ -3,11 +3,19 @@
 **Versión:** 1.0 (H9 closure)
 **Fecha:** 2026-05-13
 **Hito:** H9 — Red team inicial
-**Actualizar en:** H13 (Council of Judges), H15 (Auditor calibration), H16 (public deploy)
+**Alcance:** MVP (H0-H9) — las 4 capas de defensa contra los 10 escenarios §18.
 
+> **⚠️ Refrescado en HX (2026-07-05).** Este informe cubre el alcance MVP y **no**
+> incluye las superficies HX (API multi-tenant, frontend BFF, filtro PII, endurecimiento
+> pre-piloto). El modelo de amenazas **vigente** está en **`docs/threat_model.md`**, que
+> cubre API auth + aislamiento multi-tenant, BFF (nonce-CSP/CSRF/cookie), PII (§18.5/§18.8),
+> secretos + cadena de suministro (CVEs al día, rotación pendiente) y el §6 endurecido
+> (floor sec6-01/ADR-0043 + property tests). Las Fases P1-P2 de
+> `docs/professionalization_roadmap.md` cierran los residuales identificados allí.
+>
 > Este informe no sustituye a una auditoría de seguridad profesional. Es evidencia interna
-> del proceso SSDLC del TFM y cubre el alcance MVP (H0-H9). Las limitaciones y gaps
-> conocidos están documentados explícitamente en la sección correspondiente.
+> del proceso SSDLC del TFM. Las limitaciones y gaps conocidos están documentados
+> explícitamente en la sección correspondiente.
 
 ---
 
