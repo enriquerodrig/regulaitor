@@ -83,6 +83,9 @@ ignore = []
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["S101"]
+# The retrieval-fixture generator holds curated full-sentence gold queries as data;
+# E501 (line-too-long) on those Spanish query literals is acceptable in a data script.
+"scripts/gen_retrieval_fixture.py" = ["E501"]
 
 [tool.black]
 line-length = 100
