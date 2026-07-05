@@ -235,7 +235,16 @@ jobs:
         #   of CVE-2026-1839 (transformers Trainer load, also unreachable). Re-evaluate
         #   when transformers 5.x ships with the fix and our FlagEmbedding/sentence-transformers
         #   pins permit the upgrade.
-        run: uv run pip-audit --skip-editable --ignore-vuln CVE-2026-1839 --ignore-vuln CVE-2025-69872 --ignore-vuln CVE-2026-6587 --ignore-vuln CVE-2026-41488 --ignore-vuln PYSEC-2025-217
+        # --ignore-vuln CVE-2026-4372: transformers RCE via a malicious model config.json
+        #   (_attn_implementation_internal → an attacker-controlled HF-Hub repo id, whose
+        #   code is downloaded + executed by AutoModelForCausalLM.from_pretrained()).
+        #   RegulAItor loads ONLY pinned, trusted models (BGE-M3 via FlagEmbedding +
+        #   bge-reranker-v2-m3 via sentence-transformers); it never calls
+        #   AutoModelForCausalLM.from_pretrained() and never loads a user-supplied model
+        #   id/config. Vulnerable path unreachable. Fix is transformers 5.3.0; the 5.x line
+        #   breaks the FlagEmbedding/sentence-transformers <5 pins — same family + precedent
+        #   as CVE-2026-1839 / PYSEC-2025-217. Re-evaluate when those pins permit 5.x.
+        run: uv run pip-audit --skip-editable --ignore-vuln CVE-2026-1839 --ignore-vuln CVE-2025-69872 --ignore-vuln CVE-2026-6587 --ignore-vuln CVE-2026-41488 --ignore-vuln PYSEC-2025-217 --ignore-vuln CVE-2026-4372
 
   frontend:
     name: Frontend (BFF)
