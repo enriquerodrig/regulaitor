@@ -236,3 +236,33 @@ jobs:
         #   when transformers 5.x ships with the fix and our FlagEmbedding/sentence-transformers
         #   pins permit the upgrade.
         run: uv run pip-audit --skip-editable --ignore-vuln CVE-2026-1839 --ignore-vuln CVE-2025-69872 --ignore-vuln CVE-2026-6587 --ignore-vuln CVE-2026-41488 --ignore-vuln PYSEC-2025-217
+
+  frontend:
+    name: Frontend (BFF)
+    # P1.1 professionalization roadmap: the Next.js BFF is the sovereign-deploy
+    # security boundary (per-request nonce-CSP, CSRF same-origin guard, httpOnly
+    # cookie, /audit proxy — ADR-0040). 44 vitest cases already exist under
+    # frontend_next/tests/; this job gates them so a CSP/CSRF/cookie regression
+    # cannot ship on green CI. Node 22 matches the Dockerfile base image.
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend_next
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend_next/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: ESLint
+        run: npm run lint
+      - name: Typecheck (tsc --noEmit)
+        run: npm run typecheck
+      - name: Vitest
+        run: npm test
+      - name: Next build (standalone)
+        run: npm run build
