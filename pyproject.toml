@@ -52,6 +52,8 @@ dev = [
     "reportlab>=4.0,<5.0",
     "schemathesis>=4.0,<5.0",
     "pytest-asyncio>=1.0,<2.0",
+    "pytest-timeout>=2.3,<3.0",
+    "pytest-randomly>=3.15,<4.0",
     "ragas>=0.2,<1.0",
     "langchain-anthropic>=0.3,<1.0",
     "langchain-huggingface>=1.0,<2.0",
@@ -237,6 +239,15 @@ exclude_also = [
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 asyncio_mode = "auto"
+# P1.4 professionalization hardening:
+# - pytest-timeout: a per-test hang guard (thread method works on Windows too).
+#   300s is generous for the TestClient/warmup-heavy integration tests while still
+#   catching a true hang (a deadlocked daemon thread, a wedged network call).
+# - pytest-randomly (auto-enabled once installed): randomizes test order every run so
+#   hidden inter-test order-dependence surfaces instead of lurking. It prints the seed
+#   to reproduce a failure.
+timeout = 300
+timeout_method = "thread"
 addopts = "-ra -q --strict-markers --cov=src/regulaitor/api --cov=src/regulaitor/corpus --cov=src/regulaitor/rag --cov=src/regulaitor/citation --cov=src/regulaitor/agents --cov=src/regulaitor/mcp_server --cov=src/regulaitor/models --cov=src/regulaitor/orchestration --cov=src/regulaitor/security --cov=src/regulaitor/document --cov=src/regulaitor/observability --cov-report=term-missing --cov-fail-under=85"
 markers = [
     "integration: integration tests using stub HTTP server",

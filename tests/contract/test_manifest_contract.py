@@ -34,12 +34,16 @@ hex_hash = st.text(alphabet="0123456789abcdef", min_size=64, max_size=64).map(
 )
 @settings(
     max_examples=20,
+    # deadline=None: this is a pure serialization round-trip; per-example WALL time is
+    # irrelevant to correctness. Under pytest-randomly (P1.4) the test can now run
+    # first, before any warmup, so a single example may coincide with a cold lazy
+    # import (BGE-M3 tokenizer pulled in transitively) and blow Hypothesis's default
+    # 200ms per-example deadline. Disabling the deadline (not just suppressing the
+    # aggregate too_slow health check) makes the test order-/seed-independent.
+    deadline=None,
     # tmp_path is not reset between Hypothesis examples, but that is intentional:
     # each run overwrites the same file path, which correctly tests the atomic
     # write + load round-trip without needing a fresh directory per example.
-    # too_slow: the first draw can coincide with a cold lazy import (BGE-M3
-    # tokenizer pulled in transitively), tripping the input-generation health
-    # check in isolation; it is unrelated to the strategy or the assertion.
     suppress_health_check=[HealthCheck.function_scoped_fixture, HealthCheck.too_slow],
 )
 def test_manifest_roundtrip(tmp_path: Path, n_articles: int, article_hashes: list[str]) -> None:
