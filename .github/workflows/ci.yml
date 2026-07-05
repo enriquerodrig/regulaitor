@@ -62,6 +62,13 @@ jobs:
         run: uv python install 3.11
       - name: Install dependencies
         run: uv sync --extra dev
+      - name: Provide a writable LanceDB cache dir
+        # lancedb 0.30.x lazily touches its SITE cache dir (/var/cache/lancedb, root-only
+        # on the Linux runner). Under pytest-randomly reordering, a lancedb test can
+        # trigger that access before any writable-path test does → PermissionError.
+        # Provide a writable dir so ordering can't matter. (Local Windows uses a
+        # different path; CI-only.)
+        run: sudo install -d -m 777 /var/cache/lancedb
       - name: Pytest
         # Slow tests (BGE-M3 / bge-reranker-v2-m3 + live LanceDB index) require
         # `make ingest && make rag-build` to populate state that's gitignored;
@@ -158,6 +165,10 @@ jobs:
       - name: Install dependencies
         if: steps.should-run.outputs.run == 'true'
         run: uv sync --extra dev
+      - name: Provide a writable LanceDB cache dir
+        # See the `test` job: lancedb 0.30.x touches /var/cache/lancedb (root-only).
+        if: steps.should-run.outputs.run == 'true'
+        run: sudo install -d -m 777 /var/cache/lancedb
       - name: Regenerate fixtures
         if: steps.should-run.outputs.run == 'true'
         run: uv run python -m scripts.regenerate_document_fixtures
