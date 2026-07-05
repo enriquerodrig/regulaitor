@@ -14,7 +14,10 @@ from __future__ import annotations
 
 import re
 from collections import Counter
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
+
+if TYPE_CHECKING:
+    from regulaitor.citation.schemas import PIISummary
 
 
 class PIIMatch(NamedTuple):
@@ -112,3 +115,16 @@ def count_pii(text: str) -> dict[str, int]:
     """
     counter = Counter(m.kind for m in detect_pii(text))
     return {kind: counter[kind] for kind in sorted(counter)}
+
+
+def summarize_pii(text: str) -> PIISummary | None:
+    """Scan *text* for PII and return a counts-only advisory summary (§18.5/§18.8),
+    or None if clean. The single source of truth shared by the /analyze document
+    pipeline and the /ask chat API, so both surfaces build the identical advisory
+    signal (counts/kinds only — the raw values never leave this module)."""
+    from regulaitor.citation.schemas import PIISummary
+
+    counts = count_pii(text)
+    if not counts:
+        return None
+    return PIISummary(total=sum(counts.values()), counts=counts)

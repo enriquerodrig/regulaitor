@@ -76,17 +76,10 @@ def _auditor() -> AuditorAgent:
 
 
 def _summarize_pii(text: str) -> PIISummary | None:
-    """Scan sanitized document text for PII and return a counts-only summary.
-
-    §18.5: advisory — the document is analyzed regardless; this only feeds the
-    UI/API warning. §18.8: counts/kinds only, the raw values never leave
-    ``security.pii``. Returns ``None`` when no PII is found (so the report's
-    ``pii_summary`` stays None and the UI shows no banner).
-    """
-    counts = pii.count_pii(text)
-    if not counts:
-        return None
-    return PIISummary(total=sum(counts.values()), counts=counts)
+    """Scan sanitized document text for PII → counts-only advisory summary (§18.5/
+    §18.8). Delegates to the shared ``pii.summarize_pii`` so /analyze and /ask build
+    the identical signal (P2.3)."""
+    return pii.summarize_pii(text)
 
 
 def _generate_case_id() -> str:

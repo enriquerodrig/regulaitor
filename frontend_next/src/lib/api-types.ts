@@ -161,6 +161,7 @@ export interface components {
             /** Council Notice */
             council_notice?: string | null;
             council?: components["schemas"]["CouncilReviewDTO"] | null;
+            pii_summary?: components["schemas"]["PIISummaryDTO"] | null;
         };
         /**
          * AuditEntryDTO

@@ -114,3 +114,20 @@ def test_count_pii_normative_digits_do_not_false_positive() -> None:
     assert count_pii(normative) == {}
     # The actual (acknowledged) false positive: a bare 9-digit run starting 6-9.
     assert count_pii("Expediente 698765432 del registro interno") == {"phone": 1}
+
+
+def test_summarize_pii_clean_returns_none() -> None:
+    from regulaitor.security.pii import summarize_pii
+
+    assert summarize_pii("¿Qué es un sistema de alto riesgo bajo el AI Act?") is None
+
+
+def test_summarize_pii_builds_counts_only_summary() -> None:
+    from regulaitor.security.pii import summarize_pii
+
+    s = summarize_pii("correo a@b.com y otro c@d.com, DNI 12345678Z")
+    assert s is not None
+    assert s.total == 3
+    assert s.counts == {"dni_nif": 1, "email": 2}
+    # §18.8: the model carries counts only — no raw values anywhere in it.
+    assert "a@b.com" not in str(s.model_dump())

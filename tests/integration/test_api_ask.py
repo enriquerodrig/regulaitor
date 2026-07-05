@@ -65,6 +65,42 @@ def test_ask_happy_path(client, auth_headers, monkeypatch: pytest.MonkeyPatch) -
     assert "injection_pattern" not in response.text
 
 
+def test_ask_clean_query_has_no_pii_summary(
+    client, auth_headers, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr("regulaitor.api.routes_ask.run", lambda **_kw: _ok_state())
+    body = client.post(
+        "/ask",
+        headers=auth_headers,
+        json={"query": "¿Qué es un sistema de alto riesgo?", "corpus": "ai_act", "language": "es"},
+    ).json()
+    assert body["pii_summary"] is None
+
+
+def test_ask_pii_query_surfaces_counts_only_summary(
+    client, auth_headers, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """P2.3: a query with PII yields a counts-only pii_summary; the answer is still
+    returned (advisory), and the RAW PII value never appears in the response."""
+    monkeypatch.setattr("regulaitor.api.routes_ask.run", lambda **_kw: _ok_state())
+    email = "juan.perez@example.com"
+    body = client.post(
+        "/ask",
+        headers=auth_headers,
+        json={
+            "query": f"Mi correo es {email}, ¿aplica el RGPD?",
+            "corpus": "gdpr",
+            "language": "es",
+        },
+    ).json()
+    assert body["verdict"] == "pass"  # advisory: still answered
+    assert body["pii_summary"] is not None
+    assert body["pii_summary"]["counts"].get("email") == 1
+    assert body["pii_summary"]["total"] >= 1
+    # §18.8: the raw PII value is NEVER in the response body (only counts).
+    assert email not in str(body["pii_summary"])
+
+
 def test_ask_missing_auth_returns_401(client) -> None:
     response = client.post("/ask", json={"query": "test", "corpus": "ai_act", "language": "es"})
     assert response.status_code == 401

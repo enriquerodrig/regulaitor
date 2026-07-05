@@ -116,6 +116,10 @@ class AskResponse(BaseModel):
     response_time_ms: int = Field(ge=0)
     council_notice: str | None = None
     council: CouncilReviewDTO | None = None
+    # P2.3: advisory PII signal scanned from the query, mirroring /analyze. Counts only
+    # (§18.8); None when the query is clean. The answer is returned regardless (§18.5
+    # advisory) — the caller decides whether to act on it.
+    pii_summary: PIISummaryDTO | None = None
 
 
 SanitizerCategory = Literal[
@@ -385,11 +389,16 @@ def _council_notice(
     )
 
 
-def to_ask_response(state: ChatState, response_time_ms: int) -> AskResponse:
+def to_ask_response(
+    state: ChatState,
+    response_time_ms: int,
+    pii_summary: PIISummaryDTO | None = None,
+) -> AskResponse:
     """Translate ChatState (with audited_answer set) to public AskResponse.
 
     Caller MUST handle injection_blocked and errors states BEFORE calling this:
     InjectionDetected and BackendError exceptions are raised in the route, not here.
+    ``pii_summary`` (P2.3) is the advisory PII signal the route scanned from the query.
     """
     audited = state.audited_answer
     if audited is None:
@@ -407,6 +416,7 @@ def to_ask_response(state: ChatState, response_time_ms: int) -> AskResponse:
             if state.council_review is not None
             else None
         ),
+        pii_summary=pii_summary,
     )
 
 

@@ -420,6 +420,16 @@
                 "type": "null"
               }
             ]
+          },
+          "pii_summary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PIISummaryDTO"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
