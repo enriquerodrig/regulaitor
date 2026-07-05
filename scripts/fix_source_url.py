@@ -30,6 +30,8 @@ from regulaitor.rag.store import TABLE_NAME
 def _fix_manifests() -> None:
     for path in sorted(Path("corpus/manifests").glob("*.json")):
         m = manifest_mod.load(path)
+        if m is None:
+            raise RuntimeError(f"failed to load manifest {path}")
         new_articles = [
             a.model_copy(
                 update={
