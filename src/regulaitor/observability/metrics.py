@@ -23,8 +23,11 @@ internal network).
 
 from __future__ import annotations
 
+import logging
 import os
 import threading
+
+logger = logging.getLogger(__name__)
 
 _lock = threading.Lock()
 _turns: dict[tuple[str, str], int] = {}  # (mode, verdict) -> count
@@ -41,8 +44,8 @@ def record_turn(mode: str, verdict: str) -> None:
     try:
         with _lock:
             _turns[(mode, verdict)] = _turns.get((mode, verdict), 0) + 1
-    except Exception:  # pragma: no cover — counting must never break a request
-        pass
+    except Exception as exc:  # pragma: no cover — counting must never break a request
+        logger.debug("metrics record_turn failed: %s", exc)
 
 
 def record_pii_query() -> None:
@@ -51,8 +54,8 @@ def record_pii_query() -> None:
     try:
         with _lock:
             _pii_queries += 1
-    except Exception:  # pragma: no cover
-        pass
+    except Exception as exc:  # pragma: no cover
+        logger.debug("metrics record_pii_query failed: %s", exc)
 
 
 def reset() -> None:
