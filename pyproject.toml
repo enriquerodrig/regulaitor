@@ -38,7 +38,7 @@ dependencies = [
     # Multi-LLM router (ADR-0013 H12): production runtime imports these at
     # module load in src/regulaitor/models/router.py. Moved from dev section
     # to main dependencies for H16 deploy (Docker --no-dev install).
-    "openai>=1.40,<2.0",
+    "openai>=2.44.0,<3.0",
     "groq>=0.11,<1.0",
 ]
 
