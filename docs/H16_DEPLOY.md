@@ -297,4 +297,35 @@ These do NOT block H16 deploy.
 
 ---
 
+## §12 — Sovereign profile (EU, zero US processor)
+
+For an EU-sovereign deploy (founder constraints C1 self-hosted inference + C3
+EU-sovereign), route the Analyst to an EU-hosted open model (Mistral) and omit
+every US key. Full spike/design + gap analysis + cost regimes: `docs/sovereign_deploy.md`.
+
+The env bundle (add to the `.env`; **never** create `.env.example`):
+
+```bash
+REGULAITOR_ANALYST_MODEL_CHOICE=self_hosted
+REGULAITOR_SELFHOST_BASE_URL=https://api.mistral.ai/v1   # or your own vLLM endpoint (self-host GPU)
+REGULAITOR_SELFHOST_API_KEY=<Mistral La Plateforme key>
+REGULAITOR_SELFHOST_MODEL=mistral-small-latest
+REGULAITOR_ANALYST_PROMPT_VERSION=v1.6                   # required with the open model (citation-format discipline)
+REGULAITOR_AUDIT_DB=/data/audit.db                       # traceability = the compliance selling point
+# OMIT ANTHROPIC_API_KEY / OPENAI_API_KEY / GROQ_API_KEY  → no US model can be invoked
+```
+
+Guarantees (CI-enforced): the `self_hosted` mode **never falls back to a US
+model** (`test_self_hosted_does_not_fall_back_to_us_model`); §6 `citation/validator.py`
+is byte-unchanged under any Analyst model (citation validation is deterministic).
+Sovereignty proof for a partner: `/health` shows lancedb ok **without**
+`anthropic_key`; the audit trail stores hashes not text (§18.8).
+
+Known gap (see `docs/sovereign_deploy.md` §4 G2): with US keys absent, the Council
+still attempts (and swallows) 3 doomed US judge calls per high-severity turn —
+harmless to §6 but wasteful. Mitigation is a $0 follow-up (skip a judge whose
+provider key is absent).
+
+---
+
 **End of H16 Deployment Runbook.**
