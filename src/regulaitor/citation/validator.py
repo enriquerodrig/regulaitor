@@ -107,8 +107,23 @@ def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> Aud
     # v0.1.32-post §6 defense-in-depth: schema Citation rejects whitespace-only
     # text, but if a future caller bypasses the schema (e.g. test injection,
     # downstream mutation, deserialization edge case) and citation_norm collapses
-    # to empty, "" in target_norm is unconditionally True → §6 bypass. Reject
-    # here too; treat as text_not_match (failed_check=3).
+    # to empty, "" in target_norm is unconditionally True → §6 bypass. Reject here.
+    #
+    # sec6-01b (mutation-audit follow-up to ADR-0043): failed_check=4, NOT 3. An
+    # empty citation is the EXTREME non-citation — by the same rationale the floor
+    # below uses (a non-citation is not a paraphrase), it must route strict. Emitting
+    # 3 (paraphrase) would let the Auditor's _all_blocked_findings_paraphrase_only
+    # soften an empty "citation" to PASS. 4 makes its `!= 3` guard route BLOCK/RHR.
+    # Byte-consistent with the floor (both are non-citations); auditor.py stays
+    # byte-unchanged. Strict-tightening (monotone: only routes MORE strictly).
+    #
+    # REACHABLE via the normal prod path (§6 review): a Citation.text of bare
+    # combining marks (U+0301) or variation selectors (U+FE0F) — Unicode category Mn
+    # — passes the schema's whitespace-only field_validator (str.strip() keeps Mn),
+    # but _normalize (NFD-decompose + drop Mn) collapses it to "". So this is a real
+    # bypass sec6-01b closes, not only defense-in-depth. (Standard whitespace and
+    # zero-width chars do NOT reach here — the schema rejects the former; the latter
+    # survive _normalize with len>=1 and hit the floor, also failed_check=4.)
     if len(citation_norm) == 0:
         scope = "apartado" if citation.apartado is not None else "article"
         return AuditResult(
@@ -123,7 +138,7 @@ def validate(citation: Citation, *, loader: LoaderProtocol | None = None) -> Aud
                 f"{citation.language}; cited text is empty after Unicode normalization "
                 f"(input was whitespace-only or zero-width sequence)."
             ),
-            failed_check=3,
+            failed_check=4,
         )
     # sec6-01 (ADR-0043): reject a too-short citation BEFORE the substring test, so a
     # trivial token can no longer ride the `in` operator to a spurious pass. See the

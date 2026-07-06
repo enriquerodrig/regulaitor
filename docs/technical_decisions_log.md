@@ -5333,3 +5333,29 @@ redteam-smoke 0.92 carry preserved (sanitizer/injection path unaffected by §6 t
 Fix shipped at v0.1.32-h16-deploy close, BEFORE H17 memoria writing begins. The deep-review C1 finding was time-sensitive (TFM defense risk); fix is bundled with C2 docs backfill and I-batch fixes in the same H17-prep session.
 
 Sin skills nuevas. Ver `tests/unit/citation/test_validator.py` (regression tests) + `src/regulaitor/citation/schemas.py:34-41` (Layer a) + `src/regulaitor/citation/validator.py:97-115` (Layer b) + deep-review workflow `wf_dc377549-4c0` output.
+
+## §P1.3b — §6 mutation audit + sec6-01b empty-guard tightening (HX profesionalización)
+
+### Scope
+
+$0 micro-milestone (mutation-testing la Capa (a) §6, roadmap P1.3b). Dos entregables acoplados:
+- **Mutation audit** `scripts/sec6_mutation_audit.py` (in-process, dependency-free): exec de `citation/validator.py` mutado + batería de invariantes §6. Per-mutant pytest re-run era impracticable (~60s de import de app por mutante); el diseño in-process exec-once resuelve. **12 mutaciones §6-weakening** (floor const/boundary/raw-length, substring-always-true/bidirectional, textmatch-invert, empty-guard, check1/2 codes, pass-flip, apartado-skip, article-level self-match). Resultado: **11 killed + 1 equivalent documentado** (empty-guard-disabled: el floor lo subsume post-sec6-01b), 0 unexpected. CI-guard `tests/unit/citation/test_sec6_mutation_audit.py` (falla si un weakening futuro sobrevive). Report `docs/sec6_mutation_audit.md`.
+- **sec6-01b** (hallazgo del audit): el empty-guard defense-in-depth (`validator.py`, v0.1.32-post) emitía `failed_check=3` (paraphrase, **softenable** por `_all_blocked_findings_paraphrase_only`). Predataba sec6-01/ADR-0043, que introdujo `failed_check=4` con la lógica "un non-citation NO es paraphrase → routing estricto". Una cita vacía es el non-citation extremo → debe emitir 4. Cambio `failed_check=3` → `4` (1 línea).
+
+### Why
+
+Consistencia §6: antes del fix, el empty-guard era el ÚNICO reject-path que etiquetaba un non-citation como softenable. Con `=4`, el `!= 3` guard del helper (auditor.py **byte-unchanged**) la enruta BLOCK/RHR.
+
+### §6 invariant + reachability (corregido por el review §6)
+
+Strict-tightening monótono (sólo enruta MÁS estricto, nunca menos; validated=False inalterado). **REACHABLE en producción** (el review §6 refutó el "unreachable" inicial): una `Citation.text` de sólo combining marks (U+0301) / variation selectors (U+FE0F) — categoría Unicode Mn — pasa el field_validator whitespace-only del schema (`str.strip()` NO quita Mn) pero `_normalize` (NFD + drop Mn) la colapsa a "" → llega al empty-guard por el path normal `Answer.model_validate(tool_use_input)` del Analyst. Pre-sec6-01b una cita así como única Finding podía suavizarse a PASS = bypass §6 real que sec6-01b cierra (reproducido e2e). Test `test_validator_rejects_combining_mark_only_citation`. `auditor.py` + `schemas.py` byte-unchanged; sólo `validator.py` (1 línea de decision-logic, misma lineage que sec6-01).
+
+### §6 adversarial review (3 lentes)
+
+El review encontró 6 hallazgos (2 high, 2 medium, 2 low): el cambio sec6-01b es correcto/monótono (confirmado) PERO (a) el claim "unreachable" era falso — combining-mark bypass real (medium, corregido arriba); (b) 3 gaps del mutation audit inicial (high/high/medium): faltaban superset-substring, article-level apartado=None, y raw-vs-normalized-length. Los 3 gaps cerrados: batería reforzada a 11 casos (B8 superset, B9/B10 article-level, B11 raw-padded) + 3 mutaciones nuevas → 12 total, 11 killed. El survivor `empty_guard_disabled` confirmado equivalent-genuino (no gap).
+
+### Gate
+
+`uv run pytest -m "not slow"` verde + mypy 114 files + ruff/black + redteam-smoke 0.92 carry. `docs/sec6_mutation_audit.md` = 11 killed / 1 equivalent / 0 unexpected.
+
+Sin skills nuevas (`citation-validator` activa desde H4). Ver `scripts/sec6_mutation_audit.py` + `tests/unit/citation/test_sec6_mutation_audit.py` + `test_validator.py` (empty-guard test ==4) + CLAUDE.md §6.1 (sec6-01b).

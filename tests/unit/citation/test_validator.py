@@ -386,7 +386,12 @@ def test_validator_rejects_empty_after_normalization_defense_in_depth(
 ) -> None:
     """Layer (b) — even if a Citation with whitespace text bypasses the schema
     (Pydantic field_validator), validator.py defense-in-depth catches the
-    empty-after-normalization case and returns failed_check=3.
+    empty-after-normalization case and returns failed_check=4.
+
+    sec6-01b: failed_check is 4 (non-citation), NOT 3 (paraphrase). An empty
+    citation is the extreme non-citation; emitting 4 keeps the Auditor's
+    paraphrase-softening `!= 3` guard routing it strict (BLOCK/RHR), consistent
+    with the length floor. See validator.py sec6-01b note + ADR-0043 lineage.
     """
     # Construct a valid Citation, then mutate-bypass to whitespace via
     # model_copy + frozen-bypass. Use object.__setattr__ to skip the schema.
@@ -400,8 +405,29 @@ def test_validator_rejects_empty_after_normalization_defense_in_depth(
     object.__setattr__(c, "text", "   ")
     r = validate(c, loader=loader_with_data)
     assert r.validated is False
-    assert r.failed_check == 3
+    assert r.failed_check == 4  # sec6-01b: non-citation, routes strict (not softenable 3)
     assert r.text_normalized_match is False
+    assert "empty_citation_text_after_normalization" in (r.reason or "")
+
+
+@pytest.mark.parametrize("combining_text", ["́", "️", "́̀"])
+def test_validator_rejects_combining_mark_only_citation(
+    loader_with_data: _FakeLoader,
+    combining_text: str,
+) -> None:
+    """sec6-01b reachability (§6 review, medium): a Citation.text of bare combining
+    marks / variation selectors PASSES the schema field_validator (str.strip() keeps
+    non-whitespace Mn chars) but _normalize() collapses it to "" — so the empty-guard
+    is reachable via the NORMAL production path (Answer.model_validate of the Analyst's
+    tool_use), NOT only via a schema bypass. It MUST be rejected with failed_check=4
+    (strict); pre-sec6-01b it was 3 (softenable) → a single-such-citation turn could be
+    softened to PASS by the Auditor = a real §6 bypass this closes.
+    """
+    # Constructed the NORMAL way — no schema bypass; this is the production path.
+    c = Citation(norma="ai_act", articulo="6", apartado="1", language="es", text=combining_text)
+    r = validate(c, loader=loader_with_data)
+    assert r.validated is False
+    assert r.failed_check == 4
     assert "empty_citation_text_after_normalization" in (r.reason or "")
 
 
