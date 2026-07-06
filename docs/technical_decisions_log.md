@@ -5352,10 +5352,14 @@ Strict-tightening monótono (sólo enruta MÁS estricto, nunca menos; validated=
 
 ### §6 adversarial review (3 lentes)
 
-El review encontró 6 hallazgos (2 high, 2 medium, 2 low): el cambio sec6-01b es correcto/monótono (confirmado) PERO (a) el claim "unreachable" era falso — combining-mark bypass real (medium, corregido arriba); (b) 3 gaps del mutation audit inicial (high/high/medium): faltaban superset-substring, article-level apartado=None, y raw-vs-normalized-length. Los 3 gaps cerrados: batería reforzada a 11 casos (B8 superset, B9/B10 article-level, B11 raw-padded) + 3 mutaciones nuevas → 12 total, 11 killed. El survivor `empty_guard_disabled` confirmado equivalent-genuino (no gap).
+El review (Capa a) encontró 6 hallazgos (2 high, 2 medium, 2 low): el cambio sec6-01b es correcto/monótono (confirmado) PERO (a) el claim "unreachable" era falso — combining-mark bypass real (medium, corregido arriba); (b) 3 gaps del mutation audit inicial (high/high/medium): faltaban superset-substring, article-level apartado=None, y raw-vs-normalized-length. Los 3 gaps cerrados: batería reforzada a 11 casos (B8 superset, B9/B10 article-level, B11 raw-padded) + 3 mutaciones nuevas → 12 total, 11 killed. El survivor `empty_guard_disabled` confirmado equivalent-genuino (no gap).
+
+### Capa (b/c) — Auditor routing mutation audit
+
+Extensión del audit a la agregación del Auditor (`scripts/sec6_auditor_mutation_audit.py` + CI-guard `test_sec6_auditor_mutation_audit.py`): mismo exec-once in-process pero inyectando un **fake validator** en el namespace del mutante (el `validator` del `audit()` resuelve de `__globals__`=ns), así cada `failed_check` se controla por prefijo del texto de la cita (VALID/FAB1/FAB2/PARA/SHORT). Batería de invariantes §6-routing (fabricación/too-short NUNCA PASS; paraphrase-only PUEDE suavizar; Lenient + quorum). **`auditor.py` NO se modifica** (el audit lee una copia y la muta in-process). Review §6 (2 lentes): faithfulness lens confirmó SOUND (el fake gana al real, expected verdicts correctos, baseline significativo); missed-weakening lens encontró **1 gap HIGH real** — la batería nunca llevaba FAB2 (apartado fab) por un Finding BLOQUEADO al helper, así que una mutación `!= 3` → `not in (3, 2)` (suaviza sólo check 2) sobrevivía → cerrado con R11 (all-blocked FAB2 → BLOCK) + R12 (partial VALID+FAB2 → RHR) + la mutación explícita → **8 mutaciones, todas killed** + 1 low (crash-vs-mismatch conflation → `_run_battery` ahora distingue; test exige kills vía mismatch genuino, no crash).
 
 ### Gate
 
-`uv run pytest -m "not slow"` verde + mypy 114 files + ruff/black + redteam-smoke 0.92 carry. `docs/sec6_mutation_audit.md` = 11 killed / 1 equivalent / 0 unexpected.
+`uv run pytest -m "not slow"` verde + mypy 115 files + ruff/black + redteam-smoke 0.92 carry. `docs/sec6_mutation_audit.md` = 11 killed / 1 equivalent / 0 unexpected · `docs/sec6_auditor_mutation_audit.md` = 8 killed / 0 unexpected.
 
-Sin skills nuevas (`citation-validator` activa desde H4). Ver `scripts/sec6_mutation_audit.py` + `tests/unit/citation/test_sec6_mutation_audit.py` + `test_validator.py` (empty-guard test ==4) + CLAUDE.md §6.1 (sec6-01b).
+Sin skills nuevas (`citation-validator` activa desde H4). Ver `scripts/sec6_mutation_audit.py` + `scripts/sec6_auditor_mutation_audit.py` + los 2 CI-guards + `test_validator.py` (empty-guard ==4 + combining-mark) + CLAUDE.md §6.1 (sec6-01b + ambos audits).
