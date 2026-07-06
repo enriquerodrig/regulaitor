@@ -321,10 +321,10 @@ is byte-unchanged under any Analyst model (citation validation is deterministic)
 Sovereignty proof for a partner: `/health` shows lancedb ok **without**
 `anthropic_key`; the audit trail stores hashes not text (§18.8).
 
-Known gap (see `docs/sovereign_deploy.md` §4 G2): with US keys absent, the Council
-still attempts (and swallows) 3 doomed US judge calls per high-severity turn —
-harmless to §6 but wasteful. Mitigation is a $0 follow-up (skip a judge whose
-provider key is absent).
+Council under the sovereign profile (P4.1): with a judge's provider key absent the
+Council **skips** that judge (zero doomed calls, DEBUG log) instead of attempting +
+swallowing it. A skipped judge degrades conservatively (the Auditor's mechanical
+verdict stands; §6 unaffected). See `docs/sovereign_deploy.md` §4 G2.
 
 ---
 

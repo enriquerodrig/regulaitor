@@ -3,6 +3,8 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from unittest.mock import patch
 
+import pytest
+
 from regulaitor.agents.council import CouncilAgent
 from regulaitor.citation.schemas import (
     Answer,
@@ -13,6 +15,17 @@ from regulaitor.citation.schemas import (
     Context,
     Finding,
 )
+
+
+@pytest.fixture(autouse=True)
+def _judge_provider_keys(monkeypatch: pytest.MonkeyPatch) -> None:
+    """P4.1: these tests mock router.complete and assert judges run. The Council
+    now skips a judge whose provider key is absent (sovereign profile), so the US
+    judge providers must appear configured for the mocked path to execute. The
+    sovereign SKIP behaviour is covered separately in test_council_sovereign."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test")
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+    monkeypatch.setenv("GROQ_API_KEY", "gsk-test")
 
 
 def _citation(text="el artículo dice X"):

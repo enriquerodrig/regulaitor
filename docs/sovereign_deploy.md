@@ -90,20 +90,22 @@ coste de `feedback_cost_estimation_discipline`). Contexto que **de-risca** esto:
 H12 halló que el techo de calidad es system-level (retriever+Auditor), **no** la
 elección de modelo — cambiar Sonnet→Mistral degrada menos de lo que intuye.
 
-**G2 — El Council hace 3 llamadas US fallidas por turno de alta severidad ($0,
-recomendado P4.1).** Con el perfil soberano (a) (`ANALYST_MODEL_CHOICE=self_hosted`
-+ claves US ausentes), el Council sigue en sus `_JUDGE_MODES` US (Haiku/GPT-4o/
-Llama) → cada juez falla auth → `_one_judge` lo traga → Council degrada. Correcto
-para §6 (el veredicto mecánico del Auditor manda), **pero** son 3 llamadas US
-doomed + logs ruidosos por turno auto-triggered. Dos configs, ninguna perfecta:
-  - **(a) analyst-only** — Council degrada (sin independencia, 3 llamadas US
-    fallidas). Lo del runbook.
-  - **(b) global** (`REGULAITOR_ROUTER_MODE=self_hosted`) — TODO en Mistral
-    (Analyst + Council + fallback); cero US intentado; **pero** los 3 jueces
-    colapsan a un solo modelo → el Council pierde su independencia (su valor≈0).
-  - **Recomendación P4.1 ($0):** guard que salte un juez cuyo provider-key esté
-    ausente (cero llamadas US doomed, en vez de 3), o un `REGULAITOR_COUNCIL_ENABLED=0`
-    explícito para el perfil soberano. Independencia real multi-EU-model = HX.
+**G2 — El Council intentaba 3 llamadas US doomed por turno de alta severidad
+(CERRADO en P4.1, $0).** Matiz honesto: la clave US ausente hace que el cliente
+del router lance `RuntimeError` **antes de cualquier llamada de red** (no hay fuga
+de datos — la soberanía ya estaba garantizada en el borde de red); el problema real
+era 3 `RuntimeError` + 3 trazas ERROR por turno para un estado esperado y benigno.
+**Fix P4.1** (`agents/council.py` `_one_judge` + `models/router.py`
+`effective_provider`/`provider_key_present`): el Council **salta** un juez cuyo
+provider-key (override-aware) esté ausente → cero intentos, log DEBUG, veredicto
+`skipped` etiquetado con el provider **efectivo**. Degrade-safe intacto (juez
+saltado = no-ok = degraded → el veredicto mecánico del Auditor manda; §6
+byte-unchanged). Revisión adversarial de 4 lentes: 0 hallazgos de severidad,
+0 fugas de soberanía. Dos configs siguen existiendo:
+  - **(a) analyst-only** — jueces US se saltan limpiamente (cero llamadas).
+  - **(b) global** (`REGULAITOR_ROUTER_MODE=self_hosted`) — TODO en Mistral;
+    los 3 jueces corren pero colapsan a un modelo → independencia≈0. Independencia
+    real multi-EU-model = HX.
 
 **G3 — Deploy vivo sigue en HF Spaces (US).** El runbook Régimen A es ejecutable
 (env verificado) pero **no ejecutado en un host EU**. Cierre: provisionar
@@ -117,7 +119,7 @@ trazable. (Hecho por este spike.)
 ## 5. Recomendación
 
 1. **Ahora ($0):** este doc + sección "Sovereign profile" en `H16_DEPLOY.md`
-   (hecho). Opcional P4.1: el guard Council-skip-sin-key (G2).
+   (hecho). Guard Council-skip-sin-key (G2) — **hecho en P4.1**.
 2. **Antes de vender (paid, pedir OK):** A/B Mistral+v1.6 (G1) para cuantificar
    el delta de calidad soberana con números, no intuición.
 3. **Con 1.er design partner (infra ~€30–120/mo):** ejecutar Régimen A en host EU

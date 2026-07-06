@@ -208,6 +208,26 @@ class CouncilAgent:
 
     def _one_judge(self, mode: router.ModelChoice, payload: str) -> JudgeVote:
         target = router._MODE_MAP[mode]
+        # Sovereign profile (docs/sovereign_deploy.md §4 G2): skip a judge whose
+        # (override-aware) provider has no API key — e.g. the US judge modes when
+        # a sovereign deploy omits ANTHROPIC/OPENAI/GROQ keys. A skipped judge is
+        # a not-ok vote, so the degrade-safe aggregation is unchanged (the
+        # Auditor's mechanical verdict stands), but there is no doomed call nor an
+        # ERROR-level traceback per turn for an expected, benign condition.
+        eff_provider = router.effective_provider(mode)
+        if not router.provider_key_present(eff_provider):
+            # Label with the EFFECTIVE provider (not the nominal judge's) so an
+            # operator sees WHICH key is actually missing — under the global
+            # self_hosted override that is `selfhost`, not anthropic/openai/groq.
+            logger.debug("council judge %s skipped: %s key absent", mode, eff_provider)
+            return JudgeVote(
+                model_id=target.model_id,
+                provider=eff_provider,
+                vote=AuditVerdict.REQUIRES_HUMAN_REVIEW,
+                reason=f"judge_skipped_no_key:{eff_provider}",
+                ok=False,
+                error_category="provider_key_absent",
+            )
         try:
             result = router.complete(
                 messages=[{"role": "user", "content": payload}],

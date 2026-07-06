@@ -139,6 +139,33 @@ def _resolve_mode(model_choice: ModelChoice) -> str:
     return model_choice
 
 
+# Provider -> API-key env var. Single source of truth for "is this provider
+# configured" checks; mirrors the fail-fast key reads in each _<provider>_client().
+_PROVIDER_KEY_ENV: dict[str, str] = {
+    PROVIDER_ANTHROPIC: "ANTHROPIC_API_KEY",
+    PROVIDER_OPENAI: "OPENAI_API_KEY",
+    PROVIDER_GROQ: "GROQ_API_KEY",
+    PROVIDER_SELFHOST: "REGULAITOR_SELFHOST_API_KEY",
+}
+
+
+def effective_provider(model_choice: ModelChoice) -> str:
+    """The provider a ``complete(model_choice)`` call would actually hit, after
+    the REGULAITOR_ROUTER_MODE override. Override-aware so a sovereign global
+    override (every mode -> self_hosted) reports ``selfhost``, not the nominal US
+    provider — the Council uses this to decide whether a judge is reachable."""
+    return _MODE_MAP[_resolve_mode(model_choice)].provider
+
+
+def provider_key_present(provider: str) -> bool:
+    """True if the API-key env for ``provider`` is set (non-empty). An unknown
+    provider fails OPEN (True) so a future provider is never silently skipped."""
+    env = _PROVIDER_KEY_ENV.get(provider)
+    if env is None:
+        return True
+    return bool(os.environ.get(env, "").strip())
+
+
 class Usage(BaseModel):
     input_tokens: int
     output_tokens: int

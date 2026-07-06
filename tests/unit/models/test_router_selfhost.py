@@ -259,3 +259,49 @@ def test_self_hosted_via_global_router_mode_env(monkeypatch) -> None:
     assert router._resolve_mode("default") == "self_hosted"
     # And an unrelated invalid id for OPENAI_GPT_4O constant stays importable.
     assert OPENAI_GPT_4O == "gpt-4o"
+
+
+# --- provider_key_present / effective_provider (P4.1 sovereign guard) -------
+
+
+def test_provider_key_present_true_when_set(monkeypatch) -> None:
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-x")
+    assert router.provider_key_present(router.PROVIDER_ANTHROPIC) is True
+
+
+def test_provider_key_present_false_when_absent(monkeypatch) -> None:
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    assert router.provider_key_present(router.PROVIDER_OPENAI) is False
+
+
+def test_provider_key_present_false_when_blank(monkeypatch) -> None:
+    monkeypatch.setenv("GROQ_API_KEY", "   ")  # whitespace-only counts as absent
+    assert router.provider_key_present(router.PROVIDER_GROQ) is False
+
+
+def test_provider_key_present_unknown_provider_fails_open() -> None:
+    # A provider with no registered env var must not be silently skipped.
+    assert router.provider_key_present("some_future_provider") is True
+
+
+def test_effective_provider_no_override(monkeypatch) -> None:
+    monkeypatch.delenv("REGULAITOR_ROUTER_MODE", raising=False)
+    assert router.effective_provider("judge") == router.PROVIDER_ANTHROPIC
+    assert router.effective_provider("cost") == router.PROVIDER_GROQ
+
+
+def test_effective_provider_global_override_selfhost(monkeypatch) -> None:
+    """Under the sovereign global override, every mode's effective provider is
+    selfhost — so a US judge mode is NOT skipped when the self-host key is set."""
+    monkeypatch.setenv("REGULAITOR_ROUTER_MODE", "self_hosted")
+    assert router.effective_provider("judge") == router.PROVIDER_SELFHOST
+    assert router.effective_provider("evaluation") == router.PROVIDER_SELFHOST
+
+
+def test_every_mode_provider_has_a_key_env() -> None:
+    """Invariant: every provider a mode can resolve to is in _PROVIDER_KEY_ENV.
+    Otherwise provider_key_present fails OPEN for it and the sovereign skip
+    silently never fires for that provider (a future provider added to _MODE_MAP
+    but not _PROVIDER_KEY_ENV would defeat the guard)."""
+    providers = {pm.provider for pm in router._MODE_MAP.values()}
+    assert providers <= set(router._PROVIDER_KEY_ENV)
