@@ -2,7 +2,7 @@
 
 Este documento es la auto-evaluación del propio sistema RegulAItor bajo el Reglamento (UE) 2024/1689 ("AI Act"). Se redacta como ejercicio de cumplimiento académico TFM y como evidencia para los módulos M2 (Agentes) y M4 (Seguridad). No sustituye certificación por un organismo notificado conforme al Capítulo III, Sección 4 del AI Act; la clasificación presentada es **provisional** y se documenta con el rigor §22.22 característico del proyecto.
 
-Versión evaluada: `v0.1.32-h16-deploy` (demo público en Hugging Face Spaces, 2026-05-28).
+Versión evaluada: estado HX post-pilot-hardening (2026-07; corpus de 9 normas, §6 de cuatro capas con floor anti-substring ADR-0043). Artefacto público desplegado: demo `v0.1.32-h16-deploy` en Hugging Face Spaces (2026-05-28).
 Referencia normativa: REGULATION (EU) 2024/1689, OJ L 12.7.2024, ELI `http://data.europa.eu/eli/reg/2024/1689/oj`. Corpus interno: `corpus/processed/ai_act_es.json` (113 artículos parseados; 687 chunks tras chunking en LanceDB), versión consolidada base-act 2024-12-27.
 
 ## 1. Identificación del sistema
@@ -107,7 +107,7 @@ Aunque la clasificación es **riesgo limitado**, varios controles propios del r�
 
 ### 5.3 Documentación técnica (artículo 11, anticipado)
 
-- 35 ADRs (`docs/adr/0001-*.md` a `0035-*.md`), `docs/technical_decisions_log.md` (5335+ líneas), `docs/architecture.md` (C4 L1/L2/L3), `docs/evidence_matrix.md` (M1-M5), `docs/auditor_calibration.md` (estudio H15), model card, data card. Trazabilidad completa.
+- 43 ADRs (`docs/adr/0001-*.md` a `0043-*.md`), `docs/technical_decisions_log.md` (5335+ líneas), `docs/architecture.md` (C4 L1/L2/L3), `docs/evidence_matrix.md` (M1-M5), `docs/auditor_calibration.md` (estudio H15), model card, data card. Trazabilidad completa.
 
 ### 5.4 Registro de eventos (artículo 12, anticipado)
 
@@ -121,7 +121,7 @@ Aunque la clasificación es **riesgo limitado**, varios controles propios del r�
 
 ### 5.6 Exactitud, robustez y ciberseguridad (artículo 15, anticipado)
 
-- Suite red team con 50 ataques (`redteam/attacks.jsonl`, gate §16.2 #4 ≥0.90 verde a 0.92).
+- Suite red team con 59 ataques (`redteam/attacks.jsonl`, ampliada a las 9 corpus; gate §16.2 #4 ≥0.90 verde a 0.92).
 - Suite evaluación con 64 casos chat + 10 doc (`evals/gold_set.jsonl`).
 - Estudio de calibración del Auditor (ADR-0016, H15) y ciclo diagnose-intervene-measure-refute-revert documentado (ADRs 0027-0034; 13 hitos consecutivos con framing §22.22; 2 REVERTs honestos v0.1.23 y v0.1.30).
 - Sanitización PDF anti-prompt-injection (`src/regulaitor/document/sanitizer.py`).
@@ -133,7 +133,7 @@ RegulAItor no procesa categorías especiales de datos personales (artículo 9 RG
 - Las consultas chat son textuales en lenguaje natural sobre obligaciones normativas; el usuario es libre de incluir o excluir PII.
 - El modo análisis documental procesa documentos corporativos (políticas, procedimientos, registros) — el operador es responsable de pseudonimizar antes de subir.
 - Los logs aplican redacción por allowlist (`src/regulaitor/observability/langfuse_client.py:27-60`); no se persiste texto crudo del usuario en LangFuse.
-- Detección automática de PII en input **construida** (`src/regulaitor/security/pii.py`, HX Fase 2/2.1): regex MVP (email, teléfono-ES, DNI/NIF, NIE, IBAN, tarjeta con Luhn) + `count_pii` counts-only (§18.8). Cableada como gate pre-pipeline en el chat de Streamlit (aviso + Continuar/Cancelar) y como recuento in-pipeline en doc-mode (`PIISummary`). Cobertura pendiente: el path del API `/ask` aún no escanea (roadmap P2.3); es regex-MVP, no NER exhaustivo.
+- Detección automática de PII en input **construida** (`src/regulaitor/security/pii.py`, HX Fase 2/2.1): regex MVP (email, teléfono-ES, DNI/NIF, NIE, IBAN, tarjeta con Luhn) + `count_pii` counts-only (§18.8). Cableada como gate pre-pipeline en el chat de Streamlit (aviso + Continuar/Cancelar), como recuento in-pipeline en doc-mode (`PIISummary`) y en el path API `GET /ask`, que escanea la consulta y adjunta un `pii_summary` **advisory** (counts-only, §18.8; `src/regulaitor/api/routes_ask.py`; P3/P2.3 cerrado). Residual real: el advisory no bloquea de forma dura y es regex-MVP, no NER exhaustivo.
 
 **DPIA simplificada**: dado que la base de uso esperada es texto no-personal sobre normas, el riesgo RGPD es **bajo**; un DPIA formal artículo 35 RGPD sería exigible solo si el sistema se integrara con datasets de empleados/clientes en el ámbito del responsable del despliegue. Ese análisis quedaría a cargo del responsable del despliegue, no del proveedor.
 
@@ -146,8 +146,8 @@ RegulAItor no entrena ni proporciona modelos de IA de uso general; consume model
 1. **Provisional**: realizada por el autor del TFM, no por organismo notificado. Una certificación formal requerirá el ramp-up del régimen 2025-2027.
 2. **Anexo III(8a) borderline**: si futuras directrices de la Comisión (artículo 6.5) extendieran la noción de "administración de justicia" a asistencia compliance, el sistema requeriría re-clasificación.
 3. **Marcado máquina-legible artículo 50.2**: no implementado watermarking criptográfico; el formato estructurado `Answer/Finding/Citation` es la única señal actual.
-4. **PII detection**: **construido en HX** (`security/pii.py`, Fase 2/2.1) — regex MVP cableado en chat (Streamlit) + doc-mode; cobertura pendiente en el path API `/ask` (roadmap P2.3) y NER exhaustivo (HX).
-5. **Evaluación de conformidad externa**: no aplicable bajo riesgo limitado, pero documentación técnica acumulada (35 ADRs + decisions log + evidence matrix) está formateada para sustentar una auditoría futura.
+4. **PII detection**: **construido en HX** (`security/pii.py`, Fase 2/2.1) — regex MVP cableado en chat (Streamlit) + doc-mode + path API `GET /ask` (advisory counts-only, P2.3 cerrado). Residual real: el advisory no bloquea de forma dura y no es NER exhaustivo (HX).
+5. **Evaluación de conformidad externa**: no aplicable bajo riesgo limitado, pero documentación técnica acumulada (43 ADRs + decisions log + evidence matrix) está formateada para sustentar una auditoría futura.
 
 ## 9. Conclusión
 
@@ -159,7 +159,7 @@ RegulAItor se auto-clasifica como **sistema de IA de riesgo limitado** bajo el A
 - CLAUDE.md §3, §4, §6, §6.1, §18 (controles de seguridad).
 - `docs/model_card.md`, `docs/data_card.md`, `docs/architecture.md`.
 - `docs/technical_decisions_log.md`, `docs/evidence_matrix.md`.
-- ADR-0014 (Council), ADR-0016 (Auditor calibration), ADR-0025 (Council binding), ADR-0027 a ADR-0034 (linaje §6 multi-capa).
+- ADR-0014 (Council), ADR-0016 (Auditor calibration), ADR-0025 (Council binding), ADR-0027 a ADR-0034 y ADR-0043 (linaje §6 multi-capa; ADR-0043/sec6-01 floor de longitud mínima en validator.py).
 - `src/regulaitor/ui_streamlit/app.py:19-67` (disclaimer y banner artículo 50.1+50.5).
 - `src/regulaitor/agents/auditor.py:20-48` (helper `_all_blocked_findings_paraphrase_only` Layer (c) §6.1).
 - `src/regulaitor/observability/langfuse_client.py:27-60` (redaction allowlist).

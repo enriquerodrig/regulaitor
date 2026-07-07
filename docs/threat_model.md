@@ -1,10 +1,12 @@
-# RegulAItor — Threat Model (HX, post pre-pilot hardening)
+# RegulAItor — Threat Model (HX, post pre-pilot hardening + P3 operability)
 
-> Estado: 2026-07-05 (roadmap P2.5). Refresca el modelo de amenazas del
+> Estado: 2026-07-07 (roadmap post-P3). Refresca el modelo de amenazas del
 > `security_report.md` (congelado en H9 / alcance MVP) al estado real HX: API
-> multi-tenant, frontend BFF, filtro PII, y el batch de endurecimiento pre-piloto
-> (`docs/professionalization_roadmap.md` Fases P1-P2). **No sustituye una auditoría de
-> seguridad profesional**; es evidencia interna del proceso SSDLC (CLAUDE.md §18).
+> multi-tenant, frontend BFF, filtro PII, el batch de endurecimiento pre-piloto
+> (`docs/professionalization_roadmap.md` Fases P1-P2) y la fase de operabilidad P3
+> (observabilidad §6, GDPR DSR, gestión de secretos, red team a las 9 normas).
+> **No sustituye una auditoría de seguridad profesional**; es evidencia interna del
+> proceso SSDLC (CLAUDE.md §18).
 
 ## 1. Activos y fronteras de confianza
 
@@ -25,12 +27,15 @@ egress a LLM (Mistral/Anthropic/…) + LangFuse (opt-in).
 
 ### 2.1 §6 — fabricación de citas (la amenaza central del producto)
 - **Amenaza:** el modelo emite una afirmación con una cita inventada o sin evidencia.
-- **Controles:** validador per-cita 3-checks (article/apartado/text-match) +
-  strict-tightenings aditivos (whitespace v0.1.32-post, floor de longitud sec6-01/
-  ADR-0043) → `failed_check=4` enruta estricto; Finding-Lenient + Turn-aggregation
-  (auditor.py); prompt-level forbid (Capa d). Fabricación **nunca** es PASS por
-  construcción (CLAUDE.md §6.1). Property/fuzz tests (P1.3) asertan el invariante sobre
-  entradas generadas; los 2 bypasses históricos (substring, whitespace) están cerrados.
+- **Controles:** arquitectura §6 de **cuatro capas** (CLAUDE.md §6.1): (a) validador
+  per-cita 3-checks (article/apartado/text-match) + strict-tightenings aditivos
+  (whitespace v0.1.32-post, floor de longitud `_MIN_CITATION_CHARS=20` sec6-01/ADR-0043,
+  ambos → `failed_check=4` que enruta estricto en `validator.py`); (b) Finding-Lenient +
+  (c) Turn-aggregation (`auditor.py`, v0.1.25/v0.1.29); (d) prompt-level forbid.
+  Fabricación **nunca** es PASS por construcción. Property/fuzz tests (P1.3) asertan el
+  invariante sobre entradas generadas + 4 auditorías de mutación
+  (`scripts/sec6_*_mutation_audit.py` + `scripts/sec18_*_mutation_audit.py`); los 2
+  bypasses históricos (substring trivial, whitespace) están cerrados.
 - **Residual:** el match es substring, no *entailment* semántico — una cita real ≥20
   chars que no *apoye* la afirmación pasa Check 3 (claim-support boundary documentado en
   `model_card.md §8.1`; NLI = HX). Riesgo de precisión, no de fabricación.
@@ -41,8 +46,9 @@ egress a LLM (Mistral/Anthropic/…) + LangFuse (opt-in).
 - **Controles:** sanitizer (`document/sanitizer.py`: texto invisible, metadatos,
   JavaScript embebido → block); injection regex (`security/injection.py`); separación
   system/usuario en prompts; red team smoke gate `block_rate ≥ 0.90` (0.92).
-- **Residual:** red team cubre AI Act + GDPR; NIS2/DORA/RTS/AMLR/MiCA/TFR sin cobertura
-  adversarial (roadmap P3.5). Detección regex, no semántica.
+- **Residual:** red team ampliado a las 9 normas (P3.5 CERRADO — `redteam/attacks.jsonl`
+  59 filas, ataques 051-059 cubren NIS2/DORA/RTS/AMLR/MiCA/TFR + test de rechazo del
+  validador $0). Detección regex, no semántica (queda como residual real).
 
 ### 2.3 API auth + aislamiento multi-tenant
 - **Amenaza:** acceso sin token; un tenant lee/afecta datos de otro; bypass de cuota.
@@ -73,18 +79,22 @@ egress a LLM (Mistral/Anthropic/…) + LangFuse (opt-in).
   con allowlist (sólo `n_errors`/categorías, no texto libre — obs-06); la query cruda
   nunca se persiste (sólo SHA-256).
 - **Residual:** el `/ask` es **advisory** — la PII de la consulta sí llega al LLM (un
-  modo hard-block/redact es opción documentada); detector regex-MVP, no NER exhaustivo;
-  sin endpoints GDPR DSR (borrado/acceso) sobre la traza (roadmap P3.3).
+  modo hard-block/redact es opción documentada); detector regex-MVP, no NER exhaustivo.
+  GDPR DSR sobre la traza CERRADO (P3.3 — `scripts/dsr.py`: acceso Art. 15 / borrado
+  Art. 17 mediado por operador + purga de retención 365d; `docs/data_retention.md`).
 
 ### 2.6 Secretos + cadena de suministro
 - **Amenaza:** clave filtrada (spend, push al Space público, lectura de trazas); CVE en
   dependencia transitiva.
 - **Controles:** `.env` gitignored (nunca committeado — verificado); gitleaks + bandit +
   pip-audit gateados en CI; CVEs transitivas al día (P1.5: 33 limpiadas; ignores con
-  análisis-de-ruta documentado); `source_url` canónico sin fuga de ruta local (P2.2).
-- **Residual:** **6-8 claves en `.env` en claro sin rotación codificada** (bloqueante
-  operativo señalado — rotar antes del primer tenant; secret-manager + cadencia +
-  Dependabot = roadmap P3.4).
+  análisis-de-ruta documentado); `source_url` canónico sin fuga de ruta local (P2.2);
+  runbook de secretos + Dependabot semanal (P3.4 CERRADO — `docs/secret_management.md` +
+  `.github/dependabot.yml`).
+- **Residual:** **6-8 claves en `.env` en claro pendientes de ROTACIÓN** — la ejecución
+  (rotar antes del primer tenant + adoptar secret-manager) es una acción de operador que
+  el runbook P3.4 documenta pero no puede realizar por sí sola; sigue siendo el
+  bloqueante operativo real.
 
 ### 2.7 Egress a terceros (LLM soberanía + LangFuse)
 - **Amenaza:** datos del usuario a una entidad US (CLOUD Act); trazas con texto sensible.
@@ -103,11 +113,23 @@ egress a LLM (Mistral/Anthropic/…) + LangFuse (opt-in).
   HA/réplicas (deliberado pre-piloto).
 
 ## 3. Riesgos residuales priorizados (→ roadmap)
-1. **Rotación de secretos** (P3.4) — el único bloqueante operativo real.
-2. **Observabilidad del block-rate §6 en prod** (P3.1) — hoy sólo señal pre-merge.
-3. **Red team a las 9 normas** (P3.5) — 7 normas sin cobertura adversarial.
-4. **Inferencia self-hosted + deploy soberano** (P4) — la tesis C1/C3, aún seams.
-5. **GDPR DSR + retención sobre la traza** (P3.3).
+
+Residuales abiertos (los que quedan):
+1. **Rotación de secretos** — el único bloqueante operativo real. El tooling P3.4
+   (runbook + Dependabot) está CERRADO; la *ejecución* de la rotación es acción de
+   operador aún pendiente.
+2. **Inferencia self-hosted + deploy soberano** (P4) — la tesis C1/C3, aún seams
+   (infra: vLLM/GPU EU no desplegado; Mistral-API satisface soberanía, no el literal).
+
+Cerrados por la fase P3 (antes en esta lista):
+- ~~Observabilidad del block-rate §6 en prod~~ — CERRADO (P3.1: `observability/metrics.py`
+  + `GET /metrics`, block-rate §6 en vivo).
+- ~~Red team a las 9 normas~~ — CERRADO (P3.5: `redteam/attacks.jsonl` 59 filas,
+  ataques 051-059 cubren las 7 normas restantes).
+- ~~GDPR DSR + retención sobre la traza~~ — CERRADO (P3.3: `scripts/dsr.py` acceso/borrado
+  + purga 365d; `docs/data_retention.md`).
+- ~~Gestión de secretos (tooling)~~ — CERRADO (P3.4: `docs/secret_management.md` +
+  `.github/dependabot.yml`); sólo queda la *rotación* como acción de operador (residual 1).
 
 ## 4. Referencias
 - `docs/security_report.md` (H9, alcance MVP — este doc lo refresca a HX).

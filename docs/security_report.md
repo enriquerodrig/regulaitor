@@ -46,7 +46,8 @@ Las cuatro capas de defensa operativas en el sistema MVP (post-H9):
 2. **Injection regex** (`src/regulaitor/security/injection.py`): 23+ patrones sobre texto
    de chat y segmentos documentales (10 chat + 13+ document).
 3. **Citation validator** (`src/regulaitor/citation/validator.py`): 3 checks por cita
-   (article_exists, apartado_exists, text_normalized_match).
+   (article_exists, apartado_exists, text_normalized_match) + floor de longitud mínima
+   `_MIN_CITATION_CHARS=20` (sec6-01/ADR-0043; emite `failed_check=4`).
 4. **Auditor** (`src/regulaitor/agents/auditor.py`): agregación lenient-strict sobre
    resultados del validator; emite PASS / BLOCK / REQUIRES_HUMAN_REVIEW.
 
@@ -132,6 +133,17 @@ Tres checks deterministas por cita antes de que llegue al Auditor:
 
 Los tres checks se ejecutan secuencialmente; el primero en fallar produce `AuditResult(validated=False, reason=...)`.
 
+**Endurecimiento sec6-01/sec6-01b (ADR-0043):** el check 3 aplica además un **floor de
+longitud mínima** `_MIN_CITATION_CHARS=20` sobre el texto normalizado. Una cita de token
+trivial (p.ej. `"el"`), que antes pasaba como substring válido del corpus, ahora se rechaza
+con `failed_check=4` (calibrado a $0 sobre las citas reales validadas; la mínima observada
+tiene 53 chars). El guard de texto vacío también emite `failed_check=4`. Es un
+strict-tightening **aditivo** (cierra el gap del substring trivial; nunca afloja). El
+`failed_check=4` se distingue del `failed_check=3` (paraphrase mismatch) precisamente para
+que el Auditor lo enrute estricto (BLOCK/RHR) en vez de suavizarlo a PASS. La cobertura de
+las capas §6 está mutation-tested por 4 auditorías (`scripts/sec6_*_mutation_audit.py` +
+`scripts/sec18_*_mutation_audit.py`).
+
 ### Capa 4 — Auditor (`src/regulaitor/agents/auditor.py`)
 
 Agregación lenient-strict sobre los resultados del citation validator:
@@ -144,6 +156,12 @@ Agregación lenient-strict sobre los resultados del citation validator:
 
 `BLOCK` impide que la respuesta llegue al usuario. `REQUIRES_HUMAN_REVIEW` la marca
 visiblemente en la UI. Solo `PASS` produce output limpio.
+
+**Arquitectura §6 multi-capa (post-MVP, ver CLAUDE.md §6.1):** la garantía "no citation, no
+answer" se materializa hoy en **cuatro capas**: (a) validator per-cita (Capa 3, con los
+strict-tightenings sec6-01/sec6-01b), (b) agregación Finding-Lenient (esta sección), (c)
+política de agregación turn-level con las refinaciones de routing v0.1.25/v0.1.29, y (d) el
+forbid explícito a nivel de prompt. El boundary de enforcement se preserva en todas las capas.
 
 ---
 
@@ -272,8 +290,11 @@ corrupción del PDF en algunos viewers. No es un fix de defensa sino de fixture.
 - **Cobertura de ataques doc-mode E2E completa:** solo ~15/28 ataques doc corren el pipeline
   H5 completo. Los 13 restantes se verifican solo en capas 1-2 (sanitizer + injection).
   Coste completo ~$5.40; deferred a HX.
-- **PII detection en ataques:** la detección PII (`security/pii.py`) no tiene casos en la
-  suite H9 (el foco fue injection + citation). Deferred a H14.
+- **PII detection en ataques (cerrado en HX/P3.5):** la suite H9 no cubría PII. La detección
+  PII (`security/pii.py`) ya se integró en la superficie HX: `POST /ask` escanea la query y
+  adjunta un `pii_summary` **advisory** (counts-only, §18.8; `api/routes_ask.py`). El regex
+  MVP **no** es NER exhaustivo y el aviso **no** hace hard-block — ambos son el residual
+  genuino diferido a HX (ver `docs/threat_model.md` §18.5/§18.8).
 
 ### Diferidos a hitos futuros
 
@@ -281,11 +302,23 @@ corrupción del PDF en algunos viewers. No es un fix de defensa sino de fixture.
   jueces independientes. Aumentará la tasa de bloqueo en escenarios 5 y 6.
 - **H15 calibración Auditor:** ajuste de thresholds del Auditor y ampliación de los checks
   del citation validator (fuzzy matching, apartado tolerance). Reducirá falsos negativos.
-- **H16 despliegue público:** superficie de ataque HTTP expuesta. Requiere:
-  - Rate limiting per-IP (más allá del per-token actual).
-  - WAF básico.
-  - Revisión de headers HTTP (CORS, CSP, X-Frame-Options).
-  - Re-run red team con ataques de red (SSRF, path traversal, auth bypass).
+- **H16 despliegue público (cerrado):** el despliegue en HF Spaces (v0.1.32) expuso la
+  superficie HTTP. Endurecimientos posteriores en HX cerraron varios de estos ítems: `/health`
+  se **dividió** en `GET /health` público (solo `status`, sin fugar detalle de subsistemas)
+  y `GET /health/detailed` autenticado (deep-review I3, cerrado); frontend BFF con nonce-CSP +
+  CSRF same-origin (ADR-0040); observabilidad `src/regulaitor/observability/metrics.py` +
+  `GET /metrics` con block-rate §6 en vivo (P3.1). Rate limiting per-IP y WAF siguen como
+  residual operator/infra.
+- **Rotación de secretos (operator, bloqueante pre-piloto):** la gestión y política de
+  secretos está documentada (`docs/secret_management.md` + `.github/dependabot.yml`, P3.4),
+  pero la **rotación efectiva** de las claves API es una acción del operador que queda
+  pendiente antes de captación.
+- **GDPR DSR (cerrado en P3.3):** `scripts/dsr.py` implementa access/erasure + retención 365d
+  (`docs/data_retention.md`).
+- **Red team ampliado a los 9 corpora (P3.5):** la suite pasó de 50 a **59 ataques**
+  (`redteam/attacks.jsonl`, ataques 051-059) cubriendo los 9 corpora (ai_act, gdpr, nis2,
+  dora, dora_rts_incident, dora_rts_class, amlr, mica, tfr; 2167 chunks), más un test $0 de
+  rechazo del validator.
 - **HX fuzzing:** generación automática de ataques con `hypothesis` (property-based).
 - **HX1 LoRA classifier adversarial:** ataques específicos al clasificador de severidad
   fine-tuned si se implementa.
@@ -316,14 +349,17 @@ Controles relevantes implementados:
 
 - **Art. 32 (Security of processing):** defensa en profundidad 4 capas + sanitizer + PII
   detection básica. Logs sin datos sensibles (content_hash en lugar de payload completo).
-- **Art. 25 (Data protection by design):** la clave API no toca el DOM ni los logs; PII
-  detectada activa alerta antes de procesamiento.
+- **Art. 25 (Data protection by design):** la clave API no toca el DOM ni los logs; la PII
+  detectada en la query se resume como aviso (`pii_summary`, counts-only §18.8, advisory —
+  no hard-block; `api/routes_ask.py`, P2.3).
+- **Art. 15/17 (Access/Erasure) + retención:** `scripts/dsr.py` implementa access/erasure
+  DSR + retención 365d (`docs/data_retention.md`, P3.3).
 
 ---
 
 ## Referencias
 
-- `redteam/attacks.jsonl` — 50 ataques (fuente de verdad).
+- `redteam/attacks.jsonl` — 59 ataques (fuente de verdad; 50 MVP + 051-059 ampliación HX/P3.5).
 - `redteam/reports/latest.md` — informe de resultados del runner.
 - `redteam/runner.py` — runner standalone Python.
 - ADR 0011 — `docs/adr/0011-redteam-runner.md`.

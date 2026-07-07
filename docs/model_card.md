@@ -1,8 +1,8 @@
 # Model Card — RegulAItor
 
-**Versión del sistema:** v0.1.32 (H16 desplegado, 2026-05-28)
-**Fecha del documento:** 2026-05-29
-**Tag de referencia:** `v0.1.32-h16-deploy`
+**Versión del sistema:** v0.1.32 desplegado (H16) + hardening pre-piloto HX/P1-P3 (incl. §6 floor sec6-01/ADR-0043)
+**Fecha del documento:** 2026-07-05
+**Tag de referencia:** `v0.1.32-h16-deploy` (+ commits pre-piloto post-tag)
 **Demo público:** https://huggingface.co/spaces/enriro00/regulaitor
 **Convenciones:** Mitchell et al. 2019 (*Model Cards for Model Reporting*) + Google Model Card Toolkit.
 
@@ -202,13 +202,13 @@ Invariante de routing (CLAUDE.md §22.13): ningún agente llama a un modelo dire
 
 ### 8.1 Sobre la afirmación "no citation, no answer" (CLAUDE.md §6)
 Ningún modelo de esta tarjeta tiene autoridad para emitir respuesta sin pasar por:
-- (a) `citation/validator.py` per-citation strict 3-checks (BYTE-EQUIVALENT semantics desde H4, ADR-0031).
+- (a) `citation/validator.py` per-citation strict 3-checks (BYTE-EQUIVALENT semantics desde H4, ADR-0031) con strict-tightenings aditivos posteriores: floor de longitud mínima `_MIN_CITATION_CHARS=20` en check 3 que emite `failed_check=4` para citas triviales/vacías (sec6-01/sec6-01b, ADR-0043 — nunca loosening).
 - (b) Finding-Lenient aggregation (`auditor.py` línea ~61, BYTE-UNCHANGED desde v0.1.21).
 - (c) Turn-level aggregation policy (modificada en ADR-0027, ADR-0032, ADR-0034 — Layer (c) §6.1).
 - (d) Prompt-level explicit forbid (Hard Rule 4 inviolable en `system.v1.5.md` chat + `system.v1.6.md` doc, ADR-0033).
 La fabricación de artículo o apartado **nunca** puede pasar por construcción del helper compartido `_all_blocked_findings_paraphrase_only`.
 
-**Límite del enforcement mecánico (claim-support boundary; auditoría pre-piloto sec6-02).** Las capas (a)-(c) verifican que la *cita exista* en el corpus (el texto citado aparece literal/normalizado en el artículo/apartado declarado, y que artículo + apartado existen). **No** verifican mecánicamente que la cita *apoye* la afirmación del Finding (§6 check 4, "la cita apoya la afirmación"): esa correspondencia afirmación↔cita la cubren el prompt del Analyst (capa (d)), el Council advisory para severidad alta (ADR-0014; binding ON desde v0.1.19 solo en dirección conservadora) y la métrica Ragas *faithfulness* en evals — ninguno es un gate duro de *entailment* semántico. **Implicación para el piloto**: un veredicto `pass` garantiza que toda cita emitida es real y existe en el corpus, **no** que el razonamiento jurídico sea correcto o completo. RegulAItor es una herramienta de primera línea con cita verificable, no un sustituto del criterio de un asesor (CLAUDE.md §3). Un checker de *entailment* semántico (NLI) que convierta el check 4 en gate duro queda como carry-forward HX — desproporcionado pre-piloto sin usuarios. Nota complementaria: el matching de texto de la capa (a) es por substring normalizado, por lo que una cita de un token trivial puede validar aunque aporte poca evidencia (gap de precisión documentado en la auditoría pre-piloto sec6-01 + `tests/unit/citation/test_validator.py::test_known_gap_trivial_substring_citation_validates`); la fabricación sigue bloqueada (checks 1/2).
+**Límite del enforcement mecánico (claim-support boundary; auditoría pre-piloto sec6-02).** Las capas (a)-(c) verifican que la *cita exista* en el corpus (el texto citado aparece literal/normalizado en el artículo/apartado declarado, y que artículo + apartado existen). **No** verifican mecánicamente que la cita *apoye* la afirmación del Finding (§6 check 4, "la cita apoya la afirmación"): esa correspondencia afirmación↔cita la cubren el prompt del Analyst (capa (d)), el Council advisory para severidad alta (ADR-0014; binding ON desde v0.1.19 solo en dirección conservadora) y la métrica Ragas *faithfulness* en evals — ninguno es un gate duro de *entailment* semántico. **Implicación para el piloto**: un veredicto `pass` garantiza que toda cita emitida es real y existe en el corpus, **no** que el razonamiento jurídico sea correcto o completo. RegulAItor es una herramienta de primera línea con cita verificable, no un sustituto del criterio de un asesor (CLAUDE.md §3). Un checker de *entailment* semántico (NLI) que convierta el check 4 en gate duro queda como carry-forward HX — desproporcionado pre-piloto sin usuarios. Nota complementaria: el matching de texto de la capa (a) es por substring normalizado, pero desde la auditoría pre-piloto sec6-01 (ADR-0043) el check 3 aplica un floor de longitud mínima `_MIN_CITATION_CHARS=20` que **bloquea** las citas de un token trivial (p. ej. `"el"`) emitiendo `failed_check=4` — no validan (`tests/unit/citation/test_validator.py::test_trivial_substring_citation_rejected_by_length_floor`; sec6-01b extiende el mismo `failed_check=4` a la guarda de texto vacío). Por tanto la capa (a) bloquea tanto la fabricación de artículo/apartado (checks 1/2) como la cita trivial sin contenido evidencial (floor, check 4); el único residuo mecánico es la ausencia de un gate de *entailment* semántico afirmación↔cita (check 4 semántico / NLI), que queda como carry-forward HX.
 
 ### 8.2 Bias y limitaciones de cobertura
 - **Sub-representación**: el gold set tiene 64 chat + 10 doc cases (CLAUDE.md §27 v0.1.15 + v0.1.27). No es estadísticamente representativo del universo de consultas reales — apto para defensa académica TFM, **no** para garantía de producción a escala.
@@ -235,7 +235,7 @@ Ver `docs/cost_analysis.md` para el modelo analítico list-price y la captura ho
 - ADR-0010 (`docs/adr/0010-evaluation-harness.md`) — judge = Haiku 4.5 + caveat mismo proveedor.
 - ADR-0013 (`docs/adr/0013-router-multi-llm.md`) — router 5 modos + A/B H12 + contaminación honesta.
 - ADR-0014 (`docs/adr/0014-council-of-judges.md`) — Council of Judges + modo `judge` añadido.
-- ADR-0021, ADR-0026, ADR-0027, ADR-0029, ADR-0031, ADR-0032, ADR-0033, ADR-0034, ADR-0035 — evolución interpretativa §6 y prompts.
+- ADR-0021, ADR-0026, ADR-0027, ADR-0029, ADR-0031, ADR-0032, ADR-0033, ADR-0034, ADR-0035, ADR-0043 — evolución interpretativa §6 y prompts (ADR-0043 = floor anti-substring sec6-01).
 - `docs/technical_decisions_log.md` §H8, §H12, §H13, §v0.1.20 … §v0.1.32.
 - `docs/cost_analysis.md` — modelo list-price + captura real router accumulator.
 - `docs/v0120_bar_thresholds.md` — derivación dual-layer §17.

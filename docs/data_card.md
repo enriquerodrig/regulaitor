@@ -1,7 +1,7 @@
 # Data Card — RegulAItor
 
-**Versión:** 1.0.0 (alineada con tag `v0.1.32-h16-deploy`)
-**Fecha:** 2026-05-29
+**Versión:** 1.0.1 (base tag `v0.1.32-h16-deploy` + hardening HX P2–P3)
+**Fecha:** 2026-07-07
 **Estructura:** Pushkarna et al. (2022), *Data Cards: Purposeful and Transparent Dataset Documentation for Responsible AI*.
 **Datasets cubiertos:** 4 — (1) corpus normativo, (2) gold set de evaluación, (3) red team set, (4) eval reports históricos.
 
@@ -54,7 +54,7 @@ Cada chunk almacena (`rag/schemas.py` + manifest):
 - `articulo`, `apartado`.
 - `idioma` (`es` | `en`).
 - `version` (CELEX versionado).
-- `source_url` (file:// para PDF local).
+- `source_url` (URL canónica EUR-Lex por CELEX vía `registry.canonical_source_url`; P2.2 — cero rutas `file:///` locales).
 - `fetched_at` ISO-8601 UTC.
 - `hash` SHA-256 por `(article, language)` — sirve como cache layer 2 idempotente (ADR-0003 §Idempotency).
 - `embedding_model` con identificador de revisión Hugging Face.
@@ -223,7 +223,7 @@ Los reports son immutables post-merge — un report se re-renderiza ($0) si y so
 2. **Base-act vs consolidada.** NIS2 y DORA usan la base act 2022-12-27 (no hay consolidadas con enmiendas a fecha H14); RGPD usa la consolidada 2016-05-04 (corrigenda 2018 incluida). Una nueva corrigenda no detectada automáticamente desactualizará el corpus hasta el siguiente re-fetch manual.
 3. **Gold set N=74 limitado.** Para descender el intervalo de confianza de las métricas hace falta N≥100 chat + ≥30 doc; carry-forward HX. Los 10 doc gold cases son insuficientes para decisiones de retrieval engineering de alta confianza (vindicado en v0.1.30 REVERT).
 4. **Red team `requires_e2e: true` cuesta dinero.** El full run E2E está bloqueado por reliability de API (H11). El gate productivo se ancla en el smoke determinista 0.92.
-5. **PII filtering construido, cobertura parcial.** `src/regulaitor/security/pii.py` **SÍ existe** (HX Fase 2/2.1): detección regex MVP (email, teléfono-ES, DNI/NIF, NIE, IBAN, tarjeta con Luhn) + `count_pii` counts-only (§18.8). Cableado como **gate pre-pipeline en el chat de Streamlit** (aviso + Continuar/Cancelar) y como **recuento in-pipeline en doc-mode** (`PIISummary`). Cobertura pendiente: el path del API `/ask` aún no escanea PII (roadmap P2.3); regex-MVP, no NER exhaustivo.
+5. **PII filtering construido, cobertura parcial.** `src/regulaitor/security/pii.py` **SÍ existe** (HX Fase 2/2.1): detección regex MVP (email, teléfono-ES, DNI/NIF, NIE, IBAN, tarjeta con Luhn) + `count_pii` counts-only (§18.8). Cableado como **gate pre-pipeline en el chat de Streamlit** (aviso + Continuar/Cancelar), como **recuento in-pipeline en doc-mode** (`PIISummary`) y —desde P2.3— como **advisory en el path del API `/ask`** (`api/routes_ask.py` escanea la query y adjunta un `pii_summary` counts-only, en paridad con `/analyze`). Residual: el `pii_summary` de `/ask` es **advisory, no hard-block**; y la detección sigue siendo regex-MVP, no NER exhaustivo.
 6. **§22.22 — algunos campos del manifest están vacíos.** `http_cache.etag` y `http_cache.last_modified` son `null` para los 4 corpora porque el fetch vino vía Playwright (WAF bypass), no vía HTTP condicional. Documentado en ADR-0003 y ADR-0015.
 
 ---
@@ -245,4 +245,5 @@ Los reports son immutables post-merge — un report se re-renderiza ($0) si y so
 
 ## Changelog
 
+- **2026-07-07** — v1.0.1: limitación #5 actualizada — el path del API `/ask` **sí** escanea PII (advisory `pii_summary` counts-only, P2.3 shipped); residual acotado a advisory-not-hard-block + regex-MVP-not-NER.
 - **2026-05-29** — v1.0.0 inicial alineado con `v0.1.32-h16-deploy` (H17 cierre académico).
