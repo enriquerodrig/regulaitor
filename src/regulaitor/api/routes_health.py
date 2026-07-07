@@ -1,20 +1,31 @@
-"""H7 — GET /health: readiness check (LanceDB + env vars + API token state)."""
+"""H7 — GET /health (public liveness) + GET /health/detailed (authed readiness).
+
+Split per deep-review I3 / roadmap Q1.1: the public /health returns only the
+readiness STATUS (200 / 503) so an unauthenticated caller learns ready/not-ready
+but not which subsystem, the corpus size, or which keys are configured. The full
+per-subsystem detail moves behind auth at /health/detailed.
+"""
 
 from __future__ import annotations
 
 import os
+from importlib.metadata import PackageNotFoundError, version
 from typing import Literal
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, PlainTextResponse
 
-from regulaitor.api.schemas import HealthCheck, HealthResponse
+from regulaitor.api.auth import verify_token
+from regulaitor.api.schemas import HealthCheck, HealthResponse, LivenessResponse
 from regulaitor.observability import metrics
 from regulaitor.rag.store import connect
 
 router = APIRouter(tags=["meta"])
 
-_VERSION = "0.0.8"
+try:
+    _VERSION = version("regulaitor")  # single source of truth = pyproject version
+except PackageNotFoundError:  # pragma: no cover — package is always installed in prod
+    _VERSION = "0.0.0"
 
 
 def _check_lancedb() -> HealthCheck:
@@ -61,19 +72,44 @@ def _check_api_token() -> HealthCheck:
     return HealthCheck(name="api_token", status="present", detail=None)
 
 
-@router.get("/health", response_model=HealthResponse)
-async def health() -> HealthResponse | JSONResponse:
-    # Critical checks gate the overall status (→ 503 for orchestrators).
+def _gather_checks() -> tuple[Literal["ok", "degraded"], list[HealthCheck]]:
+    """Run the critical readiness checks + the informational audit sub-check.
+
+    `overall` is gated ONLY by the critical checks (→ 503 for orchestrators). The
+    audit-DB sub-check (obs-08) is reported but never flips `overall` — a broken
+    opt-in audit trail must not 503 the service.
+    """
     critical = [_check_lancedb(), _check_anthropic_key(), _check_api_token()]
     overall: Literal["ok", "degraded"] = (
         "ok" if all(c.status in ("ok", "present") for c in critical) else "degraded"
     )
-    # obs-08: append the audit-DB sub-check as INFORMATIONAL — it is reported but does
-    # not flip `overall` (a broken opt-in audit trail must not 503 the service).
     checks = list(critical)
     audit_check = _check_audit_db()
     if audit_check is not None:
         checks.append(audit_check)
+    return overall, checks
+
+
+@router.get("/health", response_model=LivenessResponse)
+async def health() -> LivenessResponse | JSONResponse:
+    """Public liveness + readiness gate — status only, no config detail (deep-review
+    I3). 200 when ready, 503 otherwise; the orchestrator healthcheck (`curl --fail`)
+    still works, but a reconnaissance caller learns neither which subsystem failed
+    nor the corpus size / configured keys. Full detail: GET /health/detailed."""
+    overall, _checks = _gather_checks()
+    response = LivenessResponse(status=overall, version=_VERSION)
+    if overall != "ok":
+        return JSONResponse(status_code=503, content=response.model_dump())
+    return response
+
+
+@router.get("/health/detailed", response_model=HealthResponse)
+async def health_detailed(_: None = Depends(verify_token)) -> HealthResponse | JSONResponse:
+    """Authenticated readiness detail — the per-subsystem checks (LanceDB row count,
+    key/token presence, audit-DB reachability). Behind verify_token so the config
+    surface is not exposed unauthenticated. Operators use it for the sovereignty
+    proof (anthropic_key: missing under the sovereign profile)."""
+    overall, checks = _gather_checks()
     response = HealthResponse(status=overall, version=_VERSION, checks=checks)
     if overall != "ok":
         return JSONResponse(status_code=503, content=response.model_dump())

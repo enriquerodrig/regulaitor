@@ -1,14 +1,17 @@
 """Test per_citation_audits field propagation (spec D2).
 
-v0.1.21.3: two tests below marked `slow` because they call `compute_chat_metrics`
-which transitively imports ragas / HuggingFace embeddings (network-dependent;
-fails on offline/SSL-degraded environments). The backward_compat test is a pure
-schema unit test and stays as default (no network).
+Q1.7: the two compute_chat_metrics tests below were once `slow` because that path
+transitively loads ragas / HuggingFace embeddings (network — fails offline/SSL-
+degraded CI). They now monkeypatch metrics._ragas_metrics_chat (the only remaining
+network dependency; the judge is already mocked), so they run in CI at $0 with no
+network — recovering the coverage the @slow exclusion cost. The backward_compat
+test is a pure schema unit test (no network).
 """
 
 from unittest.mock import Mock
 
 import pytest
+from evals import metrics
 from evals.metrics import compute_chat_metrics
 from evals.schemas import ChatCaseResult, GoldCaseChat
 
@@ -23,9 +26,19 @@ from regulaitor.citation.schemas import (
 from regulaitor.orchestration.state import ChatState
 
 
-@pytest.mark.slow
-def test_chat_case_result_per_citation_audits_populated():
+def _fake_ragas(**_kwargs: object) -> dict[str, float]:
+    """Stub the Ragas adapter so compute_chat_metrics needs no network/LLM."""
+    return {
+        "faithfulness": 0.9,
+        "answer_relevancy": 0.9,
+        "context_precision": 0.9,
+        "context_recall": 0.9,
+    }
+
+
+def test_chat_case_result_per_citation_audits_populated(monkeypatch: pytest.MonkeyPatch):
     """compute_chat_metrics extracts audit_results and populates per_citation_audits."""
+    monkeypatch.setattr(metrics, "_ragas_metrics_chat", _fake_ragas)
     citation = Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="test text")
     finding = Finding(text="test finding", citations=[citation], severity="info")
     answer = Answer(query="test", language="es", text="test", findings=[finding])
@@ -114,9 +127,9 @@ def test_chat_case_result_per_citation_audits_backward_compat():
     assert result.per_citation_audits is None
 
 
-@pytest.mark.slow
-def test_chat_case_result_per_citation_audits_round_trip():
+def test_chat_case_result_per_citation_audits_round_trip(monkeypatch: pytest.MonkeyPatch):
     """New format with per_citation_audits serializes and deserializes correctly."""
+    monkeypatch.setattr(metrics, "_ragas_metrics_chat", _fake_ragas)
     citation = Citation(norma="ai_act", articulo="6", apartado="1", language="es", text="test text")
     finding = Finding(text="test finding", citations=[citation], severity="info")
     answer = Answer(query="test", language="es", text="test", findings=[finding])

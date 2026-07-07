@@ -37,22 +37,39 @@ def test_lifespan_calls_corpus_warmup_at_startup(
     )
 
 
-def test_health_returns_200_when_all_healthy(client, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
-    # Stub LanceDB count_rows to return >0
+class _FakeTable:
+    def count_rows(self) -> int:
+        return 1011
+
+
+def _stub_lancedb_ok(monkeypatch: pytest.MonkeyPatch) -> None:
     from regulaitor.api import routes_health
 
-    class _FakeTable:
-        def count_rows(self) -> int:
-            return 1011
-
     monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
+
+
+# --- public /health: readiness STATUS only, no config detail (deep-review I3) ---
+
+
+def test_health_returns_200_when_all_healthy(client, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
+    _stub_lancedb_ok(monkeypatch)
     response = client.get("/health")
     assert response.status_code == 200
     body = response.json()
     assert body["status"] == "ok"
-    assert any(c["name"] == "lancedb" and c["status"] == "ok" for c in body["checks"])
-    assert any(c["name"] == "anthropic_key" and c["status"] == "present" for c in body["checks"])
+    assert body["version"]  # non-empty; sourced from pyproject
+
+
+def test_health_public_hides_config_detail(client, monkeypatch: pytest.MonkeyPatch) -> None:
+    """The public /health must NOT leak the per-subsystem checks (corpus size, which
+    keys are configured) to an unauthenticated caller — that is reconnaissance."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
+    _stub_lancedb_ok(monkeypatch)
+    body = client.get("/health").json()
+    assert set(body.keys()) == {"status", "version"}  # NO "checks"
+    assert "anthropic_key" not in client.get("/health").text
+    assert "chunks" not in client.get("/health").text
 
 
 def test_health_returns_503_when_lancedb_unreachable(
@@ -66,67 +83,68 @@ def test_health_returns_503_when_lancedb_unreachable(
 
     monkeypatch.setattr(routes_health, "connect", _raise)
     response = client.get("/health")
-    assert response.status_code == 503
-    body = response.json()
-    assert body["status"] == "degraded"
-    assert any(c["name"] == "lancedb" and c["status"] == "unreachable" for c in body["checks"])
+    assert response.status_code == 503  # orchestrator healthcheck still catches it
+    assert response.json()["status"] == "degraded"
 
 
 def test_health_returns_503_when_anthropic_key_missing(
     client, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    from regulaitor.api import routes_health
-
-    class _FakeTable:
-        def count_rows(self) -> int:
-            return 1011
-
-    monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
+    _stub_lancedb_ok(monkeypatch)
     response = client.get("/health")
     assert response.status_code == 503
-    body = response.json()
-    assert body["status"] == "degraded"
+    assert response.json()["status"] == "degraded"
 
 
 def test_health_no_auth_required(client) -> None:
-    """Health must respond without Authorization header (used by external pollers)."""
-    # No headers passed; should still respond (with 200 or 503, not 401)
+    """Public health must respond without Authorization header (external pollers)."""
     response = client.get("/health")
-    assert response.status_code in (200, 503)
+    assert response.status_code in (200, 503)  # not 401
 
 
-def test_health_audit_db_subcheck_is_nonfatal(client, monkeypatch: pytest.MonkeyPatch, tmp_path):
+# --- authed /health/detailed: full per-subsystem checks behind verify_token ---
+
+
+def test_health_detailed_requires_auth(client) -> None:
+    """The detailed checks (config surface) must NOT be reachable unauthenticated."""
+    assert client.get("/health/detailed").status_code == 401
+
+
+def test_health_detailed_returns_checks_when_authed(
+    client, auth_headers, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
+    _stub_lancedb_ok(monkeypatch)
+    body = client.get("/health/detailed", headers=auth_headers).json()
+    assert body["status"] == "ok"
+    assert any(c["name"] == "lancedb" and c["status"] == "ok" for c in body["checks"])
+    assert any(c["name"] == "anthropic_key" and c["status"] == "present" for c in body["checks"])
+
+
+def test_health_detailed_audit_db_subcheck_is_nonfatal(
+    client, auth_headers, monkeypatch: pytest.MonkeyPatch, tmp_path
+) -> None:
     """obs-08: a broken opt-in audit DB is REPORTED but does NOT 503 the service."""
     monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
-    from regulaitor.api import routes_health
-
-    class _FakeTable:
-        def count_rows(self) -> int:
-            return 1011
-
-    monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
+    _stub_lancedb_ok(monkeypatch)
     blocker = tmp_path / "f"  # parent-is-a-file → audit DB cannot open
     blocker.write_text("x")
     monkeypatch.setenv("REGULAITOR_AUDIT_DB", str(blocker / "sub" / "a.db"))
 
-    response = client.get("/health")
+    response = client.get("/health/detailed", headers=auth_headers)
     assert response.status_code == 200  # criticals ok → up despite the broken audit DB
     checks = response.json()["checks"]
     assert any(c["name"] == "audit_db" and c["status"] == "degraded" for c in checks)
 
 
-def test_health_audit_db_subcheck_absent_when_unconfigured(client, monkeypatch: pytest.MonkeyPatch):
+def test_health_detailed_audit_db_absent_when_unconfigured(
+    client, auth_headers, monkeypatch: pytest.MonkeyPatch
+) -> None:
     monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-fake-key")
     monkeypatch.delenv("REGULAITOR_AUDIT_DB", raising=False)
-    from regulaitor.api import routes_health
-
-    class _FakeTable:
-        def count_rows(self) -> int:
-            return 1011
-
-    monkeypatch.setattr(routes_health, "connect", lambda **_: _FakeTable())
-    checks = client.get("/health").json()["checks"]
+    _stub_lancedb_ok(monkeypatch)
+    checks = client.get("/health/detailed", headers=auth_headers).json()["checks"]
     assert not any(c["name"] == "audit_db" for c in checks)
 
 

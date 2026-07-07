@@ -318,8 +318,10 @@ REGULAITOR_AUDIT_DB=/data/audit.db                       # traceability = the co
 Guarantees (CI-enforced): the `self_hosted` mode **never falls back to a US
 model** (`test_self_hosted_does_not_fall_back_to_us_model`); §6 `citation/validator.py`
 is byte-unchanged under any Analyst model (citation validation is deterministic).
-Sovereignty proof for a partner: `/health` shows lancedb ok **without**
-`anthropic_key`; the audit trail stores hashes not text (§18.8).
+Sovereignty proof for a partner: `GET /health/detailed` (authenticated) shows
+lancedb ok **without** `anthropic_key`; the audit trail stores hashes not text
+(§18.8). (Public `GET /health` returns only the readiness status — no key/config
+detail — per the deep-review I3 split; the detail is behind the Bearer token.)
 
 Council under the sovereign profile (P4.1): with a judge's provider key absent the
 Council **skips** that judge (zero doomed calls, DEBUG log) instead of attempting +

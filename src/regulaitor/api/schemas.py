@@ -202,6 +202,20 @@ class HealthResponse(BaseModel):
     checks: list[HealthCheck]
 
 
+class LivenessResponse(BaseModel):
+    """Public GET /health — readiness status only, NO per-subsystem detail.
+
+    An unauthenticated caller (an orchestrator healthcheck) learns ready/not-ready
+    but not which subsystem failed, the corpus size, or which keys are configured
+    (reconnaissance info-leak, deep-review I3). Full detail is at /health/detailed
+    behind auth.
+    """
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+    status: Literal["ok", "degraded"]
+    version: str
+
+
 class ErrorResponse(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
     error_code: str
