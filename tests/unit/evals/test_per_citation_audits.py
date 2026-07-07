@@ -98,6 +98,21 @@ def test_chat_case_result_per_citation_audits_populated(monkeypatch: pytest.Monk
     assert result.per_citation_audits[0]["validated"] is True
     assert result.per_citation_audits[0]["citation"]["articulo"] == "6"
 
+    # Q1.4 full-field schema guard: pin the persisted entry shape so a future
+    # AuditResult schema change is caught (the trail is mined by $0 diagnostics —
+    # e.g. scripts/v0122_1_verdict_diagnostic.py reads per_citation_audits).
+    entry = result.per_citation_audits[0]
+    assert set(entry.keys()) == {
+        "citation",
+        "validated",
+        "article_exists",
+        "apartado_exists",
+        "text_normalized_match",
+        "reason",
+        "failed_check",
+    }
+    assert set(entry["citation"].keys()) == {"norma", "articulo", "apartado", "language", "text"}
+
 
 def test_chat_case_result_per_citation_audits_backward_compat():
     """Existing checkpoint entries (old format) load with per_citation_audits=None."""

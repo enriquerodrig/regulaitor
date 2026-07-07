@@ -5371,3 +5371,24 @@ Cuarto audit (`scripts/sec18_sanitizer_mutation_audit.py` + CI-guard): exec-once
 `uv run pytest -m "not slow"` verde + mypy 117 files + ruff/black + redteam-smoke 0.92 carry. **CUATRO mutation audits §6/§18 CI-guarded**: `docs/sec6_mutation_audit.md` = 11 killed / 1 equivalent · `docs/sec6_auditor_mutation_audit.md` = 8 killed · `docs/sec18_injection_mutation_audit.md` = 25/25 patrones + 9 killed · `docs/sec18_sanitizer_mutation_audit.md` = 6/6 tricks + 11 killed. **El review adversarial encontró un gap real en LOS CUATRO** (§6a 3 clases + combining-mark; §6b/c FAB2 blocked-path; §18-inj 18/25 patrones sin payload; §18.8 RLO Trojan-Source + audit-log) — patrón vindicado: el audit inicial da falsa confianza, el review lo corrige.
 
 Sin skills nuevas (`citation-validator` activa desde H4; `redteam-runner` desde H9). Ver los 4 scripts `scripts/sec6_*` + `scripts/sec18_*` + los 4 CI-guards + `test_validator.py` (empty-guard ==4 + combining-mark) + CLAUDE.md §6.1 (sec6-01b + audits §6).
+
+## §P1.3c — Barrido de cierre de items $0 (profesionalización)
+
+$0 milestone que remata todos los items $0 pendientes tras los 4 mutation audits. Enumeración comprehensiva vía workflow multi-agente (5 fuentes: roadmap, deep-review pre-H16, threat_model, código/CI, follow-ups de docs; workflow `wf_7004d988-1d5`) → **20 items $0 verificados en disco** (+ excluidos correctamente los paid/infra/operator/hx). Ejecución en 3 rondas + cierre honesto de los marginales.
+
+### Hechos (16/20)
+
+- **Round 1 (código, commit `395f520`)**: (a) **`/health` split** (deep-review I3): `GET /health` público devuelve sólo `{status, version}` 200/503 — sin fugar qué subsistema, tamaño de corpus ni qué claves están configuradas (reconnaissance); el detalle per-subsistema va a `GET /health/detailed` autenticado (`Depends(verify_token)`). El healthcheck Docker `curl --fail /health` sigue funcionando; la prueba de soberanía usa `/health/detailed`. (b) **version fix**: `_VERSION` era `"0.0.8"` hardcodeado → `importlib.metadata.version("regulaitor")` (= 1.0.0 de pyproject). (c) **de-slow** (Q1.7): los 2 tests `per_citation_audits` eran `@slow` sólo por la carga de ragas/HF de `compute_chat_metrics` → monkeypatch de `_ragas_metrics_chat` → corren en CI a $0 sin red. Cobertura medida **89.87% (< 90%)** → gate se queda en 85% (no se sube a ciegas).
+- **Round 2 (docs §22.22, commit `a8f8d07`)**: reconciliados 8 governance docs que contradecían el código shipeado (workflow 8-agentes 1-por-fichero, cada diff revisado): model_card §8.1 (trivial-token gap CERRADO por floor ADR-0043), data_card + ai_act_assessment (P2.3 /ask PII advisory; 50→59 ataques; 35→43 ADRs; source_url canónico P2.2), threat_model + security_report (§6 4-capas + floor + 4 audits; P3.1/3.3/3.4/3.5 CERRADOS con refs), roadmap ("propuesta"→"en ejecución" con estado por fase), evidence_matrix (source_url + HF deploy done), rag-ingest SKILL (Formex→PDF/Playwright reality).
+- **Round 3 (polish)**: Q1.4 **schema-guard test** de `per_citation_audits` (pin del shape del trail que minan los diagnósticos $0) + notas operativas runbook §11 (pip-audit Windows = CI Linux autoritativo; paridad chips corpus doc-mode = known-limitation I8).
+
+### Diferidos con razón (4/20 — §20 anti-over-engineering, decisión explícita = cierre)
+
+- **OpenAPI error-shapes `responses=`** (item 15): cosmético; `/docs` está deshabilitado en prod (`REGULAITOR_ENABLE_DOCS=0`); churn per-ruta > valor. HX si un comprador revisa el OpenAPI.
+- **CELEX last-checked en registry** (item 17): duplicativo — la currency ya vive en `fetched_at` por manifest + `celex`/`version` ya están en `CORPUS_REGISTRY`. Sin consumidor.
+- **Audit hash-chain tamper-evidence** (item 18): FEATURE (no polish) sobre un subsistema opt-in sin consumidor actual; valor real de compliance pero prematuro pre-piloto. Recomendado HX cuando un piloto/auditor lo exija.
+- **Audit pagination + tenant export** (item 20): marginal — `recent(limit=50)` basta pre-usuarios. HX.
+
+### Gate
+
+`uv run pytest -m "not slow"` verde + mypy 117 + ruff/black + redteam-smoke 0.92 carry + cov 89.87% ≥ 85%. §6 `validator.py`/`auditor.py` + §18 `sanitizer.py`/`injection.py` BYTE-UNCHANGED (los items $0 no tocaron el enforcement). **Todos los $0 de alto valor cerrados; los de inversión (G1 A/B Mistral pago, G3 infra Régimen A, rotación de claves = operador) quedan para la siguiente fase.**

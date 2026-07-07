@@ -357,4 +357,19 @@ consulta, garantías de seguridad): `docs/data_retention.md`.
 
 ---
 
+## 11. Notas operativas + limitaciones conocidas ($0)
+
+- **`pip-audit` en Windows (dev):** la fuente de verdad es el job **Security** de CI
+  (Linux). En local Windows, esta máquina intercepta TLS, así que `pip-audit` necesita
+  `UV_NATIVE_TLS=1` / `--native-tls` para resolver el índice (mismo patrón que `uv lock
+  --native-tls`); si aun así falla la revocación CRL, no bloquea — CI Linux es
+  autoritativo. No gatees sobre el resultado local de `pip-audit` en Windows.
+- **Paridad de chips de corpus doc-mode (deep-review I8, known-limitation):** el modo
+  chat renderiza chips por norma (`ui_streamlit/_render.py`, R13) indicando qué corpus
+  se consultaron; el modo documento aún **no** muestra ese resumen de corpus por
+  segmento. No afecta al §6 (la validación de citas es idéntica), sólo a la UX de
+  trazabilidad visible. Cierre = paridad UI, diferido a HX (frontend Next.js).
+
+---
+
 **Fin del runbook RegulAItor (post-v0.1.32 H16 deploy).**
