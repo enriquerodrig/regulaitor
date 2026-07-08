@@ -114,7 +114,7 @@ jobs:
     # ANTHROPIC_API_KEY (sanitizer short-circuits); clean PASS path skips
     # cleanly when the secret is absent.
     runs-on: ubuntu-latest
-    # dorny/paths-filter@v3 needs pull-requests:read to list changed files on PRs.
+    # dorny/paths-filter@v4 needs pull-requests:read to list changed files on PRs.
     # contents:read is the default-restricted minimum for checkout.
     permissions:
       contents: read
@@ -125,7 +125,7 @@ jobs:
           lfs: true
       - name: Detect document pipeline changes
         id: changes
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         with:
           filters: |
             document:
