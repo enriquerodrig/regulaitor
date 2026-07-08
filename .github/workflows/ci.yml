@@ -19,7 +19,7 @@ jobs:
         with:
           lfs: true
       - name: Cache HuggingFace models
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/huggingface
           key: ${{ runner.os }}-hf-bgem3-${{ hashFiles('uv.lock') }}
@@ -48,7 +48,7 @@ jobs:
         with:
           lfs: true
       - name: Cache HuggingFace models
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/huggingface
           key: ${{ runner.os }}-hf-bgem3-${{ hashFiles('uv.lock') }}
@@ -148,7 +148,7 @@ jobs:
           fi
       - name: Cache HuggingFace models
         if: steps.should-run.outputs.run == 'true'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/huggingface
           key: ${{ runner.os }}-hf-bgem3-${{ hashFiles('uv.lock') }}
@@ -202,7 +202,7 @@ jobs:
           tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
           /tmp/gitleaks detect --no-git --source . --redact --verbose
       - name: Cache HuggingFace models
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/huggingface
           key: ${{ runner.os }}-hf-bgem3-${{ hashFiles('uv.lock') }}
