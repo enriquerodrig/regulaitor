@@ -15,7 +15,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           lfs: true
       - name: Cache HuggingFace models
@@ -44,7 +44,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           lfs: true
       - name: Cache HuggingFace models
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v3
         with:
           enable-cache: true
@@ -120,7 +120,7 @@ jobs:
       contents: read
       pull-requests: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           lfs: true
       - name: Detect document pipeline changes
@@ -184,7 +184,7 @@ jobs:
     name: Security
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           lfs: true
       - name: Gitleaks (secret scan)
@@ -269,7 +269,7 @@ jobs:
       run:
         working-directory: frontend_next
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up Node 22
         uses: actions/setup-node@v4
         with:
