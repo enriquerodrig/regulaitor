@@ -85,6 +85,12 @@ evals/reports/*
 # 2026-05-23-v0.1.20-paid-validation-design.md.
 !evals/reports/v0.1.20/
 !evals/reports/v0.1.20/*
+# G1 sovereign quality A/B — tracked as HX evidence (sovereign go/no-go):
+# probe + main arm A (Sonnet) + arm B (Mistral, $0 graph-only recovery under
+# Anthropic-down) + closure. See spec docs/superpowers/specs/
+# 2026-07-14-g1-sovereign-quality-ab-design.md.
+!evals/reports/g1/
+!evals/reports/g1/*
 # v0.1.21 quorum diagnostic + closure reports — tracked as TFM evidence
 !evals/reports/v0.1.21/
 !evals/reports/v0.1.21/*

@@ -842,3 +842,122 @@ def test_compute_chat_metrics_acceptable_verdicts_provides_multi_value_flexibili
     assert case.acceptable_verdicts == ["block", "pass", "requires_human_review"]
     assert "pass" in case.acceptable_verdicts  # pass is now acceptable
     assert "requires_human_review" in case.acceptable_verdicts  # RHR is now acceptable
+
+
+# ---------------------------------------------------------------------------
+# _ragas_metrics_chat degrade-to-zeros guard (broken/incompatible Ragas install)
+# ---------------------------------------------------------------------------
+
+
+def test_ragas_metrics_chat_degrades_to_zeros_on_import_error(monkeypatch):
+    """A broken Ragas install (e.g. langchain-community 0.4 removed
+    chat_models.vertexai that ragas 0.4.3 imports) must NOT raise — the four
+    RAG-quality sub-metrics degrade to 0.0 so compute_chat_metrics can still
+    report the safety-critical verdict/citation/severity metrics."""
+    from evals import metrics
+
+    def _boom(**_kwargs):
+        raise ModuleNotFoundError("No module named 'langchain_community.chat_models.vertexai'")
+
+    monkeypatch.setattr(metrics, "_ragas_evaluate_chat", _boom)
+
+    out = metrics._ragas_metrics_chat(
+        query="q",
+        answer="a",
+        contexts=["c"],
+        ground_truth=None,
+        judge_call=lambda *a, **k: ("", 0.0),
+    )
+    assert out == {
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+    }
+
+
+def test_ragas_metrics_chat_degrades_to_zeros_on_any_exception(monkeypatch):
+    """The guard is broad: any Ragas-side failure (not just ImportError) must
+    degrade rather than kill the case (mirrors the H15.2 checkpoint philosophy)."""
+    from evals import metrics
+
+    def _boom(**_kwargs):
+        raise RuntimeError("ragas evaluate() blew up mid-run")
+
+    monkeypatch.setattr(metrics, "_ragas_evaluate_chat", _boom)
+
+    out = metrics._ragas_metrics_chat(
+        query="q",
+        answer="a",
+        contexts=["c"],
+        ground_truth="gt",
+        judge_call=lambda *a, **k: ("", 0.0),
+    )
+    assert out == metrics._RAGAS_ZERO_SCORES
+    # Returns a copy, not the shared constant (defensive against caller mutation).
+    assert out is not metrics._RAGAS_ZERO_SCORES
+
+
+def test_ragas_metrics_chat_passthrough_on_success(monkeypatch):
+    """When Ragas works, the guard returns its scores verbatim (no interference)."""
+    from evals import metrics
+
+    scores = {
+        "faithfulness": 0.8,
+        "answer_relevancy": 0.7,
+        "context_precision": 0.6,
+        "context_recall": 0.5,
+    }
+    monkeypatch.setattr(metrics, "_ragas_evaluate_chat", lambda **_kwargs: dict(scores))
+
+    out = metrics._ragas_metrics_chat(
+        query="q",
+        answer="a",
+        contexts=["c"],
+        ground_truth=None,
+        judge_call=lambda *a, **k: ("", 0.0),
+    )
+    assert out == scores
+
+
+@pytest.mark.parametrize("flag", ["1", "true", "TRUE", "yes", "on"])
+def test_ragas_metrics_chat_skip_seam_returns_zeros_without_evaluating(monkeypatch, flag):
+    """REGULAITOR_EVAL_SKIP_RAGAS short-circuits to zeros WITHOUT invoking the
+    (slow) Ragas body — the fast-path for large-N runs after probe validation."""
+    from evals import metrics
+
+    def _must_not_run(**_kwargs):
+        raise AssertionError("_ragas_evaluate_chat must not be called when skip seam is on")
+
+    monkeypatch.setattr(metrics, "_ragas_evaluate_chat", _must_not_run)
+    monkeypatch.setenv("REGULAITOR_EVAL_SKIP_RAGAS", flag)
+
+    out = metrics._ragas_metrics_chat(
+        query="q",
+        answer="a",
+        contexts=["c"],
+        ground_truth=None,
+        judge_call=lambda *a, **k: ("", 0.0),
+    )
+    assert out == metrics._RAGAS_ZERO_SCORES
+
+
+@pytest.mark.parametrize("flag", ["", "0", "off", "false", "no"])
+def test_ragas_metrics_chat_skip_seam_off_still_evaluates(monkeypatch, flag):
+    """Falsey / unset values do NOT trigger the skip (no '0'-is-truthy footgun)."""
+    from evals import metrics
+
+    monkeypatch.setattr(metrics, "_ragas_evaluate_chat", lambda **_kwargs: {"faithfulness": 0.9})
+    if flag:
+        monkeypatch.setenv("REGULAITOR_EVAL_SKIP_RAGAS", flag)
+    else:
+        monkeypatch.delenv("REGULAITOR_EVAL_SKIP_RAGAS", raising=False)
+
+    out = metrics._ragas_metrics_chat(
+        query="q",
+        answer="a",
+        contexts=["c"],
+        ground_truth=None,
+        judge_call=lambda *a, **k: ("", 0.0),
+    )
+    assert out == {"faithfulness": 0.9}

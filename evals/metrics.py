@@ -8,7 +8,9 @@ LLM (Haiku 4.5).
 
 from __future__ import annotations
 
+import logging
 import math
+import os
 import statistics
 from collections.abc import Callable
 
@@ -27,6 +29,8 @@ from regulaitor.citation.schemas import (
     DocumentReport,
 )
 from regulaitor.orchestration.state import ChatState
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Custom — citation / verdict / severity
@@ -152,6 +156,14 @@ def _extract_severity_chat(audited: AuditedAnswer | None) -> str | None:
 # ---------------------------------------------------------------------------
 
 
+_RAGAS_ZERO_SCORES: dict[str, float] = {
+    "faithfulness": 0.0,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.0,
+    "context_recall": 0.0,
+}
+
+
 def _ragas_metrics_chat(
     *,
     query: str,
@@ -168,7 +180,67 @@ def _ragas_metrics_chat(
     ``judge_call`` is the cache-aware LLM call (Haiku 4.5 + temperature=0).
     It is kept on the signature for future flexibility even though Ragas
     builds its own LangChain LLM internally. This is intentional.
+
+    Robustness: if the Ragas install is broken or incompatible — e.g.
+    langchain-community 0.4 removed ``chat_models.vertexai`` which ragas 0.4.3
+    imports at load — the four RAG-quality sub-metrics degrade to 0.0 with a
+    WARNING instead of raising. A down optional sub-instrument must never zero
+    out the safety-critical verdict / citation / severity metrics that
+    compute_chat_metrics derives from the graph output (mirrors the H15.2
+    checkpoint "one failure must not kill the run" philosophy).
+
+    Speed seam (eval-only): set REGULAITOR_EVAL_SKIP_RAGAS=1 to skip the slow
+    (multi-Haiku-call) Ragas RAG-quality metrics on large-N runs and return
+    zeros for the four sub-metrics. The sovereign-critical verdict / citation /
+    severity metrics are computed elsewhere in compute_chat_metrics and are
+    unaffected. Use only when Ragas has already been validated on a probe.
     """
+    if os.environ.get("REGULAITOR_EVAL_SKIP_RAGAS", "").lower() in {"1", "true", "yes", "on"}:
+        return dict(_RAGAS_ZERO_SCORES)
+    try:
+        return _ragas_evaluate_chat(
+            query=query, answer=answer, contexts=contexts, ground_truth=ground_truth
+        )
+    except Exception as exc:  # noqa: BLE001 — any broken/incompatible Ragas install
+        logger.warning(
+            "Ragas metrics unavailable (%s: %s); returning zeros for the 4 "
+            "RAG-quality sub-metrics — verdict/citation/severity are unaffected.",
+            type(exc).__name__,
+            exc,
+        )
+        return dict(_RAGAS_ZERO_SCORES)
+
+
+def _ragas_evaluate_chat(
+    *,
+    query: str,
+    answer: str,
+    contexts: list[str],
+    ground_truth: str | None,
+) -> dict[str, float]:
+    """Actual Ragas ``evaluate()`` body, isolated so _ragas_metrics_chat can
+    wrap it in a degrade-to-zeros guard. Excluded from unit-test coverage
+    (external Ragas/datasets/langchain I/O; exercised end-to-end via mocking).
+    """
+    # Upstream packaging bug: ragas 0.4.3 imports
+    # langchain_community.chat_models.vertexai.ChatVertexAI at module load, but
+    # langchain-community 0.4 (pulled in by the P1 CVE lockfile refresh b810d67)
+    # removed that module. ragas 0.4.3 declares no langchain-community upper
+    # bound, so the resolver is free to pick 0.4.x. We never use Vertex (we pass
+    # our own ChatAnthropic llm below), so a stub module satisfies the import
+    # without changing dependencies or the CVE posture. Remove when ragas ships a
+    # release that drops the direct langchain_community.chat_models.vertexai
+    # import. The outer _ragas_metrics_chat guard still degrades to zeros if any
+    # residual incompatibility surfaces.
+    import sys  # pragma: no cover
+    import types  # pragma: no cover
+
+    _vertexai_mod = "langchain_community.chat_models.vertexai"  # pragma: no cover
+    if _vertexai_mod not in sys.modules:  # pragma: no cover
+        _stub = types.ModuleType(_vertexai_mod)
+        _stub.ChatVertexAI = type("ChatVertexAI", (), {})  # type: ignore[attr-defined]
+        sys.modules[_vertexai_mod] = _stub
+
     # Lazy imports — Ragas is heavy and not needed by other modules.
     # The implementation body is excluded from unit-test coverage because
     # Ragas/datasets/langchain_anthropic are external I/O dependencies tested

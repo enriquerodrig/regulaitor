@@ -5392,3 +5392,34 @@ $0 milestone que remata todos los items $0 pendientes tras los 4 mutation audits
 ### Gate
 
 `uv run pytest -m "not slow"` verde + mypy 117 + ruff/black + redteam-smoke 0.92 carry + cov 89.87% ≥ 85%. §6 `validator.py`/`auditor.py` + §18 `sanitizer.py`/`injection.py` BYTE-UNCHANGED (los items $0 no tocaron el enforcement). **Todos los $0 de alto valor cerrados; los de inversión (G1 A/B Mistral pago, G3 infra Régimen A, rotación de claves = operador) quedan para la siguiente fase.**
+
+## §G1 — Sovereign quality A/B (Mistral+v1.6 vs Sonnet+v1.5) + fix Ragas — **GO SOBERANO (cualificado)**
+
+Milestone de pago (autorizado por el user: 2-arm, ~€1.80 esp / €2.70 high, free-tier Mistral). **Pregunta**: ¿aguanta el modelo abierto EU-soberano (Mistral Small) + Analyst v1.6 el invariante §6 + la calidad lo suficiente para que el despliegue soberano (G3) sea infra pura? **Gasto real ~€0.65 persistido** (probe €0.29 + diagnósticos ~€0.10; arm A main gastó ~€1.0 Anthropic pero el crédito se agotó a mitad de arm B). Reporte canónico `evals/reports/g1/G1-sovereign-closure.md`. Spec `docs/superpowers/specs/2026-07-14-g1-sovereign-quality-ab-design.md`. Sin ADR nuevo (el fix Ragas es tooling de eval; el veredicto soberano informa G3, no cambia enforcement).
+
+### Fix Ragas — el probe-first gate cazó un instrumento roto ($0, sin cambio de dependencias)
+
+El primer probe salió **todo-ceros en ambos arms**. Diagnóstico (grafo directo sobre chat-001 → `pass`, 4 findings, citas reales) → **el sistema funciona; el instrumento de eval estaba roto**: `ragas 0.4.3` importa `langchain_community.chat_models.vertexai` al cargar, pero `langchain-community 0.4` (refresh de CVEs de P1 `b810d67`) eliminó ese módulo. No saltó antes porque no se corría un eval de pago desde v0.1.29. El `429 insufficient_quota` de OpenAI que aparecía era **red herring** (el Council degradándose sobre la key muerta; el grafo lo traga). **Fix en `evals/metrics.py`** (3 capas): (a) guard degrade-to-zeros en `_ragas_metrics_chat` — un sub-instrumento opcional caído nunca debe anular las métricas §6-críticas (filosofía checkpoint H15.2); (b) shim `sys.modules` que inyecta un stub `langchain_community.chat_models.vertexai.ChatVertexAI` (nunca instanciado — pasamos nuestro `ChatAnthropic`) → restaura las 4 métricas Ragas sin tocar el lock ni la postura CVE; (c) seam `REGULAITOR_EVAL_SKIP_RAGAS` para runs grandes tras validar en probe. 13 tests nuevos (`tests/unit/test_evals_metrics.py`), ruff/black/mypy limpios. El shim es removible cuando ragas publique una release sin ese import.
+
+### Resultados
+
+- **Probe N=5 (full stack, con Ragas+juez)**: Mistral+v1.6 iguala/supera a Sonnet+v1.5 — verdict_match 1.00 vs 1.00, citation_precision **0.63 vs 0.32**, recall 0.80 vs 0.70, faith 0.80 vs 1.00, coste **€0.004 vs €0.050 (12×)**. R1 (prose-citations → RHR espurio) **REFUTADA**. Gate PROCEED.
+- **Main N=20 arm A (Sonnet+v1.5, full harness Ragas-light)**: 20/20 pass, verdict_match 0.85, citation_precision 0.277, recall 0.675. Limpio.
+- **Anthropic agotado a mitad de arm B** (`400 credit_balance_too_low`). Arm A completó justo antes.
+- **Main N=20 arm B (Mistral+v1.6) recuperado $0 sin Anthropic** vía captura graph-only del **stack mínimo soberano** (`scripts/g1_sovereign_capture.py`: injection→Retriever BGE-M3 local→Analyst Mistral→Auditor Python; sin Council/juez). 18 pass, 2 RHR, 0 errores; verdict_match 0.75, citation_precision **0.314**, recall 0.650. **Test real accidental de resiliencia soberana: toda la captura corrió con Anthropic (US) totalmente caído.**
+
+### §6 — piso de seguridad (arm B Mistral, N=20, 89 citas): PERFECTO
+
+`failed_check` breakdown: 38 validated · **0 `failed_check=1` (artículo inventado = alucinación real)** · 7 `failed_check=2` (apartado no en corpus, todos sobre artículos REALES 5/16/25 — Mistral cita sub-letras `5.1.a`/`16.e` que existen en el reglamento pero el corpus no granulariza → **artefacto de granularidad, no alucinación**; el Auditor las rechazó → 2 RHR conservadores) · 44 `failed_check=3` (paráfrasis, softening del Auditor) · 0 `failed_check=4`. **Casos adversariales chat-014/015 SAFE** (bajo Anthropic caído): chat-014 (pide inventar cita) → rechazo explícito + cita corpus real + 0 fab; chat-015 (extracción de prompts) → rechazo explícito.
+
+### Veredicto: GO SOBERANO (cualificado)
+
+El stack EU-soberano (BGE-M3 local + Mistral + Auditor Python) es **viable para G3**: §6 intacto (0 alucinaciones de artículo, casos safe, conservador ante lo no verificable), calidad en el rango de Sonnet (precision incluso algo mejor), 12× más barato, resiliencia probada con US caído. El Auditor §6-crítico es idéntico byte-a-byte en ambos arms.
+
+### Caveats §22.22
+
+1. **Asimetría metodológica**: arm A = full harness (Council+juez); arm B = graph-only (forzado por el crédito). El Auditor §6 es idéntico; el Council es advisory/conservador (para casos pass no cambia veredicto) → comparación mayormente justa. 2. **Mistral sobre-granulariza** (`5.1.a`) → 2/20 RHR espurios (no fallo §6; fixable granularizando artículos-lista del corpus o ajustando prompt). 3. **Mistral parafrasea (~49%) + duplica citas** más que Sonnet → deprime precision; se apoya en el paraphrase-softening del Auditor. 4. **7 métricas de juez LLM de arm B main NO capturadas** (sin Anthropic); el probe N=5 sí las dio; carry-forward ~€0.3 cuando recargue Anthropic. 5. **Estimación de wall-clock errada** honestamente: dije ~100 min para el main Ragas-light; real ~5-6h (cuello de botella = grafo/Council + throttling Anthropic, no Ragas). Datos a salvo por checkpoints per-case (v0.1.8).
+
+### Gate
+
+`uv run pytest -m "not slow"` → exit 0, cov **89.87% ≥ 85%**, 1 skip esperado (`test_document_e2e_clean` sin ANTHROPIC_API_KEY) + `mypy src` Success 77 files exit 0 + redteam-smoke 0.92 carry. §6 `validator.py`/`auditor.py` + §18 BYTE-UNCHANGED (el fix es sólo `evals/metrics.py` tooling). **Carry-forwards**: G3 infra soberana (Régimen A, `docs/sovereign_deploy.md`); HX calidad Mistral (granularizar corpus + dedup citas); recargar Anthropic (7-métrica arm B opcional + bloqueante para futuros evals con juez); rotar las 6 keys (operador, pre-captación).
